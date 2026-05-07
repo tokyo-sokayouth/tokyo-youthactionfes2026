@@ -1196,13 +1196,14 @@
   }
   .nav-item {
     flex: 1;
+    min-width: 0;
     background: none;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    padding: 6px 0;
+    padding: 6px 2px;
     color: var(--color-ink-soft);
     cursor: pointer;
     font-family: var(--font-body);
@@ -1225,7 +1226,7 @@
     margin-top: 2px;
     transition: opacity 0.2s ease;
   }
-  .nav-label { font-size: 10px; }
+  .nav-label { font-size: 10px; white-space: nowrap; }
 
   /* ============ ICONS (inline SVG) ============ */
   .icon-svg { width: 22px; height: 22px; stroke-width: 1.8; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
@@ -1511,7 +1512,7 @@
       <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
 
-    <h2 class="section-title">注目イベント</h2>
+    <h2 class="section-title">まもなく開催！</h2>
 
     <div class="featured-card">
       <div class="featured-img"></div>
@@ -2033,7 +2034,7 @@
     </div>
 
     <div class="links-header">
-      <h1 class="links-title">注目イベント</h1>
+      <h1 class="links-title">まもなく開催！</h1>
       <p class="links-subtitle">話題のイベントをチェック</p>
     </div>
 
@@ -2461,6 +2462,13 @@
       <span class="nav-label">リンク</span>
       <div class="nav-indicator"></div>
     </button>
+    <button class="nav-item" data-page="page-qa">
+      <div class="nav-icon">
+        <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <span class="nav-label">Q&amp;A</span>
+      <div class="nav-indicator"></div>
+    </button>
     <button class="nav-item" data-page="page-event">
       <div class="nav-icon">
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -2501,7 +2509,7 @@
       'page-event': 'page-event',
       'page-event-detail': 'page-event',
       'page-event-shinjuku': 'page-event',
-      'page-qa': 'page-home',
+      'page-qa': 'page-qa',
       'page-join': 'page-join'
     };
     const activeNav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
