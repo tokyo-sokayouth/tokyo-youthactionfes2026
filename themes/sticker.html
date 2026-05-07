@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="YOUTH ACTION FES 2026">
 <meta name="twitter:description" content="Fes Navi - 東京・山梨エリアで開催されるユース・フェスティバルの公式サイト。">
-<title>YOUTH ACTION FES 2026 | Fes Navi</title>
+<title>YOUTH ACTION FES 2026 | Fes Navi (Theme: Sticker Playful 🌟)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1437,9 +1437,117 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+/* ============ THEME: STICKER PLAYFUL ============ */
+:root {
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --radius-lg: 26px;
+}
+
+/* Hero corner stickers */
+.hero {
+  position: relative;
+  overflow: visible;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+.hero::before {
+  top: 6px; left: 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23F0CE40' stroke='%23F26B5B' stroke-width='1.4' d='M12 2l2.4 6.6L21 9.6l-5.4 4.5 2 7.4L12 17.7l-5.6 3.8 2-7.4L3 9.6l6.6-1z'/></svg>");
+  transform: rotate(-12deg);
+}
+.hero::after {
+  top: 18px; right: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23B198D4' stroke='%23F26B5B' stroke-width='1.4' d='M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 6.5-7 11-7 11z'/></svg>");
+  transform: rotate(10deg);
+}
+.logo-wrap {
+  position: relative;
+}
+.logo-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 8%;
+  width: 36px;
+  height: 36px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='3.4' fill='%23B0CC42'/><circle cx='12' cy='4' r='2.4' fill='%235DC2BD'/><circle cx='12' cy='20' r='2.4' fill='%235DC2BD'/><circle cx='4' cy='12' r='2.4' fill='%235DC2BD'/><circle cx='20' cy='12' r='2.4' fill='%235DC2BD'/></svg>");
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+.hero-tagline::before {
+  content: '✿ ';
+  color: var(--color-coral);
+}
+.hero-tagline::after {
+  content: ' ✿';
+  color: var(--color-coral);
+}
+
+/* Cards with dashed border for handmade feel */
+.featured-card, .link-card, .schedule-card, .area-pill, .qa-item, .content-card, .article-card, .recommend-block {
+  border-style: dashed;
+  border-width: 1.8px;
+}
+
+/* Bottom nav active = bouncy circle */
+.nav-item.active .nav-icon {
+  background: var(--color-coral-soft);
+  border-radius: 50%;
+  animation: stickerPop 0.35s ease;
+}
+@keyframes stickerPop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.nav-icon { transition: background 0.2s ease; padding: 4px; }
+
+/* CTA bounce on hover (where supported) */
+@keyframes ctaBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.btn-primary:hover { animation: ctaBounce 0.6s ease infinite; }
+
+/* Sparkles around section titles */
+.section-title::before {
+  content: '✦ ';
+  color: var(--color-yellow);
+  font-size: 14px;
+}
+.section-title::after {
+  background: linear-gradient(90deg, var(--color-coral), var(--color-yellow), var(--color-purple));
+  width: 40px;
+  height: 3px;
+  border-radius: 999px;
+}
+
+/* Chips multi-color */
+.chip:nth-child(1) { background: var(--color-coral-soft); color: var(--color-coral); }
+.chip:nth-child(2) { background: var(--color-green-soft); color: var(--color-green); }
+.chip:nth-child(3) { background: var(--color-purple-soft); color: var(--color-purple); }
+.chip:nth-child(4) { background: var(--color-yellow-soft); color: #B19420; }
+.chip:nth-child(5) { background: var(--color-teal-soft); color: var(--color-teal); }
+.chip:nth-child(6) { background: var(--color-coral-soft); color: var(--color-coral); }
+.chip:nth-child(7) { background: var(--color-green-soft); color: var(--color-green); }
+.chip:nth-child(8) { background: var(--color-purple-soft); color: var(--color-purple); }
+
 </style>
 </head>
 <body>
+
+
+<a href="./" style="position:fixed;top:12px;left:12px;z-index:300;background:rgba(45,42,38,0.85);color:white;padding:8px 14px;border-radius:999px;text-decoration:none;font-family:'Outfit',sans-serif;font-size:11px;letter-spacing:1.5px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">‹ THEMES</a>
 
 <div class="phone-frame">
 
@@ -1454,7 +1562,7 @@
 
     <div class="hero">
       <!-- Logo -->
-      <div class="logo-wrap"><img src="assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
+      <div class="logo-wrap"><img src="../assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
 
       <div style="margin-top:18px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
       <div class="hero-tagline">Fes Navi</div>
