@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FF6B5B">
+<meta name="robots" content="noindex">
+<title>デザイン案プレビュー | YOUTH ACTION FES 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-coral: #F26B5B;
+    --color-green: #B0CC42;
+    --color-purple: #B198D4;
+    --color-yellow: #F0CE40;
+    --color-teal: #5DC2BD;
+    --color-ink: #2D2A26;
+    --color-ink-soft: #6F6A62;
+    --color-bg: #FDFAF2;
+    --color-card: #FFFFFF;
+    --color-border: #EDE6D4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: #F2EBD9;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    color: var(--color-ink);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt";
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--color-coral);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    margin-top: 12px;
+    line-height: 1.8;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--color-card);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1.5px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(45,42,38,0.10);
+  }
+  .thumb {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+  }
+  .thumb-pop {
+    background:
+      radial-gradient(circle at 20% 30%, #F26B5B33 0%, transparent 30%),
+      radial-gradient(circle at 75% 25%, #B198D433 0%, transparent 30%),
+      radial-gradient(circle at 30% 80%, #5DC2BD33 0%, transparent 30%),
+      radial-gradient(circle at 80% 75%, #F0CE4044 0%, transparent 30%),
+      linear-gradient(135deg, #FFEDE5 0%, #FFF8E5 50%, #E8F2D8 100%);
+  }
+  .thumb-pop::after {
+    content: '🎉';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+  }
+  .thumb-editorial {
+    background: linear-gradient(135deg, #FAFAFA 0%, #F2EBD9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--color-ink-soft);
+    font-family: 'Outfit', sans-serif;
+  }
+  .thumb-editorial-eyebrow {
+    font-size: 11px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+  }
+  .thumb-editorial-title {
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--color-ink);
+  }
+  .thumb-editorial-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--color-ink);
+    opacity: 0.5;
+    margin-top: 14px;
+  }
+  .thumb-sticker {
+    background: linear-gradient(135deg, #FFF8E5 0%, #FFEDE5 50%, #EDE6F4 100%);
+    position: relative;
+  }
+  .thumb-sticker .stk {
+    position: absolute;
+    font-size: 28px;
+  }
+  .thumb-sticker .stk1 { top: 14px; left: 18px; transform: rotate(-15deg); }
+  .thumb-sticker .stk2 { top: 16px; right: 22px; transform: rotate(12deg); }
+  .thumb-sticker .stk3 { bottom: 18px; left: 32px; transform: rotate(8deg); }
+  .thumb-sticker .stk4 { bottom: 20px; right: 28px; transform: rotate(-10deg); }
+  .thumb-sticker .stk-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-coral);
+  }
+  .thumb-mono {
+    background: linear-gradient(180deg, #FDFAF2 0%, #F2EBD9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .thumb-mono-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
+  }
+  .thumb-mono-rule {
+    width: 32px;
+    height: 3px;
+    background: var(--color-coral);
+    border-radius: 999px;
+    margin-top: 14px;
+  }
+  .body {
+    padding: 18px 18px 20px;
+  }
+  .name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .name .badge {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    background: var(--color-coral);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .desc {
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-ink);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    transition: background 0.2s ease;
+  }
+  .open-btn:hover { background: var(--color-coral); }
+  .back {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    text-decoration: none;
+  }
+  .back:hover { color: var(--color-coral); }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-ink-soft);
+    line-height: 1.8;
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: 24px; }
+    .container { padding: 28px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="eyebrow">DESIGN PREVIEW</div>
+      <h1>デザイン案 4種</h1>
+      <p class="subtitle">気に入ったテーマを選んでください。<br>選んだ案をメインサイトに反映します。</p>
+    </header>
+
+    <div class="grid">
+      <!-- POP -->
+      <div class="card">
+        <div class="thumb thumb-pop"></div>
+        <div class="body">
+          <div class="name">Pop Festival <span class="badge">A</span></div>
+          <p class="desc">祭り感・元気・カラフル。多色confettiドット背景、コーラルのpillバッジ、セクションごとに変わる下線色。賑やか。</p>
+          <a class="open-btn" href="./pop.html">テーマを開く →</a>
+        </div>
+      </div>
+
+      <!-- EDITORIAL -->
+      <div class="card">
+        <div class="thumb thumb-editorial">
+          <div class="thumb-editorial-eyebrow">VOL.2026 / SPECIAL ISSUE</div>
+          <div class="thumb-editorial-title">Fes Navi</div>
+          <div class="thumb-editorial-rule"></div>
+        </div>
+        <div class="body">
+          <div class="name">Editorial Refined <span class="badge">B</span></div>
+          <p class="desc">雑誌風・洗練・落ち着き。「VOL.2026」eyebrow、細いボーダー、行間広め、アクセント色控えめ。大人っぽい。</p>
+          <a class="open-btn" href="./editorial.html">テーマを開く →</a>
+        </div>
+      </div>
+
+      <!-- STICKER -->
+      <div class="card">
+        <div class="thumb thumb-sticker">
+          <span class="stk stk1">⭐️</span>
+          <span class="stk stk2">💜</span>
+          <span class="stk stk3">🌸</span>
+          <span class="stk stk4">🟢</span>
+          <div class="stk-center">Fes Navi</div>
+        </div>
+        <div class="body">
+          <div class="name">Sticker Playful <span class="badge">C</span></div>
+          <p class="desc">遊び心・親しみ・若者向け。ヒーロー4隅にミニステッカー、ぷよっとアニメ、点線ボーダー。元気で親近感。</p>
+          <a class="open-btn" href="./sticker.html">テーマを開く →</a>
+        </div>
+      </div>
+
+      <!-- MONO -->
+      <div class="card">
+        <div class="thumb thumb-mono">
+          <div class="thumb-mono-title">Fes Navi</div>
+          <div class="thumb-mono-rule"></div>
+        </div>
+        <div class="body">
+          <div class="name">Bold Mono Coral <span class="badge">D</span></div>
+          <p class="desc">シンプル・大胆・大人。アクセントをコーラル一色に集約、装飾排除、太く大きなタイポ。ミニマルで力強い。</p>
+          <a class="open-btn" href="./mono.html">テーマを開く →</a>
+        </div>
+      </div>
+    </div>
+
+    <a class="back" href="../">← メインサイトに戻る</a>
+
+    <footer>
+      ※ これらはプレビュー用のページです。<br>
+      本実装は、選ばれたテーマだけをメインサイトに反映します。
+    </footer>
+  </div>
+</body>
+</html>

@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="YOUTH ACTION FES 2026">
 <meta name="twitter:description" content="Fes Navi - 東京・山梨エリアで開催されるユース・フェスティバルの公式サイト。">
-<title>YOUTH ACTION FES 2026 | Fes Navi</title>
+<title>YOUTH ACTION FES 2026 | Fes Navi (Theme: Bold Mono Coral 🟧)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1437,9 +1437,106 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+/* ============ THEME: BOLD MONO CORAL ============ */
+:root {
+  --color-green: #BFB7A8;
+  --color-green-soft: #ECE6D9;
+  --color-purple: #BFB7A8;
+  --color-purple-soft: #ECE6D9;
+  --color-teal: #BFB7A8;
+  --color-teal-soft: #ECE6D9;
+  --color-yellow: #BFB7A8;
+  --color-yellow-soft: #ECE6D9;
+}
+
+/* Calmer page background */
+.phone-frame {
+  background-image: none;
+}
+
+/* Hero with bold typography and breathing room */
+.hero {
+  padding: 16px 24px 44px;
+}
+.hero-region {
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: var(--color-ink-soft);
+}
+.hero-region::before, .hero-region::after {
+  width: 56px;
+  background: var(--color-ink);
+  opacity: 0.25;
+}
+.hero-tagline {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-ink);
+  letter-spacing: 0.04em;
+  margin-top: 18px;
+  margin-bottom: 32px;
+}
+
+/* Section titles bigger, bolder */
+.section-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-top: 56px;
+  margin-bottom: 28px;
+}
+.section-title::after {
+  width: 40px;
+  height: 3px;
+  background: var(--color-coral);
+  margin-top: 14px;
+}
+
+/* Cards minimal: shadow only, no decorative borders for content cards */
+.featured-card, .link-card, .schedule-card, .article-card,
+.area-pill, .qa-item, .content-card, .recommend-block, .info-block {
+  border: none;
+  box-shadow: 0 4px 18px rgba(45,42,38,0.06);
+}
+
+/* Link cards subdued background */
+.link-card.coral { background: #FFFFFF; border-left: 4px solid var(--color-coral); border-radius: var(--radius-md); }
+.link-card.green { background: #FFFFFF; border-left: 4px solid var(--color-coral); border-radius: var(--radius-md); }
+.link-card.purple { background: #FFFFFF; border-left: 4px solid var(--color-coral); border-radius: var(--radius-md); }
+.link-icon.coral, .link-icon.green, .link-icon.purple { background: var(--color-ink); }
+.link-cta.coral, .link-cta.green, .link-cta.purple { background: var(--color-coral); }
+
+/* Bottom nav active gets a strong coral pill */
+.nav-item.active .nav-icon {
+  background: var(--color-coral);
+  color: white;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+.nav-item.active .nav-icon .icon-svg { stroke: white; }
+.nav-item.active .nav-indicator { display: none; }
+
+/* Buttons stronger */
+.btn-primary { font-weight: 800; letter-spacing: 0.18em; }
+
+/* Tabs */
+.tab.active { background: var(--color-ink); }
+
+/* Chips coral only */
+.chip { background: var(--color-coral-soft); color: var(--color-coral); }
+
+/* Reaction & article tags coral-toned */
+.article-tag { background: var(--color-coral-soft); color: var(--color-coral); }
+.article-tag-pill { color: var(--color-ink); }
+
 </style>
 </head>
 <body>
+
+
+<a href="./" style="position:fixed;top:12px;left:12px;z-index:300;background:rgba(45,42,38,0.85);color:white;padding:8px 14px;border-radius:999px;text-decoration:none;font-family:'Outfit',sans-serif;font-size:11px;letter-spacing:1.5px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">‹ THEMES</a>
 
 <div class="phone-frame">
 
@@ -1454,7 +1551,7 @@
 
     <div class="hero">
       <!-- Logo -->
-      <div class="logo-wrap"><img src="assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
+      <div class="logo-wrap"><img src="../assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
 
       <div style="margin-top:18px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
       <div class="hero-tagline">Fes Navi</div>
