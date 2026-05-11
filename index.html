@@ -17,7 +17,7 @@
 <title>YOUTH ACTION FES 2026 | Fes Navi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   /* ============ DESIGN TOKENS ============ */
   :root {
@@ -52,6 +52,7 @@
 
     --font-display: 'Outfit', 'Zen Kaku Gothic New', sans-serif;
     --font-body: 'Zen Kaku Gothic New', sans-serif;
+    --font-script: 'Caveat', 'Outfit', cursive;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -123,15 +124,20 @@
   .site-footer {
     padding: 18px 20px 90px;
     text-align: center;
-    font-size: 11px;
-    color: var(--color-ink-soft);
+    font-size: 10.5px;
+    color: rgba(45,42,38,0.45);
     background: var(--color-bg);
-    line-height: 1.5;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
   }
   .site-footer-org {
-    font-weight: 600;
-    color: var(--color-ink);
-    letter-spacing: 0.02em;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .site-footer-copy {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.03em;
   }
   .page.active { display: block; }
   @keyframes fadeIn {
@@ -142,7 +148,7 @@
   /* ============ HERO LOGO ============ */
   .hero {
     text-align: center;
-    padding: 8px 24px 32px;
+    padding: 8px 24px 18px;
     position: relative;
   }
   .logo-wrap {
@@ -169,13 +175,17 @@
     opacity: 0.4;
   }
   .hero-tagline {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-ink-soft);
-    margin-top: 10px;
-    margin-bottom: 26px;
-    letter-spacing: 0.15em;
+    font-family: var(--font-script);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--color-coral);
+    margin-top: 6px;
+    margin-bottom: 22px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    transform: rotate(-2deg);
+    display: inline-block;
+    text-shadow: 2px 2px 0 var(--color-yellow-soft);
   }
 
   /* ============ PRIMARY BUTTON ============ */
@@ -226,16 +236,88 @@
     box-shadow: 0 3px 12px rgba(93,194,189,0.25);
   }
   .find-events {
-    margin-top: 22px;
+    margin: 4px 20px 12px;
     text-align: center;
   }
+  .about-section {
+    margin: 0 16px 22px;
+    padding: 24px 22px 26px;
+    background: var(--color-coral-soft);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-section::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .about-eyebrow {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--color-coral);
+    letter-spacing: 0.01em;
+    line-height: 1;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .about-tag {
+    font-family: var(--font-script);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+    line-height: 1.1;
+    position: relative;
+  }
+  .about-headline {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin-bottom: 16px;
+    letter-spacing: 0.04em;
+    position: relative;
+  }
+  .about-body {
+    position: relative;
+  }
+  .about-body p {
+    font-size: 12.5px;
+    line-height: 1.85;
+    color: var(--color-ink);
+    margin: 0 0 12px;
+    letter-spacing: 0.02em;
+  }
+  .about-body p:last-child { margin-bottom: 0; }
   .find-events-title {
     font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     color: var(--color-ink);
     margin-bottom: 14px;
+    line-height: 1.05;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 6px;
+  }
+  .find-events-title::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: 0;
+    height: 6px;
+    background: var(--color-yellow);
+    border-radius: 3px;
+    z-index: -1;
+    opacity: 0.85;
   }
   .find-events-buttons {
     display: flex;
@@ -285,6 +367,25 @@
   .tab.active {
     background: var(--color-coral);
     color: white;
+  }
+  /* Schedule page: ALL spans full width on its own row */
+  .tabs.schedule-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .tabs.schedule-tabs .tab-all {
+    grid-column: 1 / -1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    color: var(--color-ink);
+  }
+  .tabs.schedule-tabs .tab-all.active {
+    background: var(--color-ink);
+    color: #fff;
+    border-color: var(--color-ink);
   }
 
   /* ============ SCHEDULE LIST ============ */
@@ -419,6 +520,69 @@
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
   }
+
+  /* ============ GALLERY PAGE ============ */
+  .gallery-header {
+    text-align: center;
+    padding: 4px 20px 18px;
+  }
+  .gallery-eyebrow {
+    font-family: var(--font-script);
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--color-coral);
+    line-height: 1;
+    transform: rotate(-2deg);
+    display: inline-block;
+    text-shadow: 2px 2px 0 var(--color-yellow-soft);
+  }
+  .gallery-jp {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    letter-spacing: 0.35em;
+    margin: 6px 0 10px;
+    font-weight: 600;
+  }
+  .gallery-subtitle {
+    font-size: 12px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 18px;
+  }
+  .gallery-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-card-alt);
+    position: relative;
+  }
+  .gallery-item.gallery-wide {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:active img { transform: scale(1.04); }
+  .gallery-caption {
+    padding: 0 20px 8px;
+    text-align: center;
+    color: var(--color-ink-soft);
+    font-size: 10.5px;
+    line-height: 1.6;
+  }
+  .gallery-caption p { margin: 0; }
 
   /* ============ LINKS PAGE ============ */
   .links-header {
@@ -882,6 +1046,15 @@
   /* ============ MONTH SCHEDULE PAGE ============ */
   .month-section {
     margin: 0 20px 28px;
+    scroll-margin-top: 16px;
+  }
+  /* Home schedule preview: name spans visually indicate tappability */
+  .schedule-content .event-name {
+    color: var(--color-coral);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(242,107,91,0.35);
+    text-underline-offset: 3px;
   }
   .month-header {
     display: flex;
@@ -1523,6 +1696,52 @@
     line-height: 1.6;
     text-align: center;
   }
+  /* Simplified join page */
+  .join-eligibility {
+    margin: 0 20px 24px;
+    padding: 22px 22px 20px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  .join-eligibility-lead {
+    margin: 0 0 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.6;
+  }
+  .join-eligibility-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .join-eligibility-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--color-ink);
+    line-height: 1.6;
+  }
+  .join-eligibility-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 8px; height: 8px;
+    background: var(--color-coral);
+    border-radius: 50%;
+  }
+  .join-actions {
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .join-actions .btn-primary,
+  .join-actions .btn-secondary {
+    text-decoration: none;
+  }
 
   /* ============ Q&A ACCORDION ============ */
   .qa-list {
@@ -1622,66 +1841,48 @@
 
       <div style="margin-top:18px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
       <div class="hero-tagline">Fes Navi</div>
-
-      <div class="find-events">
-        <div class="find-events-title">Find Your Events</div>
-        <div class="find-events-buttons">
-          <button class="btn-primary" onclick="goToPage('page-region')">
-            近くの会場を探す
-            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="btn-secondary" onclick="goToPage('page-schedule')">
-            開催一覧
-            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
     </div>
+
+    <section class="about-section">
+      <div class="about-eyebrow">About</div>
+      <div class="about-tag">Think globally, Fes locally.</div>
+      <div class="about-headline">私の街を、舞台にしよう。</div>
+      <div class="about-body">
+        <p>一歩外に出れば、きっと素敵な出会いが待っている。<br>
+        ユースアクションフェスは、そんな"ときめき"を探しに来てほしい、あなたの街のフェスティバルです。</p>
+        <p>友達と来ても、ひとりで来ても。はじめましてでも、久しぶりでも。どんなかたちでも、大歓迎です。</p>
+        <p>東京のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
+        <p>あなたの街にも、きっと熱い舞台がある。まずは、気軽に来てみてください。</p>
+      </div>
+    </section>
+
+    <section class="find-events">
+      <div class="find-events-title">Find Your Events</div>
+      <div class="find-events-buttons">
+        <button class="btn-primary" onclick="goToPage('page-region')">
+          近くの会場を探す
+          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="btn-secondary" onclick="goToPage('page-schedule', 'all')">
+          開催一覧
+          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </section>
 
     <h2 class="section-title">開催スケジュール</h2>
 
     <div class="tabs">
       <button class="tab active">東京23区</button>
-      <button class="tab">第2総東京</button>
+      <button class="tab">東京（多摩地域）</button>
       <button class="tab">山梨</button>
     </div>
 
-    <div class="schedule-card">
-      <div class="schedule-item" onclick="goToPage('page-schedule')">
-        <div class="schedule-date">
-          <div class="month">7<span style="font-size:14px;">月</span></div>
-          <div class="month-en">JULY</div>
-        </div>
-        <div class="schedule-content">大田総区 / 渋谷総区 / 新宿総区 ほか</div>
-        <div class="schedule-arrow">›</div>
-      </div>
-      <div class="schedule-item" onclick="goToPage('page-schedule')">
-        <div class="schedule-date">
-          <div class="month">9<span style="font-size:14px;">月</span></div>
-          <div class="month-en">SEPTEMBER</div>
-        </div>
-        <div class="schedule-content">江戸川総区 / 調布総区 / 千代田区 / 小金井総区 ほか</div>
-        <div class="schedule-arrow">›</div>
-      </div>
-      <div class="schedule-item" onclick="goToPage('page-schedule')">
-        <div class="schedule-date">
-          <div class="month">10<span style="font-size:14px;">月</span></div>
-          <div class="month-en">OCTOBER</div>
-        </div>
-        <div class="schedule-content">秋川総区 / 町田総区 / 文京区 / 台東区 / 品川総区 ほか</div>
-        <div class="schedule-arrow">›</div>
-      </div>
-      <div class="schedule-item" onclick="goToPage('page-schedule')">
-        <div class="schedule-date">
-          <div class="month">11<span style="font-size:14px;">月</span></div>
-          <div class="month-en">NOVEMBER</div>
-        </div>
-        <div class="schedule-content">江東総区 / 世田谷総区 / 葛飾総区 ほか</div>
-        <div class="schedule-arrow">›</div>
-      </div>
+    <div class="schedule-card" id="home-schedule-card">
+      <!-- populated by JS from schedule data -->
     </div>
 
-    <button class="all-schedule-btn" onclick="goToPage('page-schedule')">
+    <button class="all-schedule-btn" onclick="goToPage('page-schedule', 'all')">
       すべてのスケジュールを見る
       <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
@@ -2010,13 +2211,13 @@
     <div class="region-card tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
       <div class="region-card-title">
         <div>
-          <span class="region-name">TOKYO 2ND</span>
-          <span class="region-name-jp">第2総東京</span>
+          <span class="region-name">TOKYO TAMA</span>
+          <span class="region-name-jp">東京（多摩地域）</span>
         </div>
         <div class="region-arrow" style="background:var(--color-purple);">›</div>
       </div>
       <div class="region-map">
-        <img src="assets/region-tokyo2nd.png" alt="第2総東京" loading="lazy">
+        <img src="assets/region-tokyo2nd.png" alt="東京（多摩地域）" loading="lazy">
       </div>
       <div class="region-info">多摩エリアの開催情報</div>
     </div>
@@ -2048,14 +2249,15 @@
       <p class="links-subtitle">東京エリアの月別開催情報</p>
     </div>
 
-    <div class="tabs" style="margin-bottom:24px;">
-      <button class="tab active" data-schedule-tab="tokyo23">東京23区</button>
-      <button class="tab" data-schedule-tab="tokyo-2nd">第2総東京</button>
+    <div class="tabs schedule-tabs" style="margin-bottom:24px;">
+      <button class="tab tab-all active" data-schedule-tab="all">ALL</button>
+      <button class="tab" data-schedule-tab="tokyo23">東京23区</button>
+      <button class="tab" data-schedule-tab="tokyo-2nd">東京（多摩地域）</button>
       <button class="tab" data-schedule-tab="yamanashi">山梨</button>
     </div>
 
     <!-- 7月 -->
-    <div class="month-section">
+    <div class="month-section" id="schedule-month-7">
       <div class="month-header">
         <span class="month-num">7</span>
         <span class="month-suffix">月開催</span>
@@ -2101,7 +2303,7 @@
     </div>
 
     <!-- 9月 -->
-    <div class="month-section">
+    <div class="month-section" id="schedule-month-9">
       <div class="month-header">
         <span class="month-num">9</span>
         <span class="month-suffix">月開催</span>
@@ -2125,7 +2327,7 @@
     </div>
 
     <!-- 10月 -->
-    <div class="month-section">
+    <div class="month-section" id="schedule-month-10">
       <div class="month-header">
         <span class="month-num">10</span>
         <span class="month-suffix">月開催</span>
@@ -2162,7 +2364,7 @@
     </div>
 
     <!-- 11月 -->
-    <div class="month-section">
+    <div class="month-section" id="schedule-month-11">
       <div class="month-header">
         <span class="month-num">11</span>
         <span class="month-suffix">月開催</span>
@@ -2189,47 +2391,47 @@
       <div></div>
     </div>
 
-    <div class="links-header">
-      <h1 class="links-title">まもなく開催！</h1>
-      <p class="links-subtitle">話題のイベントをチェック</p>
+    <div class="gallery-header">
+      <div class="gallery-eyebrow">Photo Gallery</div>
+      <div class="gallery-jp">ギャラリー</div>
+      <p class="gallery-subtitle">街のリアルなフェスティバルの様子をのぞき見してみよう</p>
     </div>
 
-    <!-- Featured Event Card -->
-    <div class="featured-card" onclick="goToPage('page-event-detail')">
-      <div class="featured-img"></div>
-      <div class="featured-body">
-        <div class="featured-text">
-          <div class="featured-title">Youth Festa 2026</div>
-          <div class="featured-desc">音楽・ダンス・アートなど、多彩なパフォーマンスが集結するスペシャルイベント！</div>
-        </div>
-        <button class="featured-arrow-btn">›</button>
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-wide">
+        <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&h=500&fit=crop&q=80" alt="盛り上がる観客" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&h=500&fit=crop&q=80" alt="ステージのライト" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&h=500&fit=crop&q=80" alt="マーケットの賑わい" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=500&h=500&fit=crop&q=80" alt="フェスティバル" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500&h=500&fit=crop&q=80" alt="花火と祭り" loading="lazy">
+      </div>
+      <div class="gallery-item gallery-wide">
+        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?w=800&h=500&fit=crop&q=80" alt="ストリートのお祭り" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&h=500&fit=crop&q=80" alt="若者の交流" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=500&h=500&fit=crop&q=80" alt="ダンスパフォーマンス" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=500&fit=crop&q=80" alt="路上ライブ" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&h=500&fit=crop&q=80" alt="フードと屋台" loading="lazy">
       </div>
     </div>
 
-    <div style="height:14px;"></div>
-
-    <div class="featured-card" onclick="goToPage('page-event-detail')">
-      <div class="featured-img" style="background:linear-gradient(135deg,#3D5A80 0%,#98C1D9 100%);"></div>
-      <div class="featured-body">
-        <div class="featured-text">
-          <div class="featured-title">SHINJUKU Youth Action Fes</div>
-          <div class="featured-desc">新宿エリアのユースが集う交流イベント。音楽ライブも開催！</div>
-        </div>
-        <button class="featured-arrow-btn">›</button>
-      </div>
-    </div>
-
-    <div style="height:14px;"></div>
-
-    <div class="featured-card" onclick="goToPage('page-event-detail')">
-      <div class="featured-img" style="background:linear-gradient(135deg,#A8E6CF 0%,#5DC9C4 100%);"></div>
-      <div class="featured-body">
-        <div class="featured-text">
-          <div class="featured-title">SETAGAYA Action Day</div>
-          <div class="featured-desc">世田谷区民が主役のアクションデイ。地域貢献活動を体験しよう！</div>
-        </div>
-        <button class="featured-arrow-btn">›</button>
-      </div>
+    <div class="gallery-caption">
+      <p>※ イメージ画像です。実際の会場の雰囲気は各エリアによって異なります。</p>
     </div>
   </div>
 
@@ -2301,14 +2503,14 @@
 
     <div class="event-hero">
       <div class="event-eyebrow">SHINJUKU AREA</div>
-      <div class="event-name-en">SHINJUKU Youth Action Fes</div>
-      <div class="event-name-jp">新宿総区 ユースアクションフェス</div>
+      <div class="event-name-en">CHIRU FES</div>
+      <div class="event-name-jp">ちるフェス</div>
     </div>
 
     <div class="video-wrap">
       <iframe
         src="https://www.youtube.com/embed/w8GJDD1Hliw?start=1"
-        title="新宿総区 ユースアクションフェス 紹介動画"
+        title="ちるフェス 紹介動画"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
         loading="lazy"
@@ -2319,8 +2521,15 @@
     <div class="info-block">
       <div class="info-label">DATE</div>
       <div class="info-value">
-        2026年7月某日(土)
-        <span class="info-value-sub">詳細日程は決まり次第更新します</span>
+        2026年7月19日(日) 13:00〜
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-label">VENUE</div>
+      <div class="info-value">
+        創価学会 新宿池田文化会館
+        <span class="info-value-sub">〒169-0074 東京都新宿区北新宿1-32</span>
       </div>
     </div>
 
@@ -2343,7 +2552,7 @@
     <div class="event-content">
       <div class="event-content-title">ABOUT</div>
       <div class="event-content-text">
-        新宿総区のユースが心を一つに、地域と未来へ向けたアクションを起こします。仲間や友人と一緒に、新しい挑戦を楽しみましょう。詳細は紹介動画をぜひご覧ください。
+        新宿総区のユースが心を一つに、地域と未来へ向けたアクションを起こす一日。仲間や友人と一緒に、新しい挑戦を楽しみましょう。詳細は紹介動画をぜひご覧ください。
       </div>
     </div>
 
@@ -2364,24 +2573,24 @@
 
     <div class="links-header">
       <h1 class="links-title">参加する</h1>
-      <p class="links-subtitle">参加お申込みは、下記フォームから<br>ご記入ください。</p>
     </div>
 
-    <div class="form-embed">
-      <iframe
-        src="https://forms.gle/uZJU6HFz6GCLbKSk7"
-        title="参加申込フォーム"
-        loading="lazy">読み込んでいます…</iframe>
+    <div class="join-eligibility">
+      <p class="join-eligibility-lead">下記に該当する方のみ、こちらからお申し込みください</p>
+      <ul class="join-eligibility-list">
+        <li>区外にお住まいの方</li>
+        <li>非会員の方</li>
+      </ul>
     </div>
 
-    <p class="form-note">フォームが表示されない場合は、下のボタンから別タブで開いてください。</p>
-
-    <div class="detail-cta coral" style="margin: 8px 20px 0;">
-      <a href="https://forms.gle/uZJU6HFz6GCLbKSk7" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:block;">
-        <button style="width:100%;">
-          新しいタブでフォームを開く
-          <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </button>
+    <div class="join-actions">
+      <a class="btn-primary" href="https://forms.gle/uZJU6HFz6GCLbKSk7" target="_blank" rel="noopener noreferrer">
+        お申し込みフォームを開く
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <a class="btn-secondary" href="#" target="_blank" rel="noopener noreferrer">
+        お問い合わせはこちら
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </a>
     </div>
   </div>
@@ -2590,7 +2799,7 @@
       <li><button data-target="page-schedule">スケジュール<span class="chev">›</span></button></li>
       <li><button data-target="page-links">リンク一覧<span class="chev">›</span></button></li>
       <li><button data-target="page-qa">Q&amp;A<span class="chev">›</span></button></li>
-      <li><button data-target="page-event">イベント<span class="chev">›</span></button></li>
+      <li><button data-target="page-event">ギャラリー<span class="chev">›</span></button></li>
       <li><button data-target="page-join">参加申込<span class="chev">›</span></button></li>
     </ul>
   </aside>
@@ -2598,6 +2807,7 @@
   <!-- ====================== SITE FOOTER (every page) ====================== -->
   <footer class="site-footer">
     <div class="site-footer-org">創価学会 総東京ユースアクションフェス実行委員会</div>
+    <div class="site-footer-copy">Copyright &copy; 2026 Tokyo Soka Youth. All Rights Reserved.</div>
   </footer>
 
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
@@ -2632,9 +2842,9 @@
     </button>
     <button class="nav-item" data-page="page-event">
       <div class="nav-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
       </div>
-      <span class="nav-label">イベント</span>
+      <span class="nav-label">ギャラリー</span>
       <div class="nav-indicator"></div>
     </button>
     <button class="nav-item" data-page="page-join">
@@ -2648,7 +2858,7 @@
 </div>
 
 <script>
-  function goToPage(pageId, tabKey) {
+  function goToPage(pageId, tabKey, monthAnchor) {
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
@@ -2684,8 +2894,16 @@
     const activeNav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
     if (activeNav) activeNav.classList.add('active');
 
-    // scroll to top
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    // scroll to top, or to a specific month anchor on schedule
+    if (pageId === 'page-schedule' && monthAnchor) {
+      window.scrollTo({ top: 0 });
+      requestAnimationFrame(() => {
+        const sec = document.getElementById('schedule-month-' + monthAnchor);
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   document.querySelectorAll('.nav-item').forEach(item => {
@@ -2704,14 +2922,15 @@
     });
   });
 
-  // Apply region highlighting to schedule pills based on active tab
+  // Apply region highlighting to schedule pills based on active tab.
+  // 'all' shows every pill highlighted in its own region color.
   function applyScheduleRegionFilter(region) {
     document.querySelectorAll('#page-schedule .area-pill[data-region]').forEach(pill => {
-      pill.classList.toggle('is-active-region', pill.dataset.region === region);
+      pill.classList.toggle('is-active-region', region === 'all' || pill.dataset.region === region);
     });
   }
-  // Initial state: highlight tokyo23 (default active tab)
-  applyScheduleRegionFilter('tokyo23');
+  // Initial state: ALL (default active tab)
+  applyScheduleRegionFilter('all');
 
   // ----- Upcoming events (home: まもなく開催！) + within-1-month highlighting -----
   function collectScheduleEvents() {
@@ -2787,6 +3006,40 @@
     });
   }
 
+  function renderHomeScheduleCard() {
+    const card = document.getElementById('home-schedule-card');
+    if (!card) return;
+    const monthEN = {7:'JULY', 8:'AUGUST', 9:'SEPTEMBER', 10:'OCTOBER', 11:'NOVEMBER', 12:'DECEMBER'};
+    const byMonth = {};
+    collectScheduleEvents().forEach(e => {
+      const m = e.date.getMonth() + 1;
+      if (!byMonth[m]) byMonth[m] = [];
+      byMonth[m].push(e);
+    });
+    const months = Object.keys(byMonth).map(Number).sort((a, b) => a - b);
+    card.innerHTML = '';
+    months.forEach(m => {
+      const items = byMonth[m];
+      // Prioritise pills with non-placeholder times (HH:MM specified) first
+      const sorted = items.slice().sort((a, b) => a.date - b.date);
+      const named = sorted.slice(0, 3).map(e => `<span class="event-name">${e.name}</span>`).join('・');
+      const more = sorted.length > 3 ? ' ほか' : '';
+      const row = document.createElement('div');
+      row.className = 'schedule-item';
+      row.addEventListener('click', () => goToPage('page-schedule', 'all', m));
+      row.innerHTML = `
+        <div class="schedule-date">
+          <div class="month">${m}<span style="font-size:14px;">月</span></div>
+          <div class="month-en">${monthEN[m] || ''}</div>
+        </div>
+        <div class="schedule-content">${named}${more}</div>
+        <div class="schedule-arrow">›</div>
+      `;
+      card.appendChild(row);
+    });
+  }
+
+  renderHomeScheduleCard();
   renderUpcomingHome();
   applySoonHighlight();
 
