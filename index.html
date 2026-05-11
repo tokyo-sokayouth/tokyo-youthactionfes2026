@@ -804,6 +804,14 @@
     position: relative;
   }
   .region-map svg { width: 100%; height: 100%; }
+  .region-map img {
+    max-width: 78%;
+    max-height: 88%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
   .region-info {
     margin-top: 12px;
     font-size: 12px;
@@ -812,6 +820,7 @@
     text-align: center;
   }
   .region-card.tokyo { border-left: 3px solid var(--color-coral); }
+  .region-card.tokyo-2nd { border-left: 3px solid var(--color-purple); }
   .region-card.yamanashi { border-left: 3px solid var(--color-green); }
 
   /* ============ MONTH SCHEDULE PAGE ============ */
@@ -1468,8 +1477,9 @@
     <h2 class="section-title">開催スケジュール</h2>
 
     <div class="tabs">
-      <button class="tab active">東京エリア</button>
-      <button class="tab">山梨エリア</button>
+      <button class="tab active">東京23区</button>
+      <button class="tab">第2総東京</button>
+      <button class="tab">山梨</button>
     </div>
 
     <div class="schedule-card">
@@ -1826,40 +1836,35 @@
       </span>
     </div>
 
-    <div class="region-card tokyo" onclick="goToPage('page-schedule')">
+    <div class="region-card tokyo" onclick="goToPage('page-schedule', 'tokyo23')">
       <div class="region-card-title">
         <div>
-          <span class="region-name">TOKYO</span>
-          <span class="region-name-jp">東京</span>
+          <span class="region-name">TOKYO 23</span>
+          <span class="region-name-jp">東京23区</span>
         </div>
         <div class="region-arrow">›</div>
       </div>
       <div class="region-map">
-        <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="dots-tokyo" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="0.6" fill="#E8DFCC"/>
-            </pattern>
-          </defs>
-          <rect width="320" height="200" fill="url(#dots-tokyo)"/>
-          <!-- Stylized Tokyo region -->
-          <path d="M40,90 L70,75 L110,70 L150,68 L190,72 L220,80 L240,90 L260,105 L280,115 L270,135 L240,145 L200,150 L160,148 L120,145 L80,135 L55,120 Z"
-                fill="#FBE8E2" stroke="#F26B5B" stroke-width="2" stroke-linejoin="round"/>
-          <!-- Inner ward divisions (decorative) -->
-          <g stroke="#F26B5B" stroke-width="0.8" fill="none" opacity="0.5">
-            <line x1="100" y1="80" x2="105" y2="140"/>
-            <line x1="140" y1="75" x2="145" y2="148"/>
-            <line x1="180" y1="72" x2="185" y2="148"/>
-            <line x1="220" y1="80" x2="225" y2="148"/>
-            <line x1="70" y1="100" x2="270" y2="125"/>
-          </g>
-          <text x="160" y="115" text-anchor="middle" font-family="Outfit, sans-serif" font-size="20" font-weight="700" fill="#F26B5B" letter-spacing="3">TOKYO</text>
-        </svg>
+        <img src="assets/region-tokyo23.png" alt="東京23区" loading="lazy">
       </div>
-      <div class="region-info">23区・多摩エリアの開催情報</div>
+      <div class="region-info">23区エリアの開催情報</div>
     </div>
 
-    <div class="region-card yamanashi" onclick="goToPage('page-schedule')">
+    <div class="region-card tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
+      <div class="region-card-title">
+        <div>
+          <span class="region-name">TOKYO 2ND</span>
+          <span class="region-name-jp">第2総東京</span>
+        </div>
+        <div class="region-arrow" style="background:var(--color-purple);">›</div>
+      </div>
+      <div class="region-map">
+        <img src="assets/region-tokyo2nd.png" alt="第2総東京" loading="lazy">
+      </div>
+      <div class="region-info">多摩エリアの開催情報</div>
+    </div>
+
+    <div class="region-card yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
       <div class="region-card-title">
         <div>
           <span class="region-name">YAMANASHI</span>
@@ -1868,17 +1873,7 @@
         <div class="region-arrow" style="background:var(--color-green);">›</div>
       </div>
       <div class="region-map">
-        <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="dots-yama" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="0.6" fill="#E8DFCC"/>
-            </pattern>
-          </defs>
-          <rect width="320" height="200" fill="url(#dots-yama)"/>
-          <path d="M70,60 L110,55 L160,58 L210,62 L250,75 L260,100 L245,130 L210,150 L170,155 L120,148 L80,130 L60,100 Z"
-                fill="#EEF3D6" stroke="#B0CC42" stroke-width="2" stroke-linejoin="round"/>
-          <text x="160" y="115" text-anchor="middle" font-family="Outfit, sans-serif" font-size="18" font-weight="700" fill="#8FA830" letter-spacing="3">YAMANASHI</text>
-        </svg>
+        <img src="assets/region-yamanashi.png" alt="山梨" loading="lazy">
       </div>
       <div class="region-info">県内全エリアの開催情報</div>
     </div>
@@ -1897,8 +1892,9 @@
     </div>
 
     <div class="tabs" style="margin-bottom:24px;">
-      <button class="tab active">東京エリア</button>
-      <button class="tab">山梨エリア</button>
+      <button class="tab active" data-schedule-tab="tokyo23">東京23区</button>
+      <button class="tab" data-schedule-tab="tokyo-2nd">第2総東京</button>
+      <button class="tab" data-schedule-tab="yamanashi">山梨</button>
     </div>
 
     <!-- 7月 -->
@@ -2487,12 +2483,19 @@
 </div>
 
 <script>
-  function goToPage(pageId) {
+  function goToPage(pageId, tabKey) {
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
     const target = document.getElementById(pageId);
     if (target) target.classList.add('active');
+
+    // optional schedule-page tab pre-selection
+    if (tabKey && pageId === 'page-schedule') {
+      document.querySelectorAll('#page-schedule [data-schedule-tab]').forEach(t => {
+        t.classList.toggle('active', t.dataset.scheduleTab === tabKey);
+      });
+    }
 
     // update nav
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
