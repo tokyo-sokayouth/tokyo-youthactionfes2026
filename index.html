@@ -1127,17 +1127,18 @@
     gap: 8px 10px;
   }
   .area-pill {
-    padding: 10px 6px 12px;
+    padding: 12px 8px;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-radius: 14px;
     text-align: center;
     cursor: pointer;
     transition: all 0.15s ease;
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 64px;
   }
   .area-pill:active { transform: scale(0.97); }
   /* has-detail: kept structurally for sub-text; visual style stays white per spec */
@@ -3071,6 +3072,7 @@
         <div class="upcoming-date">${formatEventDate(e.date)}</div>
         <div class="upcoming-name">${e.name}</div>
         <span class="upcoming-badge">まもなく開催！</span>
+        <div class="upcoming-arrow">›</div>
       `;
       list.appendChild(item);
     });
