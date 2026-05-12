@@ -148,11 +148,11 @@
   /* ============ HERO LOGO ============ */
   .hero {
     text-align: center;
-    padding: 8px 24px 18px;
+    padding: 0 24px 14px;
     position: relative;
   }
   .logo-wrap {
-    margin: 0 auto 4px;
+    margin: 0 auto 0;
     max-width: 280px;
   }
   .logo-wrap img { width: 100%; height: auto; display: block; }
@@ -176,16 +176,16 @@
   }
   .hero-tagline {
     font-family: var(--font-script);
-    font-size: 40px;
+    font-size: 56px;
     font-weight: 700;
     color: var(--color-coral);
-    margin-top: 6px;
-    margin-bottom: 22px;
+    margin-top: 4px;
+    margin-bottom: 18px;
     letter-spacing: 0.01em;
     line-height: 1;
     transform: rotate(-2deg);
     display: inline-block;
-    text-shadow: 2px 2px 0 var(--color-yellow-soft);
+    text-shadow: 3px 3px 0 var(--color-yellow-soft);
   }
 
   /* ============ PRIMARY BUTTON ============ */
@@ -319,10 +319,35 @@
     z-index: -1;
     opacity: 0.85;
   }
+  .find-events-note {
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+    margin: 0 0 14px;
+    padding: 0 4px;
+  }
   .find-events-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .btn-find {
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 24px 12px;
+  }
+  .btn-find-main {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .btn-find-sub {
+    font-size: 10.5px;
+    font-weight: 500;
+    opacity: 0.85;
+    letter-spacing: 0.04em;
+    line-height: 1;
   }
 
   /* ============ SECTIONS ============ */
@@ -353,16 +378,17 @@
     margin: 0 24px 16px;
   }
   .tab {
-    padding: 8px 22px;
+    padding: 8px 14px;
     border: none;
     background: transparent;
     border-radius: var(--radius-pill);
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--color-ink-soft);
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
   .tab.active {
     background: var(--color-coral);
@@ -372,12 +398,21 @@
   .tabs.schedule-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+    gap: 6px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .tabs.schedule-tabs .tab {
+    padding: 8px 6px;
+    font-size: 12.5px;
+    white-space: nowrap;
+    text-align: center;
   }
   .tabs.schedule-tabs .tab-all {
     grid-column: 1 / -1;
     padding-top: 10px;
     padding-bottom: 10px;
+    font-size: 14px;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     color: var(--color-ink);
@@ -1025,8 +1060,8 @@
     aspect-ratio: 16/9;
   }
   .region-map img {
-    max-width: 48%;
-    max-height: 76%;
+    max-width: 68%;
+    max-height: 92%;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -1099,13 +1134,17 @@
     text-align: center;
     cursor: pointer;
     transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .area-pill:active { transform: scale(0.97); }
   /* has-detail: kept structurally for sub-text; visual style stays white per spec */
 
   /* Tab-based region highlight */
   .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
-  .area-pill[data-region]:not(.is-active-region) { opacity: 0.4; }
+  .area-pill.is-region-dim { opacity: 0.4; }
   .area-pill.is-active-region[data-region="tokyo23"] {
     background: var(--color-coral-soft);
     border-color: var(--color-coral);
@@ -1732,6 +1771,32 @@
     background: var(--color-coral);
     border-radius: 50%;
   }
+  .join-rule {
+    margin-top: 14px;
+    padding: 14px 14px 12px;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-coral);
+  }
+  .join-rule:first-of-type { margin-top: 16px; }
+  .join-rule-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin-bottom: 6px;
+  }
+  .join-rule p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--color-ink);
+    line-height: 1.7;
+  }
+  .join-eligibility-note {
+    margin: 16px 0 0;
+    font-size: 11px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
   .join-actions {
     margin: 0 20px;
     display: flex;
@@ -1858,14 +1923,15 @@
 
     <section class="find-events">
       <div class="find-events-title">Find Your Events</div>
+      <p class="find-events-note">自分の総区・区以外のイベントにも参加できます。お気軽にお越しください。</p>
       <div class="find-events-buttons">
-        <button class="btn-primary" onclick="goToPage('page-region')">
-          近くの会場を探す
-          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        <button class="btn-primary btn-find" onclick="goToPage('page-region')">
+          <span class="btn-find-main">近くの会場を探す</span>
+          <span class="btn-find-sub">地域から会場を選ぶ</span>
         </button>
-        <button class="btn-secondary" onclick="goToPage('page-schedule', 'all')">
-          開催一覧
-          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        <button class="btn-secondary btn-find" onclick="goToPage('page-schedule', 'all')">
+          <span class="btn-find-main">開催一覧</span>
+          <span class="btn-find-sub">全エリアの月別スケジュール</span>
         </button>
       </div>
     </section>
@@ -1923,7 +1989,7 @@
 
     <div class="links-header">
       <h1 class="links-title">公式リンク集</h1>
-      <p class="links-subtitle">学び・検索・発信の公式サイトへ<br>アクセスできます。</p>
+      <p class="links-subtitle">会合での共有や、個人での研鑽・<br>気になる話題のチェックにもどうぞ。</p>
     </div>
 
     <div class="link-card coral" onclick="goToPage('page-search')">
@@ -2246,7 +2312,7 @@
 
     <div class="links-header">
       <h1 class="links-title">開催スケジュール</h1>
-      <p class="links-subtitle">東京エリアの月別開催情報</p>
+      <p class="links-subtitle">月別開催情報</p>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
@@ -2576,11 +2642,19 @@
     </div>
 
     <div class="join-eligibility">
-      <p class="join-eligibility-lead">下記に該当する方のみ、こちらからお申し込みください</p>
-      <ul class="join-eligibility-list">
-        <li>区外にお住まいの方</li>
-        <li>非会員の方</li>
-      </ul>
+      <p class="join-eligibility-lead">区外・総区外から参加される方は、下記をご一読ください。</p>
+
+      <div class="join-rule">
+        <div class="join-rule-title">他の総区・区にお住まいの会員の方</div>
+        <p>こちらのフォームからお申し込みいただければご参加いただけます。</p>
+      </div>
+
+      <div class="join-rule">
+        <div class="join-rule-title">非会員の方</div>
+        <p>当日は会員の方と同伴でお越しください。お知り合いの会員に声をかけて、一緒にご参加ください。</p>
+      </div>
+
+      <p class="join-eligibility-note">※ ご自身の区内・総区内で開催されるイベントは、所属組織を通じてのお申し込みとなります。</p>
     </div>
 
     <div class="join-actions">
@@ -2923,10 +2997,19 @@
   });
 
   // Apply region highlighting to schedule pills based on active tab.
-  // 'all' shows every pill highlighted in its own region color.
+  // 'all' shows every pill in its default white state (no tint, no dim).
   function applyScheduleRegionFilter(region) {
     document.querySelectorAll('#page-schedule .area-pill[data-region]').forEach(pill => {
-      pill.classList.toggle('is-active-region', region === 'all' || pill.dataset.region === region);
+      if (region === 'all') {
+        pill.classList.remove('is-active-region');
+        pill.classList.remove('is-region-dim');
+      } else if (pill.dataset.region === region) {
+        pill.classList.add('is-active-region');
+        pill.classList.remove('is-region-dim');
+      } else {
+        pill.classList.remove('is-active-region');
+        pill.classList.add('is-region-dim');
+      }
     });
   }
   // Initial state: ALL (default active tab)
@@ -2961,32 +3044,33 @@
     return s;
   }
 
+  // Show events whose date is within 2 weeks from now (home まもなく開催！ section).
+  const SOON_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
+
   function renderUpcomingHome() {
     const list = document.getElementById('upcoming-list');
     if (!list) return;
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const oneMonth = 30 * 24 * 60 * 60 * 1000;
-    const all = collectScheduleEvents()
-      .filter(e => e.date.getTime() >= todayStart)
+    const upcoming = collectScheduleEvents()
+      .filter(e => {
+        const t = e.date.getTime();
+        return t >= todayStart && (t - now.getTime()) <= SOON_WINDOW_MS;
+      })
       .sort((a, b) => a.date - b.date);
-    const next = all.slice(0, 2);
     list.innerHTML = '';
-    if (next.length === 0) {
-      list.innerHTML = '<div class="upcoming-empty">予定されている開催はありません</div>';
+    if (upcoming.length === 0) {
+      list.innerHTML = '<div class="upcoming-empty">2週間以内の開催予定はありません</div>';
       return;
     }
-    next.forEach(e => {
-      const soon = (e.date.getTime() - now.getTime()) <= oneMonth;
+    upcoming.forEach(e => {
       const item = document.createElement('div');
-      item.className = 'upcoming-item' + (soon ? ' is-soon' : '');
+      item.className = 'upcoming-item is-soon';
       item.addEventListener('click', () => goToPage(e.target));
-      const badge = soon ? '<span class="upcoming-badge">まもなく開催！</span>' : '';
       item.innerHTML = `
         <div class="upcoming-date">${formatEventDate(e.date)}</div>
         <div class="upcoming-name">${e.name}</div>
-        ${badge}
-        <div class="upcoming-arrow">›</div>
+        <span class="upcoming-badge">まもなく開催！</span>
       `;
       list.appendChild(item);
     });
@@ -2994,7 +3078,6 @@
 
   function applySoonHighlight() {
     const now = Date.now();
-    const oneMonth = 30 * 24 * 60 * 60 * 1000;
     document.querySelectorAll('.area-pill[data-event-date]').forEach(pill => {
       const d = new Date(pill.dataset.eventDate);
       if (isNaN(d.getTime())) {
@@ -3002,7 +3085,7 @@
         return;
       }
       const diff = d.getTime() - now;
-      pill.classList.toggle('is-soon', diff >= 0 && diff <= oneMonth);
+      pill.classList.toggle('is-soon', diff >= 0 && diff <= SOON_WINDOW_MS);
     });
   }
 
