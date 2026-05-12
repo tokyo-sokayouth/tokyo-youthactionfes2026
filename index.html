@@ -660,6 +660,10 @@
   .link-card.coral { background: var(--color-coral-soft); }
   .link-card.green { background: var(--color-green-soft); }
   .link-card.purple { background: var(--color-purple-soft); }
+  .link-card.teal { background: var(--color-teal-soft); }
+  .link-card.red { background: #FCE6E7; }
+  .link-card.yellow { background: var(--color-yellow-soft); }
+  a.link-card { display: block; text-decoration: none; color: inherit; }
 
   .link-header {
     display: flex;
@@ -680,6 +684,9 @@
   .link-icon.coral { background: var(--color-coral); }
   .link-icon.green { background: var(--color-green); }
   .link-icon.purple { background: var(--color-purple); }
+  .link-icon.teal { background: var(--color-teal); }
+  .link-icon.red { background: #E0252B; }
+  .link-icon.yellow { background: var(--color-yellow); }
 
   .link-info { flex: 1; padding-top: 4px; }
   .link-name {
@@ -717,6 +724,9 @@
   .link-cta.coral { background: var(--color-coral); }
   .link-cta.green { background: var(--color-green); }
   .link-cta.purple { background: var(--color-purple); }
+  .link-cta.teal { background: var(--color-teal); }
+  .link-cta.red { background: #E0252B; }
+  .link-cta.yellow { background: var(--color-yellow); color: var(--color-ink); }
 
   .about-card {
     margin: 8px 20px 0;
@@ -1993,53 +2003,101 @@
       <p class="links-subtitle">会合での共有や、個人での研鑽・<br>気になる話題のチェックにもどうぞ。</p>
     </div>
 
-    <div class="link-card coral" onclick="goToPage('page-search')">
+    <a href="https://sokadisearch.org/" target="_blank" rel="noopener noreferrer" class="link-card coral">
       <div class="link-header">
         <div class="link-icon coral">
           <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         </div>
         <div class="link-info">
           <div class="link-name">SOKA D.I. SEARCH <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">池田先生の指導を、テーマやキーワードから検索できます。</div>
+          <div class="link-desc">池田先生の指導を、テーマやキーワードから検索できるデータベース。</div>
         </div>
       </div>
-      <a href="https://sokadisearch.org/signup/" target="_blank" rel="noopener noreferrer" class="link-cta coral" onclick="event.stopPropagation();" style="text-decoration:none;">
+      <span class="link-cta coral">
         サイトへ進む
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
+      </span>
+    </a>
 
-    <div class="link-card green" onclick="goToPage('page-campus')">
-      <div class="link-header">
-        <div class="link-icon green">
-          <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        </div>
-        <div class="link-info">
-          <div class="link-name">SEIKYO CAMPUS <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">動画・記事・講座など、学びを深めるコンテンツが充実！</div>
-        </div>
-      </div>
-      <a href="https://www.seikyoonline.com/summarize/seikyo-campus.html" target="_blank" rel="noopener noreferrer" class="link-cta green" onclick="event.stopPropagation();" style="text-decoration:none;">
-        サイトへ進む
-        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
-
-    <div class="link-card purple" onclick="goToPage('page-media')">
+    <a href="https://sokayouth-media.jp" target="_blank" rel="noopener noreferrer" class="link-card purple">
       <div class="link-header">
         <div class="link-icon purple">
           <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </div>
         <div class="link-info">
-          <div class="link-name">soka youth media <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">全国のユースの挑戦・体験・声を記事で発信中！</div>
+          <div class="link-name">Soka Youth Media <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">全国のユースの挑戦・体験・声を記事で発信中。</div>
         </div>
       </div>
-      <a href="https://www.sokayouth-media.jp/" target="_blank" rel="noopener noreferrer" class="link-cta purple" onclick="event.stopPropagation();" style="text-decoration:none;">
+      <span class="link-cta purple">
         サイトへ進む
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
+      </span>
+    </a>
+
+    <a href="https://www.sokaglobal.org/jp/" target="_blank" rel="noopener noreferrer" class="link-card teal">
+      <div class="link-header">
+        <div class="link-icon teal">
+          <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="link-info">
+          <div class="link-name">Soka Gakkai グローバルサイト <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">創価学会の活動・哲学・歴史を世界に向けて発信する公式サイト。</div>
+        </div>
+      </div>
+      <span class="link-cta teal">
+        サイトへ進む
+        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </span>
+    </a>
+
+    <a href="https://sgi-peace.org/" target="_blank" rel="noopener noreferrer" class="link-card green">
+      <div class="link-header">
+        <div class="link-icon green">
+          <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div class="link-info">
+          <div class="link-name">SGIピースサイト <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">SGI Action for Peace — 平和への行動を世界各地から発信。</div>
+        </div>
+      </div>
+      <span class="link-cta green">
+        サイトへ進む
+        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </span>
+    </a>
+
+    <a href="https://www.youtube.com/@soka_日常ちゃんねる" target="_blank" rel="noopener noreferrer" class="link-card red">
+      <div class="link-header">
+        <div class="link-icon red">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <div class="link-info">
+          <div class="link-name">創価学会の日常ちゃんねる <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">学会の日常をのぞける、公式YouTubeチャンネル。</div>
+        </div>
+      </div>
+      <span class="link-cta red">
+        YouTubeを見る
+        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </span>
+    </a>
+
+    <a href="https://www.youtube.com/channel/UC1GsBI4yJhQmW-Zp-NuXDNg" target="_blank" rel="noopener noreferrer" class="link-card red">
+      <div class="link-header">
+        <div class="link-icon red">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <div class="link-info">
+          <div class="link-name">聖教公式YouTube <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">SOKAnetチャンネル — 信仰・人生・社会に光を当てる動画を配信。</div>
+        </div>
+      </div>
+      <span class="link-cta red">
+        YouTubeを見る
+        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </span>
+    </a>
 
     <div class="about-card">
       <span>このサイトについて</span>
