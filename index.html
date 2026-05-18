@@ -1878,6 +1878,39 @@
     color: var(--color-ink-soft);
     line-height: 1.6;
   }
+  .join-self-area {
+    margin: 0 20px 18px;
+    padding: 16px 18px;
+    background: var(--color-green-soft);
+    border-left: 4px solid var(--color-green);
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .join-self-area-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--color-green);
+    color: white;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .join-self-area-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin-bottom: 6px;
+  }
+  .join-self-area p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--color-ink);
+  }
   .join-actions {
     margin: 0 20px;
     display: flex;
@@ -2774,6 +2807,14 @@
       <h1 class="links-title">参加する</h1>
     </div>
 
+    <div class="join-self-area">
+      <div class="join-self-area-icon">✓</div>
+      <div>
+        <div class="join-self-area-title">お住まいの地域で開催される場合</div>
+        <p>事前のお申し込みは不要です。当日、そのまま会場にお越しください。<br>詳しいご案内は、地域や、お声がけいただいた方からお届けします。</p>
+      </div>
+    </div>
+
     <div class="join-eligibility">
       <p class="join-eligibility-lead">区外・総区外から参加される方は、下記をご一読ください。</p>
 
@@ -2978,6 +3019,15 @@
         <div class="qa-body">
           <p>東京におけるユースアクションフェスは、総区または分区単位で開催されます。</p>
           <p>それぞれ実行委員会を立ち上げ、協議を重ねながら、男子部・ヤング白ゆり・学生部・池田華陽会を中心に企画・運営を進めていきます。</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary>自分が住んでいる地域以外にも参加できるの？<span class="chev">›</span></summary>
+        <div class="qa-body">
+          <p>はい、ご参加いただけます。東京では自分の住んでいる地域以外のユースアクションフェスにも参加が可能です。（受け入れ可能な総区のみ）</p>
+          <p>「東京のあちこちで、同じ時代を生きる仲間たちが、それぞれの街で本気のフェスを作っています」——気になる地域や、ご友人がいる地域など、ぜひお気軽に足を運んでみてください。</p>
+          <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。非会員の方は、お知り合いの会員の方とご一緒にご参加ください。</p>
         </div>
       </details>
 
