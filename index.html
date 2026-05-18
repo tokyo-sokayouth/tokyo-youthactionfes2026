@@ -1926,6 +1926,45 @@
   .qa-list {
     margin: 0 20px;
   }
+  .qa-section {
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+  }
+  .qa-section.qa-organizer {
+    margin-top: 28px;
+    padding: 18px 14px 12px;
+    background: rgba(93,194,189,0.05);
+    border-radius: var(--radius-md);
+  }
+  .qa-section-header {
+    margin: 4px 4px 18px;
+    text-align: center;
+  }
+  .qa-section-eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 999px;
+    color: #fff;
+  }
+  .qa-section.qa-visitor .qa-section-eyebrow { background: var(--color-coral); }
+  .qa-section.qa-organizer .qa-section-eyebrow { background: var(--color-teal); }
+  .qa-section-title {
+    margin: 10px 0 4px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .qa-section-desc {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
   .qa-item {
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
@@ -1938,7 +1977,7 @@
     cursor: pointer;
     padding: 16px 18px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     font-size: 14px;
     font-weight: 700;
@@ -1946,21 +1985,28 @@
     line-height: 1.55;
   }
   .qa-item summary::-webkit-details-marker { display: none; }
-  .qa-item summary::before {
-    content: 'Q';
+  .qa-icon {
     flex-shrink: 0;
-    width: 26px; height: 26px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: var(--color-coral);
-    color: white;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 13px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1px;
   }
+  .qa-icon.coral  { background: var(--color-coral);  }
+  .qa-icon.yellow { background: var(--color-yellow); }
+  .qa-icon.green  { background: var(--color-green);  }
+  .qa-icon.teal   { background: var(--color-teal);   }
+  .qa-icon.purple { background: var(--color-purple); }
+  .qa-icon svg {
+    width: 16px; height: 16px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .qa-summary-text { flex: 1; }
   .qa-item summary .chev {
     margin-left: auto;
     color: var(--color-ink-soft);
@@ -1970,7 +2016,7 @@
   .qa-item[open] summary .chev { transform: rotate(180deg); }
 
   .qa-body {
-    padding: 0 18px 18px 56px;
+    padding: 0 18px 18px 62px;
     font-size: 13.5px;
     color: var(--color-ink);
     line-height: 1.85;
@@ -2971,74 +3017,177 @@
     </div>
 
     <div class="qa-list">
-      <details class="qa-item">
-        <summary>ユースアクションフェスの目的は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>創価学会が地域や社会にとっての「公共財」となり、信頼と貢献を広げていくことを目的としています。あわせて、本フェスを人材育成・弘教拡大の決勝点と位置づけています。</p>
-          <p>また、青年部が中心となり、内外の垣根を越えて、地域の友人や未入会のご家族との絆を深めるきっかけづくりを目指します。</p>
-        </div>
-      </details>
 
-      <details class="qa-item">
-        <summary>ユースアクションフェスの内容のイメージは？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>外部会場での開催も含め、誰もがワクワクし、未入会の方やご友人にも参加しやすい内容を目指します。</p>
-          <p>さらに、区長・市長などの外部有力者を招くことで、地域との友好と信頼を広げ、理解促進につなげていきます。</p>
-          <p>加えて、企画・運営には新たな人材を積極的に登用し、広宣流布の主体者の育成を図ります。</p>
+      <!-- ===== Section 1: 来場者の方向け ===== -->
+      <section class="qa-section qa-visitor">
+        <div class="qa-section-header">
+          <span class="qa-section-eyebrow">TO VISITORS</span>
+          <h2 class="qa-section-title">はじめての方へ</h2>
+          <p class="qa-section-desc">楽しみ方や、参加のしかたについて</p>
         </div>
-      </details>
 
-      <details class="qa-item">
-        <summary>社会貢献の意義は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>池田先生の御指導より——</p>
-          <div class="qa-quote">
-            牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
-            <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon coral" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </span>
+            <span class="qa-summary-text">ユースアクションフェスって、どんなイベント？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>東京・山梨のあちこちで、同世代の若者たちが「自分の街を、舞台にしよう」と手作りで開いている、地域のフェスです。</p>
+            <p>音楽・ダンス・トーク・屋台など、内容は街ごとにさまざま。「来てよかった」と思っていただける時間を、出演者もスタッフも一緒になってつくっています。</p>
           </div>
-          <div class="qa-quote">
-            御書には「智者とは世間の法より外に仏法を行ず、世間の治世の法を能く能く心へて候を智者とは申すなり」（一四六六㌻）と仰せである。つまり、社会を大事にして、社会のために貢献し、活躍していくことが仏法であり、その人が「智者」であるというのである。（略）〝私たちが実際に何をなし、どれだけ社会に貢献できるかだ。その行動のなかに、学会の正しさを証明する道がある〟
-            <span class="qa-quote-source">（『新・人間革命』「源流」の章）</span>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon yellow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 14.5 9 22 9.5 16 14.5 17.5 22 12 18 6.5 22 8 14.5 2 9.5 9.5 9"/></svg>
+            </span>
+            <span class="qa-summary-text">当日はどんな雰囲気？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>区民ホールや街なかの会場で開催します。気軽な格好でご来場いただけます。</p>
+            <p>出演やステージ企画は地元の若者が中心。地域にお住まいの方々もたくさん足を運んでくださり、温かい雰囲気のなかで楽しんでいただけます。</p>
           </div>
-        </div>
-      </details>
+        </details>
 
-      <details class="qa-item">
-        <summary>学会の中でフェスを行う意義は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>池田先生の御指導より——</p>
-          <div class="qa-quote">
-            学会の合唱祭や文化祭の重要な意味は、それを通して一人ひとりが信心を磨き、友情を深め、強い確信に立ち、発心の契機にしていくことにこそあります。
-            <span class="qa-quote-source">（『新・人間革命』「正義」の章）</span>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon green" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <span class="qa-summary-text">ひとりでも、友達や家族と一緒でも来ていい？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>もちろん、大歓迎です。ひとりでふらっと立ち寄っても、ご友人やご家族とわいわい来ていただいても、どんな来方でも大丈夫です。</p>
+            <p>はじめましての方も、リピーターの方も、誰もが心地よく過ごせる場所を目指しています。</p>
           </div>
-        </div>
-      </details>
+        </details>
 
-      <details class="qa-item">
-        <summary>本番までどのように進めていくの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>東京におけるユースアクションフェスは、総区または分区単位で開催されます。</p>
-          <p>それぞれ実行委員会を立ち上げ、協議を重ねながら、男子部・ヤング白ゆり・学生部・池田華陽会を中心に企画・運営を進めていきます。</p>
-        </div>
-      </details>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon coral" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span class="qa-summary-text">自分が住んでいる地域以外でも参加できる？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>はい、ご参加いただけます。東京では、自分の住んでいる地域以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
+            <p>気になる地域や、ご友人がいる街など、ぜひお気軽に足を運んでみてください。</p>
+            <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。</p>
+          </div>
+        </details>
 
-      <details class="qa-item">
-        <summary>自分が住んでいる地域以外にも参加できるの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>はい、ご参加いただけます。東京では自分の住んでいる地域以外のユースアクションフェスにも参加が可能です。（受け入れ可能な総区のみ）</p>
-          <p>「東京のあちこちで、同じ時代を生きる仲間たちが、それぞれの街で本気のフェスを作っています」——気になる地域や、ご友人がいる地域など、ぜひお気軽に足を運んでみてください。</p>
-          <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。非会員の方は、お知り合いの会員の方とご一緒にご参加ください。</p>
-        </div>
-      </details>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg>
+            </span>
+            <span class="qa-summary-text">このサイトでできることは？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>お住まいの地域や、気になる街のフェス情報をまとめてご覧いただけます。</p>
+            <p>開催スケジュールや各地域の様子を掲載していますので、参加の際の参考としてご活用ください。</p>
+          </div>
+        </details>
+      </section>
 
-      <details class="qa-item">
-        <summary>このサイトは何に使うの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>東京では、自区以外のユースアクションフェスにも参加することが可能です。（受け入れ可能な総区のみ）</p>
-          <p>友人の住む地域のフェス情報などをこのサイトからご覧いただけますので、参加の際の参考としてご活用ください。</p>
-          <p>また、各地域の取り組みや資料も掲載し、ユースアクションフェスに向けた運動の活性化にも役立てていただくことを目的としています。</p>
+      <!-- ===== Section 2: 運営者・関係者の方向け ===== -->
+      <section class="qa-section qa-organizer">
+        <div class="qa-section-header">
+          <span class="qa-section-eyebrow">TO ORGANIZERS</span>
+          <h2 class="qa-section-title">運営者・関係者の方へ</h2>
+          <p class="qa-section-desc">背景や運営の考え方について</p>
         </div>
-      </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </span>
+            <span class="qa-summary-text">ユースアクションフェスの目的は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>創価学会が地域や社会にとっての「公共財」となり、信頼と貢献を広げていくことを目的としています。あわせて、本フェスを人材育成・弘教拡大の決勝点と位置づけています。</p>
+            <p>また、青年部が中心となり、内外の垣根を越えて、地域の友人や未入会のご家族との絆を深めるきっかけづくりを目指します。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12c1 1 1 2 1 3h6c0-1 0-2 1-3a7 7 0 0 0-4-12z"/></svg>
+            </span>
+            <span class="qa-summary-text">ユースアクションフェスの内容のイメージは？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>外部会場での開催も含め、誰もがワクワクし、未入会の方やご友人にも参加しやすい内容を目指します。</p>
+            <p>さらに、区長・市長などの外部有力者を招くことで、地域との友好と信頼を広げ、理解促進につなげていきます。</p>
+            <p>加えて、企画・運営には新たな人材を積極的に登用し、広宣流布の主体者の育成を図ります。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+            <span class="qa-summary-text">社会貢献の意義は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>池田先生の御指導より——</p>
+            <div class="qa-quote">
+              牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
+              <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
+            </div>
+            <div class="qa-quote">
+              御書には「智者とは世間の法より外に仏法を行ず、世間の治世の法を能く能く心へて候を智者とは申すなり」（一四六六㌻）と仰せである。つまり、社会を大事にして、社会のために貢献し、活躍していくことが仏法であり、その人が「智者」であるというのである。（略）〝私たちが実際に何をなし、どれだけ社会に貢献できるかだ。その行動のなかに、学会の正しさを証明する道がある〟
+              <span class="qa-quote-source">（『新・人間革命』「源流」の章）</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 14.5 9 22 9.5 16 14.5 17.5 22 12 18 6.5 22 8 14.5 2 9.5 9.5 9"/></svg>
+            </span>
+            <span class="qa-summary-text">学会の中でフェスを行う意義は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>池田先生の御指導より——</p>
+            <div class="qa-quote">
+              学会の合唱祭や文化祭の重要な意味は、それを通して一人ひとりが信心を磨き、友情を深め、強い確信に立ち、発心の契機にしていくことにこそあります。
+              <span class="qa-quote-source">（『新・人間革命』「正義」の章）</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span class="qa-summary-text">本番までどのように進めていくの？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>東京におけるユースアクションフェスは、総区または分区単位で開催されます。</p>
+            <p>それぞれ実行委員会を立ち上げ、協議を重ねながら、男子部・ヤング白ゆり・学生部・池田華陽会を中心に企画・運営を進めていきます。</p>
+          </div>
+        </details>
+      </section>
+
     </div>
 
     <div style="height:24px;"></div>
