@@ -688,6 +688,66 @@
     line-height: 1.6;
   }
   .gallery-caption p { margin: 0; }
+  .gallery-coming-soon {
+    margin: 4px 16px 24px;
+    padding: 56px 24px 48px;
+    background: var(--color-card);
+    border: 1.5px dashed var(--color-coral);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-coming-soon::before,
+  .gallery-coming-soon::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.55;
+    z-index: 0;
+  }
+  .gallery-coming-soon::before {
+    width: 110px; height: 110px;
+    background: var(--color-yellow-soft);
+    top: -32px; left: -28px;
+  }
+  .gallery-coming-soon::after {
+    width: 90px; height: 90px;
+    background: var(--color-coral-soft);
+    bottom: -28px; right: -24px;
+  }
+  .coming-soon-eyebrow {
+    position: relative; z-index: 1;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    font-weight: 800;
+    color: #fff;
+    padding: 5px 14px;
+    background: var(--color-coral);
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .coming-soon-title {
+    position: relative; z-index: 1;
+    font-family: var(--font-script);
+    font-size: 54px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1;
+    margin: 0 0 16px;
+    display: inline-block;
+    transform: rotate(-2deg);
+    text-shadow: 3px 3px 0 var(--color-yellow-soft);
+  }
+  .coming-soon-msg {
+    position: relative; z-index: 1;
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.85;
+    margin: 0;
+  }
 
   /* ============ LINKS PAGE ============ */
   .links-header {
@@ -2672,44 +2732,13 @@
     <div class="gallery-header">
       <div class="gallery-eyebrow">Photo Gallery</div>
       <div class="gallery-jp">ギャラリー</div>
-      <p class="gallery-subtitle">街のリアルなフェスティバルの様子をのぞき見してみよう</p>
+      <p class="gallery-subtitle">各地で開催されるフェスの様子を、<br>準備が整い次第こちらでお届けします。</p>
     </div>
 
-    <div class="gallery-grid">
-      <div class="gallery-item gallery-wide">
-        <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&h=500&fit=crop&q=80" alt="盛り上がる観客" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&h=500&fit=crop&q=80" alt="ステージのライト" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&h=500&fit=crop&q=80" alt="マーケットの賑わい" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=500&h=500&fit=crop&q=80" alt="フェスティバル" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500&h=500&fit=crop&q=80" alt="花火と祭り" loading="lazy">
-      </div>
-      <div class="gallery-item gallery-wide">
-        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?w=800&h=500&fit=crop&q=80" alt="ストリートのお祭り" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&h=500&fit=crop&q=80" alt="若者の交流" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=500&h=500&fit=crop&q=80" alt="ダンスパフォーマンス" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=500&fit=crop&q=80" alt="路上ライブ" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&h=500&fit=crop&q=80" alt="フードと屋台" loading="lazy">
-      </div>
-    </div>
-
-    <div class="gallery-caption">
-      <p>※ イメージ画像です。実際の会場の雰囲気は各エリアによって異なります。</p>
+    <div class="gallery-coming-soon">
+      <span class="coming-soon-eyebrow">STAY TUNED</span>
+      <div class="coming-soon-title">Coming Soon</div>
+      <p class="coming-soon-msg">写真は現在準備中です。<br>各地のフェスの様子を、<br>もうしばらくお待ちください。</p>
     </div>
   </div>
 
@@ -2878,7 +2907,7 @@
     </div>
 
     <div class="join-actions">
-      <a class="btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd1PPswXfe1tr64dFr4926BpIfb9CeChc34cT8SPS6dlevXSA/viewform" target="_blank" rel="noopener noreferrer">
+      <a class="btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
         お申し込みフォームを開く
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
@@ -3141,20 +3170,20 @@
             <span class="qa-icon purple" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </span>
-            <span class="qa-summary-text">社会への貢献について、どう考えているの？</span>
+            <span class="qa-summary-text">社会貢献の意義は？</span>
             <span class="chev">›</span>
           </summary>
           <div class="qa-body">
-            <p>私たちが大切にしている考えのひとつに、創立者・池田先生の次のような言葉があります。</p>
-            <div class="qa-quote">
-              牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
-              <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
-            </div>
+            <p>池田先生は次のようにご指導くださっています。</p>
             <div class="qa-quote">
               御書には「智者とは世間の法より外に仏法を行ず、世間の治世の法を能く能く心へて候を智者とは申すなり」（一四六六㌻）と仰せである。つまり、社会を大事にして、社会のために貢献し、活躍していくことが仏法であり、その人が「智者」であるというのである。（略）〝私たちが実際に何をなし、どれだけ社会に貢献できるかだ。その行動のなかに、学会の正しさを証明する道がある〟
               <span class="qa-quote-source">（『新・人間革命』「源流」の章）</span>
             </div>
-            <p>こうした言葉を心にとめながら、目の前の街と人のために、自分たちにできることを重ねていきたいと願っています。</p>
+            <div class="qa-quote">
+              牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
+              <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
+            </div>
+            <p>社会や世界に目を向け、「自分が今いる場所をより良い地域に」との思いで、足元から平和を広げていきましょう。</p>
           </div>
         </details>
 
@@ -3163,16 +3192,16 @@
             <span class="qa-icon teal" aria-hidden="true">
               <svg viewBox="0 0 24 24"><polygon points="12 2 14.5 9 22 9.5 16 14.5 17.5 22 12 18 6.5 22 8 14.5 2 9.5 9.5 9"/></svg>
             </span>
-            <span class="qa-summary-text">私たちがフェスを行う意義は？</span>
+            <span class="qa-summary-text">学会の中でフェスを行う意義は？</span>
             <span class="chev">›</span>
           </summary>
           <div class="qa-body">
-            <p>音楽や舞台を通して人とつながる時間そのものに、大きな意味があると感じています。池田先生も、こうした集いの意義について、次のように語られています。</p>
+            <p>池田先生は次のようにご指導くださっています。</p>
             <div class="qa-quote">
               学会の合唱祭や文化祭の重要な意味は、それを通して一人ひとりが信心を磨き、友情を深め、強い確信に立ち、発心の契機にしていくことにこそあります。
               <span class="qa-quote-source">（『新・人間革命』「正義」の章）</span>
             </div>
-            <p>一人ひとりが自分らしく輝き、友情を深め、新しい一歩を踏み出すきっかけになる——そんな場をつくれたら、と思っています。</p>
+            <p>ユースアクションフェスにむけて、信行学の挑戦を互いに共有し合いながら、1人でも多くのメンバーと共に、信心の歓喜を広げていきたいと思います。</p>
           </div>
         </details>
 
