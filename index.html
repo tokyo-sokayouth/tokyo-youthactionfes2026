@@ -365,6 +365,60 @@
     letter-spacing: 0.02em;
   }
   .about-body p:last-child { margin-bottom: 0; }
+  .about-body p.about-lead {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+  .about-body strong {
+    background: linear-gradient(transparent 60%, rgba(255,193,77,0.55) 60%);
+    padding: 0 2px;
+    font-weight: 700;
+  }
+  .about-can {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.7);
+    border: 1.5px dashed var(--color-coral);
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+  .about-can-title {
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--color-coral);
+    margin-bottom: 10px;
+  }
+  .about-can-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .about-can-list li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+  .about-can-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 2px; top: 0;
+    color: var(--color-coral);
+    font-weight: 800;
+    font-size: 13px;
+  }
+  .about-can-list strong {
+    background: linear-gradient(transparent 60%, rgba(255,193,77,0.55) 60%);
+    padding: 0 2px;
+    font-weight: 700;
+  }
   .find-events-title {
     font-family: var(--font-display);
     font-size: 30px;
@@ -858,6 +912,11 @@
   .link-cta.red { background: #E0252B; }
   .link-cta.yellow { background: var(--color-yellow); color: var(--color-ink); }
 
+  .link-card.link-card-compact {
+    padding: 10px 14px;
+    margin: 4px 20px 14px;
+  }
+  .link-card.link-card-compact .link-header { gap: 10px; }
   .about-card {
     margin: 8px 20px 0;
     background: var(--color-card);
@@ -1153,16 +1212,16 @@
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-lg);
-    cursor: pointer;
     transition: transform 0.15s ease;
   }
-  .region-card:active { transform: scale(0.98); }
   .region-card-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 14px;
+    cursor: pointer;
   }
+  .region-card-title:active { transform: scale(0.98); }
   .region-name {
     font-family: var(--font-display);
     font-size: 22px;
@@ -1184,29 +1243,49 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
   }
-  .region-map {
-    width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: var(--radius-md);
-    background: var(--color-card-alt);
+  .region-cities {
+    margin-top: 12px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-  .region-map svg { width: 100%; height: 100%; }
-  .region-map {
-    aspect-ratio: 16/9;
+  .region-city {
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-ink);
+    background: var(--color-card-alt);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
   }
-  .region-map img {
-    max-width: 42%;
-    max-height: 66%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
+  .region-city:active { transform: scale(0.96); }
+  .region-card.tokyo .region-city:hover,
+  .region-card.tokyo .region-city.is-clickable {
+    border-color: var(--color-coral);
+    color: var(--color-coral);
+    background: var(--color-coral-soft);
   }
+  .region-card.tokyo-2nd .region-city:hover,
+  .region-card.tokyo-2nd .region-city.is-clickable {
+    border-color: var(--color-purple);
+    color: var(--color-purple);
+    background: var(--color-purple-soft);
+  }
+  .region-card.yamanashi .region-city:hover,
+  .region-card.yamanashi .region-city.is-clickable {
+    border-color: var(--color-green);
+    color: var(--color-green);
+    background: var(--color-green-soft);
+  }
+  .region-city.is-pending {
+    color: var(--color-ink-soft);
+    background: transparent;
+    cursor: default;
+    opacity: 0.6;
+  }
+  .region-city.is-pending:hover { background: transparent; color: var(--color-ink-soft); }
   .region-info {
     margin-top: 12px;
     font-size: 12px;
@@ -1283,21 +1362,17 @@
   .area-pill:active { transform: scale(0.97); }
   /* has-detail: kept structurally for sub-text; visual style stays white per spec */
 
-  /* Tab-based region highlight */
-  .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
-  .area-pill.is-region-dim { opacity: 0.4; }
-  .area-pill.is-active-region[data-region="tokyo23"] {
-    background: var(--color-coral-soft);
-    border-color: var(--color-coral);
-  }
-  .area-pill.is-active-region[data-region="tokyo-2nd"] {
-    background: var(--color-purple-soft);
-    border-color: var(--color-purple);
-  }
-  .area-pill.is-active-region[data-region="yamanashi"] {
-    background: var(--color-green-soft);
-    border-color: var(--color-green);
-  }
+  /* Month-based border accent (border only, no fill) */
+  #schedule-month-7  .area-pill { border-color: #FF6B6B; }
+  #schedule-month-8  .area-pill { border-color: #FFA94D; }
+  #schedule-month-9  .area-pill { border-color: #69DB7C; }
+  #schedule-month-10 .area-pill { border-color: #74C0FC; }
+  #schedule-month-11 .area-pill { border-color: #DA77F2; }
+
+  /* Tab-based region highlight: only dim non-matching cards (no fill) */
+  .area-pill { transition: border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
+  .area-pill.is-region-dim { opacity: 0.35; }
+  .area-pill.is-active-region { border-width: 2px; }
   /* Within-1-month soon-coming highlight (wins over region tint) */
   .area-pill.is-soon {
     background: var(--color-yellow-soft) !important;
@@ -1654,9 +1729,17 @@
   }
   .event-no-external strong {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     color: var(--color-coral);
     font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .event-no-external p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--color-ink-soft);
   }
 
   .event-linktree {
@@ -2301,11 +2384,20 @@
       <div class="about-tag">Think globally, Fes locally.</div>
       <div class="about-headline">私の街を、舞台にしよう。</div>
       <div class="about-body">
-        <p>一歩外に出れば、きっと素敵な出会いが待っている。<br>
-        ユースアクションフェスは、そんな"ときめき"を探しに来てほしい、あなたの街のフェスティバルです。</p>
+        <p class="about-lead">一歩外に出れば、きっと素敵な出会いが待っている。<br>
+        ユースアクションフェスは、そんな“ときめき”を探しに来てほしい、<strong>あなたの街のフェスティバル</strong>です。</p>
         <p>友達と来ても、ひとりで来ても。はじめましてでも、久しぶりでも。どんなかたちでも、大歓迎です。</p>
-        <p>東京のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
+        <p>東京・山梨のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
         <p>あなたの街にも、きっと熱い舞台がある。まずは、気軽に来てみてください。</p>
+      </div>
+
+      <div class="about-can">
+        <div class="about-can-title">このサイトでできること</div>
+        <ul class="about-can-list">
+          <li>お住まいの地域や、気になる街のフェス情報を <strong>まとめてチェック</strong></li>
+          <li>各総区の <strong>開催日・会場・雰囲気</strong> を一覧で確認</li>
+          <li>お住まいではない地域のフェスへの <strong>事前申し込み</strong></li>
+        </ul>
       </div>
     </section>
 
@@ -2406,20 +2498,16 @@
       </span>
     </a>
 
-    <a href="https://www.sokaglobal.org/jp/" target="_blank" rel="noopener noreferrer" class="link-card teal">
+    <a href="https://www.sokaglobal.org/jp/" target="_blank" rel="noopener noreferrer" class="link-card teal link-card-compact">
       <div class="link-header">
-        <div class="link-icon teal">
-          <svg class="icon-svg" style="width:24px;height:24px;stroke:white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div class="link-icon teal" style="width:32px;height:32px;flex-shrink:0;">
+          <svg class="icon-svg" style="width:16px;height:16px;stroke:white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="link-info">
-          <div class="link-name">Soka Gakkai グローバルサイト <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">創価学会の活動・哲学・歴史を世界に向けて発信する公式サイト。</div>
+          <div class="link-name" style="font-size:13px;">Soka Gakkai グローバルサイト <span style="font-size:11px;">↗</span></div>
+          <div class="link-desc" style="font-size:11px;">創価学会の公式サイト</div>
         </div>
       </div>
-      <span class="link-cta teal">
-        サイトへ進む
-        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </span>
     </a>
 
     <a href="https://sgi-peace.org/" target="_blank" rel="noopener noreferrer" class="link-card green">
@@ -2470,10 +2558,6 @@
       </span>
     </a>
 
-    <div class="about-card">
-      <span>このサイトについて</span>
-      <span style="color: var(--color-ink-soft);">›</span>
-    </div>
   </div>
 
   <!-- ====================== SEARCH DETAIL ====================== -->
@@ -2690,46 +2774,46 @@
       </span>
     </div>
 
-    <div class="region-card tokyo" onclick="goToPage('page-schedule', 'tokyo23')">
-      <div class="region-card-title">
+    <div class="region-card tokyo">
+      <div class="region-card-title" onclick="goToPage('page-schedule', 'tokyo23')">
         <div>
           <span class="region-name">TOKYO 23</span>
-          <span class="region-name-jp">東京23区</span>
+          <span class="region-name-jp">東京（23区）</span>
         </div>
         <div class="region-arrow">›</div>
       </div>
-      <div class="region-map">
-        <img src="assets/region-tokyo23.png" alt="東京23区" loading="lazy">
+      <div class="region-cities" id="region-cities-tokyo23">
+        <!-- populated by JS -->
       </div>
-      <div class="region-info">23区エリアの開催情報</div>
+      <div class="region-info">区名をタップして該当の開催情報へ</div>
     </div>
 
-    <div class="region-card tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
-      <div class="region-card-title">
+    <div class="region-card tokyo-2nd">
+      <div class="region-card-title" onclick="goToPage('page-schedule', 'tokyo-2nd')">
         <div>
           <span class="region-name">TOKYO TAMA</span>
-          <span class="region-name-jp">東京（多摩地域）</span>
+          <span class="region-name-jp">東京（多摩）</span>
         </div>
         <div class="region-arrow" style="background:var(--color-purple);">›</div>
       </div>
-      <div class="region-map">
-        <img src="assets/region-tokyo2nd.png" alt="東京（多摩地域）" loading="lazy">
+      <div class="region-cities" id="region-cities-tokyo-2nd">
+        <!-- populated by JS -->
       </div>
-      <div class="region-info">多摩エリアの開催情報</div>
+      <div class="region-info">市町村名をタップして該当の開催情報へ</div>
     </div>
 
-    <div class="region-card yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
-      <div class="region-card-title">
+    <div class="region-card yamanashi">
+      <div class="region-card-title" onclick="goToPage('page-schedule', 'yamanashi')">
         <div>
           <span class="region-name">YAMANASHI</span>
           <span class="region-name-jp">山梨</span>
         </div>
         <div class="region-arrow" style="background:var(--color-green);">›</div>
       </div>
-      <div class="region-map">
-        <img src="assets/region-yamanashi.png" alt="山梨" loading="lazy">
+      <div class="region-cities" id="region-cities-yamanashi">
+        <!-- populated by JS -->
       </div>
-      <div class="region-info">県内全エリアの開催情報</div>
+      <div class="region-info">市町村名をタップして該当の開催情報へ</div>
     </div>
   </div>
 
@@ -2747,8 +2831,8 @@
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
       <button class="tab tab-all active" data-schedule-tab="all">ALL</button>
-      <button class="tab" data-schedule-tab="tokyo23">東京23区</button>
-      <button class="tab" data-schedule-tab="tokyo-2nd">東京（多摩地域）</button>
+      <button class="tab" data-schedule-tab="tokyo23">東京（23区）</button>
+      <button class="tab" data-schedule-tab="tokyo-2nd">東京（多摩）</button>
       <button class="tab" data-schedule-tab="yamanashi">山梨</button>
     </div>
 
@@ -3006,8 +3090,10 @@
     </a>
 
     <div class="event-no-external" id="ed-no-external" style="display:none;">
-      <strong>※ こちらのフェスは、他総区からの参加を受け付けておりません</strong>
-      対象地域の方のご参加をお願いいたします。
+      <strong>このフェスは、他地域からの参加を<br>受け付けておりません。</strong>
+      <p>対象地域にお住まいの方は、<br>
+      お声がけいただいた方や所属組織を通じて<br>
+      お申し込みください。</p>
     </div>
 
     <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
@@ -3102,25 +3188,20 @@
     <div class="join-self-area">
       <div class="join-self-area-icon">✓</div>
       <div>
-        <div class="join-self-area-title">お住まいの地域で開催される場合</div>
-        <p>事前のお申し込みは不要です。当日、そのまま会場にお越しください。<br>詳しいご案内は、地域や、お声がけいただいた方からお届けします。</p>
+        <div class="join-self-area-title">お住まいの地域で開催されるフェスへの参加</div>
+        <p>お住まいの地域で開催されるフェスへのお申し込みは、<strong>所属組織を通じて</strong>お申し込みください。<br>詳しいご案内は、地域や、お声がけいただいた方からお届けします。</p>
       </div>
     </div>
 
     <div class="join-eligibility">
-      <p class="join-eligibility-lead">区外・総区外から参加される方は、下記をご一読ください。</p>
+      <p class="join-eligibility-lead">お住まいではない地域のフェスに参加されたい方は、下記フォームよりお申し込みください。</p>
 
       <div class="join-rule">
-        <div class="join-rule-title">他の総区・区にお住まいの会員の方</div>
-        <p>こちらのフォームからお申し込みいただければご参加いただけます。</p>
+        <div class="join-rule-title">お申し込み方法</div>
+        <p>下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえご送信ください。<br>運営チームより、改めてご案内のメールをお届けします。</p>
       </div>
 
-      <div class="join-rule">
-        <div class="join-rule-title">非会員の方</div>
-        <p>当日は会員の方と同伴でお越しください。お知り合いの会員に声をかけて、一緒にご参加ください。</p>
-      </div>
-
-      <p class="join-eligibility-note">※ ご自身の区内・総区内で開催されるイベントは、所属組織を通じてのお申し込みとなります。</p>
+      <p class="join-eligibility-note">※ 会場によっては他地域からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
     </div>
 
     <div class="join-actions">
@@ -3128,7 +3209,7 @@
         お申し込みフォームを開く
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
-      <a class="btn-secondary" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
         お問い合わせはこちら
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </a>
@@ -3268,9 +3349,23 @@
       <section class="qa-section qa-visitor">
         <div class="qa-section-header">
           <span class="qa-section-eyebrow">TO VISITORS</span>
-          <h2 class="qa-section-title">はじめての方へ</h2>
+          <h2 class="qa-section-title">フェスに参加されたい方へ</h2>
           <p class="qa-section-desc">楽しみ方や、参加のしかたについて</p>
         </div>
+
+        <details class="qa-item" open>
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg>
+            </span>
+            <span class="qa-summary-text">このサイトでできることは？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>お住まいの地域や、気になる街のフェス情報をまとめてご覧いただけます。</p>
+            <p>開催スケジュールや各地域の様子を掲載していますので、参加の際の参考としてご活用ください。</p>
+          </div>
+        </details>
 
         <details class="qa-item">
           <summary>
@@ -3329,26 +3424,13 @@
           </div>
         </details>
 
-        <details class="qa-item">
-          <summary>
-            <span class="qa-icon teal" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg>
-            </span>
-            <span class="qa-summary-text">このサイトでできることは？</span>
-            <span class="chev">›</span>
-          </summary>
-          <div class="qa-body">
-            <p>お住まいの地域や、気になる街のフェス情報をまとめてご覧いただけます。</p>
-            <p>開催スケジュールや各地域の様子を掲載していますので、参加の際の参考としてご活用ください。</p>
-          </div>
-        </details>
       </section>
 
-      <!-- ===== Section 2: 関係者の方へ ===== -->
+      <!-- ===== Section 2: もっと詳しく ===== -->
       <section class="qa-section qa-organizer">
         <div class="qa-section-header">
-          <span class="qa-section-eyebrow">FOR MEMBERS &amp; FRIENDS</span>
-          <h2 class="qa-section-title">関係者の方へ</h2>
+          <span class="qa-section-eyebrow">LEARN MORE</span>
+          <h2 class="qa-section-title">もっと詳しく</h2>
           <p class="qa-section-desc">私たちが大切にしている考えについて</p>
         </div>
 
@@ -4054,6 +4136,87 @@
     }
   };
 
+  // ====================== REGION CITIES MAP ======================
+  // city: 市町村名 / eventId: 該当する詳細イベントID (なければ null)
+  const REGION_CITIES = {
+    'tokyo23': [
+      { city: '千代田区', eventId: 'chiyoda' },
+      { city: '中央区',   eventId: 'chuo' },
+      { city: '港区',     eventId: 'minato' },
+      { city: '新宿区',   eventId: 'shinjuku' },
+      { city: '文京区',   eventId: 'bunkyo' },
+      { city: '台東区',   eventId: 'taito' },
+      { city: '墨田区',   eventId: 'sumida' },
+      { city: '江東区',   eventId: 'koto' },
+      { city: '品川区',   eventId: 'shinagawa' },
+      { city: '目黒区',   eventId: 'meguro' },
+      { city: '大田区',   eventId: 'ota' },
+      { city: '世田谷区', eventId: 'setagaya' },
+      { city: '渋谷区',   eventId: 'shibuya' },
+      { city: '中野区',   eventId: 'nakano' },
+      { city: '杉並区',   eventId: 'suginami' },
+      { city: '豊島区',   eventId: 'toshima' },
+      { city: '北区',     eventId: 'kita' },
+      { city: '荒川区',   eventId: 'arakawa' },
+      { city: '板橋区',   eventId: 'itabashi' },
+      { city: '練馬区',   eventId: 'nerima' },
+      { city: '足立区',   eventId: 'adachi' },
+      { city: '葛飾区',   eventId: 'katsushika' },
+      { city: '江戸川区', eventId: 'edogawa' }
+    ],
+    'tokyo-2nd': [
+      { city: '八王子市',     eventId: 'hachioji' },
+      { city: '立川市',       eventId: 'shintachikawa-tachikawa-bunka' },
+      { city: '武蔵野市',     eventId: 'musashino' },
+      { city: '三鷹市',       eventId: 'musashino' },
+      { city: '青梅市',       eventId: 'ikuhou' },
+      { city: '府中市',       eventId: 'fuchu' },
+      { city: '昭島市',       eventId: 'shintachikawa-akishima' },
+      { city: '調布市',       eventId: 'chofu' },
+      { city: '町田市',       eventId: 'machida' },
+      { city: '小金井市',     eventId: 'koganei' },
+      { city: '小平市',       eventId: 'gakuen' },
+      { city: '日野市',       eventId: 'shintachikawa-hino' },
+      { city: '東村山市',     eventId: null },
+      { city: '国分寺市',     eventId: 'koganei' },
+      { city: '国立市',       eventId: 'koganei' },
+      { city: '福生市',       eventId: null },
+      { city: '狛江市',       eventId: 'chofu' },
+      { city: '東大和市',     eventId: 'murayama' },
+      { city: '清瀬市',       eventId: null },
+      { city: '東久留米市',   eventId: null },
+      { city: '武蔵村山市',   eventId: null },
+      { city: '多摩市',       eventId: 'tama-ikeda' },
+      { city: '稲城市',       eventId: null },
+      { city: '羽村市',       eventId: null },
+      { city: 'あきる野市',   eventId: null },
+      { city: '西東京市',     eventId: 'gakuen' },
+      { city: '瑞穂町',       eventId: null },
+      { city: '日の出町',     eventId: null },
+      { city: '檜原村',       eventId: null },
+      { city: '奥多摩町',     eventId: null }
+    ],
+    'yamanashi': [
+      { city: '甲府市', eventId: 'yamanashi' }
+      // TODO: 山梨県の他の市町村を追加（イベントが拡大した際に更新）
+    ]
+  };
+
+  function renderRegionCities() {
+    Object.entries(REGION_CITIES).forEach(([regionKey, list]) => {
+      const wrap = document.getElementById('region-cities-' + regionKey);
+      if (!wrap) return;
+      wrap.innerHTML = list.map(item => {
+        if (item.eventId && REGION_EVENTS[item.eventId]) {
+          return `<button class="region-city is-clickable" type="button"
+            data-event-id="${item.eventId}"
+            onclick="event.stopPropagation(); openEventDetail('${item.eventId}')">${item.city}</button>`;
+        }
+        return `<span class="region-city is-pending" title="開催情報は未定です">${item.city}</span>`;
+      }).join('');
+    });
+  }
+
   // Convert Google Drive image URL to a viewable thumbnail URL
   function driveImageUrl(driveUrl) {
     if (!driveUrl) return null;
@@ -4228,9 +4391,27 @@
     tab.addEventListener('click', () => {
       tab.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      if (tab.dataset.scheduleTab) applyScheduleRegionFilter(tab.dataset.scheduleTab);
+      if (tab.dataset.scheduleTab) {
+        const key = tab.dataset.scheduleTab;
+        applyScheduleRegionFilter(key);
+        // Scroll to the first month section that has a matching pill (like the home month buttons)
+        if (key !== 'all') {
+          requestAnimationFrame(() => {
+            const firstPill = document.querySelector(`#page-schedule .area-pill[data-region="${key}"]`);
+            if (firstPill) {
+              const section = firstPill.closest('.month-section');
+              if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
     });
   });
+
+  // Populate region city tags on initial load
+  renderRegionCities();
 
   // Apply region highlighting to schedule pills based on active tab.
   // 'all' shows every pill in its default white state (no tint, no dim).
