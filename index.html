@@ -1526,6 +1526,164 @@
     font-size: 13px;
     color: var(--color-ink);
     line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  /* ====== EVENT DETAIL: flyer / typography / sessions / extras ====== */
+  .event-flyer-wrap {
+    margin-top: 16px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-card-alt);
+  }
+  .event-flyer-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .event-poster-typo {
+    margin-top: 16px;
+    aspect-ratio: 4/5;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-coral-soft) 0%, var(--color-yellow-soft) 100%);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px 22px;
+  }
+  .event-poster-typo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 18% 85%, rgba(240,206,64,0.4) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(93,194,189,0.32) 0%, transparent 50%);
+    z-index: 0;
+  }
+  .event-poster-watermark {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 78%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .event-poster-typo .event-poster-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+  .event-poster-typo .event-poster-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    font-weight: 800;
+    color: var(--color-coral);
+    margin-bottom: 8px;
+  }
+  .event-poster-typo .event-poster-title-jp {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .event-poster-typo .event-poster-sub-jp {
+    font-family: var(--font-script);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-coral);
+    line-height: 1.1;
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-top: 8px;
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.6);
+  }
+
+  .event-sessions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .event-session {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 10px;
+    background: var(--color-coral-soft);
+    border-radius: var(--radius-sm);
+  }
+  .event-session.single {
+    background: transparent;
+    padding: 0;
+  }
+  .event-session-date {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .event-session-time {
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    font-weight: 500;
+  }
+  .event-session-label {
+    font-size: 10.5px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-coral);
+    margin-bottom: 2px;
+  }
+
+  .event-no-external {
+    margin: 16px 20px 0;
+    padding: 14px 16px;
+    background: var(--color-yellow-soft);
+    border: 1.5px solid var(--color-yellow);
+    border-radius: var(--radius-md);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--color-ink);
+    text-align: center;
+  }
+  .event-no-external strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--color-coral);
+    font-weight: 700;
+  }
+
+  .event-linktree {
+    display: flex;
+    margin: 14px 20px 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 16px;
+    background: var(--color-card);
+    border: 2px solid var(--color-coral);
+    color: var(--color-coral);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 13.5px;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 0 rgba(214,72,57,0.3);
+  }
+  .event-linktree:active { transform: translateY(1px); box-shadow: none; }
+  .event-linktree svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* ============ ARTICLE DETAIL PAGE ============ */
@@ -2602,64 +2760,60 @@
         <span class="month-label">JULY</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-05T13:00" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-04T15:00" data-event-id="ota" onclick="openEventDetail('ota')">
           <div class="area-pill-name">大田総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">調布総区</div>
-          <div class="area-pill-sub">調布市・狛江市</div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="tama-ikeda" onclick="openEventDetail('tama-ikeda')">
+          <div class="area-pill-name">多摩池田総区</div>
+          <div class="area-pill-sub">多摩市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">千代田区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">渋谷総区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">八王子総区</div>
-          <div class="area-pill-sub">八王子市</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">中央区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="gakuen" onclick="openEventDetail('gakuen')">
           <div class="area-pill-name">学園総区</div>
           <div class="area-pill-sub">小平市・西東京市</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-05" data-event-id="chiyoda" onclick="openEventDetail('chiyoda')">
+          <div class="area-pill-name">千代田総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="hachioji" onclick="openEventDetail('hachioji')">
+          <div class="area-pill-name">八王子総区</div>
+          <div class="area-pill-sub">八王子市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-19T10:00" data-event-id="shinjuku" onclick="openEventDetail('shinjuku')">
+          <div class="area-pill-name">新宿総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-20" data-event-id="chofu" onclick="openEventDetail('chofu')">
+          <div class="area-pill-name">調布総区</div>
+          <div class="area-pill-sub">調布市・狛江市</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26T10:00" data-event-id="musashino" onclick="openEventDetail('musashino')">
           <div class="area-pill-name">武蔵野総区</div>
           <div class="area-pill-sub">武蔵野市・三鷹市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-19T13:00" data-event-target="page-event-shinjuku" onclick="goToPage('page-event-shinjuku')">
-          <div class="area-pill-name">新宿総区</div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="ikuhou" onclick="openEventDetail('ikuhou')">
+          <div class="area-pill-name">育鵬総区</div>
+          <div class="area-pill-sub">青梅市</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="fuchu" onclick="openEventDetail('fuchu')">
           <div class="area-pill-name">府中総区</div>
           <div class="area-pill-sub">府中市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-id="shibuya" onclick="openEventDetail('shibuya')">
+          <div class="area-pill-name">渋谷総区</div>
+          <div class="area-pill-sub">7〜10月開催予定</div>
         </div>
       </div>
     </div>
 
-    <!-- 9月 -->
-    <div class="month-section" id="schedule-month-9">
+    <!-- 8月 -->
+    <div class="month-section" id="schedule-month-8">
       <div class="month-header">
-        <span class="month-num">9</span>
+        <span class="month-num">8</span>
         <span class="month-suffix">月開催</span>
-        <span class="month-label">SEPTEMBER</span>
+        <span class="month-label">AUGUST</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">江戸川総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">港区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">小金井総区</div>
-          <div class="area-pill-sub">小金井市・国分寺市・国立市</div>
-        </div>
-        <div class="area-pill" data-region="yamanashi" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">山梨総県</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-08-29" data-event-id="chuo" onclick="openEventDetail('chuo')">
+          <div class="area-pill-name">中央区</div>
         </div>
       </div>
     </div>
@@ -2672,31 +2826,71 @@
         <span class="month-label">OCTOBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">秋川総区</div>
-          <div class="area-pill-sub">福生市・あきる野市・日の出町・檜原村</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="toshima" onclick="openEventDetail('toshima')">
+          <div class="area-pill-name">豊島総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="sumida" onclick="openEventDetail('sumida')">
+          <div class="area-pill-name">墨田総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="minato" onclick="openEventDetail('minato')">
+          <div class="area-pill-name">港総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="arakawa" onclick="openEventDetail('arakawa')">
           <div class="area-pill-name">荒川総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="taito" onclick="openEventDetail('taito')">
+          <div class="area-pill-name">台東総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="shinagawa" onclick="openEventDetail('shinagawa')">
+          <div class="area-pill-name">品川総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="edogawa" onclick="openEventDetail('edogawa')">
+          <div class="area-pill-name">江戸川総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="meguro" onclick="openEventDetail('meguro')">
+          <div class="area-pill-name">目黒国際総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-akishima" onclick="openEventDetail('shintachikawa-akishima')">
+          <div class="area-pill-name">新立川総区</div>
+          <div class="area-pill-sub">昭島会場</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-hino" onclick="openEventDetail('shintachikawa-hino')">
+          <div class="area-pill-name">日野総区</div>
+          <div class="area-pill-sub">日野会場</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-tachikawa-bunka" onclick="openEventDetail('shintachikawa-tachikawa-bunka')">
+          <div class="area-pill-name">立川総区</div>
+          <div class="area-pill-sub">立川文化会館</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-tachikawa-heiwa" onclick="openEventDetail('shintachikawa-tachikawa-heiwa')">
+          <div class="area-pill-name">立川総区</div>
+          <div class="area-pill-sub">立川平和会館</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="suginami" onclick="openEventDetail('suginami')">
+          <div class="area-pill-name">杉並総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="nerima" onclick="openEventDetail('nerima')">
+          <div class="area-pill-name">練馬総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="murayama" onclick="openEventDetail('murayama')">
+          <div class="area-pill-name">村山総区</div>
+          <div class="area-pill-sub">東大和市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="itabashi" onclick="openEventDetail('itabashi')">
+          <div class="area-pill-name">板橋総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="bunkyo" onclick="openEventDetail('bunkyo')">
+          <div class="area-pill-name">文京区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="machida" onclick="openEventDetail('machida')">
           <div class="area-pill-name">町田総区</div>
           <div class="area-pill-sub">町田市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">文京区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-28" data-event-id="kita" onclick="openEventDetail('kita')">
+          <div class="area-pill-name">北総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">目黒総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">台東区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">中野総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">品川総区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-id="adachi" onclick="openEventDetail('adachi')">
+          <div class="area-pill-name">足立総区</div>
         </div>
       </div>
     </div>
@@ -2709,14 +2903,24 @@
         <span class="month-label">NOVEMBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="yamanashi" data-event-date="2026-11-01" data-event-id="yamanashi" onclick="openEventDetail('yamanashi')">
+          <div class="area-pill-name">山梨総県</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="nakano" onclick="openEventDetail('nakano')">
+          <div class="area-pill-name">中野総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-11-08" data-event-id="koganei" onclick="openEventDetail('koganei')">
+          <div class="area-pill-name">小金井総区</div>
+          <div class="area-pill-sub">小金井市・国分寺市・国立市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="katsushika" onclick="openEventDetail('katsushika')">
+          <div class="area-pill-name">葛飾総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="koto" onclick="openEventDetail('koto')">
           <div class="area-pill-name">江東総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-29" data-event-id="setagaya" onclick="openEventDetail('setagaya')">
           <div class="area-pill-name">世田谷総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">葛飾総区</div>
         </div>
       </div>
     </div>
@@ -2742,58 +2946,71 @@
     </div>
   </div>
 
-  <!-- ====================== EVENT DETAIL PAGE ====================== -->
+  <!-- ====================== EVENT DETAIL PAGE (template) ====================== -->
   <div class="page" id="page-event-detail">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-event')">‹</button>
-      <button class="menu-btn"><span></span><span></span><span></span></button>
+      <button class="back-btn" onclick="goToPage('page-schedule')">‹</button>
+      <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
     <div class="event-hero">
-      <div class="event-eyebrow">SHINJUKU AREA</div>
-      <div class="event-name-en">Youth Festa 2026</div>
-      <div class="event-name-jp">ユース・フェスタ 2026</div>
-      <div class="event-poster">
+      <div class="event-eyebrow" id="ed-eyebrow">AREA</div>
+      <div class="event-name-en" id="ed-name-en"></div>
+      <div class="event-name-jp" id="ed-name-jp"></div>
+
+      <!-- Hero: flyer image (when available) -->
+      <div class="event-flyer-wrap" id="ed-hero-flyer-wrap" style="display:none;">
+        <img id="ed-hero-flyer" alt="イベントフライヤー">
+      </div>
+
+      <!-- Hero: logo watermark + typography (fallback) -->
+      <div class="event-poster-typo" id="ed-hero-typo" style="display:none;">
+        <img class="event-poster-watermark" src="assets/logo.png" alt="">
         <div class="event-poster-content">
-          <div class="event-poster-title">YOUTH<br>FESTA</div>
-          <div class="event-poster-sub">MUSIC · DANCE · ART</div>
-          <div class="event-poster-date">2026</div>
+          <div class="event-poster-eyebrow" id="ed-hero-poster-eyebrow"></div>
+          <div class="event-poster-title-jp" id="ed-hero-poster-title"></div>
+          <div class="event-poster-sub-jp" id="ed-hero-poster-sub">Coming Soon</div>
         </div>
       </div>
+    </div>
+
+    <div class="video-wrap" id="ed-video" style="display:none; margin: 0 20px 16px;">
+      <iframe id="ed-video-iframe" src="" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
     </div>
 
     <div class="info-block">
       <div class="info-label">DATE</div>
       <div class="info-value">
-        2026年7月某日(土)
-        <span class="info-value-sub">開場 13:00 / 開演 14:00</span>
+        <div class="event-sessions" id="ed-sessions"></div>
       </div>
     </div>
 
     <div class="info-block">
       <div class="info-label">VENUE</div>
       <div class="info-value">
-        創価学会 新宿文化会館
-        <span class="info-value-sub">新宿区○-○-○</span>
+        <span id="ed-venue"></span>
+        <span class="info-value-sub" id="ed-address"></span>
       </div>
     </div>
 
-    <div class="info-block">
-      <div class="info-label">FORM</div>
-      <div class="info-value" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <span>事前登録が必要です</span>
-        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-join')">登録する</button>
-      </div>
-    </div>
-
-    <div class="event-content">
+    <div class="event-content" id="ed-content-wrap" style="display:none;">
       <div class="event-content-title">EVENT CONTENT</div>
-      <div class="event-content-text">
-        音楽ライブ、ダンスパフォーマンス、アート展示など、ユースの才能が集結する一日限りのスペシャルイベント。仲間と一緒に新しい体験を楽しみましょう。事前登録の上、ぜひ会場にお越しください。
-      </div>
+      <div class="event-content-text" id="ed-description"></div>
     </div>
 
-    <div class="detail-cta coral" style="margin-top:20px;">
+    <a id="ed-linktree" class="event-linktree" target="_blank" rel="noopener noreferrer" style="display:none;">
+      <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <span id="ed-linktree-label">公式リンクを見る</span>
+    </a>
+
+    <div class="event-no-external" id="ed-no-external" style="display:none;">
+      <strong>※ こちらのフェスは、他総区からの参加を受け付けておりません</strong>
+      対象地域の方のご参加をお願いいたします。
+    </div>
+
+    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
       <button onclick="goToPage('page-join')">
         参加を申し込む
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -3296,7 +3513,662 @@
 </div>
 
 <script>
+  // ====================== REGION EVENTS DATA ======================
+  const REGION_EVENTS = {
+    'nakano': {
+      region: 'tokyo23',
+      eyebrow: 'NAKANO AREA',
+      eventNameJp: 'NAKANO ユースアクションフェス',
+      eventNameEn: 'NAKANO Youth Action Fes',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: 'なかのZERO 視聴覚ホール',
+      address: '東京都中野区中野2-9-7',
+      allowExternal: false,
+      flyer: null,
+      youtube: 'https://youtu.be/Qt7TFpDamkg',
+      linktree: null,
+      description: '来賓挨拶や結果発表、ワークショップなどを予定しています。'
+    },
+    'arakawa': {
+      region: 'tokyo23',
+      eyebrow: 'ARAKAWA AREA',
+      eventNameJp: '荒川学線祭「アラフェス」',
+      eventNameEn: 'ARAKAWA Festival',
+      sessions: [{ dateLabel: '2026年10月18日(日)' }],
+      venue: '荒川文化会館',
+      address: '東京都荒川区（〒116-0001）',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=14oHLCv',
+      youtube: null,
+      linktree: 'https://lit.link/arakawafes2026',
+      description: 'すべての青年世代の方々に楽しんでいただける、ステージ企画やブース企画をご用意しています。'
+    },
+    'tama-ikeda': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TAMA-IKEDA AREA',
+      eventNameJp: '2026 YOUTH SUMMER FES',
+      eventNameEn: '2026 Youth Summer Fes',
+      sessions: [{ dateLabel: '2026年7月5日(日)' }],
+      venue: '桜ヶ丘文化会館',
+      address: '東京都多摩市一の宮2-21',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=14zCJjSpl',
+      youtube: null,
+      linktree: null,
+      description: 'トークセッション、アポロ合唱団、ダンス（創価DI CREW）、キッズコーナーなど、夏の一日を多彩に楽しめる企画を用意しています。'
+    },
+    'musashino': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MUSASHINO AREA',
+      eventNameJp: 'むさしのフェスティバル',
+      eventNameEn: 'Musashino Festival',
+      sessions: [{ dateLabel: '2026年7月26日', timeLabel: '10:00〜13:00 / 16:00〜19:00（2回開催）' }],
+      venue: '三鷹平和会館',
+      address: '東京都三鷹市本町6丁目',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '4つのブースに分け、子どもから大人まで楽しめるイベントになっています。'
+    },
+    'koganei': {
+      region: 'tokyo-2nd',
+      eyebrow: 'KOGANEI AREA',
+      eventNameJp: '小金井・国分寺・国立 ユースアクションフェス',
+      eventNameEn: 'Koganei District Youth Fes',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: '小金井文化会館 / 国分寺令和会館 / 国立京葉文化会館（3会場）',
+      address: '東京都小金井市・国分寺市・国立市',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '会館オープンデー。パフォーマンス＆ステージ、出し物や展示などを予定しています。3会場（小金井・国分寺・国立）で同日開催の分区企画です。'
+    },
+    'gakuen': {
+      region: 'tokyo-2nd',
+      eyebrow: 'GAKUEN AREA',
+      eventNameJp: '学園総区 ユースアクションフェス',
+      eventNameEn: 'Gakuen Youth Action Fes',
+      sessions: [{ dateLabel: '2026年7月5日(日)' }],
+      venue: '小平文化会館',
+      address: '東京都小平市上水本町2',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=108JRBV',
+      youtube: null,
+      linktree: null,
+      description: '・ウェルビーイング体験\n・パフォーマンス企画（ものまね歌手など）\n・アート体験\n・防災ワークショップ\n・ヘルスワークショップ\n冒頭にオープニングイベントを開催し、その後は会場全体をフル活用してブース展開します。'
+    },
+    'shintachikawa-akishima': {
+      region: 'tokyo-2nd',
+      eyebrow: 'AKISHIMA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 昭島',
+      eventNameEn: 'Soka Youth Open Day - Akishima',
+      sessions: [{ dateLabel: '2026年10月中旬' }],
+      venue: '昭島文化会館',
+      address: '東京都昭島市昭島町',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '冒頭にオープニングイベントを開催。その後は会場全体をフル活用し、学園祭のような「子ども向け」「ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）」が織りなす企画を予定しています。'
+    },
+    'shintachikawa-hino': {
+      region: 'tokyo-2nd',
+      eyebrow: 'HINO',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 日野',
+      eventNameEn: 'Soka Youth Open Day - Hino',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '日野文化会館',
+      address: '東京都日野市東町1丁目',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '冒頭にオープニングイベントを開催。その後は会場全体をフル活用し、「子ども向け」「ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）」が織りなす企画を予定しています。'
+    },
+    'shintachikawa-tachikawa-bunka': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TACHIKAWA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（文化会館）',
+      eventNameEn: 'Soka Youth Open Day - Tachikawa',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '立川文化会館',
+      address: '東京都立川市柴崎町3',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '冒頭にオープニングイベントを開催。その後は会場全体をフル活用し、学園祭のような企画を予定しています。'
+    },
+    'shintachikawa-tachikawa-heiwa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TACHIKAWA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（平和会館）',
+      eventNameEn: 'Soka Youth Open Day - Tachikawa Heiwa',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '立川平和会館',
+      address: '東京都立川市上砂町3',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '調布平和会館オープンデーを同時開催。10時から17時まで、会館全体を使用し、午前は子育て世帯向けの企画、午後は青年世代向けの企画を予定しています。'
+    },
+    'suginami': {
+      region: 'tokyo23',
+      eyebrow: 'SUGINAMI AREA',
+      eventNameJp: 'Link SUGINAMI 2026 〜ありがとうのカタチ〜',
+      eventNameEn: 'Link SUGINAMI 2026',
+      sessions: [{ dateLabel: '2026年10月25日' }],
+      venue: '杉並文化会館',
+      address: '東京都杉並区阿佐ヶ谷北',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ブース企画と、時間を決めて多彩な企画でメインイベントを盛り上げます。'
+    },
+    'ikuhou': {
+      region: 'tokyo-2nd',
+      eyebrow: 'IKUHOU AREA',
+      eventNameJp: '育鵬総区 YOUTH ACTION FES',
+      eventNameEn: 'Ikuhou Youth Action Fes',
+      sessions: [{ dateLabel: '2026年7月26日(日)' }],
+      venue: '育鵬文化会館',
+      address: '〒198-0032 東京都青梅市',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '誰でも気軽に足を運べるオープンなイベント。町や街の家族や仲間と一緒に、町の文化に触れる、地域の魅力に触れる体験ができる企画などを予定しています。'
+    },
+    'chiyoda': {
+      region: 'tokyo23',
+      eyebrow: 'CHIYODA AREA',
+      eventNameJp: 'プレユースアクションフェス',
+      eventNameEn: 'Pre Youth Action Fes',
+      sessions: [{ dateLabel: '2026年7月5日' }],
+      venue: '千代田文化会館',
+      address: '東京都千代田区',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '会館オープンデー（仮）。フライヤーは作成予定です。'
+    },
+    'yamanashi': {
+      region: 'yamanashi',
+      eyebrow: 'YAMANASHI AREA',
+      eventNameJp: 'ニュー山梨 ユースアクションフェス（仮称）',
+      eventNameEn: 'New Yamanashi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年11月1日' }],
+      venue: '創価学会 山梨文化会館',
+      address: '山梨県甲府市朝気1丁目15-1',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '平和をテーマに、音楽・ワークショップ・シンポジウム・コンサートを楽しめる企画を準備しています。'
+    },
+    'nerima': {
+      region: 'tokyo23',
+      eyebrow: 'NERIMA AREA',
+      eventNameJp: 'つながるフェス2',
+      eventNameEn: 'Tsunagaru Fes 2',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '練馬高松文化会館',
+      address: '東京都練馬区高松5-11-17',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '合唱・ダンス・バンド演奏などのステージ企画をメインに、展示・キッズコーナー・体験ブースなど、地域の家族や友人みんなで楽しめる企画を予定しています。'
+    },
+    'shinjuku': {
+      region: 'tokyo23',
+      eyebrow: 'SHINJUKU AREA',
+      eventNameJp: 'しんじゃくる（仮）',
+      eventNameEn: 'Shinjuku Youth Fes',
+      sessions: [{ dateLabel: '2026年7月19日(日)', timeLabel: '10:00〜13:00' }],
+      venue: '新宿信濃文化会館',
+      address: '東京都新宿区',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '会場全体を使った体験型ブース企画を予定。新宿世代を集めた「つながる」をテーマに、トークセッションなどを通じて参加できる企画もあります。'
+    },
+    'hachioji': {
+      region: 'tokyo-2nd',
+      eyebrow: 'HACHIOJI AREA',
+      eventNameJp: 'Hachioji Peace Fes 〜私の一歩が世界を結ぶ〜',
+      eventNameEn: 'Hachioji Peace Fes',
+      sessions: [{ dateLabel: '2026年7月5日' }],
+      venue: '創価大学 総合体育館',
+      address: '東京都八王子市丹木町1',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '約2700名の参加者を予定。主に、ご友人や未入会家族の皆様にご参加いただく予定です。ダンス、信仰体験を通して、「平和」の重要性を伝えるイベントにしていきます。'
+    },
+    'shibuya': {
+      region: 'tokyo23',
+      eyebrow: 'SHIBUYA AREA',
+      eventNameJp: 'スポフェス（仮）',
+      eventNameEn: 'Shibuya Sports Fes',
+      sessions: [{ dateLabel: '2026年7月〜10月' }],
+      venue: '体育館',
+      address: '東京都渋谷区',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '運動を中心とした体験イベント。詳細決定次第お知らせします。'
+    },
+    'ota': {
+      region: 'tokyo23',
+      eyebrow: 'OTA AREA',
+      eventNameJp: '大田"絆"フェス2026（キズナフェス）',
+      eventNameEn: 'Ota Kizuna Fes 2026',
+      sessions: [{ dateLabel: '2026年7月4日(土)', timeLabel: '15:00〜19:00' }],
+      venue: '大森スポーツセンター',
+      address: '東京都大田区大森本町2-2-5',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'スポーツ総合イベント（トーク・競技メインイベント 15:00〜18:00 / 後夜祭 18:00〜19:00）。'
+    },
+    'machida': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MACHIDA AREA',
+      eventNameJp: '町田ユースフェスタ（仮）',
+      eventNameEn: 'Machida Youth Festa',
+      sessions: [{ dateLabel: '2026年10月25日' }],
+      venue: '町田平和会館',
+      address: '〒194-0037 東京都町田市',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=1OuubevK',
+      youtube: null,
+      linktree: 'https://lit.link/kizunafes2026',
+      description: '会館オープンデーとして、バンド演奏や参加者型企画、対談コーナーを設けます。'
+    },
+    'toshima': {
+      region: 'tokyo23',
+      eyebrow: 'TOSHIMA AREA',
+      eventNameJp: '豊島区 ユースアクションフェス（仮）',
+      eventNameEn: 'Toshima Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月中' }],
+      venue: '東京戸田記念講堂',
+      address: '東京都豊島区東池袋',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内外の友人や家族の皆様と一緒に楽しめるフェスをご用意しています。'
+    },
+    'taito': {
+      region: 'tokyo23',
+      eyebrow: 'TAITO AREA',
+      eventNameJp: 'TAITO YOUTH ACTION FES 下町文化祭',
+      eventNameEn: 'Taito Youth Action Fes',
+      sessions: [
+        { dateLabel: '2026年10月18日(日)' },
+        { dateLabel: '2026年11月29日(日)' }
+      ],
+      venue: '東京上野平和講堂',
+      address: '東京都台東区東上野4-12-1',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=19RUGZl',
+      youtube: null,
+      linktree: null,
+      description: 'エンタメと学びの要素が融合した参加型フェス。台東区の地域性、下町感、従来の枠にとらわれない、新しい台東のフェスを目指します。'
+    },
+    'setagaya': {
+      region: 'tokyo23',
+      eyebrow: 'SETAGAYA AREA',
+      eventNameJp: '世田谷 ユースアクションフェス Re.Freude（リ・フロイデ） 〜わたしたちの新しい歓喜の一歩〜',
+      eventNameEn: 'Setagaya Re.Freude',
+      sessions: [
+        { dateLabel: '2026年11月29日(日)', timeLabel: '第1部 14:00開演 / 第2部 16:00開演（各回約60分）' }
+      ],
+      venue: '世田谷池田記念講堂',
+      address: '〒154-0014 東京都世田谷区新代田5-4-8',
+      allowExternal: false,
+      flyer: 'https://drive.google.com/open?id=1y6u7feXq2QK1n6dz2xfGLVcISKSPL3p',
+      youtube: null,
+      linktree: 'https://setagaya2026.github.io/setagaya-daiku',
+      description: '15年前の世田谷第九合唱の精神を継承し、青年世代600名の「歓喜を共に歌いげる第九」を奏でます。プロセスは公開もOKに対しないし、ご家族・ご友人とまた世田谷の歌を奏でる企画。'
+    },
+    'murayama': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MURAYAMA AREA',
+      eventNameJp: '北多摩つながるフェス',
+      eventNameEn: 'Kita-Tama Tsunagaru Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '東大和文化会館',
+      address: '東京都東大和市桜が丘1-1449-74',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=19_J11OuJuKqYVzybVlMewzGYnWxmpcCxubB',
+      youtube: null,
+      linktree: null,
+      description: 'ブース企画、合唱など、多彩な企画を楽しめる場を準備しています。'
+    },
+    'itabashi': {
+      region: 'tokyo23',
+      eyebrow: 'ITABASHI AREA',
+      eventNameJp: '板橋総区 ユースアクションフェス',
+      eventNameEn: 'Itabashi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月25日' }],
+      venue: '板橋文化会館',
+      address: '東京都板橋区',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ダンスなどを披露するメインイベントと会館オープンデーを開催します。'
+    },
+    'shinagawa': {
+      region: 'tokyo23',
+      eyebrow: 'SHINAGAWA AREA',
+      eventNameJp: 'しなぴリ LINK Fes',
+      eventNameEn: 'Shinagawa LINK Fes',
+      sessions: [{ dateLabel: '2026年10月18日' }],
+      venue: '品川文化会館',
+      address: '東京都品川区上大崎3丁目',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '学園祭のような繋がり、ミニ運動会やステージ、セミナーなどを盛り込んだ参加型イベント。'
+    },
+    'fuchu': {
+      region: 'tokyo-2nd',
+      eyebrow: 'FUCHU AREA',
+      eventNameJp: 'Spark Fes 7.26 〜ここからあなたの一歩を〜',
+      eventNameEn: 'Fuchu Spark Fes',
+      sessions: [{ dateLabel: '2026年7月26日' }],
+      venue: '府中文化会館',
+      address: '東京都府中市',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=1lILZTwGj',
+      youtube: null,
+      linktree: null,
+      description: '「Sparkfes」で、対象を超えて広域に各種アトラクション、企画ブース、展示ブースなど、誰もがどこかで新しい一歩を踏み出せる場を提供するフェスを目指します。'
+    },
+    'sumida': {
+      region: 'tokyo23',
+      eyebrow: 'SUMIDA AREA',
+      eventNameJp: '墨田 ユースアクションフェス（仮）',
+      eventNameEn: 'Sumida Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月中' }],
+      venue: '墨田文化会館（予定）',
+      address: '東京都墨田区太平2-2-2',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '音楽：ドンドンソムム、TOMIさん、山田さん、山田さん、ラップ、DJ、銀河合唱団など。スポーツ：子どもダンス、フラダンスなど。教育：職業体験ブースなど。'
+    },
+    'meguro': {
+      region: 'tokyo23',
+      eyebrow: 'MEGURO AREA',
+      eventNameJp: 'あつまれ 想いの森 メグロ',
+      eventNameEn: 'Atsumare Meguro Forest',
+      sessions: [{ dateLabel: '2026年10月18日' }],
+      venue: '目黒国際文化会館',
+      address: '〒153-0064 目黒区中央町1丁目15-13',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'メインステージでのライブ、スタンプラリー、絵画等の展示、エクササイズ体験、フォト企画、熟成フォとなど、各コンテンツや会館の一部を全スペースに使用していきます。'
+    },
+    'chofu': {
+      region: 'tokyo-2nd',
+      eyebrow: 'CHOFU AREA',
+      eventNameJp: 'SOKA OPEN DAY',
+      eventNameEn: 'Soka Open Day - Chofu',
+      sessions: [{ dateLabel: '2026年7月20日' }],
+      venue: '調布平和会館',
+      address: '東京都調布市西つつじヶ丘',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=152XKuu',
+      youtube: null,
+      linktree: null,
+      description: '調布平和会館オープンデーを初開催。10時から17時まで、会館全体を使用し、午前は子育て世帯向けの企画、午後は青年世代向けの企画。トップ家庭教師（中里和治さん）などのプログラムを予定しています。'
+    },
+    'minato': {
+      region: 'tokyo23',
+      eyebrow: 'MINATO AREA',
+      eventNameJp: '港ユースフェス（仮）',
+      eventNameEn: 'Minato Youth Fes',
+      sessions: [{ dateLabel: '2026年10月' }],
+      venue: '港東文化会館（予定）',
+      address: '東京都港区東神橋3-21-15',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '学会の魅力を改めて感じる、ご家族・ご友人を含めた、幅広い方々に学会の魅力を再発見できる企画を考えています。'
+    },
+    'edogawa': {
+      region: 'tokyo23',
+      eyebrow: 'EDOGAWA AREA',
+      eventNameJp: '江戸川 ユースアクションフェス（仮）',
+      eventNameEn: 'Edogawa Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月18日' }],
+      venue: '東京国際池田記念会館',
+      address: '東京都江戸川区西葛西',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ニューユースアクションフェス、自由な対話を中心に企画していきます。仲間内のメンバーから参加できる楽しいテーマで開催したいと思います。'
+    },
+    'katsushika': {
+      region: 'tokyo23',
+      eyebrow: 'KATSUSHIKA AREA',
+      eventNameJp: '葛飾ユースフェス（仮）',
+      eventNameEn: 'Katsushika Youth Fes',
+      sessions: [{ dateLabel: '2026年11月8日' }],
+      venue: '葛飾平和講堂',
+      address: '東京都葛飾区東四つつき',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内容も検討中。'
+    },
+    'koto': {
+      region: 'tokyo23',
+      eyebrow: 'KOTO AREA',
+      eventNameJp: '江希祭 〜KOTOユース希望文化祭',
+      eventNameEn: 'Koto Hope Fes',
+      sessions: [{ dateLabel: '2026年11月8日' }],
+      venue: '江東文化会館',
+      address: '東京都江東区東陽3-24-1',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'オープニング音楽祭、展示、パネルディスカッションなどを予定しています。'
+    },
+    'chuo': {
+      region: 'tokyo23',
+      eyebrow: 'CHUO AREA',
+      eventNameJp: '中央区 ユースアクションフェス（仮）',
+      eventNameEn: 'Chuo Youth Action Fes',
+      sessions: [{ dateLabel: '2026年8月29日' }],
+      venue: '時事通信ホール',
+      address: '東京都中央区銀座5-15-4',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内容は未定です。'
+    },
+    'adachi': {
+      region: 'tokyo23',
+      eyebrow: 'ADACHI AREA',
+      eventNameJp: '足立 ユースアクションフェス',
+      eventNameEn: 'Adachi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月31日' }],
+      venue: 'ギャラクシティ西新井',
+      address: '〒123-0842 東京都足立区西新井栄町1-18-1',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '展示・合唱・全員参加型イベントを予定しています。'
+    },
+    'bunkyo': {
+      region: 'tokyo23',
+      eyebrow: 'BUNKYO AREA',
+      eventNameJp: '文京区 ユースアクションフェス',
+      eventNameEn: 'Bunkyo Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月25日' }],
+      venue: '未定',
+      address: '東京都文京区',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '平和音楽祭を予定しています。詳細は決定次第お知らせします。'
+    },
+    'kita': {
+      region: 'tokyo23',
+      eyebrow: 'KITA AREA',
+      eventNameJp: '城北フェス',
+      eventNameEn: 'Kita Fes',
+      sessions: [{ dateLabel: '2026年10月後半' }],
+      venue: '城北池田記念講堂',
+      address: '東京都北区東十条6丁目',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '会館を一日開放して、複数のブースを設けます。'
+    }
+  };
+
+  // Convert Google Drive image URL to a viewable thumbnail URL
+  function driveImageUrl(driveUrl) {
+    if (!driveUrl) return null;
+    const m = driveUrl.match(/[?&/]id=([^&]+)|\/d\/([^/]+)/);
+    const id = m ? (m[1] || m[2]) : null;
+    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : null;
+  }
+
+  function extractYouTubeId(url) {
+    if (!url) return '';
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]+)/);
+    return m ? m[1] : '';
+  }
+
+  function openEventDetail(eventId) {
+    const e = REGION_EVENTS[eventId];
+    if (!e) {
+      // fallback: just show the page with placeholder content
+      goToPage('page-event-detail');
+      return;
+    }
+
+    document.getElementById('ed-eyebrow').textContent = e.eyebrow || '';
+    document.getElementById('ed-name-en').textContent = e.eventNameEn || '';
+    document.getElementById('ed-name-jp').textContent = e.eventNameJp || '';
+
+    // Hero
+    const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
+    const flyerImg = document.getElementById('ed-hero-flyer');
+    const typo = document.getElementById('ed-hero-typo');
+    const flyerUrl = driveImageUrl(e.flyer);
+    if (flyerUrl) {
+      flyerImg.onerror = () => {
+        flyerWrap.style.display = 'none';
+        typo.style.display = 'flex';
+      };
+      flyerImg.src = flyerUrl;
+      flyerWrap.style.display = 'block';
+      typo.style.display = 'none';
+    } else {
+      flyerWrap.style.display = 'none';
+      flyerImg.src = '';
+      typo.style.display = 'flex';
+    }
+    document.getElementById('ed-hero-poster-eyebrow').textContent = e.eyebrow || '';
+    document.getElementById('ed-hero-poster-title').textContent = e.eventNameJp || '';
+
+    // YouTube
+    const videoWrap = document.getElementById('ed-video');
+    const videoIframe = document.getElementById('ed-video-iframe');
+    const ytId = extractYouTubeId(e.youtube);
+    if (ytId) {
+      videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+      videoWrap.style.display = 'block';
+    } else {
+      videoIframe.src = '';
+      videoWrap.style.display = 'none';
+    }
+
+    // Sessions
+    const sessionsEl = document.getElementById('ed-sessions');
+    const single = (e.sessions || []).length <= 1;
+    sessionsEl.innerHTML = (e.sessions || []).map((s, i) => {
+      const label = (e.sessions.length > 1) ? `<div class="event-session-label">DAY ${i + 1}</div>` : '';
+      const time = s.timeLabel ? `<span class="event-session-time">${s.timeLabel}</span>` : '';
+      return `<div class="event-session${single ? ' single' : ''}">${label}<span class="event-session-date">${s.dateLabel}</span>${time}</div>`;
+    }).join('');
+
+    // Venue / address
+    document.getElementById('ed-venue').textContent = e.venue || '';
+    document.getElementById('ed-address').textContent = e.address || '';
+
+    // Description
+    const descWrap = document.getElementById('ed-content-wrap');
+    const descEl = document.getElementById('ed-description');
+    if (e.description) {
+      descEl.textContent = e.description;
+      descWrap.style.display = 'block';
+    } else {
+      descWrap.style.display = 'none';
+    }
+
+    // Linktree / external link
+    const lt = document.getElementById('ed-linktree');
+    const ltLabel = document.getElementById('ed-linktree-label');
+    if (e.linktree) {
+      lt.href = e.linktree;
+      const isLitlink = /lit\.link/.test(e.linktree);
+      ltLabel.textContent = isLitlink ? '公式リンク集を見る' : '公式サイトを見る';
+      lt.style.display = 'flex';
+    } else {
+      lt.style.display = 'none';
+      lt.removeAttribute('href');
+    }
+
+    // External participation
+    const cta = document.getElementById('ed-cta');
+    const ngMsg = document.getElementById('ed-no-external');
+    if (e.allowExternal) {
+      cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else {
+      cta.style.display = 'none';
+      ngMsg.style.display = 'block';
+    }
+
+    goToPage('page-event-detail');
+  }
+
   function goToPage(pageId, tabKey, monthAnchor) {
+    // stop any video iframes on the event-detail page when leaving
+    if (pageId !== 'page-event-detail') {
+      const iframe = document.getElementById('ed-video-iframe');
+      if (iframe && iframe.src) iframe.src = '';
+    }
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
