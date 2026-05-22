@@ -177,7 +177,7 @@
   /* ============ HERO LOGO ============ */
   .hero {
     text-align: center;
-    padding: 0 24px 14px;
+    padding: 0 24px 4px;
     position: relative;
   }
   .logo-wrap {
@@ -472,6 +472,11 @@
     opacity: 0.85;
     letter-spacing: 0.04em;
     line-height: 1;
+  }
+  .btn-find.btn-find-solo { padding: 18px 24px; }
+  .btn-find.btn-find-solo .btn-find-main {
+    font-size: 17px;
+    letter-spacing: 0.1em;
   }
 
   /* ============ SECTIONS ============ */
@@ -917,6 +922,11 @@
     margin: 4px 20px 14px;
   }
   .link-card.link-card-compact .link-header { gap: 10px; }
+  .link-card.link-card-medium {
+    padding: 14px 16px;
+    margin: 6px 20px 14px;
+  }
+  .link-card.link-card-medium .link-header { gap: 12px; }
   .about-card {
     margin: 8px 20px 0;
     background: var(--color-card);
@@ -1302,13 +1312,10 @@
     margin: 0 20px 28px;
     scroll-margin-top: 16px;
   }
-  /* Home schedule preview: name spans visually indicate tappability */
+  /* Home schedule preview: area names use coral color without underline */
   .schedule-content .event-name {
     color: var(--color-coral);
     font-weight: 700;
-    text-decoration: underline;
-    text-decoration-color: rgba(242,107,91,0.35);
-    text-underline-offset: 3px;
   }
   .month-header {
     display: flex;
@@ -2375,7 +2382,7 @@
       <!-- Logo -->
       <div class="logo-wrap"><img src="assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
 
-      <div style="margin-top:18px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
+      <div style="margin-top:4px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
       <div class="hero-tagline">Fes Navi</div>
     </div>
 
@@ -2386,16 +2393,15 @@
       <div class="about-body">
         <p class="about-lead">一歩外に出れば、きっと素敵な出会いが待っている。<br>
         ユースアクションフェスは、そんな“ときめき”を探しに来てほしい、<strong>あなたの街のフェスティバル</strong>です。</p>
-        <p>友達と来ても、ひとりで来ても。はじめましてでも、久しぶりでも。どんなかたちでも、大歓迎です。</p>
         <p>東京・山梨のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
-        <p>あなたの街にも、きっと熱い舞台がある。まずは、気軽に来てみてください。</p>
+        <p>あなたの街にも、きっと熱い舞台がある。</p>
       </div>
 
       <div class="about-can">
         <div class="about-can-title">このサイトでできること</div>
         <ul class="about-can-list">
           <li>お住まいの地域や、気になる街のフェス情報を <strong>まとめてチェック</strong></li>
-          <li>各総区の <strong>開催日・会場・雰囲気</strong> を一覧で確認</li>
+          <li>各フェスの <strong>開催日・会場・雰囲気</strong> を一覧で確認</li>
           <li>お住まいではない地域のフェスへの <strong>事前申し込み</strong></li>
         </ul>
       </div>
@@ -2403,15 +2409,13 @@
 
     <section class="find-events">
       <div class="find-events-title">Find Your Events</div>
-      <p class="find-events-note">自分の総区・区以外のイベントにも参加できます。お気軽にお越しください。</p>
+      <p class="find-events-note">お住まいの地域以外のフェスにも参加できます。</p>
       <div class="find-events-buttons">
-        <button class="btn-primary btn-find" onclick="goToPage('page-region')">
+        <button class="btn-primary btn-find btn-find-solo" onclick="goToPage('page-region')">
           <span class="btn-find-main">近くの会場を探す</span>
-          <span class="btn-find-sub">地域から会場を選ぶ</span>
         </button>
-        <button class="btn-secondary btn-find" onclick="goToPage('page-schedule', 'all')">
+        <button class="btn-secondary btn-find btn-find-solo" onclick="goToPage('page-schedule', 'all')">
           <span class="btn-find-main">開催一覧</span>
-          <span class="btn-find-sub">全エリアの月別スケジュール</span>
         </button>
       </div>
     </section>
@@ -2463,7 +2467,7 @@
 
     <div class="links-header">
       <h1 class="links-title">公式リンク集</h1>
-      <p class="links-subtitle">会合での共有や、個人での研鑽・<br>気になる話題のチェックにもどうぞ。</p>
+      <p class="links-subtitle">会合での共有や、個人での研鑽など、<br>気になる話題のチェックにもどうぞ。</p>
     </div>
 
     <a href="https://sokadisearch.org/" target="_blank" rel="noopener noreferrer" class="link-card coral">
@@ -2489,7 +2493,7 @@
         </div>
         <div class="link-info">
           <div class="link-name">Soka Youth Media <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">全国のユースの挑戦・体験・声を記事で発信中。</div>
+          <div class="link-desc">全国の青年世代の挑戦・体験・声を記事で発信中。</div>
         </div>
       </div>
       <span class="link-cta purple">
@@ -2498,14 +2502,14 @@
       </span>
     </a>
 
-    <a href="https://www.sokaglobal.org/jp/" target="_blank" rel="noopener noreferrer" class="link-card teal link-card-compact">
+    <a href="https://www.sokaglobal.org/jp/" target="_blank" rel="noopener noreferrer" class="link-card teal link-card-medium">
       <div class="link-header">
-        <div class="link-icon teal" style="width:32px;height:32px;flex-shrink:0;">
-          <svg class="icon-svg" style="width:16px;height:16px;stroke:white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div class="link-icon teal" style="width:38px;height:38px;flex-shrink:0;">
+          <svg class="icon-svg" style="width:20px;height:20px;stroke:white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="link-info">
-          <div class="link-name" style="font-size:13px;">Soka Gakkai グローバルサイト <span style="font-size:11px;">↗</span></div>
-          <div class="link-desc" style="font-size:11px;">創価学会の公式サイト</div>
+          <div class="link-name" style="font-size:15px;">Soka Gakkai グローバルサイト <span style="font-size:12px;">↗</span></div>
+          <div class="link-desc" style="font-size:12px;">創価学会の活動や思想を世界へ発信する公式サイト。</div>
         </div>
       </div>
     </a>
@@ -2883,7 +2887,6 @@
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-id="shibuya" onclick="openEventDetail('shibuya')">
           <div class="area-pill-name">渋谷総区</div>
-          <div class="area-pill-sub">7〜10月開催予定</div>
         </div>
       </div>
     </div>
@@ -2917,13 +2920,13 @@
           <div class="area-pill-name">墨田総区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="minato" onclick="openEventDetail('minato')">
-          <div class="area-pill-name">港総区</div>
+          <div class="area-pill-name">港区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="arakawa" onclick="openEventDetail('arakawa')">
           <div class="area-pill-name">荒川総区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="taito" onclick="openEventDetail('taito')">
-          <div class="area-pill-name">台東総区</div>
+          <div class="area-pill-name">台東区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="shinagawa" onclick="openEventDetail('shinagawa')">
           <div class="area-pill-name">品川総区</div>
@@ -2932,23 +2935,11 @@
           <div class="area-pill-name">江戸川総区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="meguro" onclick="openEventDetail('meguro')">
-          <div class="area-pill-name">目黒国際総区</div>
+          <div class="area-pill-name">目黒総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-akishima" onclick="openEventDetail('shintachikawa-akishima')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa" onclick="openEventDetail('shintachikawa')">
           <div class="area-pill-name">新立川総区</div>
-          <div class="area-pill-sub">昭島会場</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-hino" onclick="openEventDetail('shintachikawa-hino')">
-          <div class="area-pill-name">日野総区</div>
-          <div class="area-pill-sub">日野会場</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-tachikawa-bunka" onclick="openEventDetail('shintachikawa-tachikawa-bunka')">
-          <div class="area-pill-name">立川総区</div>
-          <div class="area-pill-sub">立川文化会館</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa-tachikawa-heiwa" onclick="openEventDetail('shintachikawa-tachikawa-heiwa')">
-          <div class="area-pill-name">立川総区</div>
-          <div class="area-pill-sub">立川平和会館</div>
+          <div class="area-pill-sub">昭島市・日野市・立川市（4会場）</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="suginami" onclick="openEventDetail('suginami')">
           <div class="area-pill-name">杉並総区</div>
@@ -3683,6 +3674,20 @@
       youtube: null,
       linktree: null,
       description: 'テーマ「アソビバ・マナビバ・学園祭〜ライフスタイルをデザイン〜」。各部屋に設ける楽しい企画や学びの機会を通じ、参加者が自身の価値観や時間の使い方、地域とのつながりといった「ライフスタイル」をデザインし、ウェルビーイング・幸せを広げる取り組みとして開催します。\n\n・ウェルビーイングセミナー\n・パフォーマンス企画（ものまね歌手 他）\n・アート体験\n・防災ワークショップ\n・ヘルスワークショップ 他'
+    },
+    'shintachikawa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'SHIN-TACHIKAWA AREA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026（新立川総区 4会場）',
+      eventNameEn: 'Soka Youth Open Day 2026',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '4会場 同時開催（昭島文化会館 / 日野文化会館 / 立川文化会館 / 立川平和会館）',
+      address: '昭島市・日野市・立川市',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '新立川総区では 4会場で同時開催します。ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催し、その後は各会場全体をフル活用して、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。\n\n◆ 昭島会場：昭島文化会館（東京都昭島市拝島町2-9-20）\n◆ 日野会場：日野文化会館（東京都日野市旭が丘3-6-1）\n◆ 立川会場（文化会館）：立川文化会館（東京都立川市羽衣町3-10-7）\n◆ 立川会場（平和会館）：立川平和会館（東京都立川市上砂町3-12-20）'
     },
     'shintachikawa-akishima': {
       region: 'tokyo-2nd',
