@@ -1386,12 +1386,10 @@
   .area-pill:active { transform: scale(0.97); }
   /* has-detail: kept structurally for sub-text; visual style stays white per spec */
 
-  /* Month-based border accent (border only, no fill) */
-  #schedule-month-7  .area-pill { border-color: #FF6B6B; }
-  #schedule-month-8  .area-pill { border-color: #FFA94D; }
-  #schedule-month-9  .area-pill { border-color: #69DB7C; }
-  #schedule-month-10 .area-pill { border-color: #74C0FC; }
-  #schedule-month-11 .area-pill { border-color: #DA77F2; }
+  /* Region-based border color (always applied, even when ALL is selected) */
+  .area-pill[data-region="tokyo23"]   { border-color: var(--color-coral); }
+  .area-pill[data-region="tokyo-2nd"] { border-color: var(--color-purple); }
+  .area-pill[data-region="yamanashi"] { border-color: var(--color-green); }
 
   /* Tab-based region highlight: soft-color fill for matching cards, dim others */
   .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
@@ -3070,20 +3068,20 @@
     <div class="gallery-header">
       <div class="gallery-eyebrow">Photo Gallery</div>
       <div class="gallery-jp">ギャラリー</div>
-      <p class="gallery-subtitle">各地で開催されるフェスの様子を、<br>準備が整い次第こちらでお届けします。</p>
+      <p class="gallery-subtitle">各地で開催されるフェスの様子を、<br>お届けします！</p>
     </div>
 
     <div class="gallery-coming-soon">
       <div class="gallery-photo-grid" aria-hidden="true">
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-fes1/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-music2/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-crowd3/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-stage4/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-youth5/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-light6/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-dance7/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-people8/400/400')"></div>
-        <div class="gallery-photo" style="background-image:url('https://picsum.photos/seed/yaf-cheer9/400/400')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=400&h=400&fit=crop&auto=format')"></div>
       </div>
       <div class="gallery-overlay">
         <span class="coming-soon-eyebrow">STAY TUNED</span>
@@ -3251,17 +3249,16 @@
     <div class="join-self-area">
       <div class="join-self-area-icon">✓</div>
       <div>
-        <div class="join-self-area-title">お住まいの地域で開催されるフェスへの参加</div>
         <p>お住まいの地域で開催されるフェスへ参加される方は、<strong>こちらのフォームでのお申し込みは不要です。</strong><br>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
       </div>
     </div>
 
     <div class="join-eligibility">
-      <p class="join-eligibility-lead">お住まいではない地域のフェスに参加されたい方は、下記フォームよりお申し込みください。</p>
+      <p class="join-eligibility-lead">お住まいの地域以外のフェスに参加されたい方は、下記フォームよりお申し込みください。</p>
 
       <div class="join-rule">
         <div class="join-rule-title">お申し込み方法</div>
-        <p>下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえご送信ください。<br>運営チームより、改めてご案内のメールをお届けします。</p>
+        <p>下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえご送信ください。</p>
       </div>
 
       <p class="join-eligibility-note">※ 会場によっては他地域からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
