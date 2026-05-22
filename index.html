@@ -1391,6 +1391,158 @@
   .area-pill[data-region="tokyo-2nd"] { border-color: var(--color-purple); }
   .area-pill[data-region="yamanashi"] { border-color: var(--color-green); }
 
+  /* ============ SCHEDULE LIST (ALL view: chronological summary cards) ============ */
+  .schedule-list {
+    margin: 0 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .schedule-list[hidden] { display: none; }
+  .sli {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    padding: 12px 14px 14px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-left-width: 4px;
+    border-radius: var(--radius-md);
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+    width: 100%;
+  }
+  .sli:active { transform: scale(0.985); }
+  .sli[data-region="tokyo23"]   { border-left-color: var(--color-coral); }
+  .sli[data-region="tokyo-2nd"] { border-left-color: var(--color-purple); }
+  .sli[data-region="yamanashi"] { border-left-color: var(--color-green); }
+
+  .sli-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 2px;
+    border-right: 1px dashed var(--color-border);
+    padding-right: 6px;
+  }
+  .sli-date-month {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-soft);
+  }
+  .sli-date-day {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-ink);
+    margin-top: 1px;
+  }
+  .sli-date-dow {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    margin-top: 4px;
+  }
+  .sli-date-approx {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    line-height: 1.2;
+    margin-top: 3px;
+  }
+
+  .sli-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sli-region {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-coral);
+    margin-bottom: 3px;
+  }
+  .sli[data-region="tokyo-2nd"] .sli-region { color: var(--color-purple); }
+  .sli[data-region="yamanashi"] .sli-region { color: var(--color-green); }
+  .sli-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .sli-venue {
+    font-size: 11px;
+    color: var(--color-ink-soft);
+    margin-top: 6px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sli-venue::before {
+    content: '📍';
+    font-size: 10px;
+    margin-right: 3px;
+    opacity: 0.7;
+  }
+  .sli-desc {
+    font-size: 11.5px;
+    color: var(--color-ink);
+    line-height: 1.55;
+    margin: 8px 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .sli-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .sli-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .sli-badge.open {
+    background: var(--color-green-soft);
+    color: #4d6a1d;
+  }
+  .sli-badge.closed {
+    background: var(--color-yellow-soft);
+    color: #8a5a00;
+  }
+  .sli-arrow {
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--color-ink-soft);
+    line-height: 1;
+  }
+
   /* Tab-based region highlight: soft-color fill for matching cards, dim others */
   .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
   .area-pill.is-region-dim { opacity: 0.35; }
@@ -2897,6 +3049,14 @@
       <button class="tab" data-schedule-tab="yamanashi">山梨</button>
     </div>
 
+    <!-- ALL view: chronological summary card list (populated by JS) -->
+    <div class="schedule-list" id="schedule-list" aria-label="開催イベント一覧">
+      <!-- populated by JS from REGION_EVENTS sorted by date -->
+    </div>
+
+    <!-- Region view: per-month area-pill grid (hidden when ALL is selected) -->
+    <div id="schedule-by-month">
+
     <!-- 7月 -->
     <div class="month-section" id="schedule-month-7">
       <div class="month-header">
@@ -3056,6 +3216,7 @@
         </div>
       </div>
     </div>
+    </div><!-- /#schedule-by-month -->
   </div>
 
   <!-- ====================== EVENT LIST PAGE ====================== -->
@@ -4276,6 +4437,86 @@
     });
   }
 
+  // ====================== SCHEDULE LIST (ALL view) ======================
+  // Build chronological summary cards from REGION_EVENTS, mapped via pill date attrs.
+  // Pills carry the canonical date (incl. consolidated cases like 新立川), so we
+  // collect them and then look up event data for each pill.
+  function renderScheduleList() {
+    const wrap = document.getElementById('schedule-list');
+    if (!wrap) return;
+    const items = [];
+    document.querySelectorAll('#schedule-by-month .area-pill[data-event-id]').forEach(pill => {
+      const id = pill.dataset.eventId;
+      const ev = REGION_EVENTS[id];
+      if (!ev) return;
+      items.push({
+        id,
+        date: pill.dataset.eventDate || '',
+        region: pill.dataset.region || '',
+        event: ev
+      });
+    });
+    // Sort by ISO date string (lexicographic works for YYYY-MM-DD[Thh:mm])
+    items.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    const REGION_LABEL = {
+      'tokyo23': '東京（23区）',
+      'tokyo-2nd': '東京（多摩）',
+      'yamanashi': '山梨'
+    };
+    const REGION_EN = {
+      'tokyo23': 'TOKYO 23',
+      'tokyo-2nd': 'TOKYO TAMA',
+      'yamanashi': 'YAMANASHI'
+    };
+    const DOW = ['日','月','火','水','木','金','土'];
+
+    wrap.innerHTML = items.map(({id, date, region, event: ev}) => {
+      // Date block: prefer dateLabel from first session for human-readable display fallback
+      let dateBlock;
+      const isoLike = /^\d{4}-\d{2}-\d{2}/.test(date);
+      if (isoLike) {
+        const d = new Date(date.replace(' ', 'T'));
+        const mo = d.getMonth() + 1;
+        const day = d.getDate();
+        const dow = DOW[d.getDay()];
+        dateBlock = `
+          <span class="sli-date-month">${mo}月</span>
+          <span class="sli-date-day">${day}</span>
+          <span class="sli-date-dow">(${dow})</span>`;
+      } else {
+        const first = (ev.sessions && ev.sessions[0] && ev.sessions[0].dateLabel) || '';
+        dateBlock = `<span class="sli-date-approx">${first || '日程未定'}</span>`;
+      }
+
+      const venue = (ev.venue || '').replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim() || '会場未定';
+      const desc = (ev.description || '').replace(/\n+/g, ' ').slice(0, 80);
+      const allow = ev.allowExternal
+        ? '<span class="sli-badge open">他地域からの参加OK</span>'
+        : '<span class="sli-badge closed">対象地域のみ</span>';
+      const regionLabel = REGION_LABEL[region] || '';
+      const regionEn = REGION_EN[region] || '';
+
+      return `<button class="sli" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
+        <div class="sli-date">${dateBlock}</div>
+        <div class="sli-body">
+          <div class="sli-region">${regionEn}・${regionLabel}</div>
+          <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
+          <div class="sli-venue">${escapeHtml(venue)}</div>
+          <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 80 ? '…' : ''}</p>
+          <div class="sli-meta">
+            ${allow}
+            <span class="sli-arrow">›</span>
+          </div>
+        </div>
+      </button>`;
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
   // Convert Google Drive image URL to a viewable thumbnail URL
   function driveImageUrl(driveUrl) {
     if (!driveUrl) return null;
@@ -4402,7 +4643,7 @@
       document.querySelectorAll('#page-schedule [data-schedule-tab]').forEach(t => {
         t.classList.toggle('active', t.dataset.scheduleTab === tabKey);
       });
-      applyScheduleRegionFilter(tabKey);
+      setScheduleView(tabKey);
     }
 
     // update nav
@@ -4452,25 +4693,37 @@
       tab.classList.add('active');
       if (tab.dataset.scheduleTab) {
         const key = tab.dataset.scheduleTab;
-        applyScheduleRegionFilter(key);
-        // Scroll to the first month section that has a matching pill (like the home month buttons)
-        if (key !== 'all') {
-          requestAnimationFrame(() => {
-            const firstPill = document.querySelector(`#page-schedule .area-pill[data-region="${key}"]`);
-            if (firstPill) {
-              const section = firstPill.closest('.month-section');
-              if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        setScheduleView(key);
       }
     });
   });
 
-  // Populate region city tags on initial load
+  // Switch between ALL (chronological card list) and region (per-month pill grid)
+  function setScheduleView(key) {
+    const list = document.getElementById('schedule-list');
+    const grid = document.getElementById('schedule-by-month');
+    if (key === 'all') {
+      if (list) list.hidden = false;
+      if (grid) grid.hidden = true;
+      applyScheduleRegionFilter('all'); // reset filter classes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (list) list.hidden = true;
+      if (grid) grid.hidden = false;
+      applyScheduleRegionFilter(key);
+      requestAnimationFrame(() => {
+        const firstPill = document.querySelector(`#page-schedule .area-pill[data-region="${key}"]`);
+        if (firstPill) {
+          const section = firstPill.closest('.month-section');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+  }
+
+  // Populate region city tags + chronological schedule list on initial load
   renderRegionCities();
+  renderScheduleList();
 
   // Apply region highlighting to schedule pills based on active tab.
   // 'all' shows every pill in its default white state (no tint, no dim).
@@ -4488,8 +4741,8 @@
       }
     });
   }
-  // Initial state: ALL (default active tab)
-  applyScheduleRegionFilter('all');
+  // Initial state: ALL (default active tab) → show chronological card list
+  setScheduleView('all');
 
   // ----- Upcoming events (home: まもなく開催！) + within-1-month highlighting -----
   function collectScheduleEvents() {
