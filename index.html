@@ -1222,96 +1222,198 @@
     text-align: center;
     padding: 8px 24px 24px;
   }
-  /* Map-based region selector */
-  .region-map-card {
+  /* ===== Illustration-based region selector ===== */
+
+  /* Top: panoramic illustration with overlay pin labels */
+  .region-panorama {
+    position: relative;
     margin: 0 16px 28px;
-    padding: 16px 16px 18px;
-    background: var(--color-card);
-    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    overflow: hidden;
+    background: linear-gradient(180deg, #f4f0e6 0%, #efe8d8 100%);
+    aspect-ratio: 3 / 2;
+    min-height: 200px;
   }
-  .region-map-svg {
-    width: 100%;
-    height: auto;
+  .region-panorama-img {
     display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
-  .map-region {
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    transform-origin: center;
-    transform-box: fill-box;
+  .region-panorama.no-image::before {
+    content: '🗺  illust-panorama.png を assets/ に配置してください';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-ink-soft);
+    font-size: 12px;
+    text-align: center;
+    padding: 16px;
   }
-  .map-region:hover { opacity: 0.85; }
-  .map-region:focus { outline: none; }
-  .map-region:focus-visible path:first-of-type {
-    stroke-width: 3.5;
-    filter: brightness(1.05);
-  }
-  .map-region:active path:first-of-type {
-    transform: scale(0.97);
-    transform-origin: center;
-    transform-box: fill-box;
-  }
-  .map-label-jp {
-    font-family: var(--font-body);
-    font-size: 17px;
-    font-weight: 800;
-    fill: var(--color-ink);
-    pointer-events: none;
-    paint-order: stroke;
-    stroke: #fff;
-    stroke-width: 3;
-    stroke-linejoin: round;
-  }
-  .map-label-en {
-    font-family: var(--font-display);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    fill: var(--color-ink-soft);
-    pointer-events: none;
-    paint-order: stroke;
-    stroke: #fff;
-    stroke-width: 2.5;
-    stroke-linejoin: round;
-  }
-  .region-map-legend {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-  .region-legend-btn {
+  .panorama-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: var(--color-card-alt);
+    gap: 0;
+    padding: 6px 10px 8px;
+    background: #fff;
     border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--color-ink);
+    border-radius: 12px;
     cursor: pointer;
     font-family: inherit;
-    transition: transform 0.12s ease, background 0.15s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+    transition: transform 0.15s ease;
+    line-height: 1.2;
   }
-  .region-legend-btn:active { transform: scale(0.97); }
-  .region-legend-btn[data-region="yamanashi"]:hover { background: var(--color-green-soft); }
-  .region-legend-btn[data-region="tokyo-2nd"]:hover { background: var(--color-purple-soft); }
-  .region-legend-btn[data-region="tokyo23"]:hover { background: var(--color-coral-soft); }
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
+  .panorama-pin::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 8px 6px 0 6px;
+    border-color: #fff transparent transparent transparent;
+    filter: drop-shadow(0 2px 1px rgba(0,0,0,0.1));
   }
-  .region-map-hint {
-    margin: 14px 0 0;
+  .panorama-pin:active { transform: translate(-50%, -100%) scale(0.95); }
+  .pin-jp {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-ink);
+  }
+  .pin-en {
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--color-ink-soft);
+    margin-top: 2px;
+  }
+  .pin-yamanashi { left: 18%; top: 50%; border-color: var(--color-green); }
+  .pin-yamanashi::after { border-top-color: var(--color-green); }
+  .pin-tama      { left: 52%; top: 70%; border-color: var(--color-purple); }
+  .pin-tama::after { border-top-color: var(--color-purple); }
+  .pin-tokyo23   { left: 82%; top: 45%; border-color: var(--color-coral); }
+  .pin-tokyo23::after { border-top-color: var(--color-coral); }
+
+  /* Section title above the 3 cards */
+  .region-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 16px 14px;
+    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+    border-top: 1px dashed var(--color-border);
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  /* Bottom: illustrated cards (per region) */
+  .region-illust-card {
+    display: grid;
+    grid-template-columns: 42% 1fr 28px;
+    align-items: stretch;
+    margin: 0 16px 12px;
+    padding: 0;
+    background: var(--color-card);
+    border: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+    min-height: 110px;
+    width: calc(100% - 32px);
+  }
+  .region-illust-card:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .region-illust-card[data-region="tokyo23"]   { background: var(--color-coral-soft); }
+  .region-illust-card[data-region="tokyo-2nd"] { background: var(--color-purple-soft); }
+  .region-illust-card[data-region="yamanashi"] { background: var(--color-green-soft); }
+
+  .ric-illust {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ric-illust img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .ric-body {
+    padding: 14px 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+  .ric-name-jp {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .region-illust-card[data-region="tokyo23"]   .ric-name-jp { color: var(--color-coral); }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-name-jp { color: var(--color-purple); }
+  .region-illust-card[data-region="yamanashi"] .ric-name-jp { color: #6f8a1f; }
+  .ric-name-en {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-ink-soft);
+    margin-bottom: 6px;
+  }
+  .ric-desc {
     font-size: 11.5px;
-    text-align: center;
+    color: var(--color-ink);
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .ric-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: auto 12px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    align-self: center;
+  }
+  .region-illust-card[data-region="tokyo23"]   .ric-arrow { background: var(--color-coral); }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-arrow { background: var(--color-purple); }
+  .region-illust-card[data-region="yamanashi"] .ric-arrow { background: #8CA528; }
+
+  .region-map-hint-box {
+    margin: 18px 16px 28px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-coral-soft);
+    border-radius: var(--radius-pill);
+    font-size: 11.5px;
     color: var(--color-ink-soft);
     line-height: 1.5;
   }
@@ -3177,82 +3279,69 @@
       </span>
     </div>
 
-    <div class="region-map-card">
-      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" class="region-map-svg" aria-label="開催エリアマップ">
-        <defs>
-          <filter id="region-shadow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-            <feOffset dx="0" dy="2"/>
-            <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
+    <!-- Top: panoramic illustration with tappable label-pins -->
+    <div class="region-panorama">
+      <img class="region-panorama-img" src="assets/illust-panorama.png" alt="東京・山梨エリアマップ"
+           onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+      <button type="button" class="panorama-pin pin-yamanashi" onclick="goToPage('page-schedule', 'yamanashi')" aria-label="山梨エリアを表示">
+        <span class="pin-jp">山梨</span>
+        <span class="pin-en">YAMANASHI</span>
+      </button>
+      <button type="button" class="panorama-pin pin-tama" onclick="goToPage('page-schedule', 'tokyo-2nd')" aria-label="東京多摩エリアを表示">
+        <span class="pin-jp">多摩</span>
+        <span class="pin-en">TOKYO TAMA</span>
+      </button>
+      <button type="button" class="panorama-pin pin-tokyo23" onclick="goToPage('page-schedule', 'tokyo23')" aria-label="東京23区エリアを表示">
+        <span class="pin-jp">東京（23区）</span>
+        <span class="pin-en">TOKYO 23</span>
+      </button>
+    </div>
 
-        <!-- Pacific Ocean hint (very subtle, right bottom) -->
-        <path d="M 395 195 Q 415 210, 410 235 Q 395 240, 388 220 Z" fill="var(--color-teal)" opacity="0.18"/>
+    <h3 class="region-section-title">
+      <svg class="icon-svg" style="width:14px;height:14px;stroke:var(--color-coral);" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      エリアを選んでイベントを探す
+    </h3>
 
-        <!-- 山梨 -->
-        <g class="map-region" data-region="yamanashi" tabindex="0" role="button" aria-label="山梨エリアを表示"
-           onclick="goToPage('page-schedule', 'yamanashi')">
-          <path d="M 30 130 C 25 95, 70 70, 115 78 C 160 88, 178 135, 158 178 C 138 218, 82 222, 50 198 C 18 178, 32 145, 30 130 Z"
-                fill="var(--color-green-soft)" stroke="var(--color-green)" stroke-width="2.5" filter="url(#region-shadow)"/>
-          <!-- Mt Fuji icon -->
-          <path d="M 56 178 L 80 144 L 104 178 Z" fill="#fff" opacity="0.85" stroke="var(--color-green)" stroke-width="1.4"/>
-          <path d="M 70 162 L 80 156 L 90 162 L 100 170 L 60 170 Z" fill="var(--color-green)" opacity="0.25"/>
-          <text x="92" y="120" text-anchor="middle" class="map-label-jp">山梨</text>
-          <text x="92" y="138" text-anchor="middle" class="map-label-en">YAMANASHI</text>
-        </g>
-
-        <!-- 東京（多摩） -->
-        <g class="map-region" data-region="tokyo-2nd" tabindex="0" role="button" aria-label="東京多摩エリアを表示"
-           onclick="goToPage('page-schedule', 'tokyo-2nd')">
-          <path d="M 178 90 C 180 70, 225 65, 258 82 C 290 100, 295 145, 270 168 C 235 188, 196 178, 178 152 C 162 128, 168 100, 178 90 Z"
-                fill="var(--color-purple-soft)" stroke="var(--color-purple)" stroke-width="2.5" filter="url(#region-shadow)"/>
-          <!-- Tree icons -->
-          <g fill="var(--color-purple)" opacity="0.45">
-            <circle cx="200" cy="155" r="3.5"/>
-            <circle cx="262" cy="118" r="3.5"/>
-            <circle cx="248" cy="158" r="3.5"/>
-          </g>
-          <text x="225" y="120" text-anchor="middle" class="map-label-jp">多摩</text>
-          <text x="225" y="138" text-anchor="middle" class="map-label-en">TOKYO TAMA</text>
-        </g>
-
-        <!-- 東京（23区） -->
-        <g class="map-region" data-region="tokyo23" tabindex="0" role="button" aria-label="東京23区エリアを表示"
-           onclick="goToPage('page-schedule', 'tokyo23')">
-          <path d="M 300 100 C 300 82, 342 76, 372 96 C 398 116, 402 152, 380 172 C 350 192, 318 184, 304 158 C 290 132, 290 112, 300 100 Z"
-                fill="var(--color-coral-soft)" stroke="var(--color-coral)" stroke-width="2.5" filter="url(#region-shadow)"/>
-          <!-- Tokyo Tower icon -->
-          <g fill="var(--color-coral)" opacity="0.55">
-            <path d="M 350 122 L 346 142 L 354 142 Z"/>
-            <rect x="348" y="142" width="4" height="14"/>
-            <circle cx="350" cy="120" r="2"/>
-          </g>
-          <text x="350" y="170" text-anchor="middle" class="map-label-jp">23区</text>
-          <text x="350" y="186" text-anchor="middle" class="map-label-en">TOKYO 23</text>
-        </g>
-
-        <!-- compass marker (decorative) -->
-        <g transform="translate(385, 28)" opacity="0.5">
-          <circle r="10" fill="#fff" stroke="var(--color-ink-soft)" stroke-width="1"/>
-          <text y="3" text-anchor="middle" font-size="9" font-weight="700" fill="var(--color-ink-soft)" font-family="var(--font-display)">N</text>
-        </g>
-      </svg>
-
-      <div class="region-map-legend">
-        <button type="button" class="region-legend-btn" data-region="yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
-          <span class="legend-dot" style="background:var(--color-green);"></span>山梨
-        </button>
-        <button type="button" class="region-legend-btn" data-region="tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
-          <span class="legend-dot" style="background:var(--color-purple);"></span>東京（多摩）
-        </button>
-        <button type="button" class="region-legend-btn" data-region="tokyo23" onclick="goToPage('page-schedule', 'tokyo23')">
-          <span class="legend-dot" style="background:var(--color-coral);"></span>東京（23区）
-        </button>
+    <!-- Bottom: 3 illustrated cards (chronological priority: 23区→多摩→山梨 in spec order) -->
+    <button type="button" class="region-illust-card" data-region="tokyo23" onclick="goToPage('page-schedule', 'tokyo23')">
+      <div class="ric-illust">
+        <img src="assets/illust-tokyo23.png" alt="" onerror="this.style.display='none'">
       </div>
+      <div class="ric-body">
+        <div class="ric-name-jp">東京（23区）</div>
+        <div class="ric-name-en">TOKYO 23</div>
+        <div class="ric-desc">都市の魅力が集まるエリアの<br>イベントはこちら！</div>
+      </div>
+      <span class="ric-arrow" aria-hidden="true">›</span>
+    </button>
 
-      <p class="region-map-hint">タップすると、そのエリアの開催情報が表示されます。</p>
+    <button type="button" class="region-illust-card" data-region="tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
+      <div class="ric-illust">
+        <img src="assets/illust-tama.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="ric-body">
+        <div class="ric-name-jp">多摩</div>
+        <div class="ric-name-en">TOKYO TAMA</div>
+        <div class="ric-desc">自然と都市が調和する<br>多摩エリアのイベントはこちら！</div>
+      </div>
+      <span class="ric-arrow" aria-hidden="true">›</span>
+    </button>
+
+    <button type="button" class="region-illust-card" data-region="yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
+      <div class="ric-illust">
+        <img src="assets/illust-yamanashi.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="ric-body">
+        <div class="ric-name-jp">山梨</div>
+        <div class="ric-name-en">YAMANASHI</div>
+        <div class="ric-desc">豊かな自然に囲まれた<br>山梨のイベントはこちら！</div>
+      </div>
+      <span class="ric-arrow" aria-hidden="true">›</span>
+    </button>
+
+    <div class="region-map-hint-box">
+      <svg class="icon-svg" style="width:18px;height:18px;stroke:var(--color-coral);flex-shrink:0;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>気になるエリアをタップすると、<br>そのエリアの開催情報が表示されます。</span>
     </div>
   </div>
 
