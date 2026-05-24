@@ -1404,8 +1404,8 @@
   .schedule-list[hidden] { display: none; }
   .sli {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 12px;
+    grid-template-columns: 54px 1fr 76px;
+    gap: 10px;
     padding: 12px 14px 14px;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
@@ -1544,6 +1544,84 @@
     font-size: 18px;
     color: var(--color-ink-soft);
     line-height: 1;
+  }
+
+  /* Media thumbnail (flyer / YouTube / logo fallback) */
+  .sli-media {
+    width: 76px;
+    aspect-ratio: 3 / 4;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-card-alt);
+    position: relative;
+    align-self: center;
+    flex-shrink: 0;
+  }
+  .sli-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .sli-media.is-logo {
+    background: linear-gradient(135deg, var(--color-yellow-soft) 0%, var(--color-coral-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sli-media.is-logo img {
+    width: 78%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  }
+  .sli-media.is-yt { background: #111; }
+  .sli-media.is-yt img { opacity: 0.85; }
+  .sli-media-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(220, 38, 38, 0.92);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+  .sli-media-play::before {
+    content: '';
+    border-style: solid;
+    border-width: 6px 0 6px 9px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 2px;
+  }
+  .sli-media-yt-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(220, 38, 38, 0.92);
+    color: #fff;
+    font-size: 8.5px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+  }
+  .sli-media-yt-badge::before {
+    content: '';
+    border-style: solid;
+    border-width: 3px 0 3px 4.5px;
+    border-color: transparent transparent transparent #fff;
   }
 
   /* Tab-based region highlight: soft-color fill for matching cards, dim others */
@@ -4493,12 +4571,25 @@
       }
 
       const venue = (ev.venue || '').replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim() || '会場未定';
-      const desc = (ev.description || '').replace(/\n+/g, ' ').slice(0, 80);
+      const desc = (ev.description || '').replace(/\n+/g, ' ').slice(0, 70);
       const allow = ev.allowExternal
         ? '<span class="sli-badge open">他地域からの参加OK</span>'
         : '<span class="sli-badge closed">対象地域のみ</span>';
       const regionLabel = REGION_LABEL[region] || '';
       const regionEn = REGION_EN[region] || '';
+
+      // Media thumbnail: flyer > YouTube thumb > logo placeholder
+      const flyerUrl = driveImageUrl(ev.flyer);
+      const ytId = extractYouTubeId(ev.youtube);
+      let mediaHTML;
+      if (flyerUrl) {
+        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画</span>' : '';
+        mediaHTML = `<div class="sli-media"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
+      } else if (ytId) {
+        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/mqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
+      } else {
+        mediaHTML = `<div class="sli-media is-logo"><img src="assets/logo.png" alt=""></div>`;
+      }
 
       return `<button class="sli" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
         <div class="sli-date">${dateBlock}</div>
@@ -4506,12 +4597,13 @@
           <div class="sli-region">${regionEn}・${regionLabel}</div>
           <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
           <div class="sli-venue">${escapeHtml(venue)}</div>
-          <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 80 ? '…' : ''}</p>
+          <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
           <div class="sli-meta">
             ${allow}
             <span class="sli-arrow">›</span>
           </div>
         </div>
+        ${mediaHTML}
       </button>`;
     }).join('');
   }
