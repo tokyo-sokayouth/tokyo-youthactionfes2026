@@ -1403,10 +1403,9 @@
   }
   .schedule-list[hidden] { display: none; }
   .sli {
-    display: grid;
-    grid-template-columns: 54px 1fr 76px;
-    gap: 10px;
-    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-left-width: 4px;
@@ -1417,6 +1416,13 @@
     font-family: inherit;
     transition: transform 0.12s ease, box-shadow 0.15s ease;
     width: 100%;
+    overflow: hidden;
+  }
+  .sli-content {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 12px;
+    padding: 12px 14px 14px;
   }
   .sli:active { transform: scale(0.985); }
   .sli[data-region="tokyo23"]   { border-left-color: var(--color-coral); }
@@ -1546,16 +1552,15 @@
     line-height: 1;
   }
 
-  /* Media thumbnail (flyer / YouTube / logo fallback) */
+  /* Media banner (flyer / YouTube / logo fallback) — full-width top banner */
   .sli-media {
-    width: 76px;
-    aspect-ratio: 3 / 4;
-    border-radius: 8px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     background: var(--color-card-alt);
     position: relative;
-    align-self: center;
     flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
   }
   .sli-media img {
     width: 100%;
@@ -1563,64 +1568,69 @@
     object-fit: cover;
     display: block;
   }
+  .sli-media.is-flyer img {
+    object-fit: contain;
+    background: #f5ede1;
+  }
   .sli-media.is-logo {
     background: linear-gradient(135deg, var(--color-yellow-soft) 0%, var(--color-coral-soft) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
+    aspect-ratio: 5 / 2;
   }
   .sli-media.is-logo img {
-    width: 78%;
-    height: auto;
+    width: auto;
+    height: 70%;
     object-fit: contain;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.08));
   }
   .sli-media.is-yt { background: #111; }
-  .sli-media.is-yt img { opacity: 0.85; }
+  .sli-media.is-yt img { opacity: 0.92; }
   .sli-media-play {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: rgba(220, 38, 38, 0.92);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
     pointer-events: none;
   }
   .sli-media-play::before {
     content: '';
     border-style: solid;
-    border-width: 6px 0 6px 9px;
+    border-width: 10px 0 10px 15px;
     border-color: transparent transparent transparent #fff;
-    margin-left: 2px;
+    margin-left: 4px;
   }
   .sli-media-yt-badge {
     position: absolute;
-    bottom: 4px;
-    right: 4px;
+    bottom: 8px;
+    right: 8px;
     background: rgba(220, 38, 38, 0.92);
     color: #fff;
-    font-size: 8.5px;
+    font-size: 10px;
     font-weight: 700;
-    padding: 2px 5px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
     line-height: 1.2;
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
   .sli-media-yt-badge::before {
     content: '';
     border-style: solid;
-    border-width: 3px 0 3px 4.5px;
+    border-width: 4px 0 4px 6px;
     border-color: transparent transparent transparent #fff;
   }
 
@@ -2336,6 +2346,12 @@
   }
   .drawer-list button:active { background: var(--color-coral-soft); }
   .drawer-list button .chev { color: var(--color-ink-soft); font-size: 18px; }
+
+  /* YouTube embed used as hero (inside .event-hero box) */
+  .event-video-hero.video-wrap {
+    margin: 16px 0 0;
+    border-color: transparent;
+  }
 
   /* ============ YOUTUBE VIDEO WRAPPER ============ */
   .video-wrap {
@@ -3350,7 +3366,14 @@
         <img id="ed-hero-flyer" alt="イベントフライヤー">
       </div>
 
-      <!-- Hero: logo watermark + typography (fallback) -->
+      <!-- Hero: YouTube embed (when no flyer but video exists) -->
+      <div class="event-video-hero video-wrap" id="ed-video" style="display:none;">
+        <iframe id="ed-video-iframe" src="" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <!-- Hero: logo watermark + typography (fallback when no media) -->
       <div class="event-poster-typo" id="ed-hero-typo" style="display:none;">
         <img class="event-poster-watermark" src="assets/logo.png" alt="">
         <div class="event-poster-content">
@@ -3359,12 +3382,6 @@
           <div class="event-poster-sub-jp" id="ed-hero-poster-sub">Coming Soon</div>
         </div>
       </div>
-    </div>
-
-    <div class="video-wrap" id="ed-video" style="display:none; margin: 0 20px 16px;">
-      <iframe id="ed-video-iframe" src="" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen></iframe>
     </div>
 
     <div class="info-block">
@@ -4578,32 +4595,34 @@
       const regionLabel = REGION_LABEL[region] || '';
       const regionEn = REGION_EN[region] || '';
 
-      // Media thumbnail: flyer > YouTube thumb > logo placeholder
+      // Media banner: flyer > YouTube thumb > logo placeholder
       const flyerUrl = driveImageUrl(ev.flyer);
       const ytId = extractYouTubeId(ev.youtube);
       let mediaHTML;
       if (flyerUrl) {
-        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画</span>' : '';
-        mediaHTML = `<div class="sli-media"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
+        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
+        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.classList.remove('is-flyer');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
       } else if (ytId) {
-        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/mqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
+        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
       } else {
         mediaHTML = `<div class="sli-media is-logo"><img src="assets/logo.png" alt=""></div>`;
       }
 
       return `<button class="sli" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
-        <div class="sli-date">${dateBlock}</div>
-        <div class="sli-body">
-          <div class="sli-region">${regionEn}・${regionLabel}</div>
-          <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
-          <div class="sli-venue">${escapeHtml(venue)}</div>
-          <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
-          <div class="sli-meta">
-            ${allow}
-            <span class="sli-arrow">›</span>
+        ${mediaHTML}
+        <div class="sli-content">
+          <div class="sli-date">${dateBlock}</div>
+          <div class="sli-body">
+            <div class="sli-region">${regionEn}・${regionLabel}</div>
+            <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
+            <div class="sli-venue">${escapeHtml(venue)}</div>
+            <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
+            <div class="sli-meta">
+              ${allow}
+              <span class="sli-arrow">›</span>
+            </div>
           </div>
         </div>
-        ${mediaHTML}
       </button>`;
     }).join('');
   }
@@ -4638,38 +4657,51 @@
     document.getElementById('ed-name-en').textContent = e.eventNameEn || '';
     document.getElementById('ed-name-jp').textContent = e.eventNameJp || '';
 
-    // Hero
+    // Hero & video: priority = flyer > YouTube hero > typography fallback
     const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
     const flyerImg = document.getElementById('ed-hero-flyer');
     const typo = document.getElementById('ed-hero-typo');
+    const videoWrap = document.getElementById('ed-video');
+    const videoIframe = document.getElementById('ed-video-iframe');
     const flyerUrl = driveImageUrl(e.flyer);
+    const ytId = extractYouTubeId(e.youtube);
+
     if (flyerUrl) {
+      // Flyer takes the hero spot. YouTube (if any) shows below.
       flyerImg.onerror = () => {
         flyerWrap.style.display = 'none';
-        typo.style.display = 'flex';
+        if (ytId) {
+          videoWrap.style.display = 'block';
+        } else {
+          typo.style.display = 'flex';
+        }
       };
       flyerImg.src = flyerUrl;
       flyerWrap.style.display = 'block';
       typo.style.display = 'none';
-    } else {
+      if (ytId) {
+        videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+        videoWrap.style.display = 'block';
+      } else {
+        videoIframe.src = '';
+        videoWrap.style.display = 'none';
+      }
+    } else if (ytId) {
+      // No flyer but YouTube: video becomes the hero (no logo typography)
       flyerWrap.style.display = 'none';
-      flyerImg.src = '';
-      typo.style.display = 'flex';
-    }
-    document.getElementById('ed-hero-poster-eyebrow').textContent = e.eyebrow || '';
-    document.getElementById('ed-hero-poster-title').textContent = e.eventNameJp || '';
-
-    // YouTube
-    const videoWrap = document.getElementById('ed-video');
-    const videoIframe = document.getElementById('ed-video-iframe');
-    const ytId = extractYouTubeId(e.youtube);
-    if (ytId) {
+      typo.style.display = 'none';
       videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
       videoWrap.style.display = 'block';
     } else {
+      // No media at all → typography placeholder with logo watermark
+      flyerWrap.style.display = 'none';
+      flyerImg.src = '';
+      typo.style.display = 'flex';
       videoIframe.src = '';
       videoWrap.style.display = 'none';
     }
+    document.getElementById('ed-hero-poster-eyebrow').textContent = e.eyebrow || '';
+    document.getElementById('ed-hero-poster-title').textContent = e.eventNameJp || '';
 
     // Sessions
     const sessionsEl = document.getElementById('ed-sessions');
