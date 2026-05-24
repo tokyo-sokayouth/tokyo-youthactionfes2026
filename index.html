@@ -1222,6 +1222,99 @@
     text-align: center;
     padding: 8px 24px 24px;
   }
+  /* Map-based region selector */
+  .region-map-card {
+    margin: 0 16px 28px;
+    padding: 16px 16px 18px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .region-map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .map-region {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .map-region:hover { opacity: 0.85; }
+  .map-region:focus { outline: none; }
+  .map-region:focus-visible path:first-of-type {
+    stroke-width: 3.5;
+    filter: brightness(1.05);
+  }
+  .map-region:active path:first-of-type {
+    transform: scale(0.97);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .map-label-jp {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 800;
+    fill: var(--color-ink);
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+  .map-label-en {
+    font-family: var(--font-display);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    fill: var(--color-ink-soft);
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+  .region-map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .region-legend-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--color-card-alt);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--color-ink);
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.12s ease, background 0.15s ease;
+  }
+  .region-legend-btn:active { transform: scale(0.97); }
+  .region-legend-btn[data-region="yamanashi"]:hover { background: var(--color-green-soft); }
+  .region-legend-btn[data-region="tokyo-2nd"]:hover { background: var(--color-purple-soft); }
+  .region-legend-btn[data-region="tokyo23"]:hover { background: var(--color-coral-soft); }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .region-map-hint {
+    margin: 14px 0 0;
+    font-size: 11.5px;
+    text-align: center;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+  }
   .region-prompt {
     display: inline-flex;
     align-items: center;
@@ -3080,50 +3173,86 @@
       <h2 class="section-title" style="margin-top:8px;">地域を選ぶ</h2>
       <span class="region-prompt">
         <svg class="icon-svg" style="width:14px;height:14px;stroke:var(--color-coral);" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        行きたい地域をタップ
+        気になるエリアをタップ
       </span>
     </div>
 
-    <div class="region-card tokyo">
-      <div class="region-card-title" onclick="goToPage('page-schedule', 'tokyo23')">
-        <div>
-          <span class="region-name">TOKYO 23</span>
-          <span class="region-name-jp">東京（23区）</span>
-        </div>
-        <div class="region-arrow">›</div>
-      </div>
-      <div class="region-cities" id="region-cities-tokyo23">
-        <!-- populated by JS -->
-      </div>
-      <div class="region-info">区名をタップして該当の開催情報へ</div>
-    </div>
+    <div class="region-map-card">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" class="region-map-svg" aria-label="開催エリアマップ">
+        <defs>
+          <filter id="region-shadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+            <feOffset dx="0" dy="2"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
 
-    <div class="region-card tokyo-2nd">
-      <div class="region-card-title" onclick="goToPage('page-schedule', 'tokyo-2nd')">
-        <div>
-          <span class="region-name">TOKYO TAMA</span>
-          <span class="region-name-jp">東京（多摩）</span>
-        </div>
-        <div class="region-arrow" style="background:var(--color-purple);">›</div>
-      </div>
-      <div class="region-cities" id="region-cities-tokyo-2nd">
-        <!-- populated by JS -->
-      </div>
-      <div class="region-info">市町村名をタップして該当の開催情報へ</div>
-    </div>
+        <!-- Pacific Ocean hint (very subtle, right bottom) -->
+        <path d="M 395 195 Q 415 210, 410 235 Q 395 240, 388 220 Z" fill="var(--color-teal)" opacity="0.18"/>
 
-    <div class="region-card yamanashi">
-      <div class="region-card-title" onclick="goToPage('page-schedule', 'yamanashi')">
-        <div>
-          <span class="region-name">YAMANASHI</span>
-          <span class="region-name-jp">山梨</span>
-        </div>
-        <div class="region-arrow" style="background:var(--color-green);">›</div>
+        <!-- 山梨 -->
+        <g class="map-region" data-region="yamanashi" tabindex="0" role="button" aria-label="山梨エリアを表示"
+           onclick="goToPage('page-schedule', 'yamanashi')">
+          <path d="M 30 130 C 25 95, 70 70, 115 78 C 160 88, 178 135, 158 178 C 138 218, 82 222, 50 198 C 18 178, 32 145, 30 130 Z"
+                fill="var(--color-green-soft)" stroke="var(--color-green)" stroke-width="2.5" filter="url(#region-shadow)"/>
+          <!-- Mt Fuji icon -->
+          <path d="M 56 178 L 80 144 L 104 178 Z" fill="#fff" opacity="0.85" stroke="var(--color-green)" stroke-width="1.4"/>
+          <path d="M 70 162 L 80 156 L 90 162 L 100 170 L 60 170 Z" fill="var(--color-green)" opacity="0.25"/>
+          <text x="92" y="120" text-anchor="middle" class="map-label-jp">山梨</text>
+          <text x="92" y="138" text-anchor="middle" class="map-label-en">YAMANASHI</text>
+        </g>
+
+        <!-- 東京（多摩） -->
+        <g class="map-region" data-region="tokyo-2nd" tabindex="0" role="button" aria-label="東京多摩エリアを表示"
+           onclick="goToPage('page-schedule', 'tokyo-2nd')">
+          <path d="M 178 90 C 180 70, 225 65, 258 82 C 290 100, 295 145, 270 168 C 235 188, 196 178, 178 152 C 162 128, 168 100, 178 90 Z"
+                fill="var(--color-purple-soft)" stroke="var(--color-purple)" stroke-width="2.5" filter="url(#region-shadow)"/>
+          <!-- Tree icons -->
+          <g fill="var(--color-purple)" opacity="0.45">
+            <circle cx="200" cy="155" r="3.5"/>
+            <circle cx="262" cy="118" r="3.5"/>
+            <circle cx="248" cy="158" r="3.5"/>
+          </g>
+          <text x="225" y="120" text-anchor="middle" class="map-label-jp">多摩</text>
+          <text x="225" y="138" text-anchor="middle" class="map-label-en">TOKYO TAMA</text>
+        </g>
+
+        <!-- 東京（23区） -->
+        <g class="map-region" data-region="tokyo23" tabindex="0" role="button" aria-label="東京23区エリアを表示"
+           onclick="goToPage('page-schedule', 'tokyo23')">
+          <path d="M 300 100 C 300 82, 342 76, 372 96 C 398 116, 402 152, 380 172 C 350 192, 318 184, 304 158 C 290 132, 290 112, 300 100 Z"
+                fill="var(--color-coral-soft)" stroke="var(--color-coral)" stroke-width="2.5" filter="url(#region-shadow)"/>
+          <!-- Tokyo Tower icon -->
+          <g fill="var(--color-coral)" opacity="0.55">
+            <path d="M 350 122 L 346 142 L 354 142 Z"/>
+            <rect x="348" y="142" width="4" height="14"/>
+            <circle cx="350" cy="120" r="2"/>
+          </g>
+          <text x="350" y="170" text-anchor="middle" class="map-label-jp">23区</text>
+          <text x="350" y="186" text-anchor="middle" class="map-label-en">TOKYO 23</text>
+        </g>
+
+        <!-- compass marker (decorative) -->
+        <g transform="translate(385, 28)" opacity="0.5">
+          <circle r="10" fill="#fff" stroke="var(--color-ink-soft)" stroke-width="1"/>
+          <text y="3" text-anchor="middle" font-size="9" font-weight="700" fill="var(--color-ink-soft)" font-family="var(--font-display)">N</text>
+        </g>
+      </svg>
+
+      <div class="region-map-legend">
+        <button type="button" class="region-legend-btn" data-region="yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
+          <span class="legend-dot" style="background:var(--color-green);"></span>山梨
+        </button>
+        <button type="button" class="region-legend-btn" data-region="tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
+          <span class="legend-dot" style="background:var(--color-purple);"></span>東京（多摩）
+        </button>
+        <button type="button" class="region-legend-btn" data-region="tokyo23" onclick="goToPage('page-schedule', 'tokyo23')">
+          <span class="legend-dot" style="background:var(--color-coral);"></span>東京（23区）
+        </button>
       </div>
-      <div class="region-cities" id="region-cities-yamanashi">
-        <!-- populated by JS -->
-      </div>
-      <div class="region-info">市町村名をタップして該当の開催情報へ</div>
+
+      <p class="region-map-hint">タップすると、そのエリアの開催情報が表示されます。</p>
     </div>
   </div>
 
