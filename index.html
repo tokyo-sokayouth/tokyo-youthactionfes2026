@@ -4922,9 +4922,9 @@
       let mediaHTML;
       if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
-        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="this.onerror=null;this.parentNode.classList.remove('is-flyer','is-fitted');this.parentNode.style.aspectRatio='';this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
+        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
       } else if (ytId) {
-        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
+        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="posterFallback(this, '${id}')"><span class="sli-media-play" aria-hidden="true"></span></div>`;
       } else {
         const eyebrow = ev.eyebrow ? `<span class="sli-poster-eyebrow">${escapeHtml(ev.eyebrow)}</span>` : '';
         mediaHTML = `<div class="sli-media is-poster">
@@ -4954,6 +4954,20 @@
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // When a flyer/YouTube thumbnail fails to load, fall back to the watermark
+  // poster (faint logo + area name + event name), matching the no-media style.
+  function posterFallback(img, id) {
+    const m = img.closest('.sli-media');
+    if (!m) return;
+    const ev = REGION_EVENTS[id] || {};
+    m.classList.remove('is-flyer', 'is-fitted', 'is-yt');
+    m.style.aspectRatio = '';
+    m.classList.add('is-poster');
+    const eyebrow = ev.eyebrow ? `<span class="sli-poster-eyebrow">${escapeHtml(ev.eyebrow)}</span>` : '';
+    const title = `<span class="sli-poster-title">${escapeHtml(ev.eventNameJp || '')}</span>`;
+    m.innerHTML = `<img class="sli-poster-logo" src="assets/logo.png" alt="" aria-hidden="true"><div class="sli-poster-content">${eyebrow}${title}</div>`;
   }
 
   // Fit the ALL-list flyer banner to the image's own aspect ratio so portrait
