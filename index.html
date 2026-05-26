@@ -1224,21 +1224,20 @@
   }
   /* ===== Illustration-based region selector ===== */
 
-  /* Top: panoramic illustration with overlay pin labels */
+  /* Top: panoramic illustration (3 region areas) */
   .region-panorama {
     position: relative;
     margin: 0 16px 28px;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: linear-gradient(180deg, #f4f0e6 0%, #efe8d8 100%);
     aspect-ratio: 3 / 2;
-    min-height: 200px;
+    min-height: 180px;
   }
   .region-panorama-img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
   }
   .region-panorama.no-image::before {
@@ -1250,85 +1249,6 @@
     text-align: center;
     padding: 16px;
   }
-  .panorama-pin {
-    position: absolute;
-    transform: translate(-50%, -100%);
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    padding: 6px 6px 7px;
-    background: #fff;
-    border: 2.5px solid var(--color-border);
-    border-radius: 18px;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-    transition: transform 0.15s ease;
-    line-height: 1.15;
-    min-width: 76px;
-  }
-  .panorama-pin::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 11px 7px 0 7px;
-    border-color: #fff transparent transparent transparent;
-    z-index: 1;
-  }
-  .panorama-pin::before {
-    /* Outer triangle for the colored border */
-    content: '';
-    position: absolute;
-    bottom: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 13px 9px 0 9px;
-    border-color: currentColor transparent transparent transparent;
-    z-index: 0;
-  }
-  .panorama-pin:active { transform: translate(-50%, -100%) scale(0.95); }
-  .pin-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 50%;
-    margin-bottom: 2px;
-  }
-  .pin-icon svg { width: 100%; height: 100%; display: block; }
-  .pin-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.1;
-  }
-  .pin-jp {
-    font-size: 11.5px;
-    font-weight: 800;
-    color: var(--color-ink);
-    white-space: nowrap;
-  }
-  .pin-en {
-    font-family: var(--font-display);
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    color: var(--color-ink-soft);
-    margin-top: 2px;
-    white-space: nowrap;
-  }
-  .pin-yamanashi { left: 18%; top: 48%; color: var(--color-green); border-color: var(--color-green); }
-  .pin-tama      { left: 52%; top: 78%; color: var(--color-purple); border-color: var(--color-purple); }
-  .pin-tokyo23   { left: 82%; top: 50%; color: var(--color-coral); border-color: var(--color-coral); }
 
   /* Section title above the 3 cards */
   .region-section-title {
@@ -3364,28 +3284,10 @@
       </span>
     </div>
 
-    <!-- Top: panoramic illustration with tappable location-pin labels -->
+    <!-- Top: panoramic illustration (3 region areas) -->
     <div class="region-panorama">
       <img class="region-panorama-img" src="assets/illust-panorama.png" alt="東京・山梨エリアマップ"
            onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
-      <button type="button" class="panorama-pin pin-yamanashi" onclick="goToPage('page-schedule', 'yamanashi')" aria-label="山梨エリアを表示">
-        <span class="pin-icon" aria-hidden="true">
-          <svg viewBox="0 0 28 28"><path d="M4 22 L14 6 L24 22 Z" fill="#a3c965" stroke="#6f8a1f" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 14 L14 10 L18 14 L15 14 L14 12 L13 14 Z" fill="#fff"/></svg>
-        </span>
-        <span class="pin-text"><span class="pin-jp">山梨</span><span class="pin-en">YAMANASHI</span></span>
-      </button>
-      <button type="button" class="panorama-pin pin-tama" onclick="goToPage('page-schedule', 'tokyo-2nd')" aria-label="東京多摩エリアを表示">
-        <span class="pin-icon" aria-hidden="true">
-          <svg viewBox="0 0 28 28"><path d="M14 4 L20 14 L17 14 L21 22 L7 22 L11 14 L8 14 Z" fill="#b09bd0" stroke="#8C72AA" stroke-width="1.5" stroke-linejoin="round"/><rect x="13" y="22" width="2" height="3" fill="#8C72AA"/></svg>
-        </span>
-        <span class="pin-text"><span class="pin-jp">東京（多摩）</span><span class="pin-en">TOKYO TAMA</span></span>
-      </button>
-      <button type="button" class="panorama-pin pin-tokyo23" onclick="goToPage('page-schedule', 'tokyo23')" aria-label="東京23区エリアを表示">
-        <span class="pin-icon" aria-hidden="true">
-          <svg viewBox="0 0 28 28"><rect x="6" y="9" width="6" height="14" fill="#f2a098" stroke="#D64839" stroke-width="1.5"/><rect x="14" y="5" width="8" height="18" fill="#f2a098" stroke="#D64839" stroke-width="1.5"/><rect x="8" y="12" width="2" height="2" fill="#D64839"/><rect x="16" y="9" width="2" height="2" fill="#D64839"/><rect x="16" y="13" width="2" height="2" fill="#D64839"/><rect x="16" y="17" width="2" height="2" fill="#D64839"/></svg>
-        </span>
-        <span class="pin-text"><span class="pin-jp">東京（23区）</span><span class="pin-en">TOKYO 23</span></span>
-      </button>
     </div>
 
     <h3 class="region-section-title">
