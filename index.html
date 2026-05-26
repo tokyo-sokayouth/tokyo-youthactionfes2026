@@ -1805,6 +1805,11 @@
     object-fit: contain;
     background: #f5ede1;
   }
+  /* Flyer box fitted to image aspect ratio (no horizontal letterboxing) */
+  .sli-media.is-flyer.is-fitted img {
+    object-fit: cover;
+    object-position: center top;
+  }
   .sli-media.is-logo {
     background: linear-gradient(135deg, var(--color-yellow-soft) 0%, var(--color-coral-soft) 100%);
     display: flex;
@@ -4867,7 +4872,7 @@
       let mediaHTML;
       if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
-        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.classList.remove('is-flyer');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
+        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="this.onerror=null;this.parentNode.classList.remove('is-flyer','is-fitted');this.parentNode.style.aspectRatio='';this.parentNode.classList.add('is-logo');this.src='assets/logo.png';">${ytBadge}</div>`;
       } else if (ytId) {
         mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
       } else {
@@ -4895,6 +4900,18 @@
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // Fit the ALL-list flyer banner to the image's own aspect ratio so portrait
+  // flyers fill the full width without left/right letterboxing.
+  function fitFlyerMedia(img) {
+    const m = img.closest('.sli-media');
+    if (!m || !img.naturalWidth || !img.naturalHeight) return;
+    const r = img.naturalWidth / img.naturalHeight;
+    // clamp between 3:4 (portrait) and 16:9 (landscape) to keep card heights sane
+    const clamped = Math.min(Math.max(r, 0.75), 1.778);
+    m.style.aspectRatio = clamped.toFixed(3);
+    m.classList.add('is-fitted');
   }
 
   // Convert Google Drive image URL to a viewable thumbnail URL
