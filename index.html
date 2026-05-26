@@ -1810,18 +1810,67 @@
     object-fit: cover;
     object-position: center top;
   }
+  /* Simple logo fallback (image load error) */
   .sli-media.is-logo {
     background: linear-gradient(135deg, var(--color-yellow-soft) 0%, var(--color-coral-soft) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 5 / 2;
   }
   .sli-media.is-logo img {
     width: auto;
-    height: 70%;
+    height: 56%;
     object-fit: contain;
     filter: drop-shadow(0 1px 3px rgba(0,0,0,0.08));
+  }
+  /* No-media poster: faint logo watermark + event name (mirrors detail-page typography) */
+  .sli-media.is-poster {
+    background: linear-gradient(135deg, var(--color-coral-soft) 0%, var(--color-yellow-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sli-media.is-poster::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 18% 84%, rgba(240,206,64,0.35) 0%, transparent 50%),
+      radial-gradient(circle at 84% 16%, rgba(93,194,189,0.28) 0%, transparent 50%);
+    z-index: 0;
+  }
+  .sli-poster-logo {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 62%;
+    max-width: 220px;
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sli-poster-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 10px 18px;
+  }
+  .sli-poster-eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--color-coral);
+    margin-bottom: 5px;
+  }
+  .sli-poster-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.35;
   }
   .sli-media.is-yt { background: #111; }
   .sli-media.is-yt img { opacity: 0.92; }
@@ -4877,7 +4926,11 @@
       } else if (ytId) {
         mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.parentNode.classList.remove('is-yt');this.parentNode.classList.add('is-logo');this.src='assets/logo.png';"><span class="sli-media-play" aria-hidden="true"></span></div>`;
       } else {
-        mediaHTML = `<div class="sli-media is-logo"><img src="assets/logo.png" alt=""></div>`;
+        const eyebrow = ev.eyebrow ? `<span class="sli-poster-eyebrow">${escapeHtml(ev.eyebrow)}</span>` : '';
+        mediaHTML = `<div class="sli-media is-poster">
+          <img class="sli-poster-logo" src="assets/logo.png" alt="" aria-hidden="true">
+          <div class="sli-poster-content">${eyebrow}<span class="sli-poster-title">${escapeHtml(ev.eventNameJp || '')}</span></div>
+        </div>`;
       }
 
       return `<button class="sli" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
