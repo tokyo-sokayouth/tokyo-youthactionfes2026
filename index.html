@@ -4817,6 +4817,7 @@
         id,
         date: pill.dataset.eventDate || '',
         region: pill.dataset.region || '',
+        soku: pill.querySelector('.area-pill-name')?.textContent?.trim() || '',
         event: ev
       });
     });
@@ -4835,7 +4836,7 @@
     };
     const DOW = ['日','月','火','水','木','金','土'];
 
-    wrap.innerHTML = items.map(({id, date, region, event: ev}) => {
+    wrap.innerHTML = items.map(({id, date, region, soku, event: ev}) => {
       // Date block: precise date → month/day; approximate (中/後半/下旬/〜/月のみ) → "○月開催予定"
       let dateBlock;
       const isoLike = /^\d{4}-\d{2}-\d{2}/.test(date);
@@ -4884,7 +4885,7 @@
         <div class="sli-content">
           <div class="sli-date">${dateBlock}</div>
           <div class="sli-body">
-            <div class="sli-region">${regionEn}・${regionLabel}</div>
+            <div class="sli-region">${regionEn}・${regionLabel}${soku ? '・' + escapeHtml(soku) : ''}</div>
             <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
             <div class="sli-venue">${escapeHtml(venue)}</div>
             <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
