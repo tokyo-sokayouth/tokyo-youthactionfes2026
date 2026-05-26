@@ -1249,6 +1249,70 @@
     text-align: center;
     padding: 16px;
   }
+  .panorama-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 12px 8px;
+    background: #fff;
+    border: 2.5px solid var(--color-border);
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    transition: transform 0.15s ease;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .panorama-pin::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 11px 7px 0 7px;
+    border-color: #fff transparent transparent transparent;
+    z-index: 1;
+  }
+  .panorama-pin::before {
+    content: '';
+    position: absolute;
+    bottom: -14px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 13px 9px 0 9px;
+    border-color: currentColor transparent transparent transparent;
+    z-index: 0;
+  }
+  .panorama-pin:active { transform: translate(-50%, -100%) scale(0.95); }
+  .pin-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.15;
+  }
+  .pin-jp {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .pin-en {
+    font-family: var(--font-display);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--color-ink-soft);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .pin-yamanashi { left: 18%; top: 56%; color: var(--color-green); border-color: var(--color-green); }
+  .pin-tama      { left: 50%; top: 50%; color: var(--color-purple); border-color: var(--color-purple); }
+  .pin-tokyo23   { left: 81%; top: 52%; color: var(--color-coral); border-color: var(--color-coral); }
 
   /* Section title above the 3 cards */
   .region-section-title {
@@ -1362,19 +1426,6 @@
   .region-illust-card[data-region="tokyo-2nd"] .ric-arrow { background: var(--color-purple); }
   .region-illust-card[data-region="yamanashi"] .ric-arrow { background: #8CA528; }
 
-  .region-map-hint-box {
-    margin: 18px 16px 28px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--color-card);
-    border: 1.5px solid var(--color-coral-soft);
-    border-radius: var(--radius-pill);
-    font-size: 11.5px;
-    color: var(--color-ink-soft);
-    line-height: 1.5;
-  }
   .region-prompt {
     display: inline-flex;
     align-items: center;
@@ -3284,10 +3335,19 @@
       </span>
     </div>
 
-    <!-- Top: panoramic illustration (3 region areas) -->
+    <!-- Top: panoramic illustration with tappable location-pin labels (no inner icon) -->
     <div class="region-panorama">
       <img class="region-panorama-img" src="assets/illust-panorama.png" alt="東京・山梨エリアマップ"
            onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+      <button type="button" class="panorama-pin pin-yamanashi" onclick="goToPage('page-schedule', 'yamanashi')" aria-label="山梨エリアを表示">
+        <span class="pin-text"><span class="pin-jp">山梨</span><span class="pin-en">YAMANASHI</span></span>
+      </button>
+      <button type="button" class="panorama-pin pin-tama" onclick="goToPage('page-schedule', 'tokyo-2nd')" aria-label="東京多摩エリアを表示">
+        <span class="pin-text"><span class="pin-jp">東京（多摩）</span><span class="pin-en">TOKYO TAMA</span></span>
+      </button>
+      <button type="button" class="panorama-pin pin-tokyo23" onclick="goToPage('page-schedule', 'tokyo23')" aria-label="東京23区エリアを表示">
+        <span class="pin-text"><span class="pin-jp">東京（23区）</span><span class="pin-en">TOKYO 23</span></span>
+      </button>
     </div>
 
     <h3 class="region-section-title">
@@ -3331,11 +3391,6 @@
         <span class="ric-arrow" aria-hidden="true">›</span>
       </div>
     </button>
-
-    <div class="region-map-hint-box">
-      <svg class="icon-svg" style="width:18px;height:18px;stroke:var(--color-coral);flex-shrink:0;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span>気になるエリアをタップすると、<br>そのエリアの開催情報が表示されます。</span>
-    </div>
   </div>
 
   <!-- ====================== SCHEDULE (MONTH LIST) ====================== -->
