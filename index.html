@@ -1889,7 +1889,7 @@
 
   /* Tab-based region highlight: soft-color fill for matching cards, dim others */
   .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
-  .area-pill.is-region-dim { opacity: 0.35; }
+  .area-pill.is-region-dim { opacity: 0.35; pointer-events: none; cursor: default; }
   .area-pill.is-active-region[data-region="tokyo23"] {
     background: var(--color-coral-soft);
     border-color: var(--color-coral);
