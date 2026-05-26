@@ -1227,18 +1227,14 @@
   /* Top: panoramic illustration (3 region areas) */
   .region-panorama {
     position: relative;
-    margin: 0 16px 28px;
+    margin: 4px 6px 26px;
     border-radius: var(--radius-lg);
-    overflow: hidden;
-    aspect-ratio: 3 / 2;
-    min-height: 180px;
+    overflow: visible;
   }
   .region-panorama-img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
+    height: auto;
   }
   .region-panorama.no-image::before {
     content: '🗺  illust-panorama.png を assets/ に配置してください';
@@ -1252,39 +1248,40 @@
   .panorama-pin {
     position: absolute;
     transform: translate(-50%, -100%);
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 6px 12px 8px;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    padding: 6px;
     background: #fff;
     border: 2.5px solid var(--color-border);
-    border-radius: 14px;
     cursor: pointer;
     font-family: inherit;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    box-shadow: 0 5px 13px rgba(0,0,0,0.2);
     transition: transform 0.15s ease;
-    line-height: 1.15;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .panorama-pin::after {
     content: '';
     position: absolute;
-    bottom: -10px; left: 50%;
+    bottom: -9px; left: 50%;
     transform: translateX(-50%);
     width: 0; height: 0;
     border-style: solid;
-    border-width: 11px 7px 0 7px;
+    border-width: 10px 6px 0 6px;
     border-color: #fff transparent transparent transparent;
     z-index: 1;
   }
   .panorama-pin::before {
     content: '';
     position: absolute;
-    bottom: -14px; left: 50%;
+    bottom: -13px; left: 50%;
     transform: translateX(-50%);
     width: 0; height: 0;
     border-style: solid;
-    border-width: 13px 9px 0 9px;
+    border-width: 12px 8px 0 8px;
     border-color: currentColor transparent transparent transparent;
     z-index: 0;
   }
@@ -1293,26 +1290,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 1.15;
+    line-height: 1.2;
   }
   .pin-jp {
-    font-size: 12px;
+    font-size: 10.5px;
     font-weight: 800;
     color: var(--color-ink);
-    white-space: nowrap;
+    line-height: 1.25;
   }
   .pin-en {
     font-family: var(--font-display);
-    font-size: 7px;
+    font-size: 6px;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.1em;
     color: var(--color-ink-soft);
     margin-top: 2px;
-    white-space: nowrap;
   }
-  .pin-yamanashi { left: 18%; top: 56%; color: var(--color-green); border-color: var(--color-green); }
-  .pin-tama      { left: 50%; top: 50%; color: var(--color-purple); border-color: var(--color-purple); }
-  .pin-tokyo23   { left: 81%; top: 52%; color: var(--color-coral); border-color: var(--color-coral); }
+  .pin-yamanashi { left: 16%; top: 60%; color: var(--color-green); border-color: var(--color-green); }
+  .pin-tama      { left: 50%; top: 54%; color: var(--color-purple); border-color: var(--color-purple); }
+  .pin-tokyo23   { left: 82%; top: 58%; color: var(--color-coral); border-color: var(--color-coral); }
 
   /* Section title above the 3 cards */
   .region-section-title {
@@ -1349,6 +1345,9 @@
     min-height: 116px;
     background: var(--color-card-alt);
   }
+  .region-illust-card[data-region="tokyo23"]   { background: var(--color-coral-soft); }
+  .region-illust-card[data-region="tokyo-2nd"] { background: var(--color-purple-soft); }
+  .region-illust-card[data-region="yamanashi"] { background: var(--color-green-soft); }
   .region-illust-card:active {
     transform: translateY(1px);
     box-shadow: 0 1px 5px rgba(0,0,0,0.1);
@@ -1359,7 +1358,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 38%;
+    object-position: right center;
     display: block;
     z-index: 0;
   }
@@ -1377,12 +1376,16 @@
     flex-direction: column;
     justify-content: center;
     gap: 2px;
-    background: linear-gradient(to right,
-      rgba(255,250,242,0.94) 0%,
-      rgba(255,250,242,0.92) 50%,
-      rgba(255,250,242,0.6) 80%,
-      rgba(255,250,242,0) 100%);
-    max-width: 62%;
+    max-width: 64%;
+  }
+  .region-illust-card[data-region="tokyo23"] .ric-text {
+    background: linear-gradient(to right, var(--color-coral-soft) 0%, var(--color-coral-soft) 55%, rgba(250,213,204,0.6) 82%, rgba(250,213,204,0) 100%);
+  }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-text {
+    background: linear-gradient(to right, var(--color-purple-soft) 0%, var(--color-purple-soft) 55%, rgba(224,213,238,0.6) 82%, rgba(224,213,238,0) 100%);
+  }
+  .region-illust-card[data-region="yamanashi"] .ric-text {
+    background: linear-gradient(to right, var(--color-green-soft) 0%, var(--color-green-soft) 55%, rgba(224,235,166,0.55) 82%, rgba(224,235,166,0) 100%);
   }
   .ric-name-jp {
     font-size: 20px;
