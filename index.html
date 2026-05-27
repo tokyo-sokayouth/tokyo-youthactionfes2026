@@ -2936,6 +2936,61 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+  /* ============ MOTION / ANIMATIONS ============ */
+  /* Scroll reveal (cards, section titles, etc.) */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.7,.2,1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* Section title underline draws in when visible */
+  .section-title::after { transition: width 0.6s cubic-bezier(.2,.7,.2,1); }
+  .section-title.reveal:not(.is-visible)::after { width: 0; }
+
+  /* "まもなく開催" badge pulse */
+  .upcoming-item.is-soon .upcoming-badge,
+  .upcoming-badge {
+    animation: badgePulse 1.9s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(214,72,57,0.45); }
+    50%     { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(214,72,57,0); }
+  }
+  /* Schedule pill "まもなく開催！" label pulse */
+  .area-pill.is-soon::before { animation: badgePulse 1.9s ease-in-out infinite; }
+
+  /* Detail page media reveal (replayed on each open) */
+  .event-hero.ed-reveal .event-flyer-wrap,
+  .event-hero.ed-reveal .event-video-hero,
+  .event-hero.ed-reveal .event-poster-typo {
+    animation: fadeInUp 0.6s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Q&A body fade-in on open */
+  .qa-item[open] .qa-body { animation: qaReveal 0.34s ease both; }
+  @keyframes qaReveal {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Button hover lift (subtle) */
+  .btn-primary, .btn-secondary, .detail-cta button { transition: transform 0.15s ease, box-shadow 0.2s ease; }
+  @media (hover: hover) {
+    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover { transform: translateY(-2px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .upcoming-badge, .area-pill.is-soon::before,
+    .event-hero.ed-reveal .event-flyer-wrap,
+    .event-hero.ed-reveal .event-video-hero,
+    .event-hero.ed-reveal .event-poster-typo,
+    .qa-item[open] .qa-body { animation: none !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -3649,7 +3704,7 @@
       <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
-    <div class="event-hero">
+    <div class="event-hero" id="ed-hero">
       <div class="event-eyebrow" id="ed-eyebrow">AREA</div>
       <div class="event-name-en" id="ed-name-en"></div>
       <div class="event-name-jp" id="ed-name-jp"></div>
@@ -4913,7 +4968,7 @@
         </div>`;
       }
 
-      return `<button class="sli" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
+      return `<button class="sli reveal" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
         ${mediaHTML}
         <div class="sli-content">
           <div class="sli-date">${dateBlock}</div>
@@ -5081,6 +5136,14 @@
     }
 
     goToPage('page-event-detail');
+
+    // replay hero media fade-in
+    const hero = document.getElementById('ed-hero');
+    if (hero) {
+      hero.classList.remove('ed-reveal');
+      void hero.offsetWidth;
+      hero.classList.add('ed-reveal');
+    }
   }
 
   function goToPage(pageId, tabKey, monthAnchor) {
@@ -5191,6 +5254,27 @@
   // Populate region city tags + chronological schedule list on initial load
   renderRegionCities();
   renderScheduleList();
+
+  // ----- Scroll reveal (cards, section titles) -----
+  const revealObserver = ('IntersectionObserver' in window)
+    ? new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+    : null;
+
+  function registerReveals(root) {
+    const els = (root || document).querySelectorAll('.reveal:not(.is-visible)');
+    if (!revealObserver) { els.forEach(el => el.classList.add('is-visible')); return; }
+    els.forEach(el => revealObserver.observe(el));
+  }
+  // Mark home section titles as reveal targets
+  document.querySelectorAll('#page-home .section-title').forEach(el => el.classList.add('reveal'));
+  registerReveals();
 
   // Apply region highlighting to schedule pills based on active tab.
   // 'all' shows every pill in its default white state (no tint, no dim).
