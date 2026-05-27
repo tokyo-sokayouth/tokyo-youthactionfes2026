@@ -328,6 +328,28 @@
     background: rgba(255,255,255,0.35);
     border-radius: 50%;
     pointer-events: none;
+    animation: blobDrift1 9s ease-in-out infinite;
+  }
+  .about-section::after {
+    content: '';
+    position: absolute;
+    bottom: -48px; left: -30px;
+    width: 104px; height: 104px;
+    background: rgba(240,206,64,0.22);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: blobDrift2 11s ease-in-out infinite;
+  }
+  @keyframes blobDrift1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50%     { transform: translate(-16px,14px) scale(1.14); }
+  }
+  @keyframes blobDrift2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50%     { transform: translate(14px,-12px) scale(1.18); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-section::before, .about-section::after { animation: none; }
   }
   .about-eyebrow {
     font-family: var(--font-display);
