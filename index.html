@@ -4999,7 +4999,7 @@
         </div>`;
       }
 
-      return `<button class="sli reveal" type="button" data-region="${region}" data-event-id="${id}" onclick="openEventDetail('${id}')">
+      return `<button class="sli reveal" type="button" data-region="${region}" data-month="${parseInt((date||'').slice(5,7),10)||''}" data-event-id="${id}" onclick="openEventDetail('${id}')">
         ${mediaHTML}
         <div class="sli-content">
           <div class="sli-date">${dateBlock}</div>
@@ -5232,8 +5232,15 @@
     if (pageId === 'page-schedule' && monthAnchor) {
       window.scrollTo({ top: 0 });
       requestAnimationFrame(() => {
-        const sec = document.getElementById('schedule-month-' + monthAnchor);
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // ALL view shows the chronological card list; scroll to the first card of that month.
+        // Region views show the per-month grid; scroll to the month section.
+        const listVisible = document.getElementById('schedule-list') && !document.getElementById('schedule-list').hidden;
+        let el = null;
+        if (listVisible) {
+          el = document.querySelector(`#schedule-list .sli[data-month="${monthAnchor}"]`);
+        }
+        if (!el) el = document.getElementById('schedule-month-' + monthAnchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
