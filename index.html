@@ -1227,14 +1227,43 @@
   /* Top: panoramic illustration (3 region areas) */
   .region-panorama {
     position: relative;
-    margin: 4px 6px 26px;
-    border-radius: var(--radius-lg);
+    margin: 8px 0 26px;
     overflow: visible;
   }
   .region-panorama-img {
     display: block;
     width: 100%;
     height: auto;
+    transform-origin: center bottom;
+  }
+  /* Entrance animation (replayed via .play on each visit) */
+  .region-panorama.play .region-panorama-img {
+    animation: mapReveal 0.85s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .region-panorama.play .panorama-pin {
+    animation:
+      pinDrop 0.7s cubic-bezier(.2,.85,.3,1.35) both,
+      pinFloat 3.6s ease-in-out infinite;
+  }
+  .region-panorama.play .pin-yamanashi { animation-delay: 0.30s, 1.05s; }
+  .region-panorama.play .pin-tama      { animation-delay: 0.45s, 1.20s; }
+  .region-panorama.play .pin-tokyo23   { animation-delay: 0.60s, 1.35s; }
+  @keyframes mapReveal {
+    from { opacity: 0; transform: scale(0.93); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pinDrop {
+    0%   { transform: translate(-50%,-100%) translateY(-30px); opacity: 0; }
+    60%  { transform: translate(-50%,-100%) translateY(5px);  opacity: 1; }
+    100% { transform: translate(-50%,-100%) translateY(0);    opacity: 1; }
+  }
+  @keyframes pinFloat {
+    0%,100% { transform: translate(-50%,-100%) translateY(0); }
+    50%     { transform: translate(-50%,-100%) translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .region-panorama.play .region-panorama-img,
+    .region-panorama.play .panorama-pin { animation: none; }
   }
   .region-panorama.no-image::before {
     content: '🗺  illust-panorama.png を assets/ に配置してください';
@@ -5066,6 +5095,16 @@
     // show target
     const target = document.getElementById(pageId);
     if (target) target.classList.add('active');
+
+    // replay the region map entrance animation on each visit
+    if (pageId === 'page-region') {
+      const pano = document.querySelector('#page-region .region-panorama');
+      if (pano) {
+        pano.classList.remove('play');
+        void pano.offsetWidth; // force reflow to restart animation
+        pano.classList.add('play');
+      }
+    }
 
     // optional schedule-page tab pre-selection
     if (tabKey && pageId === 'page-schedule') {
