@@ -3767,7 +3767,7 @@
 
       <!-- Hero: self-hosted video (when available, highest priority) -->
       <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
-        <video id="ed-hero-selfvideo" controls playsinline preload="metadata"></video>
+        <video id="ed-hero-selfvideo" controls autoplay muted loop playsinline preload="auto"></video>
       </div>
 
       <!-- Hero: flyer image (when available) -->
@@ -5023,7 +5023,7 @@
       const videoFile = ev.videoFile || '';
       let mediaHTML;
       if (videoFile) {
-        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls playsinline preload="metadata"></video></div>`;
+        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls autoplay muted loop playsinline preload="auto"></video></div>`;
       } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
@@ -5127,12 +5127,16 @@
     // Reset self-video first (avoid leftover state when switching events)
     selfVideoEl.pause();
     if (videoFile) {
+      selfVideoEl.muted = true; // required for autoplay on mobile
       selfVideoEl.src = videoFile;
       selfVideoWrap.style.display = 'block';
       flyerWrap.style.display = 'none';
       typo.style.display = 'none';
       videoIframe.src = '';
       videoWrap.style.display = 'none';
+      // Kick off playback (browsers allow muted autoplay)
+      const p = selfVideoEl.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
     } else if (flyerUrl) {
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
