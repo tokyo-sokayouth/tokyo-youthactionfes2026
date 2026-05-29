@@ -81,6 +81,23 @@
     word-break: auto-phrase;
     line-break: strict;
   }
+  /* For browsers without word-break:auto-phrase, BudouX inserts <wbr> hints
+     into Japanese text below. word-break:keep-all forces breaks only at wbr
+     or whitespace/punctuation, giving natural phrase wrapping. overflow-wrap
+     prevents overflow on very long unbreakable strings. */
+  p, h1, h2, h3, h4, h5, h6,
+  .event-no-external strong, .event-no-external p,
+  .event-name-jp, .event-content-text,
+  .sli-name, .sli-venue, .sli-desc, .sli-region,
+  .qa-body, .qa-summary,
+  .about-text, .about-list,
+  .join-eligibility-lead, .join-eligibility-note, .join-self-area p, .join-contact-note,
+  .join-rule, .join-rule-title,
+  .info-value, .info-value-sub,
+  .links-title, .article-title, .article-excerpt {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
 
   /* ============ PHONE FRAME (DESKTOP PREVIEW) ============ */
   .phone-frame {
@@ -5638,6 +5655,72 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
   });
+</script>
+
+<!-- BudouX: Japanese phrase-aware line break hints (~5KB).
+     Works on all browsers/iOS versions, including older ones where
+     word-break:auto-phrase is not yet supported. -->
+<script type="module">
+  let parser = null;
+  const SELECTOR = [
+    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    '.event-no-external strong', '.event-no-external p',
+    '.event-name-jp', '.event-content-text',
+    '.sli-name', '.sli-venue', '.sli-desc', '.sli-region',
+    '.qa-body', '.qa-summary',
+    '.about-text', '.about-list',
+    '.join-eligibility-lead', '.join-eligibility-note',
+    '.join-self-area p', '.join-contact-note',
+    '.join-rule', '.join-rule-title',
+    '.info-value', '.info-value-sub',
+    '.links-title', '.article-title', '.article-excerpt'
+  ].join(', ');
+
+  async function ensureParser() {
+    if (parser) return parser;
+    try {
+      const mod = await import('https://cdn.jsdelivr.net/npm/budoux@0.6.6/+esm');
+      parser = mod.loadDefaultJapaneseParser();
+    } catch (e) {
+      console.warn('[BudouX] failed to load', e);
+    }
+    return parser;
+  }
+
+  async function applyTo(root) {
+    const p = await ensureParser();
+    if (!p) return;
+    const scope = root && root.querySelectorAll ? root : document;
+    scope.querySelectorAll(SELECTOR).forEach(el => {
+      // Skip if already processed and the structure still has wbr/spans
+      if (el.dataset.budouxApplied === '1' && el.querySelector('wbr, span[style]')) return;
+      try { p.applyToElement(el); el.dataset.budouxApplied = '1'; } catch(_) {}
+    });
+  }
+
+  function init() {
+    applyTo(document);
+    // Watch for dynamically rendered content (schedule cards, event detail rewrites, etc.)
+    const obs = new MutationObserver(muts => {
+      let needs = false;
+      for (const m of muts) {
+        if (m.type === 'childList' && m.addedNodes.length) { needs = true; break; }
+        if (m.type === 'characterData') { needs = true; break; }
+      }
+      if (needs) {
+        // Debounce: re-apply on next frame
+        if (init._raf) cancelAnimationFrame(init._raf);
+        init._raf = requestAnimationFrame(() => applyTo(document));
+      }
+    });
+    obs.observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 </body>
