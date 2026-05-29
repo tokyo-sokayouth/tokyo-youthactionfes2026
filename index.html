@@ -2204,11 +2204,50 @@
     width: 100%;
     height: auto;
   }
+  .event-selfvideo-wrap {
+    position: relative;
+  }
   .event-selfvideo-wrap video {
     display: block;
     width: 100%;
     height: auto;
     background: #000;
+  }
+  .selfvideo-unmute {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    background: rgba(0, 0, 0, 0.78);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: selfvideoPulse 2s ease-in-out infinite;
+  }
+  .selfvideo-unmute .selfvideo-unmute-icon-on { display: none; }
+  .selfvideo-unmute.is-unmuted {
+    background: rgba(0, 0, 0, 0.55);
+    animation: none;
+  }
+  .selfvideo-unmute.is-unmuted .selfvideo-unmute-icon-muted { display: none; }
+  .selfvideo-unmute.is-unmuted .selfvideo-unmute-icon-on { display: inline-block; }
+  @keyframes selfvideoPulse {
+    0%, 100% { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50%      { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 255, 255, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .selfvideo-unmute { animation: none; }
   }
   .sli-media.is-self-video {
     background: #000;
@@ -3768,6 +3807,18 @@
       <!-- Hero: self-hosted video (when available, highest priority) -->
       <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
         <video id="ed-hero-selfvideo" controls autoplay muted loop playsinline preload="auto"></video>
+        <button class="selfvideo-unmute" id="ed-selfvideo-unmute" type="button" aria-label="音声をONにする">
+          <svg class="selfvideo-unmute-icon-muted" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/>
+            <line x1="16" y1="9" x2="22" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="22" y1="9" x2="16" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <svg class="selfvideo-unmute-icon-on" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/>
+            <path d="M15.5 8.5a5 5 0 010 7M18 6a8 8 0 010 12" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span class="selfvideo-unmute-text">音声をONにする</span>
+        </button>
       </div>
 
       <!-- Hero: flyer image (when available) -->
@@ -5134,6 +5185,28 @@
       typo.style.display = 'none';
       videoIframe.src = '';
       videoWrap.style.display = 'none';
+      // Reset unmute button to "音声をONにする" state on each open
+      const unmuteBtn = document.getElementById('ed-selfvideo-unmute');
+      if (unmuteBtn) {
+        unmuteBtn.classList.remove('is-unmuted');
+        unmuteBtn.style.display = 'inline-flex';
+        const txt = unmuteBtn.querySelector('.selfvideo-unmute-text');
+        if (txt) txt.textContent = '音声をONにする';
+        unmuteBtn.onclick = () => {
+          const nowMuted = !selfVideoEl.muted;
+          selfVideoEl.muted = nowMuted;
+          if (nowMuted) {
+            unmuteBtn.classList.remove('is-unmuted');
+            if (txt) txt.textContent = '音声をONにする';
+          } else {
+            unmuteBtn.classList.add('is-unmuted');
+            if (txt) txt.textContent = '音声ON';
+          }
+          // Make sure playback continues
+          const p2 = selfVideoEl.play();
+          if (p2 && typeof p2.catch === 'function') p2.catch(() => {});
+        };
+      }
       // Kick off playback (browsers allow muted autoplay)
       const p = selfVideoEl.play();
       if (p && typeof p.catch === 'function') p.catch(() => {});
@@ -5238,20 +5311,33 @@
   }
 
   function goToPage(pageId, tabKey, monthAnchor) {
-    // stop any video iframes on the event-detail page when leaving
-    if (pageId !== 'page-event-detail') {
-      const iframe = document.getElementById('ed-video-iframe');
-      if (iframe && iframe.src) iframe.src = '';
-      const selfVideo = document.getElementById('ed-hero-selfvideo');
-      if (selfVideo) selfVideo.pause();
+    // Pause videos only on the page we're LEAVING (not the one we're entering)
+    const leaving = document.querySelector('.page.active');
+    if (leaving && leaving.id !== pageId) {
+      leaving.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
+      // stop YouTube iframe on the event-detail page when leaving it
+      if (leaving.id === 'page-event-detail') {
+        const iframe = document.getElementById('ed-video-iframe');
+        if (iframe && iframe.src) iframe.src = '';
+      }
     }
-    // pause any inline videos (ALL list cards etc.) on any navigation
-    document.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
     const target = document.getElementById(pageId);
     if (target) target.classList.add('active');
+
+    // Re-trigger autoplay on the page we just entered (display:none → block can
+    // halt playback). Muted+autoplay+playsinline is allowed without user gesture.
+    if (target) {
+      target.querySelectorAll('video[autoplay]').forEach(v => {
+        try {
+          v.muted = true;
+          const p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        } catch(_) {}
+      });
+    }
 
     // replay the region map entrance animation on each visit
     if (pageId === 'page-region') {
