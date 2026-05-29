@@ -3870,10 +3870,8 @@
     </a>
 
     <div class="event-no-external" id="ed-no-external" style="display:none;">
-      <strong>このフェスは、他地域からの参加を<br>受け付けておりません。</strong>
-      <p>対象地域にお住まいの方は、<br>
-      お声がけいただいた方や所属組織を通じて<br>
-      お申し込みください。</p>
+      <strong id="ed-no-external-title"></strong>
+      <p id="ed-no-external-body"></p>
     </div>
 
     <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
@@ -5296,6 +5294,13 @@
       ngMsg.style.display = 'none';
     } else {
       cta.style.display = 'none';
+      // Look up the soku name from the corresponding schedule pill
+      const pill = document.querySelector(`.area-pill[data-event-id="${eventId}"] .area-pill-name`);
+      const sokuName = (pill && pill.textContent.trim()) || '対象地域';
+      document.getElementById('ed-no-external-title').textContent =
+        `${sokuName}の会員の方、およびご友人・ご家族の方が対象です。`;
+      document.getElementById('ed-no-external-body').textContent =
+        '※お声がけいただいた方や、所属組織を通じてご参加ください。';
       ngMsg.style.display = 'block';
     }
 
