@@ -4994,7 +4994,6 @@
       const allow = ev.allowExternal
         ? '<span class="sli-badge open">他地域からの参加OK</span>'
         : '<span class="sli-badge closed">対象地域のみ</span>';
-      const regionLabel = REGION_LABEL[region] || '';
       const regionEn = REGION_EN[region] || '';
 
       // Media banner: flyer > YouTube thumb > logo placeholder
@@ -5019,7 +5018,7 @@
         <div class="sli-content">
           <div class="sli-date">${dateBlock}</div>
           <div class="sli-body">
-            <div class="sli-region">${regionEn}・${regionLabel}${soku ? '・' + escapeHtml(soku) : ''}</div>
+            <div class="sli-region">${regionEn}${soku ? '・' + escapeHtml(soku) : ''}</div>
             <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
             <div class="sli-venue">${escapeHtml(venue)}</div>
             <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
