@@ -2204,6 +2204,21 @@
     width: 100%;
     height: auto;
   }
+  .event-selfvideo-wrap video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+  .sli-media.is-self-video {
+    background: #000;
+  }
+  .sli-media.is-self-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .event-poster-typo {
     margin-top: 16px;
     aspect-ratio: 4/5;
@@ -3750,6 +3765,11 @@
       <div class="event-name-en" id="ed-name-en"></div>
       <div class="event-name-jp" id="ed-name-jp"></div>
 
+      <!-- Hero: self-hosted video (when available, highest priority) -->
+      <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
+        <video id="ed-hero-selfvideo" controls playsinline preload="metadata"></video>
+      </div>
+
       <!-- Hero: flyer image (when available) -->
       <div class="event-flyer-wrap" id="ed-hero-flyer-wrap" style="display:none;">
         <img id="ed-hero-flyer" alt="イベントフライヤー">
@@ -4561,6 +4581,7 @@
       allowExternal: false,
       flyer: 'https://drive.google.com/open?id=1-5-ZmDRQ7hWJirjXlJjRjE6nciGnMZp2',
       youtube: null,
+      videoFile: 'assets/shibuya_20260518%20-%20otaku%20otaku.MP4',
       linktree: null,
       description: '「本当に勝ちたい。」（リーチ・マイケル）— 運動を中心とした体験イベント。詳細決定次第お知らせします。'
     },
@@ -4996,11 +5017,14 @@
         : '<span class="sli-badge closed">対象地域のみ</span>';
       const regionEn = REGION_EN[region] || '';
 
-      // Media banner: flyer > YouTube thumb > logo placeholder
+      // Media banner: self-hosted video > flyer > YouTube thumb > logo placeholder
       const flyerUrl = driveImageUrl(ev.flyer);
       const ytId = extractYouTubeId(ev.youtube);
+      const videoFile = ev.videoFile || '';
       let mediaHTML;
-      if (flyerUrl) {
+      if (videoFile) {
+        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls playsinline preload="metadata"></video></div>`;
+      } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
       } else if (ytId) {
@@ -5088,16 +5112,30 @@
     document.getElementById('ed-name-en').style.display = 'none';
     document.getElementById('ed-name-jp').textContent = e.eventNameJp || '';
 
-    // Hero & video: priority = flyer > YouTube hero > typography fallback
+    // Hero & video: priority = self-hosted video > flyer > YouTube hero > typography fallback
     const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
     const flyerImg = document.getElementById('ed-hero-flyer');
     const typo = document.getElementById('ed-hero-typo');
     const videoWrap = document.getElementById('ed-video');
     const videoIframe = document.getElementById('ed-video-iframe');
+    const selfVideoWrap = document.getElementById('ed-hero-selfvideo-wrap');
+    const selfVideoEl = document.getElementById('ed-hero-selfvideo');
     const flyerUrl = driveImageUrl(e.flyer);
     const ytId = extractYouTubeId(e.youtube);
+    const videoFile = e.videoFile || '';
 
-    if (flyerUrl) {
+    // Reset self-video first (avoid leftover state when switching events)
+    selfVideoEl.pause();
+    if (videoFile) {
+      selfVideoEl.src = videoFile;
+      selfVideoWrap.style.display = 'block';
+      flyerWrap.style.display = 'none';
+      typo.style.display = 'none';
+      videoIframe.src = '';
+      videoWrap.style.display = 'none';
+    } else if (flyerUrl) {
+      selfVideoEl.removeAttribute('src'); selfVideoEl.load();
+      selfVideoWrap.style.display = 'none';
       // Flyer takes the hero spot. YouTube (if any) shows below.
       flyerImg.onerror = () => {
         flyerWrap.style.display = 'none';
@@ -5119,12 +5157,16 @@
       }
     } else if (ytId) {
       // No flyer but YouTube: video becomes the hero (no logo typography)
+      selfVideoEl.removeAttribute('src'); selfVideoEl.load();
+      selfVideoWrap.style.display = 'none';
       flyerWrap.style.display = 'none';
       typo.style.display = 'none';
       videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
       videoWrap.style.display = 'block';
     } else {
       // No media at all → typography placeholder with logo watermark
+      selfVideoEl.removeAttribute('src'); selfVideoEl.load();
+      selfVideoWrap.style.display = 'none';
       flyerWrap.style.display = 'none';
       flyerImg.src = '';
       typo.style.display = 'flex';
@@ -5196,7 +5238,11 @@
     if (pageId !== 'page-event-detail') {
       const iframe = document.getElementById('ed-video-iframe');
       if (iframe && iframe.src) iframe.src = '';
+      const selfVideo = document.getElementById('ed-hero-selfvideo');
+      if (selfVideo) selfVideo.pause();
     }
+    // pause any inline videos (ALL list cards etc.) on any navigation
+    document.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
