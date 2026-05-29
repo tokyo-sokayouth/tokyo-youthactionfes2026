@@ -156,8 +156,8 @@
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes heroLogoPop {
-    0%   { opacity: 0; transform: scale(0.86) translateY(10px); }
-    65%  { opacity: 1; transform: scale(1.04) translateY(-2px); }
+    0%   { opacity: 0; transform: scale(0.9) translateY(14px); }
+    55%  { opacity: 1; transform: scale(1.1) translateY(-2px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
   }
   @keyframes heroSlideUp {
@@ -188,7 +188,7 @@
   /* ============ HERO LOGO ============ */
   .hero {
     text-align: center;
-    padding: 0 24px 14px;
+    padding: 0 24px 4px;
     position: relative;
   }
   .logo-wrap {
@@ -198,15 +198,15 @@
     z-index: 1;
   }
   #page-home .logo-wrap {
-    animation: heroLogoPop 0.95s cubic-bezier(.16,1,.3,1) both;
+    animation: heroLogoPop 2.6s cubic-bezier(.34,.1,.2,1) both;
   }
   #page-home .hero-region {
-    animation: heroSlideUp 0.6s ease-out 0.35s both;
+    animation: heroSlideUp 0.9s ease-out 1.7s both;
   }
   #page-home .hero-tagline {
     animation:
-      taglineDance 0.95s cubic-bezier(.16,1,.3,1) 0.55s both,
-      taglineWiggle 5s ease-in-out 2.5s infinite;
+      taglineDance 0.95s cubic-bezier(.16,1,.3,1) 2.1s both,
+      taglineWiggle 5s ease-in-out 3.3s infinite;
   }
   /* Decorative confetti around hero */
   .hero-deco {
@@ -336,6 +336,28 @@
     background: rgba(255,255,255,0.35);
     border-radius: 50%;
     pointer-events: none;
+    animation: blobDrift1 9s ease-in-out infinite;
+  }
+  .about-section::after {
+    content: '';
+    position: absolute;
+    bottom: -48px; left: -30px;
+    width: 104px; height: 104px;
+    background: rgba(240,206,64,0.22);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: blobDrift2 11s ease-in-out infinite;
+  }
+  @keyframes blobDrift1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50%     { transform: translate(-16px,14px) scale(1.14); }
+  }
+  @keyframes blobDrift2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50%     { transform: translate(14px,-12px) scale(1.18); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-section::before, .about-section::after { animation: none; }
   }
   .about-eyebrow {
     font-family: var(--font-display);
@@ -376,6 +398,61 @@
     letter-spacing: 0.02em;
   }
   .about-body p:last-child { margin-bottom: 0; }
+  .about-body p.about-lead {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+  .about-body strong {
+    background: linear-gradient(transparent 60%, rgba(255,193,77,0.55) 60%);
+    padding: 0 2px;
+    font-weight: 700;
+  }
+  .about-can {
+    margin-top: 22px;
+    padding: 14px 4px 0;
+    background: transparent;
+    border: none;
+    border-top: 1px dashed rgba(214,72,57,0.25);
+    position: relative;
+  }
+  .about-can-title {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: rgba(214,72,57,0.7);
+    margin-bottom: 8px;
+  }
+  .about-can-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .about-can-list li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .about-can-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 2px; top: 0;
+    color: rgba(214,72,57,0.6);
+    font-weight: 700;
+    font-size: 11.5px;
+  }
+  .about-can-list strong {
+    color: var(--color-ink);
+    font-weight: 700;
+    background: none;
+    padding: 0;
+  }
   .find-events-title {
     font-family: var(--font-display);
     font-size: 30px;
@@ -429,6 +506,11 @@
     opacity: 0.85;
     letter-spacing: 0.04em;
     line-height: 1;
+  }
+  .btn-find.btn-find-solo { padding: 18px 24px; }
+  .btn-find.btn-find-solo .btn-find-main {
+    font-size: 17px;
+    letter-spacing: 0.1em;
   }
 
   /* ============ SECTIONS ============ */
@@ -499,9 +581,10 @@
     color: var(--color-ink);
   }
   .tabs.schedule-tabs .tab-all.active {
-    background: var(--color-ink);
+    background: var(--color-coral);
     color: #fff;
-    border-color: var(--color-ink);
+    border-color: var(--color-coral);
+    box-shadow: 0 2px 0 rgba(214,72,57,0.35);
   }
 
   /* ============ SCHEDULE LIST ============ */
@@ -699,6 +782,78 @@
     line-height: 1.6;
   }
   .gallery-caption p { margin: 0; }
+  .gallery-coming-soon {
+    margin: 4px 16px 24px;
+    padding: 0;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+  }
+  .gallery-photo-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 2px;
+    z-index: 0;
+  }
+  .gallery-photo {
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-card-alt);
+  }
+  .gallery-coming-soon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,250,242,0.55) 0%, rgba(255,250,242,0.8) 100%);
+    z-index: 1;
+  }
+  .gallery-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 80px 24px 80px;
+    text-align: center;
+  }
+  .coming-soon-eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    font-weight: 800;
+    color: #fff;
+    padding: 5px 14px;
+    background: var(--color-coral);
+    border-radius: 999px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(214,72,57,0.3);
+  }
+  .coming-soon-title {
+    font-family: var(--font-script);
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1;
+    margin: 0 0 18px;
+    display: inline-block;
+    transform: rotate(-3deg);
+    text-shadow:
+      0 0 24px rgba(255,255,255,0.9),
+      4px 4px 0 rgba(255,193,77,0.55);
+  }
+  .coming-soon-msg {
+    font-size: 13px;
+    color: var(--color-ink);
+    line-height: 1.9;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 0 0 12px rgba(255,255,255,0.85);
+  }
 
   /* ============ LINKS PAGE ============ */
   .links-header {
@@ -772,13 +927,16 @@
   .link-info { flex: 1; padding-top: 4px; }
   .link-name {
     font-family: var(--font-display);
-    font-size: 19px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--color-ink);
     display: flex;
     align-items: center;
     gap: 6px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .link-desc {
     font-size: 12px;
@@ -809,6 +967,16 @@
   .link-cta.red { background: #E0252B; }
   .link-cta.yellow { background: var(--color-yellow); color: var(--color-ink); }
 
+  .link-card.link-card-compact {
+    padding: 10px 14px;
+    margin: 4px 20px 14px;
+  }
+  .link-card.link-card-compact .link-header { gap: 10px; }
+  .link-card.link-card-medium {
+    padding: 14px 16px;
+    margin: 6px 20px 14px;
+  }
+  .link-card.link-card-medium .link-header { gap: 12px; }
   .about-card {
     margin: 8px 20px 0;
     background: var(--color-card);
@@ -1084,6 +1252,241 @@
     text-align: center;
     padding: 8px 24px 24px;
   }
+  /* ===== Illustration-based region selector ===== */
+
+  /* Top: panoramic illustration (3 region areas) */
+  .region-panorama {
+    position: relative;
+    margin: 8px 0 26px;
+    overflow: visible;
+  }
+  .region-panorama-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: center bottom;
+  }
+  /* Entrance animation (replayed via .play on each visit) */
+  .region-panorama.play .region-panorama-img {
+    animation: mapReveal 0.85s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .region-panorama.play .panorama-pin {
+    animation:
+      pinDrop 0.7s cubic-bezier(.2,.85,.3,1.35) both,
+      pinFloat 3.6s ease-in-out infinite;
+  }
+  .region-panorama.play .pin-yamanashi { animation-delay: 0.30s, 1.05s; }
+  .region-panorama.play .pin-tama      { animation-delay: 0.45s, 1.20s; }
+  .region-panorama.play .pin-tokyo23   { animation-delay: 0.60s, 1.35s; }
+  @keyframes mapReveal {
+    from { opacity: 0; transform: scale(0.93); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pinDrop {
+    0%   { transform: translate(-50%,-100%) translateY(-30px); opacity: 0; }
+    60%  { transform: translate(-50%,-100%) translateY(5px);  opacity: 1; }
+    100% { transform: translate(-50%,-100%) translateY(0);    opacity: 1; }
+  }
+  @keyframes pinFloat {
+    0%,100% { transform: translate(-50%,-100%) translateY(0); }
+    50%     { transform: translate(-50%,-100%) translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .region-panorama.play .region-panorama-img,
+    .region-panorama.play .panorama-pin { animation: none; }
+  }
+  .region-panorama.no-image::before {
+    content: '🗺  illust-panorama.png を assets/ に配置してください';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-ink-soft);
+    font-size: 12px;
+    text-align: center;
+    padding: 16px;
+  }
+  .panorama-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    padding: 6px;
+    background: #fff;
+    border: 2.5px solid var(--color-border);
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.2);
+    transition: transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .panorama-pin::after {
+    content: '';
+    position: absolute;
+    bottom: -9px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 10px 6px 0 6px;
+    border-color: #fff transparent transparent transparent;
+    z-index: 1;
+  }
+  .panorama-pin::before {
+    content: '';
+    position: absolute;
+    bottom: -13px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 12px 8px 0 8px;
+    border-color: currentColor transparent transparent transparent;
+    z-index: 0;
+  }
+  .panorama-pin:active { transform: translate(-50%, -100%) scale(0.95); }
+  .pin-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+  }
+  .pin-jp {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.25;
+  }
+  .pin-en {
+    font-family: var(--font-display);
+    font-size: 6px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-soft);
+    margin-top: 2px;
+  }
+  .pin-yamanashi { left: 18%; top: 46%; color: var(--color-green); border-color: var(--color-green); }
+  .pin-tama      { left: 50%; top: 40%; color: var(--color-purple); border-color: var(--color-purple); }
+  .pin-tokyo23   { left: 80%; top: 33%; color: var(--color-coral); border-color: var(--color-coral); }
+
+  /* Section title above the 3 cards */
+  .region-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 16px 14px;
+    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+    border-top: 1px dashed var(--color-border);
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  /* Bottom: cards with full-width illustration background + semi-transparent text overlay */
+  .region-illust-card {
+    position: relative;
+    display: block;
+    margin: 0 16px 12px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+    width: calc(100% - 32px);
+    aspect-ratio: 16 / 6.5;
+    min-height: 116px;
+    background: var(--color-card-alt);
+  }
+  .region-illust-card[data-region="tokyo23"]   { background: var(--color-coral-soft); }
+  .region-illust-card[data-region="tokyo-2nd"] { background: var(--color-purple-soft); }
+  .region-illust-card[data-region="yamanashi"] { background: var(--color-green-soft); }
+  .region-illust-card:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  }
+  .ric-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    display: block;
+    z-index: 0;
+  }
+  .ric-overlay {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+  .ric-text {
+    flex: 1;
+    padding: 16px 8px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    max-width: 64%;
+  }
+  .region-illust-card[data-region="tokyo23"] .ric-text {
+    background: linear-gradient(to right, var(--color-coral-soft) 0%, var(--color-coral-soft) 55%, rgba(250,213,204,0.6) 82%, rgba(250,213,204,0) 100%);
+  }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-text {
+    background: linear-gradient(to right, var(--color-purple-soft) 0%, var(--color-purple-soft) 55%, rgba(224,213,238,0.6) 82%, rgba(224,213,238,0) 100%);
+  }
+  .region-illust-card[data-region="yamanashi"] .ric-text {
+    background: linear-gradient(to right, var(--color-green-soft) 0%, var(--color-green-soft) 55%, rgba(224,235,166,0.55) 82%, rgba(224,235,166,0) 100%);
+  }
+  .ric-name-jp {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+  }
+  .region-illust-card[data-region="tokyo23"]   .ric-name-jp { color: var(--color-coral); }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-name-jp { color: var(--color-purple); }
+  .region-illust-card[data-region="yamanashi"] .ric-name-jp { color: #6f8a1f; }
+  .ric-name-en {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-ink-soft);
+    margin-top: 2px;
+  }
+  .ric-desc {
+    font-size: 11.5px;
+    color: var(--color-ink);
+    line-height: 1.55;
+    font-weight: 600;
+  }
+  .ric-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: auto 14px auto auto;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  }
+  .region-illust-card[data-region="tokyo23"]   .ric-arrow { background: var(--color-coral); }
+  .region-illust-card[data-region="tokyo-2nd"] .ric-arrow { background: var(--color-purple); }
+  .region-illust-card[data-region="yamanashi"] .ric-arrow { background: #8CA528; }
+
   .region-prompt {
     display: inline-flex;
     align-items: center;
@@ -1104,16 +1507,16 @@
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-lg);
-    cursor: pointer;
     transition: transform 0.15s ease;
   }
-  .region-card:active { transform: scale(0.98); }
   .region-card-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 14px;
+    cursor: pointer;
   }
+  .region-card-title:active { transform: scale(0.98); }
   .region-name {
     font-family: var(--font-display);
     font-size: 22px;
@@ -1135,29 +1538,49 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
   }
-  .region-map {
-    width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: var(--radius-md);
-    background: var(--color-card-alt);
+  .region-cities {
+    margin-top: 12px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-  .region-map svg { width: 100%; height: 100%; }
-  .region-map {
-    aspect-ratio: 16/9;
+  .region-city {
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-ink);
+    background: var(--color-card-alt);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
   }
-  .region-map img {
-    max-width: 42%;
-    max-height: 66%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
+  .region-city:active { transform: scale(0.96); }
+  .region-card.tokyo .region-city:hover,
+  .region-card.tokyo .region-city.is-clickable {
+    border-color: var(--color-coral);
+    color: var(--color-coral);
+    background: var(--color-coral-soft);
   }
+  .region-card.tokyo-2nd .region-city:hover,
+  .region-card.tokyo-2nd .region-city.is-clickable {
+    border-color: var(--color-purple);
+    color: var(--color-purple);
+    background: var(--color-purple-soft);
+  }
+  .region-card.yamanashi .region-city:hover,
+  .region-card.yamanashi .region-city.is-clickable {
+    border-color: var(--color-green);
+    color: var(--color-green);
+    background: var(--color-green-soft);
+  }
+  .region-city.is-pending {
+    color: var(--color-ink-soft);
+    background: transparent;
+    cursor: default;
+    opacity: 0.6;
+  }
+  .region-city.is-pending:hover { background: transparent; color: var(--color-ink-soft); }
   .region-info {
     margin-top: 12px;
     font-size: 12px;
@@ -1174,13 +1597,10 @@
     margin: 0 20px 28px;
     scroll-margin-top: 16px;
   }
-  /* Home schedule preview: name spans visually indicate tappability */
+  /* Home schedule preview: area names use coral color without underline */
   .schedule-content .event-name {
-    color: var(--color-coral);
+    color: var(--color-ink);
     font-weight: 700;
-    text-decoration: underline;
-    text-decoration-color: rgba(242,107,91,0.35);
-    text-underline-offset: 3px;
   }
   .month-header {
     display: flex;
@@ -1234,9 +1654,301 @@
   .area-pill:active { transform: scale(0.97); }
   /* has-detail: kept structurally for sub-text; visual style stays white per spec */
 
-  /* Tab-based region highlight */
+  /* Region-based border color (always applied, even when ALL is selected) */
+  .area-pill[data-region="tokyo23"]   { border-color: var(--color-coral); }
+  .area-pill[data-region="tokyo-2nd"] { border-color: var(--color-purple); }
+  .area-pill[data-region="yamanashi"] { border-color: var(--color-green); }
+
+  /* ============ SCHEDULE LIST (ALL view: chronological summary cards) ============ */
+  .schedule-list {
+    margin: 0 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .schedule-list[hidden] { display: none; }
+  .sli {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-left-width: 4px;
+    border-radius: var(--radius-md);
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+    width: 100%;
+    overflow: hidden;
+  }
+  .sli-content {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 12px;
+    padding: 12px 14px 14px;
+  }
+  .sli:active { transform: scale(0.985); }
+  .sli[data-region="tokyo23"]   { border-left-color: var(--color-coral); }
+  .sli[data-region="tokyo-2nd"] { border-left-color: var(--color-purple); }
+  .sli[data-region="yamanashi"] { border-left-color: var(--color-green); }
+
+  .sli-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 2px;
+    border-right: 1px dashed var(--color-border);
+    padding-right: 6px;
+  }
+  .sli-date-month {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-soft);
+  }
+  .sli-date-day {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-ink);
+    margin-top: 1px;
+  }
+  .sli-date-dow {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    margin-top: 4px;
+  }
+  .sli-date-approx {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    line-height: 1.2;
+    margin-top: 3px;
+  }
+
+  .sli-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sli-region {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-coral);
+    margin-bottom: 3px;
+  }
+  .sli[data-region="tokyo-2nd"] .sli-region { color: var(--color-purple); }
+  .sli[data-region="yamanashi"] .sli-region { color: var(--color-green); }
+  .sli-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .sli-venue {
+    font-size: 11px;
+    color: var(--color-ink-soft);
+    margin-top: 6px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sli-venue::before {
+    content: '📍';
+    font-size: 10px;
+    margin-right: 3px;
+    opacity: 0.7;
+  }
+  .sli-desc {
+    font-size: 11.5px;
+    color: var(--color-ink);
+    line-height: 1.55;
+    margin: 8px 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .sli-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .sli-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .sli-badge.open {
+    background: var(--color-green-soft);
+    color: #4d6a1d;
+  }
+  .sli-badge.closed {
+    background: var(--color-yellow-soft);
+    color: #8a5a00;
+  }
+  .sli-arrow {
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--color-ink-soft);
+    line-height: 1;
+  }
+
+  /* Media banner (flyer / YouTube / logo fallback) — full-width top banner */
+  .sli-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-card-alt);
+    position: relative;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sli-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .sli-media.is-flyer img {
+    object-fit: contain;
+    background: #f5ede1;
+  }
+  /* Flyer box fitted to image aspect ratio (no horizontal letterboxing) */
+  .sli-media.is-flyer.is-fitted img {
+    object-fit: cover;
+    object-position: center top;
+  }
+  /* Simple logo fallback (image load error) */
+  .sli-media.is-logo {
+    background: linear-gradient(135deg, var(--color-yellow-soft) 0%, var(--color-coral-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sli-media.is-logo img {
+    width: auto;
+    height: 56%;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.08));
+  }
+  /* No-media poster: faint logo watermark + event name (mirrors detail-page typography) */
+  .sli-media.is-poster {
+    background: linear-gradient(135deg, var(--color-coral-soft) 0%, var(--color-yellow-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sli-media.is-poster::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 18% 84%, rgba(240,206,64,0.35) 0%, transparent 50%),
+      radial-gradient(circle at 84% 16%, rgba(93,194,189,0.28) 0%, transparent 50%);
+    z-index: 0;
+  }
+  .sli-poster-logo {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 62%;
+    max-width: 220px;
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sli-poster-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 10px 18px;
+  }
+  .sli-poster-area {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--color-coral);
+    line-height: 1.3;
+  }
+  .sli-media.is-yt { background: #111; }
+  .sli-media.is-yt img { opacity: 0.92; }
+  .sli-media-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(220, 38, 38, 0.92);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    pointer-events: none;
+  }
+  .sli-media-play::before {
+    content: '';
+    border-style: solid;
+    border-width: 10px 0 10px 15px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 4px;
+  }
+  .sli-media-yt-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(220, 38, 38, 0.92);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+  .sli-media-yt-badge::before {
+    content: '';
+    border-style: solid;
+    border-width: 4px 0 4px 6px;
+    border-color: transparent transparent transparent #fff;
+  }
+
+  /* Tab-based region highlight: soft-color fill for matching cards, dim others */
   .area-pill { transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
-  .area-pill.is-region-dim { opacity: 0.4; }
+  .area-pill.is-region-dim { opacity: 0.35; pointer-events: none; cursor: default; }
   .area-pill.is-active-region[data-region="tokyo23"] {
     background: var(--color-coral-soft);
     border-color: var(--color-coral);
@@ -1477,6 +2189,172 @@
     font-size: 13px;
     color: var(--color-ink);
     line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  /* ====== EVENT DETAIL: flyer / typography / sessions / extras ====== */
+  .event-flyer-wrap {
+    margin-top: 16px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-card-alt);
+  }
+  .event-flyer-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .event-poster-typo {
+    margin-top: 16px;
+    aspect-ratio: 4/5;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-coral-soft) 0%, var(--color-yellow-soft) 100%);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px 22px;
+  }
+  .event-poster-typo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 18% 85%, rgba(240,206,64,0.4) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(93,194,189,0.32) 0%, transparent 50%);
+    z-index: 0;
+  }
+  .event-poster-watermark {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 78%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .event-poster-typo .event-poster-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+  .event-poster-typo .event-poster-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    font-weight: 800;
+    color: var(--color-coral);
+    margin-bottom: 8px;
+  }
+  .event-poster-typo .event-poster-title-jp {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .event-poster-typo .event-poster-sub-jp {
+    font-family: var(--font-script);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-coral);
+    line-height: 1.1;
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-top: 8px;
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.6);
+  }
+
+  .event-sessions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .event-session {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 10px;
+    background: var(--color-coral-soft);
+    border-radius: var(--radius-sm);
+  }
+  .event-session.single {
+    background: transparent;
+    padding: 0;
+  }
+  .event-session-date {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .event-session-time {
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    font-weight: 500;
+  }
+  .event-session-label {
+    font-size: 10.5px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-coral);
+    margin-bottom: 2px;
+  }
+
+  .event-no-external {
+    margin: 16px 20px 0;
+    padding: 14px 16px;
+    background: var(--color-yellow-soft);
+    border: 1.5px solid var(--color-yellow);
+    border-radius: var(--radius-md);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--color-ink);
+    text-align: center;
+  }
+  .event-no-external strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-coral);
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .event-no-external p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--color-ink-soft);
+  }
+
+  .event-linktree {
+    display: flex;
+    margin: 14px 20px 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 16px;
+    background: var(--color-card);
+    border: 2px solid var(--color-coral);
+    color: var(--color-coral);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 13.5px;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 0 rgba(214,72,57,0.3);
+  }
+  .event-linktree:active { transform: translateY(1px); box-shadow: none; }
+  .event-linktree svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* ============ ARTICLE DETAIL PAGE ============ */
@@ -1781,6 +2659,12 @@
   .drawer-list button:active { background: var(--color-coral-soft); }
   .drawer-list button .chev { color: var(--color-ink-soft); font-size: 18px; }
 
+  /* YouTube embed used as hero (inside .event-hero box) */
+  .event-video-hero.video-wrap {
+    margin: 16px 0 0;
+    border-color: transparent;
+  }
+
   /* ============ YOUTUBE VIDEO WRAPPER ============ */
   .video-wrap {
     position: relative;
@@ -1937,6 +2821,45 @@
   .qa-list {
     margin: 0 20px;
   }
+  .qa-section {
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+  }
+  .qa-section.qa-organizer {
+    margin-top: 28px;
+    padding: 18px 14px 12px;
+    background: rgba(93,194,189,0.05);
+    border-radius: var(--radius-md);
+  }
+  .qa-section-header {
+    margin: 4px 4px 18px;
+    text-align: center;
+  }
+  .qa-section-eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 999px;
+    color: #fff;
+  }
+  .qa-section.qa-visitor .qa-section-eyebrow { background: var(--color-coral); }
+  .qa-section.qa-organizer .qa-section-eyebrow { background: var(--color-teal); }
+  .qa-section-title {
+    margin: 10px 0 4px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .qa-section-desc {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
   .qa-item {
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
@@ -1949,7 +2872,7 @@
     cursor: pointer;
     padding: 16px 18px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     font-size: 14px;
     font-weight: 700;
@@ -1957,21 +2880,28 @@
     line-height: 1.55;
   }
   .qa-item summary::-webkit-details-marker { display: none; }
-  .qa-item summary::before {
-    content: 'Q';
+  .qa-icon {
     flex-shrink: 0;
-    width: 26px; height: 26px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: var(--color-coral);
-    color: white;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 13px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1px;
   }
+  .qa-icon.coral  { background: var(--color-coral);  }
+  .qa-icon.yellow { background: var(--color-yellow); }
+  .qa-icon.green  { background: var(--color-green);  }
+  .qa-icon.teal   { background: var(--color-teal);   }
+  .qa-icon.purple { background: var(--color-purple); }
+  .qa-icon svg {
+    width: 16px; height: 16px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .qa-summary-text { flex: 1; }
   .qa-item summary .chev {
     margin-left: auto;
     color: var(--color-ink-soft);
@@ -1981,12 +2911,39 @@
   .qa-item[open] summary .chev { transform: rotate(180deg); }
 
   .qa-body {
-    padding: 0 18px 18px 56px;
+    padding: 0 18px 18px 62px;
     font-size: 13.5px;
     color: var(--color-ink);
     line-height: 1.85;
   }
   .qa-body p { margin-bottom: 10px; }
+  .qa-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 10px 18px;
+    background: var(--color-coral);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 3px 0 rgba(214,72,57,0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .qa-cta-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(214,72,57,0.35);
+  }
+  .qa-cta-btn svg {
+    width: 12px; height: 12px;
+    stroke: #fff; fill: none;
+    stroke-width: 2.5;
+  }
   .qa-quote {
     margin: 10px 0;
     padding: 10px 14px;
@@ -2010,6 +2967,61 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+  /* ============ MOTION / ANIMATIONS ============ */
+  /* Scroll reveal (cards, section titles, etc.) */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.7,.2,1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* Section title underline draws in when visible */
+  .section-title::after { transition: width 0.6s cubic-bezier(.2,.7,.2,1); }
+  .section-title.reveal:not(.is-visible)::after { width: 0; }
+
+  /* "まもなく開催" badge pulse */
+  .upcoming-item.is-soon .upcoming-badge,
+  .upcoming-badge {
+    animation: badgePulse 1.9s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(214,72,57,0.45); }
+    50%     { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(214,72,57,0); }
+  }
+  /* Schedule pill "まもなく開催！" label pulse */
+  .area-pill.is-soon::before { animation: badgePulse 1.9s ease-in-out infinite; }
+
+  /* Detail page media reveal (replayed on each open) */
+  .event-hero.ed-reveal .event-flyer-wrap,
+  .event-hero.ed-reveal .event-video-hero,
+  .event-hero.ed-reveal .event-poster-typo {
+    animation: fadeInUp 1.1s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Q&A body fade-in on open */
+  .qa-item[open] .qa-body { animation: qaReveal 0.34s ease both; }
+  @keyframes qaReveal {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Button hover lift (subtle) */
+  .btn-primary, .btn-secondary, .detail-cta button { transition: transform 0.15s ease, box-shadow 0.2s ease; }
+  @media (hover: hover) {
+    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover { transform: translateY(-2px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .upcoming-badge, .area-pill.is-soon::before,
+    .event-hero.ed-reveal .event-flyer-wrap,
+    .event-hero.ed-reveal .event-video-hero,
+    .event-hero.ed-reveal .event-poster-typo,
+    .qa-item[open] .qa-body { animation: none !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -2039,7 +3051,7 @@
       <!-- Logo -->
       <div class="logo-wrap"><img src="assets/logo.png" alt="YOUTH ACTION FES 2026" style="width:100%;height:auto;display:block;"></div>
 
-      <div style="margin-top:18px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
+      <div style="margin-top:4px;"><span class="hero-region">TOKYO &amp; YAMANASHI</span></div>
       <div class="hero-tagline">Fes Navi</div>
     </div>
 
@@ -2048,25 +3060,31 @@
       <div class="about-tag">Think globally, Fes locally.</div>
       <div class="about-headline">私の街を、舞台にしよう。</div>
       <div class="about-body">
-        <p>一歩外に出れば、きっと素敵な出会いが待っている。<br>
-        ユースアクションフェスは、そんな"ときめき"を探しに来てほしい、あなたの街のフェスティバルです。</p>
-        <p>友達と来ても、ひとりで来ても。はじめましてでも、久しぶりでも。どんなかたちでも、大歓迎です。</p>
-        <p>東京のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
-        <p>あなたの街にも、きっと熱い舞台がある。まずは、気軽に来てみてください。</p>
+        <p class="about-lead">一歩外に出れば、きっと素敵な出会いが待っている。<br>
+        ユースアクションフェスは、そんな“ときめき”を探しに来てほしい、<strong>あなたの街のフェスティバル</strong>です。</p>
+        <p>東京・山梨のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
+        <p>あなたの街にも、きっと熱い舞台がある。</p>
+      </div>
+
+      <div class="about-can">
+        <div class="about-can-title">Fes Naviでできること</div>
+        <ul class="about-can-list">
+          <li>お住まいの地域や、気になる街のフェス情報を <strong>まとめてチェック</strong></li>
+          <li>各フェスの <strong>開催日・会場・雰囲気</strong> を一覧で確認</li>
+          <li>お住まいではない地域のフェスへの <strong>事前申し込み</strong></li>
+        </ul>
       </div>
     </section>
 
     <section class="find-events">
       <div class="find-events-title">Find Your Events</div>
-      <p class="find-events-note">自分の総区・区以外のイベントにも参加できます。お気軽にお越しください。</p>
+      <p class="find-events-note">お住まいの地域以外のフェスにも参加できます。</p>
       <div class="find-events-buttons">
-        <button class="btn-primary btn-find" onclick="goToPage('page-region')">
+        <button class="btn-primary btn-find btn-find-solo" onclick="goToPage('page-region')">
           <span class="btn-find-main">近くの会場を探す</span>
-          <span class="btn-find-sub">地域から会場を選ぶ</span>
         </button>
-        <button class="btn-secondary btn-find" onclick="goToPage('page-schedule', 'all')">
+        <button class="btn-secondary btn-find btn-find-solo" onclick="goToPage('page-schedule', 'all')">
           <span class="btn-find-main">開催一覧</span>
-          <span class="btn-find-sub">全エリアの月別スケジュール</span>
         </button>
       </div>
     </section>
@@ -2118,7 +3136,7 @@
 
     <div class="links-header">
       <h1 class="links-title">公式リンク集</h1>
-      <p class="links-subtitle">会合での共有や、個人での研鑽・<br>気になる話題のチェックにもどうぞ。</p>
+      <p class="links-subtitle">会合での共有や、個人での研鑽など、<br>気になる話題のチェックにもどうぞ。</p>
     </div>
 
     <a href="https://sokadisearch.org/" target="_blank" rel="noopener noreferrer" class="link-card coral">
@@ -2144,7 +3162,7 @@
         </div>
         <div class="link-info">
           <div class="link-name">Soka Youth Media <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">全国のユースの挑戦・体験・声を記事で発信中。</div>
+          <div class="link-desc">青年世代の挑戦・体験・声を記事で発信中。</div>
         </div>
       </div>
       <span class="link-cta purple">
@@ -2160,7 +3178,7 @@
         </div>
         <div class="link-info">
           <div class="link-name">Soka Gakkai グローバルサイト <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">創価学会の活動・哲学・歴史を世界に向けて発信する公式サイト。</div>
+          <div class="link-desc">創価学会の活動や大切にしていることを世界へ発信する公式サイト。</div>
         </div>
       </div>
       <span class="link-cta teal">
@@ -2201,14 +3219,14 @@
       </span>
     </a>
 
-    <a href="https://www.youtube.com/channel/UC1GsBI4yJhQmW-Zp-NuXDNg" target="_blank" rel="noopener noreferrer" class="link-card red">
+    <a href="https://www.youtube.com/@seikyoshimbun" target="_blank" rel="noopener noreferrer" class="link-card red">
       <div class="link-header">
         <div class="link-icon red">
           <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </div>
         <div class="link-info">
-          <div class="link-name">聖教公式YouTube <span style="font-size:13px;">↗</span></div>
-          <div class="link-desc">SOKAnetチャンネル — 信仰・人生・社会に光を当てる動画を配信。</div>
+          <div class="link-name">聖教新聞公式チャンネル <span style="font-size:13px;">↗</span></div>
+          <div class="link-desc">ニュースや信仰体験、世界に広がるSGIの取り組みまで、紙上では伝わりきらない内容を動画で配信。</div>
         </div>
       </div>
       <span class="link-cta red">
@@ -2217,10 +3235,6 @@
       </span>
     </a>
 
-    <div class="about-card">
-      <span>このサイトについて</span>
-      <span style="color: var(--color-ink-soft);">›</span>
-    </div>
   </div>
 
   <!-- ====================== SEARCH DETAIL ====================== -->
@@ -2433,51 +3447,63 @@
       <h2 class="section-title" style="margin-top:8px;">地域を選ぶ</h2>
       <span class="region-prompt">
         <svg class="icon-svg" style="width:14px;height:14px;stroke:var(--color-coral);" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        行きたい地域をタップ
+        気になるエリアをタップ
       </span>
     </div>
 
-    <div class="region-card tokyo" onclick="goToPage('page-schedule', 'tokyo23')">
-      <div class="region-card-title">
-        <div>
-          <span class="region-name">TOKYO 23</span>
-          <span class="region-name-jp">東京23区</span>
-        </div>
-        <div class="region-arrow">›</div>
-      </div>
-      <div class="region-map">
-        <img src="assets/region-tokyo23.png" alt="東京23区" loading="lazy">
-      </div>
-      <div class="region-info">23区エリアの開催情報</div>
+    <!-- Top: panoramic illustration with tappable location-pin labels (no inner icon) -->
+    <div class="region-panorama">
+      <img class="region-panorama-img" src="assets/illust-panorama.png" alt="東京・山梨エリアマップ"
+           onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+      <button type="button" class="panorama-pin pin-yamanashi" onclick="goToPage('page-schedule', 'yamanashi')" aria-label="山梨エリアを表示">
+        <span class="pin-text"><span class="pin-jp">山梨</span><span class="pin-en">YAMANASHI</span></span>
+      </button>
+      <button type="button" class="panorama-pin pin-tama" onclick="goToPage('page-schedule', 'tokyo-2nd')" aria-label="東京多摩エリアを表示">
+        <span class="pin-text"><span class="pin-jp">東京<br>（多摩）</span><span class="pin-en">TOKYO TAMA</span></span>
+      </button>
+      <button type="button" class="panorama-pin pin-tokyo23" onclick="goToPage('page-schedule', 'tokyo23')" aria-label="東京23区エリアを表示">
+        <span class="pin-text"><span class="pin-jp">東京<br>（23区）</span><span class="pin-en">TOKYO 23</span></span>
+      </button>
     </div>
 
-    <div class="region-card tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
-      <div class="region-card-title">
-        <div>
-          <span class="region-name">TOKYO TAMA</span>
-          <span class="region-name-jp">東京（多摩地域）</span>
-        </div>
-        <div class="region-arrow" style="background:var(--color-purple);">›</div>
-      </div>
-      <div class="region-map">
-        <img src="assets/region-tokyo2nd.png" alt="東京（多摩地域）" loading="lazy">
-      </div>
-      <div class="region-info">多摩エリアの開催情報</div>
-    </div>
+    <h3 class="region-section-title">
+      <svg class="icon-svg" style="width:14px;height:14px;stroke:var(--color-coral);" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      エリアを選んでイベントを探す
+    </h3>
 
-    <div class="region-card yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
-      <div class="region-card-title">
-        <div>
-          <span class="region-name">YAMANASHI</span>
-          <span class="region-name-jp">山梨</span>
+    <!-- Bottom: cards with full-width illustration background + semi-transparent text overlay -->
+    <button type="button" class="region-illust-card" data-region="tokyo23" onclick="goToPage('page-schedule', 'tokyo23')">
+      <img class="ric-bg" src="assets/illust-tokyo23.jpg" alt="" onerror="this.style.display='none'">
+      <div class="ric-overlay">
+        <div class="ric-text">
+          <div class="ric-name-jp">東京（23区）</div>
+          <div class="ric-name-en">TOKYO 23</div>
         </div>
-        <div class="region-arrow" style="background:var(--color-green);">›</div>
+        <span class="ric-arrow" aria-hidden="true">›</span>
       </div>
-      <div class="region-map">
-        <img src="assets/region-yamanashi.png" alt="山梨" loading="lazy">
+    </button>
+
+    <button type="button" class="region-illust-card" data-region="tokyo-2nd" onclick="goToPage('page-schedule', 'tokyo-2nd')">
+      <img class="ric-bg" src="assets/illust-tama.jpg" alt="" onerror="this.style.display='none'">
+      <div class="ric-overlay">
+        <div class="ric-text">
+          <div class="ric-name-jp">東京（多摩）</div>
+          <div class="ric-name-en">TOKYO TAMA</div>
+        </div>
+        <span class="ric-arrow" aria-hidden="true">›</span>
       </div>
-      <div class="region-info">県内全エリアの開催情報</div>
-    </div>
+    </button>
+
+    <button type="button" class="region-illust-card" data-region="yamanashi" onclick="goToPage('page-schedule', 'yamanashi')">
+      <img class="ric-bg" src="assets/illust-yamanashi.jpg" alt="" onerror="this.style.display='none'">
+      <div class="ric-overlay">
+        <div class="ric-text">
+          <div class="ric-name-jp">山梨</div>
+          <div class="ric-name-en">YAMANASHI</div>
+        </div>
+        <span class="ric-arrow" aria-hidden="true">›</span>
+      </div>
+    </button>
   </div>
 
   <!-- ====================== SCHEDULE (MONTH LIST) ====================== -->
@@ -2489,15 +3515,23 @@
 
     <div class="links-header">
       <h1 class="links-title">開催スケジュール</h1>
-      <p class="links-subtitle">月別開催情報</p>
+      <p class="links-subtitle">エリア名をタップして、<br>近くの会場を探そう！</p>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
       <button class="tab tab-all active" data-schedule-tab="all">ALL</button>
-      <button class="tab" data-schedule-tab="tokyo23">東京23区</button>
-      <button class="tab" data-schedule-tab="tokyo-2nd">東京（多摩地域）</button>
+      <button class="tab" data-schedule-tab="tokyo23">東京（23区）</button>
+      <button class="tab" data-schedule-tab="tokyo-2nd">東京（多摩）</button>
       <button class="tab" data-schedule-tab="yamanashi">山梨</button>
     </div>
+
+    <!-- ALL view: chronological summary card list (populated by JS) -->
+    <div class="schedule-list" id="schedule-list" aria-label="開催イベント一覧">
+      <!-- populated by JS from REGION_EVENTS sorted by date -->
+    </div>
+
+    <!-- Region view: per-month area-pill grid (hidden when ALL is selected) -->
+    <div id="schedule-by-month">
 
     <!-- 7月 -->
     <div class="month-section" id="schedule-month-7">
@@ -2507,64 +3541,59 @@
         <span class="month-label">JULY</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-05T13:00" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-04T15:00" data-event-id="ota" onclick="openEventDetail('ota')">
           <div class="area-pill-name">大田総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">調布総区</div>
-          <div class="area-pill-sub">調布市・狛江市</div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="tama-ikeda" onclick="openEventDetail('tama-ikeda')">
+          <div class="area-pill-name">多摩池田総区</div>
+          <div class="area-pill-sub">多摩市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">千代田区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">渋谷総区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">八王子総区</div>
-          <div class="area-pill-sub">八王子市</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">中央区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="gakuen" onclick="openEventDetail('gakuen')">
           <div class="area-pill-name">学園総区</div>
           <div class="area-pill-sub">小平市・西東京市</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-05" data-event-id="chiyoda" onclick="openEventDetail('chiyoda')">
+          <div class="area-pill-name">千代田総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="hachioji" onclick="openEventDetail('hachioji')">
+          <div class="area-pill-name">八王子総区</div>
+          <div class="area-pill-sub">八王子市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-19T10:00" data-event-id="shinjuku" onclick="openEventDetail('shinjuku')">
+          <div class="area-pill-name">新宿総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-20" data-event-id="chofu" onclick="openEventDetail('chofu')">
+          <div class="area-pill-name">調布総区</div>
+          <div class="area-pill-sub">調布市・狛江市</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26T10:00" data-event-id="musashino" onclick="openEventDetail('musashino')">
           <div class="area-pill-name">武蔵野総区</div>
           <div class="area-pill-sub">武蔵野市・三鷹市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-19T13:00" data-event-target="page-event-shinjuku" onclick="goToPage('page-event-shinjuku')">
-          <div class="area-pill-name">新宿総区</div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="ome" onclick="openEventDetail('ome')">
+          <div class="area-pill-name">青梅総区</div>
+          <div class="area-pill-sub">青梅市</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="fuchu" onclick="openEventDetail('fuchu')">
           <div class="area-pill-name">府中総区</div>
           <div class="area-pill-sub">府中市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-31" data-event-id="shibuya" onclick="openEventDetail('shibuya')">
+          <div class="area-pill-name">渋谷総区</div>
         </div>
       </div>
     </div>
 
-    <!-- 9月 -->
-    <div class="month-section" id="schedule-month-9">
+    <!-- 8月 -->
+    <div class="month-section" id="schedule-month-8">
       <div class="month-header">
-        <span class="month-num">9</span>
+        <span class="month-num">8</span>
         <span class="month-suffix">月開催</span>
-        <span class="month-label">SEPTEMBER</span>
+        <span class="month-label">AUGUST</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">江戸川総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">港区</div>
-        </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">小金井総区</div>
-          <div class="area-pill-sub">小金井市・国分寺市・国立市</div>
-        </div>
-        <div class="area-pill" data-region="yamanashi" data-event-date="2026-09-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">山梨総県</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-08-29" data-event-id="chuo" onclick="openEventDetail('chuo')">
+          <div class="area-pill-name">中央区</div>
         </div>
       </div>
     </div>
@@ -2577,31 +3606,59 @@
         <span class="month-label">OCTOBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">秋川総区</div>
-          <div class="area-pill-sub">福生市・あきる野市・日の出町・檜原村</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="toshima" onclick="openEventDetail('toshima')">
+          <div class="area-pill-name">豊島総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="sumida" onclick="openEventDetail('sumida')">
+          <div class="area-pill-name">墨田総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="minato" onclick="openEventDetail('minato')">
+          <div class="area-pill-name">港区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="arakawa" onclick="openEventDetail('arakawa')">
           <div class="area-pill-name">荒川総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="taito" onclick="openEventDetail('taito')">
+          <div class="area-pill-name">台東区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="shinagawa" onclick="openEventDetail('shinagawa')">
+          <div class="area-pill-name">品川総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="edogawa" onclick="openEventDetail('edogawa')">
+          <div class="area-pill-name">江戸川総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="meguro" onclick="openEventDetail('meguro')">
+          <div class="area-pill-name">目黒総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa" onclick="openEventDetail('shintachikawa')">
+          <div class="area-pill-name">新立川総区</div>
+          <div class="area-pill-sub">昭島市・日野市・立川市（4会場）</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="suginami" onclick="openEventDetail('suginami')">
+          <div class="area-pill-name">杉並総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="nerima" onclick="openEventDetail('nerima')">
+          <div class="area-pill-name">練馬総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="murayama" onclick="openEventDetail('murayama')">
+          <div class="area-pill-name">村山総区</div>
+          <div class="area-pill-sub">東大和市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="itabashi" onclick="openEventDetail('itabashi')">
+          <div class="area-pill-name">板橋総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="bunkyo" onclick="openEventDetail('bunkyo')">
+          <div class="area-pill-name">文京区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="machida" onclick="openEventDetail('machida')">
           <div class="area-pill-name">町田総区</div>
           <div class="area-pill-sub">町田市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">文京区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-28" data-event-id="kita" onclick="openEventDetail('kita')">
+          <div class="area-pill-name">北総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">目黒総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">台東区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">中野総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">品川総区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-id="adachi" onclick="openEventDetail('adachi')">
+          <div class="area-pill-name">足立総区</div>
         </div>
       </div>
     </div>
@@ -2614,17 +3671,28 @@
         <span class="month-label">NOVEMBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="yamanashi" data-event-date="2026-11-01" data-event-id="yamanashi" onclick="openEventDetail('yamanashi')">
+          <div class="area-pill-name">山梨総県</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="nakano" onclick="openEventDetail('nakano')">
+          <div class="area-pill-name">中野総区</div>
+        </div>
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-11-08" data-event-id="koganei" onclick="openEventDetail('koganei')">
+          <div class="area-pill-name">小金井総区</div>
+          <div class="area-pill-sub">小金井市・国分寺市・国立市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="katsushika" onclick="openEventDetail('katsushika')">
+          <div class="area-pill-name">葛飾総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="koto" onclick="openEventDetail('koto')">
           <div class="area-pill-name">江東総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-29" data-event-id="setagaya" onclick="openEventDetail('setagaya')">
           <div class="area-pill-name">世田谷総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-30" data-event-target="page-event-detail" onclick="goToPage('page-event-detail')">
-          <div class="area-pill-name">葛飾総区</div>
         </div>
       </div>
     </div>
+    </div><!-- /#schedule-by-month -->
   </div>
 
   <!-- ====================== EVENT LIST PAGE ====================== -->
@@ -2637,63 +3705,60 @@
     <div class="gallery-header">
       <div class="gallery-eyebrow">Photo Gallery</div>
       <div class="gallery-jp">ギャラリー</div>
-      <p class="gallery-subtitle">街のリアルなフェスティバルの様子をのぞき見してみよう</p>
+      <p class="gallery-subtitle">各地で開催されるフェスの様子を、<br>お届けします！</p>
     </div>
 
-    <div class="gallery-grid">
-      <div class="gallery-item gallery-wide">
-        <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&h=500&fit=crop&q=80" alt="盛り上がる観客" loading="lazy">
+    <div class="gallery-coming-soon">
+      <div class="gallery-photo-grid" aria-hidden="true">
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=400&fit=crop&auto=format')"></div>
+        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=400&h=400&fit=crop&auto=format')"></div>
       </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&h=500&fit=crop&q=80" alt="ステージのライト" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="coming-soon-eyebrow">STAY TUNED</span>
+        <div class="coming-soon-title">Coming Soon</div>
+        <p class="coming-soon-msg">写真は現在準備中です。<br>各地のフェスの様子を、<br>もうしばらくお待ちください。</p>
       </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&h=500&fit=crop&q=80" alt="マーケットの賑わい" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=500&h=500&fit=crop&q=80" alt="フェスティバル" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500&h=500&fit=crop&q=80" alt="花火と祭り" loading="lazy">
-      </div>
-      <div class="gallery-item gallery-wide">
-        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?w=800&h=500&fit=crop&q=80" alt="ストリートのお祭り" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&h=500&fit=crop&q=80" alt="若者の交流" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=500&h=500&fit=crop&q=80" alt="ダンスパフォーマンス" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=500&fit=crop&q=80" alt="路上ライブ" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&h=500&fit=crop&q=80" alt="フードと屋台" loading="lazy">
-      </div>
-    </div>
-
-    <div class="gallery-caption">
-      <p>※ イメージ画像です。実際の会場の雰囲気は各エリアによって異なります。</p>
     </div>
   </div>
 
-  <!-- ====================== EVENT DETAIL PAGE ====================== -->
+  <!-- ====================== EVENT DETAIL PAGE (template) ====================== -->
   <div class="page" id="page-event-detail">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-event')">‹</button>
-      <button class="menu-btn"><span></span><span></span><span></span></button>
+      <button class="back-btn" onclick="goToPage('page-schedule')">‹</button>
+      <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
-    <div class="event-hero">
-      <div class="event-eyebrow">SHINJUKU AREA</div>
-      <div class="event-name-en">Youth Festa 2026</div>
-      <div class="event-name-jp">ユース・フェスタ 2026</div>
-      <div class="event-poster">
+    <div class="event-hero" id="ed-hero">
+      <div class="event-eyebrow" id="ed-eyebrow">AREA</div>
+      <div class="event-name-en" id="ed-name-en"></div>
+      <div class="event-name-jp" id="ed-name-jp"></div>
+
+      <!-- Hero: flyer image (when available) -->
+      <div class="event-flyer-wrap" id="ed-hero-flyer-wrap" style="display:none;">
+        <img id="ed-hero-flyer" alt="イベントフライヤー">
+      </div>
+
+      <!-- Hero: YouTube embed (when no flyer but video exists) -->
+      <div class="event-video-hero video-wrap" id="ed-video" style="display:none;">
+        <iframe id="ed-video-iframe" src="" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <!-- Hero: logo watermark + typography (fallback when no media) -->
+      <div class="event-poster-typo" id="ed-hero-typo" style="display:none;">
+        <img class="event-poster-watermark" src="assets/logo.png" alt="">
         <div class="event-poster-content">
-          <div class="event-poster-title">YOUTH<br>FESTA</div>
-          <div class="event-poster-sub">MUSIC · DANCE · ART</div>
-          <div class="event-poster-date">2026</div>
+          <div class="event-poster-eyebrow" id="ed-hero-poster-eyebrow"></div>
+          <div class="event-poster-title-jp" id="ed-hero-poster-title"></div>
+          <div class="event-poster-sub-jp" id="ed-hero-poster-sub">Coming Soon</div>
         </div>
       </div>
     </div>
@@ -2701,35 +3766,36 @@
     <div class="info-block">
       <div class="info-label">DATE</div>
       <div class="info-value">
-        2026年7月某日(土)
-        <span class="info-value-sub">開場 13:00 / 開演 14:00</span>
+        <div class="event-sessions" id="ed-sessions"></div>
       </div>
     </div>
 
     <div class="info-block">
       <div class="info-label">VENUE</div>
       <div class="info-value">
-        創価学会 新宿文化会館
-        <span class="info-value-sub">新宿区○-○-○</span>
+        <span id="ed-venue"></span>
+        <span class="info-value-sub" id="ed-address"></span>
       </div>
     </div>
 
-    <div class="info-block">
-      <div class="info-label">FORM</div>
-      <div class="info-value" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <span>事前登録が必要です</span>
-        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-join')">登録する</button>
-      </div>
-    </div>
-
-    <div class="event-content">
+    <div class="event-content" id="ed-content-wrap" style="display:none;">
       <div class="event-content-title">EVENT CONTENT</div>
-      <div class="event-content-text">
-        音楽ライブ、ダンスパフォーマンス、アート展示など、ユースの才能が集結する一日限りのスペシャルイベント。仲間と一緒に新しい体験を楽しみましょう。事前登録の上、ぜひ会場にお越しください。
-      </div>
+      <div class="event-content-text" id="ed-description"></div>
     </div>
 
-    <div class="detail-cta coral" style="margin-top:20px;">
+    <a id="ed-linktree" class="event-linktree" target="_blank" rel="noopener noreferrer" style="display:none;">
+      <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <span id="ed-linktree-label">公式リンクを見る</span>
+    </a>
+
+    <div class="event-no-external" id="ed-no-external" style="display:none;">
+      <strong>このフェスは、他地域からの参加を<br>受け付けておりません。</strong>
+      <p>対象地域にお住まいの方は、<br>
+      お声がけいただいた方や所属組織を通じて<br>
+      お申し込みください。</p>
+    </div>
+
+    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
       <button onclick="goToPage('page-join')">
         参加を申し込む
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -2821,33 +3887,27 @@
     <div class="join-self-area">
       <div class="join-self-area-icon">✓</div>
       <div>
-        <div class="join-self-area-title">お住まいの地域で開催される場合</div>
-        <p>事前のお申し込みは不要です。当日、そのまま会場にお越しください。<br>詳しいご案内は、地域や、お声がけいただいた方からお届けします。</p>
+        <p>お住まいの地域で開催されるフェスへ参加される方は、<strong>こちらのフォームでのお申し込みは不要です。</strong><br>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
       </div>
     </div>
 
     <div class="join-eligibility">
-      <p class="join-eligibility-lead">区外・総区外から参加される方は、下記をご一読ください。</p>
+      <p class="join-eligibility-lead"><strong style="text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--color-coral);">お住まいの地域以外のフェスに参加されたい方</strong>は、下記フォームよりお申し込みください。</p>
 
       <div class="join-rule">
-        <div class="join-rule-title">他の総区・区にお住まいの会員の方</div>
-        <p>こちらのフォームからお申し込みいただければご参加いただけます。</p>
+        <div class="join-rule-title">お申し込み方法</div>
+        <p>下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえご送信ください。</p>
       </div>
 
-      <div class="join-rule">
-        <div class="join-rule-title">非会員の方</div>
-        <p>当日は会員の方と同伴でお越しください。お知り合いの会員に声をかけて、一緒にご参加ください。</p>
-      </div>
-
-      <p class="join-eligibility-note">※ ご自身の区内・総区内で開催されるイベントは、所属組織を通じてのお申し込みとなります。</p>
+      <p class="join-eligibility-note">※ 会場によっては他地域からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
     </div>
 
     <div class="join-actions">
-      <a class="btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd1PPswXfe1tr64dFr4926BpIfb9CeChc34cT8SPS6dlevXSA/viewform" target="_blank" rel="noopener noreferrer">
+      <a class="btn-primary" href="https://forms.gle/X2P4A2t1pMHmKnbc7" target="_blank" rel="noopener noreferrer">
         お申し込みフォームを開く
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
-      <a class="btn-secondary" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
         お問い合わせはこちら
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </a>
@@ -2982,74 +4042,164 @@
     </div>
 
     <div class="qa-list">
-      <details class="qa-item">
-        <summary>ユースアクションフェスの目的は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>創価学会が地域や社会にとっての「公共財」となり、信頼と貢献を広げていくことを目的としています。あわせて、本フェスを人材育成・弘教拡大の決勝点と位置づけています。</p>
-          <p>また、青年部が中心となり、内外の垣根を越えて、地域の友人や未入会のご家族との絆を深めるきっかけづくりを目指します。</p>
-        </div>
-      </details>
 
-      <details class="qa-item">
-        <summary>ユースアクションフェスの内容のイメージは？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>外部会場での開催も含め、誰もがワクワクし、未入会の方やご友人にも参加しやすい内容を目指します。</p>
-          <p>さらに、区長・市長などの外部有力者を招くことで、地域との友好と信頼を広げ、理解促進につなげていきます。</p>
-          <p>加えて、企画・運営には新たな人材を積極的に登用し、広宣流布の主体者の育成を図ります。</p>
-        </div>
-      </details>
-
-      <details class="qa-item">
-        <summary>社会貢献の意義は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>池田先生の御指導より——</p>
-          <div class="qa-quote">
-            牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
-            <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
+      <!-- ===== Section 1: 来場者の方向け ===== -->
+      <section class="qa-section qa-visitor">
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg>
+            </span>
+            <span class="qa-summary-text">このサイトでできることは？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>お住まいの地域や、気になる街のフェス情報をまとめてご覧いただけます。</p>
+            <p>開催スケジュールや各地域の様子を掲載していますので、参加の際の参考としてご活用ください。</p>
           </div>
-          <div class="qa-quote">
-            御書には「智者とは世間の法より外に仏法を行ず、世間の治世の法を能く能く心へて候を智者とは申すなり」（一四六六㌻）と仰せである。つまり、社会を大事にして、社会のために貢献し、活躍していくことが仏法であり、その人が「智者」であるというのである。（略）〝私たちが実際に何をなし、どれだけ社会に貢献できるかだ。その行動のなかに、学会の正しさを証明する道がある〟
-            <span class="qa-quote-source">（『新・人間革命』「源流」の章）</span>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon coral" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </span>
+            <span class="qa-summary-text">ユースアクションフェスって、どんなイベント？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>東京・山梨のあちこちで、同世代の若者たちが「自分の街を、舞台にしよう」と手作りで開いている、地域のフェスです。</p>
+            <p>音楽・ダンス・トーク・屋台など、内容は街ごとにさまざま。「来てよかった」と思っていただける時間を、出演者もスタッフも一緒になってつくっています。</p>
           </div>
-        </div>
-      </details>
+        </details>
 
-      <details class="qa-item">
-        <summary>学会の中でフェスを行う意義は？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>池田先生の御指導より——</p>
-          <div class="qa-quote">
-            学会の合唱祭や文化祭の重要な意味は、それを通して一人ひとりが信心を磨き、友情を深め、強い確信に立ち、発心の契機にしていくことにこそあります。
-            <span class="qa-quote-source">（『新・人間革命』「正義」の章）</span>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon yellow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 14.5 9 22 9.5 16 14.5 17.5 22 12 18 6.5 22 8 14.5 2 9.5 9.5 9"/></svg>
+            </span>
+            <span class="qa-summary-text">当日はどんな雰囲気？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>学会の会館だけでなく、区民ホールや街なかの会場で開催します。気軽な格好でご来場いただけます。</p>
+            <p>出演やステージ企画は地元の若者が中心。地域にお住まいの方々もたくさん足を運んでくださり、温かい雰囲気のなかで楽しんでいただけます。</p>
           </div>
-        </div>
-      </details>
+        </details>
 
-      <details class="qa-item">
-        <summary>本番までどのように進めていくの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>東京におけるユースアクションフェスは、総区または分区単位で開催されます。</p>
-          <p>それぞれ実行委員会を立ち上げ、協議を重ねながら、男子部・ヤング白ゆり・学生部・池田華陽会を中心に企画・運営を進めていきます。</p>
-        </div>
-      </details>
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon coral" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span class="qa-summary-text">自分が住んでいる地域以外でも参加できる？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>はい、ご参加いただけます。東京では、自分の住んでいる地域以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
+            <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。</p>
+            <button type="button" class="qa-cta-btn" onclick="goToPage('page-join')">
+              「参加する」ページへ
+              <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </details>
 
-      <details class="qa-item">
-        <summary>自分が住んでいる地域以外にも参加できるの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>はい、ご参加いただけます。東京では自分の住んでいる地域以外のユースアクションフェスにも参加が可能です。（受け入れ可能な総区のみ）</p>
-          <p>「東京のあちこちで、同じ時代を生きる仲間たちが、それぞれの街で本気のフェスを作っています」——気になる地域や、ご友人がいる地域など、ぜひお気軽に足を運んでみてください。</p>
-          <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。非会員の方は、お知り合いの会員の方とご一緒にご参加ください。</p>
-        </div>
-      </details>
+      </section>
 
-      <details class="qa-item">
-        <summary>このサイトは何に使うの？<span class="chev">›</span></summary>
-        <div class="qa-body">
-          <p>東京では、自区以外のユースアクションフェスにも参加することが可能です。（受け入れ可能な総区のみ）</p>
-          <p>友人の住む地域のフェス情報などをこのサイトからご覧いただけますので、参加の際の参考としてご活用ください。</p>
-          <p>また、各地域の取り組みや資料も掲載し、ユースアクションフェスに向けた運動の活性化にも役立てていただくことを目的としています。</p>
+      <!-- ===== Section 2: もっと詳しく ===== -->
+      <section class="qa-section qa-organizer">
+        <div class="qa-section-header">
+          <span class="qa-section-eyebrow">LEARN MORE</span>
+          <h2 class="qa-section-title">もっと詳しく</h2>
+          <p class="qa-section-desc">私たちが大切にしている考えについて</p>
         </div>
-      </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </span>
+            <span class="qa-summary-text">このフェスの目的は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>私たちの活動が、地域や社会の役に立つ存在であり続けたい——その思いから、信頼と貢献を地道に広げていくことを目的にしています。</p>
+            <p>また、フェスをきっかけに、若い世代がともに学び、育ち合う場をつくりたいと願っています。</p>
+            <p>青年メンバーが中心となり、立場を越えて、地域のご友人やご家族との絆を深めるひとときを目指しています。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon yellow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12c1 1 1 2 1 3h6c0-1 0-2 1-3a7 7 0 0 0-4-12z"/></svg>
+            </span>
+            <span class="qa-summary-text">どんな内容を目指しているの？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>外部会場での開催も含め、誰もがワクワクし、はじめての方やご友人にも気軽に来ていただける内容を目指しています。</p>
+            <p>地域の友好と信頼を広げる場にしていきたいと考えています。</p>
+            <p>また、企画・運営には新しい仲間を積極的に迎え、次の世代の担い手が育つきっかけにもしていきます。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon green" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+            <span class="qa-summary-text">社会貢献の意義は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>池田先生は次のようにご指導くださっています。</p>
+            <div class="qa-quote">
+              御書には「智者とは世間の法より外に仏法を行ず、世間の治世の法を能く能く心へて候を智者とは申すなり」（一四六六㌻）と仰せである。つまり、社会を大事にして、社会のために貢献し、活躍していくことが仏法であり、その人が「智者」であるというのである。（略）〝私たちが実際に何をなし、どれだけ社会に貢献できるかだ。その行動のなかに、学会の正しさを証明する道がある〟
+              <span class="qa-quote-source">（『新・人間革命』「源流」の章）</span>
+            </div>
+            <div class="qa-quote">
+              牧口先生は「社会に利益をあたえることが善である」と定義し、宗教の存在意義も、そこにあるとしていた。社会貢献こそ、SGIの根本精神である。
+              <span class="qa-quote-source">（1996.6 第21回SGI総会）</span>
+            </div>
+            <p>社会や世界に目を向け、「自分が今いる場所をより良い地域に」との思いで、足元から平和を広げていきましょう。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon coral" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 14.5 9 22 9.5 16 14.5 17.5 22 12 18 6.5 22 8 14.5 2 9.5 9.5 9"/></svg>
+            </span>
+            <span class="qa-summary-text">学会の中でフェスを行う意義は？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>池田先生は次のようにご指導くださっています。</p>
+            <div class="qa-quote">
+              学会の合唱祭や文化祭の重要な意味は、それを通して一人ひとりが信心を磨き、友情を深め、強い確信に立ち、発心の契機にしていくことにこそあります。
+              <span class="qa-quote-source">（『新・人間革命』「正義」の章）</span>
+            </div>
+            <p>ユースアクションフェスにむけて、信行学の挑戦を互いに共有し合いながら、1人でも多くのメンバーと共に、信心の歓喜を広げていきたいと思います。</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>
+            <span class="qa-icon purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span class="qa-summary-text">本番までどのように進めていくの？</span>
+            <span class="chev">›</span>
+          </summary>
+          <div class="qa-body">
+            <p>東京におけるユースアクションフェスは、地域単位で開催します。</p>
+            <p>それぞれの地域で実行委員会を立ち上げ、若い世代のメンバーが中心となって、話し合いを重ねながら企画・運営を進めています。</p>
+          </div>
+        </details>
+      </section>
+
     </div>
 
     <div style="height:24px;"></div>
@@ -3094,11 +4244,11 @@
       <span class="nav-label">スケジュール</span>
       <div class="nav-indicator"></div>
     </button>
-    <button class="nav-item" data-page="page-links">
+    <button class="nav-item" data-page="page-join">
       <div class="nav-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </div>
-      <span class="nav-label">リンク</span>
+      <span class="nav-label">参加する</span>
       <div class="nav-indicator"></div>
     </button>
     <button class="nav-item" data-page="page-qa">
@@ -3115,30 +4265,946 @@
       <span class="nav-label">ギャラリー</span>
       <div class="nav-indicator"></div>
     </button>
-    <button class="nav-item" data-page="page-join">
+    <button class="nav-item" data-page="page-links">
       <div class="nav-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       </div>
-      <span class="nav-label">参加する</span>
+      <span class="nav-label">リンク</span>
       <div class="nav-indicator"></div>
     </button>
   </nav>
 </div>
 
 <script>
+  // ====================== REGION EVENTS DATA ======================
+  const REGION_EVENTS = {
+    'nakano': {
+      region: 'tokyo23',
+      eyebrow: 'NAKANO AREA',
+      eventNameJp: 'NAKANO ユースアクション',
+      eventNameEn: 'NAKANO Youth Action',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: 'なかのZERO 視聴覚ホール',
+      address: '東京都中野区中野2-9-7',
+      allowExternal: true,
+      flyer: null,
+      youtube: 'https://youtu.be/Qt77FpOamkg',
+      linktree: null,
+      description: '「ひとりでも生きている時代。あえてつながる一歩を、中野で」をテーマに、内外の区民とつながり、未来を共に考える機会にします。区民意識調査（仮称）の結果発表やワークショップなどを予定しています。'
+    },
+    'arakawa': {
+      region: 'tokyo23',
+      eyebrow: 'ARAKAWA AREA',
+      eventNameJp: '荒川学縁祭「アラフェス」',
+      eventNameEn: 'ARAKAWA Festival',
+      sessions: [{ dateLabel: '2026年10月18日(日)' }],
+      venue: '創価学会 荒川文化会館',
+      address: '〒116-0001 東京都荒川区町屋7丁目10-4',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=14nHLCVN3ScK7qHldiXFeZmzlPu3DNaq8',
+      youtube: null,
+      linktree: 'https://lit.link/arakawafes2026',
+      description: '「広布に走れ」「ああ感激の同志あり」が発表された師弟の縁深き荒川文化会館で、下町・荒川らしい人情味あふれる温かなつながりを感じる「荒川学縁祭」を開催します。同世代との出会いや地域との交流を通して、新たな友情と希望が広がる一日へ。内外を問わず、すべての青年世代の方々に楽しんでいただけるステージ企画やブース企画を、会館全館を会場として展開します。'
+    },
+    'tama-ikeda': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TAMA-IKEDA AREA',
+      eventNameJp: '2026 YOUTH SUMMER FES',
+      eventNameEn: '2026 Youth Summer Fes',
+      sessions: [{ dateLabel: '2026年7月5日(日)', timeLabel: '13:00〜15:00' }],
+      venue: '創価学会 桜ヶ丘文化会館',
+      address: '東京都多摩市一ノ宮2-20-1',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=14zCS-pQIL_y3roQaEJmsnMP3pcBx_omp',
+      youtube: null,
+      linktree: null,
+      description: '青年による夏らしい爽やかなイベント。トークセッション、アポロ合唱団、ダンス（創価D.I.CREW）、キッズコーナーなど、お子様と一緒に楽しめる企画や、スペシャルゲストとして創価大学ダンスサークル D.I.CREW によるパフォーマンスもあります。ぜひご友人の方と共にお越しください。'
+    },
+    'musashino': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MUSASHINO AREA',
+      eventNameJp: 'むさしのフェスティバル',
+      eventNameEn: 'Musashino Festival',
+      sessions: [
+        { dateLabel: '2026年7月26日(日)', timeLabel: '第1部 10:00〜13:00 ／ 第2部 16:00〜19:00' }
+      ],
+      venue: '創価学会 三鷹平和会館',
+      address: '東京都三鷹市牟礼6丁目1-48',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '全世代が気軽に来場いただける、4つのブース構成のイベント。子どもたちが遊べるブース、身近なことから社会課題を考えるブース、日々の活動を体験できるブースなど盛りだくさん。ゆったり対話できるカフェスペースも完備。ぜひお越しください。'
+    },
+    'koganei': {
+      region: 'tokyo-2nd',
+      eyebrow: 'KOGANEI AREA',
+      eventNameJp: '小金井総区ユースアクションフェス',
+      eventNameEn: 'Koganei District Youth Fes',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: '創価学会 小金井文化会館 / 国分寺平和会館 / 国立文化会館（3会場）',
+      address: '小金井市前原町3-35-20 ／ 国分寺市東元町2-7-15 ／ 国立市東1丁目15-7',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '「えっ、ここ会館!?」ヨガや最新コスメ体験、eスポーツに音楽ライブまで！いつもの場所が1日限定の体験型フェス会場に変身します。会館オープンデー、パフォーマンスなどのステージ、出し物や展示など、3会場（小金井黄金区・国分寺栄光区・国立常勝区）で同日開催の分区企画です。'
+    },
+    'gakuen': {
+      region: 'tokyo-2nd',
+      eyebrow: 'GAKUEN AREA',
+      eventNameJp: '学園総区 ユースアクションフェス',
+      eventNameEn: 'Gakuen Youth Action Fes',
+      sessions: [{ dateLabel: '2026年7月5日(日)', timeLabel: '第1部 10:00〜12:00 ／ 第2部 13:30〜16:00' }],
+      venue: '創価学会 小平文化会館',
+      address: '東京都小平市上水本町2-2-15',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=108JRbV1ckmYAVGono2XpqhWMyMrq5MWP',
+      youtube: null,
+      linktree: null,
+      description: 'テーマ「アソビバ・マナビバ・学園祭〜ライフスタイルをデザイン〜」。各部屋に設ける楽しい企画や学びの機会を通じ、参加者が自身の価値観や時間の使い方、地域とのつながりといった「ライフスタイル」をデザインし、ウェルビーイング・幸せを広げる取り組みとして開催します。\n\n・ウェルビーイングセミナー\n・パフォーマンス企画（ものまね歌手 他）\n・アート体験\n・防災ワークショップ\n・ヘルスワークショップ 他'
+    },
+    'shintachikawa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'SHIN-TACHIKAWA AREA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026（新立川総区 4会場）',
+      eventNameEn: 'Soka Youth Open Day 2026',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '4会場 同時開催（創価学会 立川文化会館 / 立川平和会館 / 昭島文化会館 / 日野文化会館）',
+      address: '昭島市・日野市・立川市',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '新立川総区では 4会場で同時開催します。ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催し、その後は各会場全体をフル活用して、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。\n\n◆ 立川会場（文化会館）：創価学会 立川文化会館（東京都立川市羽衣町3-10-7）\n◆ 立川会場（平和会館）：創価学会 立川平和会館（東京都立川市上砂町3-12-20）\n◆ 昭島会場：創価学会 昭島文化会館（東京都昭島市拝島町2-9-20）\n◆ 日野会場：創価学会 日野文化会館（東京都日野市旭が丘3-6-1）'
+    },
+    'shintachikawa-akishima': {
+      region: 'tokyo-2nd',
+      eyebrow: 'AKISHIMA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 昭島',
+      eventNameEn: 'Soka Youth Open Day - Akishima',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '創価学会 昭島文化会館',
+      address: '東京都昭島市拝島町2丁目9-20',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催。その後は会館全体をフル活用し、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。青年の「熱」と「力」で日頃の感謝をお伝えします。'
+    },
+    'shintachikawa-hino': {
+      region: 'tokyo-2nd',
+      eyebrow: 'HINO',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 日野',
+      eventNameEn: 'Soka Youth Open Day - Hino',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '創価学会 日野文化会館',
+      address: '東京都日野市旭が丘3丁目6-1',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催。その後は会館全体をフル活用し、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。'
+    },
+    'shintachikawa-tachikawa-bunka': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TACHIKAWA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（文化会館）',
+      eventNameEn: 'Soka Youth Open Day - Tachikawa Bunka',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '創価学会 立川文化会館',
+      address: '東京都立川市羽衣町3丁目10-7',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催。その後は会館全体をフル活用し、各部の特色を生かした企画を予定しています。'
+    },
+    'shintachikawa-tachikawa-heiwa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'TACHIKAWA',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（平和会館）',
+      eventNameEn: 'Soka Youth Open Day - Tachikawa Heiwa',
+      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      venue: '創価学会 立川平和会館',
+      address: '東京都立川市上砂町3丁目12-20',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催。その後は会館全体をフル活用し、各部の特色を生かした企画を予定しています。'
+    },
+    'suginami': {
+      region: 'tokyo23',
+      eyebrow: 'SUGINAMI AREA',
+      eventNameJp: 'Link SUGINAMI 2026 〜ありがとうのカタチ〜',
+      eventNameEn: 'Link SUGINAMI 2026',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '創価学会 杉並文化会館',
+      address: '東京都杉並区阿佐谷南3-51-3',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '分断があおられる時代にあって、人と強く結び合う青年の連帯を地域に広げていく挑戦です。これまで縁してきた人たちとの「つながり」を「固い絆」へと深めゆく思いを「Link」に込め、互いを尊重し感謝する青年の連帯を、この「リンスギ」（Link SUGINAMI の略）から広げていきます。杉並文化会館全館を使用してのブース企画と、時間を決めて創価講堂にてメインイベントを開催する予定です。'
+    },
+    'ome': {
+      region: 'tokyo-2nd',
+      eyebrow: 'OME AREA',
+      eventNameJp: '青梅総区 YOUTH ACTION FES',
+      eventNameEn: 'Ome Youth Action Fes',
+      sessions: [{ dateLabel: '2026年7月26日(日)' }],
+      venue: '創価学会 青梅文化会館',
+      address: '〒198-0032 東京都青梅市野上町3丁目8',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '誰でも気軽に足を運べるオープンなイベント。和太鼓の演奏＆体験や外国の文化に触れられる企画、青梅・羽村・奥多摩・瑞穂のディープな地元情報が満載の展示企画などを予定しています。和太鼓フィットネスでストレス発散、ジャーナリングで心を整える若者向けフェス。白熱のレースゲーム大会や子育て座談会、縁日キッズコーナーも完備で家族みんなで楽しめます。'
+    },
+    'chiyoda': {
+      region: 'tokyo23',
+      eyebrow: 'CHIYODA AREA',
+      eventNameJp: 'プレユースアクションフェス',
+      eventNameEn: 'Pre Youth Action Fes',
+      sessions: [
+        { dateLabel: '2026年7月5日(日)' },
+        { dateLabel: '2026年10月' }
+      ],
+      venue: '創価学会 千代田文化会館',
+      address: '東京都千代田区富士見1丁目11-8',
+      allowExternal: false,
+      flyer: 'https://drive.google.com/open?id=1XF39na7V9E9FnrzuQT6ZEsfNFLaM7Iek',
+      youtube: null,
+      linktree: null,
+      description: '会館オープンデー（詳細はフライヤー参照）。'
+    },
+    'yamanashi': {
+      region: 'yamanashi',
+      eyebrow: 'YAMANASHI AREA',
+      eventNameJp: 'ニュー山梨 ユースアクションフェス',
+      eventNameEn: 'New Yamanashi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年11月1日(日)' }],
+      venue: '創価学会 山梨文化会館',
+      address: '山梨県甲府市荒川2丁目15-1',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '平和などをテーマに、展示・ワークショップ・シンポジウム・コンサートなどを実施する予定です。若者一人ひとりの意識が変わり、行動が変わり、社会が変わっていく流れを創っていきます。気候変動などの地球的課題とともに、一人ひとりが輝いていくための文化芸術、心を育む教育の大切さを伝えていきます。'
+    },
+    'nerima': {
+      region: 'tokyo23',
+      eyebrow: 'NERIMA AREA',
+      eventNameJp: 'つながるフェス♪',
+      eventNameEn: 'Tsunagaru Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: 'オープン 13:00 / メインショー 14:00' }],
+      venue: '創価学会 城西平和講堂',
+      address: '東京都練馬区向山1-10-15',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=1zzj0RNhDxBreJh54cBnlE_ljhKJX4yhB',
+      youtube: null,
+      linktree: null,
+      description: '合唱・ダンス・バンド演奏などのステージ演目をメインに、展示・キッズコーナー・体験ブースなど、子どもから大人まで楽しめる参加型イベントです。地域や世代を超えた“つながり”をテーマに、多彩な交流企画を予定しています。歌やダンス、展示や体験企画を通して、世代を超えた“つながり”を楽しめます。お子さま連れでも安心して楽しめるコーナーも充実。'
+    },
+    'shinjuku': {
+      region: 'tokyo23',
+      eyebrow: 'SHINJUKU AREA',
+      eventNameJp: 'しんじゅく ちるふぇす 〜ほっとするいちにち〜',
+      eventNameEn: 'Shinjuku Chill Fes',
+      sessions: [{ dateLabel: '2026年7月19日(日)', timeLabel: '10:00〜17:00' }],
+      venue: '創価学会 新宿池田文化会館',
+      address: '東京都新宿区北新宿1-32-13',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '会場全体を使って展示や体験型ブースを設置。さらに、トークセッションなど誰でも参加できる企画も行います。子どもから大人までリラックスして楽しめる「チルい」イベント。「ゆるいつながりが大きな励ましになる」、そんなイベントになっています。皆さまぜひお越しください。'
+    },
+    'hachioji': {
+      region: 'tokyo-2nd',
+      eyebrow: 'HACHIOJI AREA',
+      eventNameJp: 'Hachioji Peace Fes 〜私の一歩が世界を結ぶ〜',
+      eventNameEn: 'Hachioji Peace Fes',
+      sessions: [{ dateLabel: '2026年7月5日(日)', timeLabel: '13:15〜15:00' }],
+      venue: '創価大学 総合体育館',
+      address: '東京都八王子市丹木町1-236',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '青年世代が主体となり、内外の垣根を越えて多くの人々を糾合する大会。約2700名の参加者を予定し、約280名の合唱団による歌や、ダンス、信仰体験を通して、「平和」の重要性を伝えます。青年による等身大の体験発表や、代表による合唱・演奏・ダンスなどを通じて、困難を乗り越える「創価の平和哲学」を若者らしい言葉と表現で発信します。'
+    },
+    'shibuya': {
+      region: 'tokyo23',
+      eyebrow: 'SHIBUYA AREA',
+      eventNameJp: 'スポフェス',
+      eventNameEn: 'Shibuya Sports Fes',
+      sessions: [{ dateLabel: '2026年7月〜10月' }],
+      venue: '体育館',
+      address: '東京都渋谷区',
+      allowExternal: false,
+      flyer: 'https://drive.google.com/open?id=1-5-ZmDRQ7hWJirjXlJjRjE6nciGnMZp2',
+      youtube: null,
+      linktree: null,
+      description: '「本当に勝ちたい。」（リーチ・マイケル）— 運動を中心とした体験イベント。詳細決定次第お知らせします。'
+    },
+    'ota': {
+      region: 'tokyo23',
+      eyebrow: 'OTA AREA',
+      eventNameJp: '大田“絆”フェス2026（キズナフェス）',
+      eventNameEn: 'Ota Kizuna Fes 2026',
+      sessions: [
+        { dateLabel: '2026年7月4日(土)', timeLabel: 'メイン 15:00〜18:00 / 後夜祭 18:00〜19:00' }
+      ],
+      venue: '大森スポーツセンター 競技場',
+      address: '東京都大田区大森本町2-2-5',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=1t3uubwxoBW5K-XBmcNCzvi2-MQW4fOTm',
+      youtube: null,
+      linktree: 'https://lit.link/kizunafes2026',
+      description: '「つながる。未来（あした）へ動き出す」をテーマに、スポーツ総合イベントを開催します。体を動かしたり、トークイベントや展示、自由な対話を楽しんだりと、世代や性別を問わずどなたでも楽しめます（キッズスペースも充実）。キズナアンケートやコンテストも実施します。'
+    },
+    'machida': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MACHIDA AREA',
+      eventNameJp: '町田ユースフェスタ',
+      eventNameEn: 'Machida Youth Festa',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '創価学会 町田平和会館',
+      address: '〒194-0037 東京都町田市木曽西4丁目35-45',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '今回は開催場所を例年の町田文化ではなく、町田平和で行います。比較的新しい会館のため、ご友人を含めて、ご家族でお越しいただけることを重視しています。【つながる】をテーマに、会館オープンデーとして、バンド演奏や参加者型企画、対話コーナーを設けます。'
+    },
+    'toshima': {
+      region: 'tokyo23',
+      eyebrow: 'TOSHIMA AREA',
+      eventNameJp: '豊島区ユースアクションフェス',
+      eventNameEn: 'Toshima Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月中' }],
+      venue: '創価学会 東京戸田記念講堂',
+      address: '東京都豊島区巣鴨2-10-21',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内外を問わず、多くの皆様に楽しんでいただけるフェスとしてまいります。詳細は検討中ですが、近日中に決定いたします。'
+    },
+    'taito': {
+      region: 'tokyo23',
+      eyebrow: 'TAITO AREA',
+      eventNameJp: 'TAITO YOUTH ACTION FES 下町文化祭 粋 -IKI-',
+      eventNameEn: 'Taito Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月18日(日)', timeLabel: '11:00〜16:00' }],
+      venue: '創価学会 東京上野平和講堂',
+      address: '東京都台東区根岸4-12-13',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=19RUGZ6-c580H2EKwqDww1dG53hOrvs9Q',
+      youtube: null,
+      linktree: null,
+      description: 'エンタメと学びの要素が融合した参加型フェス。台東区の地域性・下町感や、従来の形式にとらわれない企画など、なつかしさの中に、新しさもある、そんなフェスを目指します。浅草や上野など、人情と文化が息づく台東区ならではの「人・音・熱」を感じながら、大切な人と楽しみ、学び、つながりを深める。下町の“粋”と“温もり”を感じられる一日です。'
+    },
+    'setagaya': {
+      region: 'tokyo23',
+      eyebrow: 'SETAGAYA AREA',
+      eventNameJp: 'Re:Freude（リ・フロイデ）〜わたしたちの新しい歓喜の歌〜',
+      eventNameEn: 'Setagaya Re:Freude',
+      sessions: [
+        { dateLabel: '2026年11月29日(日)', timeLabel: '第1回 14:00開演 / 第2回 18:00開演（各回約60分）' }
+      ],
+      venue: '創価学会 東京池田記念講堂',
+      address: '〒154-0014 東京都世田谷区用賀3丁目1-1',
+      allowExternal: false,
+      flyer: 'https://drive.google.com/open?id=1vau7ferXqQGK1r8dz2xfGLVcISKSPL3p',
+      youtube: null,
+      linktree: 'https://setagaya2026.github.io/setagaya-daiku/',
+      description: 'フロイデ合唱団600名（300名×2公演・総入替）・富士交響楽団・ソリスト4名・銀河合唱団によるベートーヴェン交響曲第9番 第4楽章「歓喜の歌」合唱を中心とした青年世代によるユースアクションフェス。参加型ブース・平和学習団体との連携展示・体験発表などを併設し、地域に開かれた平和の連帯の場として開催します。15年前の世田谷第九合唱祭の精神を継承し、青年世代600名が「苦悩を突き抜けて歓喜に至れ」を体現します。'
+    },
+    'murayama': {
+      region: 'tokyo-2nd',
+      eyebrow: 'MURAYAMA AREA',
+      eventNameJp: '北多摩つながるフェス',
+      eventNameEn: 'Kita-Tama Tsunagaru Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '創価学会 東大和文化会館',
+      address: '東京都東大和市桜が丘1-1449-74',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=19JI10uUuKqYVzy6MewzGYrWxmpcCxubB',
+      youtube: null,
+      linktree: null,
+      description: '「町の文化祭」のような親しみやすさを重視し、多様な価値観や個性を発揮できる「ブース形式」を取り入れた開かれたフェスを目指しています。また合唱を通じてユースの人材育成とつながりをさらに深めていきます。子育て世代から学生世代まで、また学会員であるかどうかに関わらず、誰もがふらっと立ち寄り、同志・友人・地域の皆様ともっとつながるイベントです。'
+    },
+    'itabashi': {
+      region: 'tokyo23',
+      eyebrow: 'ITABASHI AREA',
+      eventNameJp: 'ユースアクションフェス',
+      eventNameEn: 'Itabashi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '創価学会 板橋文化会館',
+      address: '東京都板橋区志村1-30-22',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'ダンスなどを披露するメインイベントと、会館でのサブ企画を予定しています。'
+    },
+    'shinagawa': {
+      region: 'tokyo23',
+      eyebrow: 'SHINAGAWA AREA',
+      eventNameJp: 'しながわ LINK Fes',
+      eventNameEn: 'Shinagawa LINK Fes',
+      sessions: [{ dateLabel: '2026年10月18日(日)' }],
+      venue: '創価学会 品川文化会館',
+      address: '〒141-0021 東京都品川区上大崎3丁目14-48',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '「LINK」する（つながる）ことで歓喜の輪をひろげよう！ 学園祭のような雰囲気で、講堂をメイン会場としてミニ運動会やeスポーツ、セミナーを開催。別の仏間や会議室で展示やキッズスペースなどを計画中（変更の可能性あり）。'
+    },
+    'fuchu': {
+      region: 'tokyo-2nd',
+      eyebrow: 'FUCHU AREA',
+      eventNameJp: 'Spark Fes 7.26 〜ここから あなたの一歩を〜',
+      eventNameEn: 'Fuchu Spark Fes',
+      sessions: [{ dateLabel: '2026年7月26日(日)' }],
+      venue: '創価学会 府中文化会館',
+      address: '東京都府中市府中町2-15-1',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=1llLZTw6b-Cn2MaWJ6BgE733CzFtotjkO',
+      youtube: null,
+      linktree: null,
+      description: '7.26「府中青年部の日」の淵源である池田先生の励ましと、夜空に輝く花火を象徴する言葉が「Spark」です。対話を通じて心に情熱を灯し、未入会の友人も含め、誰もがここから新しい一歩を踏み出せる希望に満ちたフェスを目指します。フィナーレ（演奏・合唱・体験発表など）、各種アトラクション、企画ブース、展示ブース 他。'
+    },
+    'sumida': {
+      region: 'tokyo23',
+      eyebrow: 'SUMIDA AREA',
+      eventNameJp: '墨田 ユースアクションフェス',
+      eventNameEn: 'Sumida Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月中' }],
+      venue: '創価学会 墨田文化会館（予定）',
+      address: '東京都墨田区太平2-2-2',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '「つながる」をテーマにユースアクションフェスを開催します。「平和」「文化」「教育」の3軸で、展示、芸術・音楽祭、職業体験ブースなどを予定。音楽ライブやお笑いライブ、トークライブなど、出演者と懇談できる場も設け、地域の方々とつながる体験を墨田区から広めていきます。'
+    },
+    'meguro': {
+      region: 'tokyo23',
+      eyebrow: 'MEGURO AREA',
+      eventNameJp: 'あつまれ 憩いの森 メグロ',
+      eventNameEn: 'Atsumare Meguro Forest',
+      sessions: [{ dateLabel: '2026年10月18日(日)' }],
+      venue: '創価学会 目黒国際文化会館',
+      address: '東京都目黒区碑文谷5丁目15-13',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'にぎやかに楽しむのも、ひとりで静かに過ごすのも。何かに夢中になるのも、ただ眺めているだけでも。あなたの『ちょうどいい』がきっと見つかる — そんな1日を過ごしてみませんか？ メインステージでのライブ、スタンプラリー、絵画等の展示、エクササイズ体験、フォトブースの設置、起震車体験、簡易カフェなど、各コンテンツを会館中の部屋・スペースを使用して展開します。'
+    },
+    'chofu': {
+      region: 'tokyo-2nd',
+      eyebrow: 'CHOFU AREA',
+      eventNameJp: 'SOKA OPEN DAY',
+      eventNameEn: 'Soka Open Day - Chofu',
+      sessions: [{ dateLabel: '2026年7月20日(月・祝)', timeLabel: '10:00〜17:00' }],
+      venue: '創価学会 調布平和会館',
+      address: '東京都調布市西つつじケ丘1-28-9',
+      allowExternal: true,
+      flyer: 'https://drive.google.com/open?id=15Z3XuoqAp5X862lxuaMI7AbE5cilcHLU',
+      youtube: null,
+      linktree: null,
+      description: '調布平和会館オープンデーを初開催。10時から17時まで、会館全体を使用し、午前は子育て世帯向けの企画、午後は青年世帯向けの企画を予定しています。\n\n🌈 PICK UP イベント 🌈\n・11:00 子育てセミナー「伸びる子になる 勉強法＆関わり方」（講師：トッププロ家庭教師 中里裕治さん）\n・14:30 スペシャルトークライブ「笑いとコミュニケーション」（講師：お笑いコンビ オシエルズ）\n\n「ちょっと行ってみようかな」— 学びと出会いの1日。家族と、友人と、一人でも、ふらっと寄れるオープンデーです。'
+    },
+    'minato': {
+      region: 'tokyo23',
+      eyebrow: 'MINATO AREA',
+      eventNameJp: '港ユースフェス',
+      eventNameEn: 'Minato Youth Fes',
+      sessions: [{ dateLabel: '2026年10月' }],
+      venue: '創価学会 麻布文化会館（予定）',
+      address: '東京都港区南麻布3-21-15',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '学会の魅力を改めて感じる催し。内容を鋭意検討中です。'
+    },
+    'edogawa': {
+      region: 'tokyo23',
+      eyebrow: 'EDOGAWA AREA',
+      eventNameJp: '江戸川 ユースアクションフェス',
+      eventNameEn: 'Edogawa Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月18日(日)' }],
+      venue: '創価学会 東京国際池田記念講堂',
+      address: '東京都江戸川区西葛西4-2-11',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '普段活動している会員の方からご友人まで、幅広い方が、学会の魅力を（再）発見できる企画を行います。部屋ごとにブースを設け、学会の魅力を発見できる企画を検討中です。'
+    },
+    'katsushika': {
+      region: 'tokyo23',
+      eyebrow: 'KATSUSHIKA AREA',
+      eventNameJp: '葛飾ユースフェス',
+      eventNameEn: 'Katsushika Youth Fes',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: '創価学会 葛飾平和講堂',
+      address: '東京都葛飾区東四つ木2丁目3-17',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内容は検討中です。決定次第お知らせします。'
+    },
+    'koto': {
+      region: 'tokyo23',
+      eyebrow: 'KOTO AREA',
+      eventNameJp: '江希祭 〜KOTOユース希望文化祭〜',
+      eventNameEn: 'Koto Hope Fes',
+      sessions: [{ dateLabel: '2026年11月8日(日)' }],
+      venue: '創価学会 江東文化会館',
+      address: '東京都江東区東陽3-24-9',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '内部のメンバーの糾合をテーマに、はじめて参加するメンバーから活動家のメンバー、また友人が参加しても楽しんでいただけるようなイベントを目指します。オープニング音楽祭・展示・パネルディスカッションなどを予定しています。'
+    },
+    'chuo': {
+      region: 'tokyo23',
+      eyebrow: 'CHUO AREA',
+      eventNameJp: '中央区 ユースアクションフェス',
+      eventNameEn: 'Chuo Youth Action Fes',
+      sessions: [{ dateLabel: '2026年8月29日(土)' }],
+      venue: '時事通信ホール',
+      address: '東京都中央区銀座5-15-8',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '「学会員の言葉遣い（“信心”“戦い”など）を極力使わず」「相互的なコミュニケーションを生みながら」「なぜ哲学・信仰が人生に不可欠なのかを深める」をコンセプトに、新しいモデルの会合を銀座で行います。'
+    },
+    'adachi': {
+      region: 'tokyo23',
+      eyebrow: 'ADACHI AREA',
+      eventNameJp: 'ユースアクションフェス',
+      eventNameEn: 'Adachi Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月31日(土)' }],
+      venue: 'ギャラクシティ西新井文化ホール',
+      address: '〒123-0842 東京都足立区栗原1-3-1',
+      allowExternal: false,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '展示・合唱・全員参加型イベントを予定しています。全容未決定のため、内容は検討中です。'
+    },
+    'bunkyo': {
+      region: 'tokyo23',
+      eyebrow: 'BUNKYO AREA',
+      eventNameJp: '文京区 ユースアクションフェス',
+      eventNameEn: 'Bunkyo Youth Action Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      venue: '未定',
+      address: '東京都文京区',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: '平和音楽祭を予定しています。詳細は内容が見えてきたら順次お知らせします。'
+    },
+    'kita': {
+      region: 'tokyo23',
+      eyebrow: 'KITA AREA',
+      eventNameJp: '城北フェス',
+      eventNameEn: 'Kita Fes',
+      sessions: [{ dateLabel: '2026年10月後半' }],
+      venue: '創価学会 城北池田記念講堂',
+      address: '東京都北区東十条6丁目14-3',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: 'どんな世代の方でも楽しめるアトラクションをご用意しています。駅からのアクセスも抜群です。気軽にお立ち寄りください。会館を一日開放して、複数のブースを設けます。'
+    }
+  };
+
+  // ====================== REGION CITIES MAP ======================
+  // city: 市町村名 / eventId: 該当する詳細イベントID (なければ null)
+  const REGION_CITIES = {
+    'tokyo23': [
+      { city: '千代田区', eventId: 'chiyoda' },
+      { city: '中央区',   eventId: 'chuo' },
+      { city: '港区',     eventId: 'minato' },
+      { city: '新宿区',   eventId: 'shinjuku' },
+      { city: '文京区',   eventId: 'bunkyo' },
+      { city: '台東区',   eventId: 'taito' },
+      { city: '墨田区',   eventId: 'sumida' },
+      { city: '江東区',   eventId: 'koto' },
+      { city: '品川区',   eventId: 'shinagawa' },
+      { city: '目黒区',   eventId: 'meguro' },
+      { city: '大田区',   eventId: 'ota' },
+      { city: '世田谷区', eventId: 'setagaya' },
+      { city: '渋谷区',   eventId: 'shibuya' },
+      { city: '中野区',   eventId: 'nakano' },
+      { city: '杉並区',   eventId: 'suginami' },
+      { city: '豊島区',   eventId: 'toshima' },
+      { city: '北区',     eventId: 'kita' },
+      { city: '荒川区',   eventId: 'arakawa' },
+      { city: '板橋区',   eventId: 'itabashi' },
+      { city: '練馬区',   eventId: 'nerima' },
+      { city: '足立区',   eventId: 'adachi' },
+      { city: '葛飾区',   eventId: 'katsushika' },
+      { city: '江戸川区', eventId: 'edogawa' }
+    ],
+    'tokyo-2nd': [
+      { city: '八王子市',     eventId: 'hachioji' },
+      { city: '立川市',       eventId: 'shintachikawa-tachikawa-bunka' },
+      { city: '武蔵野市',     eventId: 'musashino' },
+      { city: '三鷹市',       eventId: 'musashino' },
+      { city: '青梅市',       eventId: 'ome' },
+      { city: '府中市',       eventId: 'fuchu' },
+      { city: '昭島市',       eventId: 'shintachikawa-akishima' },
+      { city: '調布市',       eventId: 'chofu' },
+      { city: '町田市',       eventId: 'machida' },
+      { city: '小金井市',     eventId: 'koganei' },
+      { city: '小平市',       eventId: 'gakuen' },
+      { city: '日野市',       eventId: 'shintachikawa-hino' },
+      { city: '東村山市',     eventId: null },
+      { city: '国分寺市',     eventId: 'koganei' },
+      { city: '国立市',       eventId: 'koganei' },
+      { city: '福生市',       eventId: null },
+      { city: '狛江市',       eventId: 'chofu' },
+      { city: '東大和市',     eventId: 'murayama' },
+      { city: '清瀬市',       eventId: null },
+      { city: '東久留米市',   eventId: null },
+      { city: '武蔵村山市',   eventId: null },
+      { city: '多摩市',       eventId: 'tama-ikeda' },
+      { city: '稲城市',       eventId: null },
+      { city: '羽村市',       eventId: null },
+      { city: 'あきる野市',   eventId: null },
+      { city: '西東京市',     eventId: 'gakuen' },
+      { city: '瑞穂町',       eventId: null },
+      { city: '日の出町',     eventId: null },
+      { city: '檜原村',       eventId: null },
+      { city: '奥多摩町',     eventId: null }
+    ],
+    'yamanashi': [
+      { city: '甲府市', eventId: 'yamanashi' }
+      // TODO: 山梨県の他の市町村を追加（イベントが拡大した際に更新）
+    ]
+  };
+
+  function renderRegionCities() {
+    Object.entries(REGION_CITIES).forEach(([regionKey, list]) => {
+      const wrap = document.getElementById('region-cities-' + regionKey);
+      if (!wrap) return;
+      wrap.innerHTML = list.map(item => {
+        if (item.eventId && REGION_EVENTS[item.eventId]) {
+          return `<button class="region-city is-clickable" type="button"
+            data-event-id="${item.eventId}"
+            onclick="event.stopPropagation(); openEventDetail('${item.eventId}')">${item.city}</button>`;
+        }
+        return `<span class="region-city is-pending" title="開催情報は未定です">${item.city}</span>`;
+      }).join('');
+    });
+  }
+
+  // ====================== SCHEDULE LIST (ALL view) ======================
+  // Build chronological summary cards from REGION_EVENTS, mapped via pill date attrs.
+  // Pills carry the canonical date (incl. consolidated cases like 新立川), so we
+  // collect them and then look up event data for each pill.
+  function renderScheduleList() {
+    const wrap = document.getElementById('schedule-list');
+    if (!wrap) return;
+    const items = [];
+    document.querySelectorAll('#schedule-by-month .area-pill[data-event-id]').forEach(pill => {
+      const id = pill.dataset.eventId;
+      const ev = REGION_EVENTS[id];
+      if (!ev) return;
+      items.push({
+        id,
+        date: pill.dataset.eventDate || '',
+        region: pill.dataset.region || '',
+        soku: pill.querySelector('.area-pill-name')?.textContent?.trim() || '',
+        event: ev
+      });
+    });
+    // Sort by ISO date string (lexicographic works for YYYY-MM-DD[Thh:mm])
+    items.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    const REGION_LABEL = {
+      'tokyo23': '東京（23区）',
+      'tokyo-2nd': '東京（多摩）',
+      'yamanashi': '山梨'
+    };
+    const REGION_EN = {
+      'tokyo23': 'TOKYO 23',
+      'tokyo-2nd': 'TOKYO TAMA',
+      'yamanashi': 'YAMANASHI'
+    };
+    const DOW = ['日','月','火','水','木','金','土'];
+
+    wrap.innerHTML = items.map(({id, date, region, soku, event: ev}) => {
+      // Date block: precise date → month/day; approximate (中/後半/下旬/〜/月のみ) → "○月開催予定"
+      let dateBlock;
+      const isoLike = /^\d{4}-\d{2}-\d{2}/.test(date);
+      const firstLabel = (ev.sessions && ev.sessions[0] && ev.sessions[0].dateLabel) || '';
+      const isApprox = /中|上旬|中旬|下旬|後半|前半|〜|ごろ|頃/.test(firstLabel) || !/日/.test(firstLabel);
+      if (isoLike && !isApprox) {
+        const d = new Date(date.replace(' ', 'T'));
+        const mo = d.getMonth() + 1;
+        const day = d.getDate();
+        const dow = DOW[d.getDay()];
+        dateBlock = `
+          <span class="sli-date-month">${mo}月</span>
+          <span class="sli-date-day">${day}</span>
+          <span class="sli-date-dow">(${dow})</span>`;
+      } else if (isoLike && isApprox) {
+        const d = new Date(date.replace(' ', 'T'));
+        const mo = d.getMonth() + 1;
+        dateBlock = `<span class="sli-date-approx">${mo}月<br>開催予定</span>`;
+      } else {
+        dateBlock = `<span class="sli-date-approx">${firstLabel || '日程未定'}</span>`;
+      }
+
+      const venue = (ev.venue || '').replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim() || '会場未定';
+      const desc = (ev.description || '').replace(/\n+/g, ' ').slice(0, 70);
+      const allow = ev.allowExternal
+        ? '<span class="sli-badge open">他地域からの参加OK</span>'
+        : '<span class="sli-badge closed">対象地域のみ</span>';
+      const regionLabel = REGION_LABEL[region] || '';
+      const regionEn = REGION_EN[region] || '';
+
+      // Media banner: flyer > YouTube thumb > logo placeholder
+      const flyerUrl = driveImageUrl(ev.flyer);
+      const ytId = extractYouTubeId(ev.youtube);
+      let mediaHTML;
+      if (flyerUrl) {
+        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
+        mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
+      } else if (ytId) {
+        mediaHTML = `<div class="sli-media is-yt"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" onerror="posterFallback(this, '${id}')"><span class="sli-media-play" aria-hidden="true"></span></div>`;
+      } else {
+        const area = ev.eyebrow || (ev.eventNameJp || '');
+        mediaHTML = `<div class="sli-media is-poster">
+          <img class="sli-poster-logo" src="assets/logo.png" alt="" aria-hidden="true">
+          <div class="sli-poster-content"><span class="sli-poster-area">${escapeHtml(area)}</span></div>
+        </div>`;
+      }
+
+      return `<button class="sli reveal" type="button" data-region="${region}" data-month="${parseInt((date||'').slice(5,7),10)||''}" data-event-id="${id}" onclick="openEventDetail('${id}')">
+        ${mediaHTML}
+        <div class="sli-content">
+          <div class="sli-date">${dateBlock}</div>
+          <div class="sli-body">
+            <div class="sli-region">${regionEn}・${regionLabel}${soku ? '・' + escapeHtml(soku) : ''}</div>
+            <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
+            <div class="sli-venue">${escapeHtml(venue)}</div>
+            <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
+            <div class="sli-meta">
+              ${allow}
+              <span class="sli-arrow">›</span>
+            </div>
+          </div>
+        </div>
+      </button>`;
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // When a flyer/YouTube thumbnail fails to load, fall back to the watermark
+  // poster (faint logo + area name + event name), matching the no-media style.
+  function posterFallback(img, id) {
+    const m = img.closest('.sli-media');
+    if (!m) return;
+    const ev = REGION_EVENTS[id] || {};
+    m.classList.remove('is-flyer', 'is-fitted', 'is-yt');
+    m.style.aspectRatio = '';
+    m.classList.add('is-poster');
+    const area = ev.eyebrow || (ev.eventNameJp || '');
+    m.innerHTML = `<img class="sli-poster-logo" src="assets/logo.png" alt="" aria-hidden="true"><div class="sli-poster-content"><span class="sli-poster-area">${escapeHtml(area)}</span></div>`;
+  }
+
+  // Fit the ALL-list flyer banner to the image's own aspect ratio so portrait
+  // flyers fill the full width without left/right letterboxing.
+  function fitFlyerMedia(img) {
+    const m = img.closest('.sli-media');
+    if (!m || !img.naturalWidth || !img.naturalHeight) return;
+    const r = img.naturalWidth / img.naturalHeight;
+    // clamp between 3:4 (portrait) and 16:9 (landscape) to keep card heights sane
+    const clamped = Math.min(Math.max(r, 0.75), 1.778);
+    m.style.aspectRatio = clamped.toFixed(3);
+    m.classList.add('is-fitted');
+  }
+
+  // Convert Google Drive image URL to a viewable thumbnail URL
+  function driveImageUrl(driveUrl) {
+    if (!driveUrl) return null;
+    const m = driveUrl.match(/[?&/]id=([^&]+)|\/d\/([^/]+)/);
+    const id = m ? (m[1] || m[2]) : null;
+    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : null;
+  }
+
+  function extractYouTubeId(url) {
+    if (!url) return '';
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]+)/);
+    return m ? m[1] : '';
+  }
+
+  function openEventDetail(eventId) {
+    const e = REGION_EVENTS[eventId];
+    if (!e) {
+      // fallback: just show the page with placeholder content
+      goToPage('page-event-detail');
+      return;
+    }
+
+    document.getElementById('ed-eyebrow').textContent = e.eyebrow || '';
+    // English event name is intentionally hidden (area name + official JP name only)
+    document.getElementById('ed-name-en').style.display = 'none';
+    document.getElementById('ed-name-jp').textContent = e.eventNameJp || '';
+
+    // Hero & video: priority = flyer > YouTube hero > typography fallback
+    const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
+    const flyerImg = document.getElementById('ed-hero-flyer');
+    const typo = document.getElementById('ed-hero-typo');
+    const videoWrap = document.getElementById('ed-video');
+    const videoIframe = document.getElementById('ed-video-iframe');
+    const flyerUrl = driveImageUrl(e.flyer);
+    const ytId = extractYouTubeId(e.youtube);
+
+    if (flyerUrl) {
+      // Flyer takes the hero spot. YouTube (if any) shows below.
+      flyerImg.onerror = () => {
+        flyerWrap.style.display = 'none';
+        if (ytId) {
+          videoWrap.style.display = 'block';
+        } else {
+          typo.style.display = 'flex';
+        }
+      };
+      flyerImg.src = flyerUrl;
+      flyerWrap.style.display = 'block';
+      typo.style.display = 'none';
+      if (ytId) {
+        videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+        videoWrap.style.display = 'block';
+      } else {
+        videoIframe.src = '';
+        videoWrap.style.display = 'none';
+      }
+    } else if (ytId) {
+      // No flyer but YouTube: video becomes the hero (no logo typography)
+      flyerWrap.style.display = 'none';
+      typo.style.display = 'none';
+      videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+      videoWrap.style.display = 'block';
+    } else {
+      // No media at all → typography placeholder with logo watermark
+      flyerWrap.style.display = 'none';
+      flyerImg.src = '';
+      typo.style.display = 'flex';
+      videoIframe.src = '';
+      videoWrap.style.display = 'none';
+    }
+    document.getElementById('ed-hero-poster-eyebrow').textContent = e.eyebrow || '';
+    document.getElementById('ed-hero-poster-title').textContent = e.eventNameJp || '';
+
+    // Sessions
+    const sessionsEl = document.getElementById('ed-sessions');
+    const single = (e.sessions || []).length <= 1;
+    sessionsEl.innerHTML = (e.sessions || []).map((s, i) => {
+      const label = (e.sessions.length > 1) ? `<div class="event-session-label">DAY ${i + 1}</div>` : '';
+      const time = s.timeLabel ? `<span class="event-session-time">${s.timeLabel}</span>` : '';
+      return `<div class="event-session${single ? ' single' : ''}">${label}<span class="event-session-date">${s.dateLabel}</span>${time}</div>`;
+    }).join('');
+
+    // Venue / address
+    document.getElementById('ed-venue').textContent = e.venue || '';
+    document.getElementById('ed-address').textContent = e.address || '';
+
+    // Description
+    const descWrap = document.getElementById('ed-content-wrap');
+    const descEl = document.getElementById('ed-description');
+    if (e.description) {
+      descEl.textContent = e.description;
+      descWrap.style.display = 'block';
+    } else {
+      descWrap.style.display = 'none';
+    }
+
+    // Linktree / external link
+    const lt = document.getElementById('ed-linktree');
+    const ltLabel = document.getElementById('ed-linktree-label');
+    if (e.linktree) {
+      lt.href = e.linktree;
+      ltLabel.textContent = '公式サイトを見る';
+      lt.style.display = 'flex';
+    } else {
+      lt.style.display = 'none';
+      lt.removeAttribute('href');
+    }
+
+    // External participation
+    const cta = document.getElementById('ed-cta');
+    const ngMsg = document.getElementById('ed-no-external');
+    if (e.allowExternal) {
+      cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else {
+      cta.style.display = 'none';
+      ngMsg.style.display = 'block';
+    }
+
+    goToPage('page-event-detail');
+
+    // replay hero media fade-in
+    const hero = document.getElementById('ed-hero');
+    if (hero) {
+      hero.classList.remove('ed-reveal');
+      void hero.offsetWidth;
+      hero.classList.add('ed-reveal');
+    }
+  }
+
   function goToPage(pageId, tabKey, monthAnchor) {
+    // stop any video iframes on the event-detail page when leaving
+    if (pageId !== 'page-event-detail') {
+      const iframe = document.getElementById('ed-video-iframe');
+      if (iframe && iframe.src) iframe.src = '';
+    }
     // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     // show target
     const target = document.getElementById(pageId);
     if (target) target.classList.add('active');
 
+    // replay the region map entrance animation on each visit
+    if (pageId === 'page-region') {
+      const pano = document.querySelector('#page-region .region-panorama');
+      if (pano) {
+        pano.classList.remove('play');
+        void pano.offsetWidth; // force reflow to restart animation
+        pano.classList.add('play');
+      }
+    }
+
     // optional schedule-page tab pre-selection
     if (tabKey && pageId === 'page-schedule') {
       document.querySelectorAll('#page-schedule [data-schedule-tab]').forEach(t => {
         t.classList.toggle('active', t.dataset.scheduleTab === tabKey);
       });
-      applyScheduleRegionFilter(tabKey);
+      setScheduleView(tabKey);
     }
 
     // update nav
@@ -3166,8 +5232,15 @@
     if (pageId === 'page-schedule' && monthAnchor) {
       window.scrollTo({ top: 0 });
       requestAnimationFrame(() => {
-        const sec = document.getElementById('schedule-month-' + monthAnchor);
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // ALL view shows the chronological card list; scroll to the first card of that month.
+        // Region views show the per-month grid; scroll to the month section.
+        const listVisible = document.getElementById('schedule-list') && !document.getElementById('schedule-list').hidden;
+        let el = null;
+        if (listVisible) {
+          el = document.querySelector(`#schedule-list .sli[data-month="${monthAnchor}"]`);
+        }
+        if (!el) el = document.getElementById('schedule-month-' + monthAnchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3186,9 +5259,60 @@
     tab.addEventListener('click', () => {
       tab.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      if (tab.dataset.scheduleTab) applyScheduleRegionFilter(tab.dataset.scheduleTab);
+      if (tab.dataset.scheduleTab) {
+        const key = tab.dataset.scheduleTab;
+        setScheduleView(key);
+      }
     });
   });
+
+  // Switch between ALL (chronological card list) and region (per-month pill grid)
+  function setScheduleView(key) {
+    const list = document.getElementById('schedule-list');
+    const grid = document.getElementById('schedule-by-month');
+    if (key === 'all') {
+      if (list) list.hidden = false;
+      if (grid) grid.hidden = true;
+      applyScheduleRegionFilter('all'); // reset filter classes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (list) list.hidden = true;
+      if (grid) grid.hidden = false;
+      applyScheduleRegionFilter(key);
+      requestAnimationFrame(() => {
+        const firstPill = document.querySelector(`#page-schedule .area-pill[data-region="${key}"]`);
+        if (firstPill) {
+          const section = firstPill.closest('.month-section');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+  }
+
+  // Populate region city tags + chronological schedule list on initial load
+  renderRegionCities();
+  renderScheduleList();
+
+  // ----- Scroll reveal (cards, section titles) -----
+  const revealObserver = ('IntersectionObserver' in window)
+    ? new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+    : null;
+
+  function registerReveals(root) {
+    const els = (root || document).querySelectorAll('.reveal:not(.is-visible)');
+    if (!revealObserver) { els.forEach(el => el.classList.add('is-visible')); return; }
+    els.forEach(el => revealObserver.observe(el));
+  }
+  // Mark home section titles as reveal targets
+  document.querySelectorAll('#page-home .section-title').forEach(el => el.classList.add('reveal'));
+  registerReveals();
 
   // Apply region highlighting to schedule pills based on active tab.
   // 'all' shows every pill in its default white state (no tint, no dim).
@@ -3206,8 +5330,8 @@
       }
     });
   }
-  // Initial state: ALL (default active tab)
-  applyScheduleRegionFilter('all');
+  // Initial state: ALL (default active tab) → show chronological card list
+  setScheduleView('all');
 
   // ----- Upcoming events (home: まもなく開催！) + within-1-month highlighting -----
   function collectScheduleEvents() {
