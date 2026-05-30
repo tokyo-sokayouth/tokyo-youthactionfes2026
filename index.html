@@ -152,8 +152,36 @@
   }
 
   @media (min-width: 768px) {
-    body { padding: 24px 0; }
-    .phone-frame { border-radius: 32px; min-height: calc(100vh - 48px); }
+    body {
+      padding: 24px 0;
+      /* デスクトップ装飾背景:
+         - Fes Naviブランドのコーラル/パープルでソフトな光彩
+         - 細かなドット模様で紙のテクスチャ感
+         - background-attachment: fixed でスクロール時もずれず安定
+         スマホ表示には影響しない（min-width: 768px 配下） */
+      background-color: #F2EBD9;
+      background-image:
+        radial-gradient(ellipse 720px 480px at 14% 18%, rgba(242,107,91,0.13) 0%, transparent 62%),
+        radial-gradient(ellipse 720px 480px at 86% 82%, rgba(177,152,212,0.13) 0%, transparent 62%),
+        radial-gradient(circle 240px at 85% 15%, rgba(255,180,140,0.10) 0%, transparent 72%),
+        radial-gradient(circle 280px at 15% 85%, rgba(242,222,178,0.16) 0%, transparent 72%),
+        radial-gradient(circle 1px at 18% 24%, rgba(45,42,38,0.18) 50%, transparent 51%),
+        radial-gradient(circle 1px at 82% 31%, rgba(45,42,38,0.14) 50%, transparent 51%),
+        radial-gradient(circle 1px at 88% 62%, rgba(45,42,38,0.16) 50%, transparent 51%),
+        radial-gradient(circle 1px at 12% 71%, rgba(45,42,38,0.12) 50%, transparent 51%),
+        radial-gradient(circle 1.5px at 22% 88%, rgba(242,107,91,0.30) 50%, transparent 51%),
+        radial-gradient(circle 1.5px at 78% 12%, rgba(177,152,212,0.30) 50%, transparent 51%);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+    .phone-frame {
+      border-radius: 32px;
+      min-height: calc(100vh - 48px);
+      /* デスクトップ時はフレームの浮き上がりを少し強める */
+      box-shadow:
+        0 28px 80px rgba(45,42,38,0.16),
+        0 4px 12px rgba(45,42,38,0.06);
+    }
   }
 
   /* ============ TOP BAR ============ */
