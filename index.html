@@ -26,6 +26,17 @@
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="shortcut icon" href="assets/logo.png">
 <link rel="apple-touch-icon" href="assets/logo.png">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J45KT9XV8G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-J45KT9XV8G');
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -189,6 +200,54 @@
     font-family: var(--font-display);
     font-size: 9.5px;
     letter-spacing: 0.03em;
+  }
+  .site-footer-links {
+    margin-top: 6px;
+    font-size: 10px;
+  }
+  .site-footer-links button {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    color: inherit;
+    font: inherit;
+    font-size: 10px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    opacity: 0.85;
+  }
+  .site-footer-links button:hover { opacity: 1; }
+
+  /* ============ PRIVACY POLICY PAGE ============ */
+  .privacy-content {
+    padding: 8px 22px 32px;
+    color: var(--color-ink);
+    font-size: 13.5px;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+  }
+  .privacy-content h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 22px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(45,42,38,0.12);
+    color: var(--color-ink);
+  }
+  .privacy-content h2:first-child { margin-top: 4px; }
+  .privacy-content p { margin: 8px 0; }
+  .privacy-content a {
+    color: var(--color-coral);
+    word-break: break-all;
+  }
+  .privacy-content .privacy-meta {
+    margin-top: 28px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(45,42,38,0.12);
+    font-size: 12px;
+    color: rgba(45,42,38,0.65);
+    line-height: 1.7;
   }
   .page.active { display: block; }
   @keyframes fadeIn {
@@ -4349,6 +4408,58 @@
     <div style="height:24px;"></div>
   </div>
 
+  <!-- ====================== PAGE: PRIVACY POLICY ====================== -->
+  <div class="page" id="page-privacy">
+    <div class="topbar">
+      <button class="back-btn" onclick="goToPage('page-home')">‹</button>
+      <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
+    </div>
+
+    <div class="links-header">
+      <h1 class="links-title">プライバシーポリシー</h1>
+      <p class="links-subtitle">Fes Naviにおける<br>利用者情報の取扱いについて</p>
+    </div>
+
+    <div class="privacy-content">
+      <p>
+        創価学会 総東京ユースアクションフェス実行委員会（以下「当委員会」）は、
+        公式情報サイト「Fes Navi」における利用者情報の取扱いについて、
+        以下のとおり定めます。
+      </p>
+
+      <h2>1. アクセス解析について</h2>
+      <p>
+        本サイトでは、サイトの利用状況を把握しサービス改善に役立てるため、
+        Google LLC が提供する「Google Analytics 4」を利用しています。
+        これにより、Cookieを通じて閲覧ページ・参照元・利用端末・
+        おおよその地域などの情報を取得しますが、個人を特定するものではありません。
+      </p>
+      <p>
+        詳細はGoogle社の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>をご参照ください。
+        計測を希望されない場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Googleアナリティクス オプトアウト アドオン</a>をご利用ください。
+      </p>
+
+      <h2>2. お問い合わせフォームについて</h2>
+      <p>
+        お問い合わせフォームでお預かりした情報は、ご返信および本フェスティバルの
+        運営目的のみに使用し、第三者に提供することはありません。
+      </p>
+
+      <h2>3. お問い合わせ</h2>
+      <p>
+        本ポリシーに関するお問い合わせは、サイト内のお問い合わせフォームより
+        ご連絡ください。
+      </p>
+
+      <div class="privacy-meta">
+        制定日：2026年5月30日<br>
+        創価学会 総東京ユースアクションフェス実行委員会
+      </div>
+    </div>
+
+    <div style="height:24px;"></div>
+  </div>
+
   <!-- ====================== HAMBURGER DRAWER ====================== -->
   <div class="drawer-overlay" id="drawer-overlay"></div>
   <aside class="drawer" id="drawer" role="dialog" aria-label="メニュー" aria-hidden="true">
@@ -4370,6 +4481,9 @@
   <footer class="site-footer">
     <div class="site-footer-org">創価学会 総東京ユースアクションフェス実行委員会</div>
     <div class="site-footer-copy">Copyright &copy; 2026 Tokyo Soka Youth. All Rights Reserved.</div>
+    <div class="site-footer-links">
+      <button type="button" data-target="page-privacy">プライバシーポリシー</button>
+    </div>
   </footer>
 
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
@@ -5722,6 +5836,12 @@
     btn.addEventListener('click', () => {
       const target = btn.dataset.target;
       closeDrawer();
+      if (target) goToPage(target);
+    });
+  });
+  document.querySelectorAll('.site-footer-links button[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
       if (target) goToPage(target);
     });
   });
