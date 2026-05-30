@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC レイアウト プレビュー | Fes Navi</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #FDFAF2;
+    --color-ink: #2D2A26;
+    --color-coral: #F26B5B;
+    --color-coral-soft: #FBE8E2;
+    --color-purple: #B198D4;
+    --color-purple-soft: #EDE6F4;
+    --color-yellow: #FFC478;
+    --color-teal: #7DC4B6;
+    --color-border: #E8E0CB;
+    --font-display: 'Outfit', 'Zen Kaku Gothic New', sans-serif;
+    --font-body: 'Zen Kaku Gothic New', sans-serif;
+    --font-script: 'Caveat', 'Outfit', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: var(--font-body);
+    background: #F2EBD9;
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    min-height: 100vh;
+  }
+
+  /* PCサイト風に: 3カラムレイアウト */
+  .preview-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 36px;
+    padding: 28px 32px;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 980px 680px at 8% 14%, rgba(242,107,91,0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 980px 680px at 92% 86%, rgba(177,152,212,0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 600px 420px at 95% 12%, rgba(255,196,120,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 600px 420px at 5% 88%, rgba(125,196,182,0.16) 0%, transparent 65%);
+    background-attachment: fixed;
+  }
+
+  /* ============ センター: 実サイトをiframe ============ */
+  .phone-frame {
+    flex: 0 0 420px;
+    width: 420px;
+    height: calc(100vh - 56px);
+    border-radius: 32px;
+    overflow: hidden;
+    background: var(--color-bg);
+    box-shadow:
+      0 32px 88px rgba(45,42,38,0.20),
+      0 8px 20px rgba(45,42,38,0.08);
+    position: sticky;
+    top: 28px;
+  }
+  .phone-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* ============ 共通サイド ============ */
+  .side {
+    flex: 0 0 300px;
+    width: 300px;
+    padding-top: 12px;
+  }
+
+  /* ============ LEFT サイド ============ */
+  .side-left {
+    text-align: left;
+  }
+  .left-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--color-coral);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .left-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--color-coral);
+  }
+  .big-typo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    font-size: 56px;
+  }
+  .big-typo .l1 { color: var(--color-coral); }
+  .big-typo .l2 { color: var(--color-purple); }
+  .big-typo .l3 { color: var(--color-ink); }
+  .big-typo .year {
+    display: block;
+    font-size: 26px;
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    opacity: 0.85;
+  }
+  .script-tag {
+    font-family: var(--font-script);
+    color: var(--color-coral);
+    font-size: 32px;
+    margin-top: 24px;
+    line-height: 1.1;
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+  .left-jp {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--color-ink);
+    line-height: 1.9;
+    opacity: 0.78;
+  }
+  .left-jp strong { color: var(--color-coral); font-weight: 700; }
+  .left-dots {
+    margin-top: 28px;
+    display: flex;
+    gap: 8px;
+  }
+  .left-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .left-dots .d1 { background: var(--color-coral); }
+  .left-dots .d2 { background: var(--color-yellow); }
+  .left-dots .d3 { background: var(--color-purple); }
+  .left-dots .d4 { background: var(--color-teal); }
+
+  .left-locations {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--color-border);
+  }
+  .left-loc-title {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--color-ink);
+    opacity: 0.55;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .left-loc-text {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .left-loc-text .sep { color: var(--color-coral); margin: 0 8px; }
+
+  /* ============ RIGHT サイド ============ */
+  .side-right { }
+
+  .card {
+    background: rgba(253,250,242,0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(232,224,203,0.6);
+    border-radius: 18px;
+    padding: 18px 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(45,42,38,0.05);
+  }
+  .card-eyebrow {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--color-coral);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Countdown card */
+  .countdown-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--color-coral);
+    letter-spacing: -0.02em;
+  }
+  .countdown-unit {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 4px;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    opacity: 0.7;
+  }
+  .countdown-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--color-ink);
+    opacity: 0.7;
+  }
+  .countdown-target {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  /* Next event card */
+  .ne-region {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--color-purple);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ne-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .ne-date {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-coral);
+  }
+  .ne-venue {
+    font-size: 12px;
+    color: var(--color-ink);
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  /* QR card */
+  .qr-card { text-align: center; }
+  .qr-img {
+    width: 140px;
+    height: 140px;
+    margin: 8px auto 10px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* QRコード風のドットパターン（ダミー） */
+    background-image:
+      linear-gradient(45deg, var(--color-ink) 25%, transparent 25%, transparent 75%, var(--color-ink) 75%),
+      linear-gradient(45deg, var(--color-ink) 25%, transparent 25%, transparent 75%, var(--color-ink) 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 6px 6px;
+    background-color: #fff;
+    background-blend-mode: normal;
+    position: relative;
+  }
+  .qr-img::after {
+    content: 'QR';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.7);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+  .qr-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--color-ink);
+    opacity: 0.78;
+  }
+
+  /* SNS card */
+  .sns-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .sns-btn {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 10px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .sns-btn:hover {
+    background: var(--color-coral-soft);
+    transform: translateY(-1px);
+  }
+
+  /* レスポンシブ: 1180px未満で両サイド非表示 */
+  @media (max-width: 1180px) {
+    .side { display: none; }
+    .phone-frame { position: static; height: auto; aspect-ratio: 9 / 19.5; }
+  }
+  @media (max-width: 480px) {
+    .preview-layout { padding: 0; gap: 0; }
+    .phone-frame {
+      flex: 1;
+      width: 100%;
+      border-radius: 0;
+      aspect-ratio: auto;
+      min-height: 100vh;
+    }
+  }
+
+  /* デモ用バナー（プレビューであることを明示） */
+  .preview-badge {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-ink);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    z-index: 1000;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-badge">PC LAYOUT PREVIEW — case C</div>
+
+<div class="preview-layout">
+
+  <!-- ============ LEFT SIDE ============ -->
+  <aside class="side side-left">
+    <div class="left-eyebrow">YOUTH ACTION FES</div>
+    <h1 class="big-typo">
+      <span class="l1">YOUTH</span><br>
+      <span class="l2">ACTION</span><br>
+      <span class="l3">FES</span>
+      <span class="year">2026</span>
+    </h1>
+    <div class="script-tag">Think globally,<br>Fes locally.</div>
+    <p class="left-jp">
+      私の街を、舞台にしよう。<br>
+      <strong>東京・山梨のあちこち</strong>で、<br>
+      同じ時代を生きる仲間たちが、<br>
+      本気のフェスを作っています。
+    </p>
+    <div class="left-dots">
+      <span class="dot d1"></span>
+      <span class="dot d2"></span>
+      <span class="dot d3"></span>
+      <span class="dot d4"></span>
+    </div>
+    <div class="left-locations">
+      <div class="left-loc-title">venues</div>
+      <div class="left-loc-text">TOKYO<span class="sep">×</span>YAMANASHI</div>
+    </div>
+  </aside>
+
+  <!-- ============ CENTER: 実サイト ============ -->
+  <main class="phone-frame">
+    <iframe src="index.html" title="Fes Navi"></iframe>
+  </main>
+
+  <!-- ============ RIGHT SIDE ============ -->
+  <aside class="side side-right">
+
+    <!-- カウントダウン -->
+    <div class="card">
+      <div class="card-eyebrow">⏳ next fes in</div>
+      <div>
+        <span class="countdown-num" id="countdown-days">162</span>
+        <span class="countdown-unit">DAYS</span>
+      </div>
+      <div class="countdown-sub">まもなくフェスがやってくる</div>
+      <div class="countdown-target">最初のフェス: 2026年11月8日(日)</div>
+    </div>
+
+    <!-- 次のイベント -->
+    <div class="card">
+      <div class="card-eyebrow">📍 next up</div>
+      <div class="ne-region">NAKANO AREA</div>
+      <div class="ne-title">NAKANO ユースアクション</div>
+      <div class="ne-date">2026年11月8日(日)</div>
+      <div class="ne-venue">なかのZERO 視聴覚ホール</div>
+    </div>
+
+    <!-- QR -->
+    <div class="card qr-card">
+      <div class="card-eyebrow">📱 mobile</div>
+      <div class="qr-img"></div>
+      <div class="qr-text">
+        スマホで読み取って<br>
+        手元で詳しく見る
+      </div>
+    </div>
+
+    <!-- SNS -->
+    <div class="card">
+      <div class="card-eyebrow">share</div>
+      <div class="sns-row">
+        <a href="#" class="sns-btn">X</a>
+        <a href="#" class="sns-btn">LINE</a>
+        <a href="#" class="sns-btn">COPY</a>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+<script>
+  // カウントダウン: 2026年11月8日まで（最初の確定イベント）
+  (function () {
+    const target = new Date('2026-11-08T00:00:00+09:00').getTime();
+    const now = Date.now();
+    const days = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+    document.getElementById('countdown-days').textContent = days;
+  })();
+</script>
+
+</body>
+</html>
