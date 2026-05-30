@@ -151,51 +151,345 @@
     box-shadow: 0 24px 70px rgba(45,42,38,0.12);
   }
 
-  @media (min-width: 768px) {
-    body {
-      padding: 24px 0;
-      /* デスクトップ装飾背景:
-         - Fes Naviブランドカラー（コーラル・パープル・イエロー・ティール）で
-           ロゴの遊び心ある雰囲気に合わせたカラフルなコンフェッティ風
-         - 大きめのグラデーション光彩でPC余白を埋める
-         - background-attachment: fixed でスクロール時もずれず安定
-         スマホ表示には影響しない（min-width: 768px 配下） */
-      background-color: #F2EBD9;
-      background-image:
-        /* 大きなグラデーション光彩（4色） */
-        radial-gradient(ellipse 880px 600px at 12% 16%, rgba(242,107,91,0.28) 0%, transparent 60%),
-        radial-gradient(ellipse 880px 600px at 88% 84%, rgba(177,152,212,0.26) 0%, transparent 60%),
-        radial-gradient(ellipse 520px 360px at 92% 18%, rgba(255,196,120,0.22) 0%, transparent 65%),
-        radial-gradient(ellipse 520px 360px at 8% 82%, rgba(125,196,182,0.18) 0%, transparent 65%),
-        /* カラフルなコンフェッティドット（左側） */
-        radial-gradient(circle 5px at 14% 12%, rgba(242,107,91,0.55) 50%, transparent 51%),
-        radial-gradient(circle 4px at 7% 28%, rgba(255,196,120,0.65) 50%, transparent 51%),
-        radial-gradient(circle 3px at 18% 42%, rgba(177,152,212,0.55) 50%, transparent 51%),
-        radial-gradient(circle 4px at 5% 58%, rgba(125,196,182,0.55) 50%, transparent 51%),
-        radial-gradient(circle 5px at 16% 74%, rgba(242,107,91,0.50) 50%, transparent 51%),
-        radial-gradient(circle 3px at 9% 88%, rgba(255,196,120,0.55) 50%, transparent 51%),
-        /* カラフルなコンフェッティドット（右側） */
-        radial-gradient(circle 4px at 88% 14%, rgba(177,152,212,0.60) 50%, transparent 51%),
-        radial-gradient(circle 5px at 95% 32%, rgba(242,107,91,0.55) 50%, transparent 51%),
-        radial-gradient(circle 3px at 84% 48%, rgba(125,196,182,0.55) 50%, transparent 51%),
-        radial-gradient(circle 4px at 92% 64%, rgba(255,196,120,0.60) 50%, transparent 51%),
-        radial-gradient(circle 5px at 86% 78%, rgba(177,152,212,0.55) 50%, transparent 51%),
-        radial-gradient(circle 3px at 94% 92%, rgba(242,107,91,0.50) 50%, transparent 51%),
-        /* 細かなアクセントドット */
-        radial-gradient(circle 2px at 22% 22%, rgba(45,42,38,0.20) 50%, transparent 51%),
-        radial-gradient(circle 2px at 78% 24%, rgba(45,42,38,0.18) 50%, transparent 51%),
-        radial-gradient(circle 2px at 12% 50%, rgba(45,42,38,0.15) 50%, transparent 51%),
-        radial-gradient(circle 2px at 90% 50%, rgba(45,42,38,0.15) 50%, transparent 51%);
-      background-attachment: fixed;
-      background-repeat: no-repeat;
+  /* ============================================================
+     ★ PC WIDE LAYOUT OVERRIDES（≥900px のみ適用）
+     phone-frame(420px) を解除しつつ、各セクションは「読みやすい幅」に
+     キャップして、横に間延びしない自然なPC表示にする。
+     900px未満では一切適用されず、既存のスマホ表示そのまま。
+     ============================================================ */
+  @media (min-width: 900px) {
+    :root {
+      --container-narrow: 720px;  /* テキスト・カード・ボタン用 */
+      --container-mid: 960px;     /* 中サイズ用 */
+      --container-wide: 1100px;   /* グリッド・ヒーロー用 */
     }
+
+    body {
+      padding: 0 !important;
+      background: #F2EBD9 !important;
+    }
+
+    /* フレーム解除: 全幅化 */
     .phone-frame {
-      border-radius: 32px;
-      min-height: calc(100vh - 48px);
-      /* デスクトップ時はフレームの浮き上がりをハッキリ強める */
-      box-shadow:
-        0 32px 88px rgba(45,42,38,0.20),
-        0 8px 20px rgba(45,42,38,0.08);
+      max-width: none !important;
+      width: 100% !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      min-height: 100vh !important;
+      padding-bottom: 96px !important;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+      height: 60px !important;
+    }
+
+    /* ============ HERO: フルワイド背景・中央コンテンツ ============ */
+    .hero {
+      padding: 72px 32px 56px !important;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 1400px 700px at 20% 30%, rgba(242,107,91,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 1400px 700px at 80% 70%, rgba(177,152,212,0.14) 0%, transparent 60%);
+    }
+    .logo-wrap {
+      max-width: 480px !important;
+      margin: 0 auto !important;
+    }
+    .hero-region { font-size: 13px !important; letter-spacing: 3.5px !important; }
+    .hero-tagline { font-size: 52px !important; }
+    .hero-deco { max-width: 960px; left: 50% !important; transform: translateX(-50%); }
+
+    /* ============ ABOUT: 横長＋装飾の円を追加 ============ */
+    .about-section {
+      max-width: 1080px !important;
+      margin: 48px auto !important;
+      padding: 44px 56px !important;
+      border-radius: 28px !important;
+      background-image:
+        radial-gradient(circle 70px at 14% 22%, rgba(255,196,120,0.36) 0%, rgba(255,196,120,0) 65%),
+        radial-gradient(circle 56px at 88% 16%, rgba(125,196,182,0.32) 0%, rgba(125,196,182,0) 65%),
+        radial-gradient(circle 90px at 92% 72%, rgba(177,152,212,0.30) 0%, rgba(177,152,212,0) 65%),
+        radial-gradient(circle 44px at 56% 88%, rgba(242,107,91,0.26) 0%, rgba(242,107,91,0) 65%),
+        radial-gradient(circle 48px at 32% 78%, rgba(255,196,120,0.24) 0%, rgba(255,196,120,0) 65%) !important;
+      background-color: var(--color-coral-soft) !important;
+      background-size: 110% 110% !important;
+      background-repeat: no-repeat !important;
+      animation: aboutBgFloat 14s ease-in-out infinite !important;
+    }
+    .about-section::before {
+      width: 180px !important;
+      height: 180px !important;
+      top: -56px !important;
+      right: -56px !important;
+    }
+    .about-section::after {
+      width: 150px !important;
+      height: 150px !important;
+      bottom: -64px !important;
+      left: -40px !important;
+    }
+    .about-headline { font-size: 26px !important; }
+    .about-lead { font-size: 17px !important; }
+  }
+  @keyframes aboutBgFloat {
+    0%, 100% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    50%      { background-position: -10px 8px, 8px -6px, -14px 10px, 6px -8px, 4px 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-section { animation: none !important; }
+  }
+  @media (min-width: 900px) {
+    /* ============ FIND EVENTS ============ */
+    .find-events {
+      max-width: var(--container-narrow) !important;
+      margin: 0 auto 24px !important;
+      padding: 24px 44px !important;
+    }
+    .find-events-buttons {
+      flex-direction: row !important;
+      justify-content: center;
+      gap: 16px !important;
+    }
+    .btn-find-solo { max-width: 280px; flex: 1; }
+
+    /* ============ セクションタイトル ============ */
+    .section-title {
+      max-width: var(--container-wide);
+      margin-left: auto !important;
+      margin-right: auto !important;
+      text-align: center !important;
+      padding: 44px 32px 16px !important;
+    }
+
+    /* ============ スケジュールカード（ホーム） ============ */
+    .schedule-card {
+      max-width: var(--container-mid) !important;
+      margin: 0 auto !important;
+    }
+
+    /* ============ まもなく開催: 2-3カラムグリッド ============ */
+    .upcoming-list {
+      max-width: var(--container-wide) !important;
+      margin: 0 auto !important;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+      gap: 16px !important;
+      padding: 0 32px !important;
+    }
+    .all-schedule-btn {
+      max-width: 320px !important;
+      margin: 24px auto !important;
+    }
+
+    /* ============ ホームのQ&Aリンクカード ============ */
+    #page-home > .link-card {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ BOTTOM NAV ============ */
+    .bottom-nav {
+      max-width: none !important;
+      width: 100% !important;
+      left: 0 !important;
+      transform: none !important;
+      padding: 12px 0 16px !important;
+      justify-content: center;
+      gap: 8px;
+    }
+    .bottom-nav .nav-item { max-width: 140px; flex: 0 1 130px !important; }
+
+    /* ============ LINKS ページ ============ */
+    .links-header { max-width: var(--container-narrow); margin: 0 auto !important; }
+    #page-links .link-card {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ JOIN（参加する）ページ ============ */
+    .join-self-area,
+    .join-eligibility,
+    .join-actions,
+    .join-contact-note {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .join-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+    }
+    .join-actions > a { flex: 1; }
+
+    /* ============ SCHEDULE ページ ============ */
+    #page-schedule .links-header,
+    #page-schedule > .section-title {
+      max-width: var(--container-narrow) !important;
+      margin: 0 auto !important;
+    }
+    .area-grid {
+      max-width: 560px !important;
+      margin: 0 auto 20px !important;
+      padding: 0 24px !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+    /* ALL view: 3カラムグリッド */
+    .schedule-list:not([hidden]) {
+      max-width: var(--container-wide) !important;
+      margin: 0 auto 20px !important;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      gap: 16px !important;
+      padding: 0 24px !important;
+      align-items: start !important;
+    }
+    .sli { width: auto !important; }
+    .sli-media.is-poster { aspect-ratio: 5 / 3 !important; }
+    .sli-media.is-flyer.is-fitted { max-height: 360px; }
+
+    #page-schedule .event-poster,
+    #page-schedule .event-poster-typo {
+      max-width: var(--container-mid) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    /* 透かしロゴ: PC幅で width:78% だと縦に切れるため絶対サイズで抑える */
+    .event-poster-watermark {
+      width: auto !important;
+      max-width: 360px !important;
+      max-height: 78% !important;
+      object-fit: contain !important;
+    }
+
+    /* ============ Q&A ページ ============ */
+    .qa-section,
+    .qa-list,
+    #page-qa .links-header {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ REGION ページ: grid-template-areas で3カード横並び ============ */
+    #page-region.active {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+      grid-template-areas:
+        "tb tb tb"
+        "rh rh rh"
+        "rp rp rp"
+        "ts ts ts"
+        "c1 c2 c3" !important;
+      max-width: var(--container-wide) !important;
+      margin: 0 auto !important;
+      column-gap: 16px;
+      row-gap: 12px;
+      padding: 0 24px 40px !important;
+    }
+    #page-region > .topbar          { grid-area: tb; }
+    #page-region > .region-hero     { grid-area: rh; }
+    #page-region > .region-panorama { grid-area: rp; }
+    #page-region > .region-section-title { grid-area: ts; text-align: center; }
+    #page-region > .region-illust-card:nth-of-type(1) { grid-area: c1; }
+    #page-region > .region-illust-card:nth-of-type(2) { grid-area: c2; }
+    #page-region > .region-illust-card:nth-of-type(3) { grid-area: c3; }
+    #page-region > .region-illust-card {
+      width: 100% !important;
+      margin: 0 !important;
+      aspect-ratio: 16 / 10 !important;
+      min-height: 180px !important;
+    }
+    #page-region .ric-text {
+      max-width: 50% !important;
+      padding: 12px 6px 12px 16px !important;
+    }
+    #page-region .ric-bg {
+      object-position: right bottom !important;
+    }
+    /* 多摩: 元画像右端のデコ円を削って建物を右寄せ */
+    #page-region .region-illust-card[data-region="tokyo-2nd"] .ric-bg {
+      object-position: 94% bottom !important;
+    }
+    #page-region .ric-name-jp { font-size: 17px !important; }
+    #page-region .ric-name-en { font-size: 9px !important; }
+    #page-region .ric-arrow { width: 30px !important; height: 30px !important; margin: auto 10px auto auto !important; }
+    .region-detail-header,
+    .region-event-list {
+      max-width: var(--container-mid) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ GALLERY ページ ============ */
+    .gallery-header {
+      max-width: var(--container-narrow) !important;
+      margin: 0 auto !important;
+    }
+    .gallery-coming-soon {
+      max-width: 720px !important;
+      margin: 8px auto 32px !important;
+      aspect-ratio: 1 !important;
+      min-height: auto !important;
+    }
+    .gallery-photo-grid { gap: 8px !important; }
+    .gallery-overlay {
+      position: absolute !important;
+      inset: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 32px !important;
+    }
+
+    /* ============ EVENT DETAIL / ARTICLES 等 ============ */
+    .event-hero,
+    .event-info-card,
+    .event-actions,
+    .event-description,
+    #page-event-detail > *,
+    #page-event-shinjuku > *,
+    #page-article-detail > * {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .event-hero { max-width: var(--container-mid) !important; }
+    #page-event-detail .topbar,
+    #page-event-shinjuku .topbar,
+    #page-article-detail .topbar { max-width: none !important; }
+
+    #page-articles > *,
+    #page-campus > *,
+    #page-media > *,
+    #page-search > * {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #page-articles .topbar,
+    #page-campus .topbar,
+    #page-media .topbar,
+    #page-search .topbar { max-width: none !important; }
+
+    /* ============ PRIVACY ============ */
+    #page-privacy > * {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #page-privacy .topbar { max-width: none !important; }
+
+    /* ============ FOOTER ============ */
+    .site-footer {
+      max-width: var(--container-wide);
+      margin: 0 auto;
     }
   }
 
