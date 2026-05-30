@@ -314,6 +314,18 @@
     transform: translateY(1px);
     box-shadow: 0 3px 12px rgba(242,107,91,0.25);
   }
+  /* Pre-release (locked) state for primary CTAs (form button etc.) */
+  .btn-primary.is-locked {
+    background: #C8C2B5;
+    color: #FFFFFF;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .btn-primary.is-locked:active { transform: none; box-shadow: none; }
+  .btn-primary.is-locked svg { opacity: 0.6; }
   .btn-secondary {
     display: flex;
     align-items: center;
@@ -3196,7 +3208,7 @@
       <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
 
-    <h2 class="section-title">まもなく開催！</h2>
+    <h2 class="section-title" id="upcoming-section-title">まもなく開催！</h2>
 
     <div class="upcoming-list" id="upcoming-list">
       <!-- populated by JS from schedule data -->
@@ -4014,8 +4026,8 @@
     </div>
 
     <div class="join-actions">
-      <a class="btn-primary" href="https://forms.gle/X2P4A2t1pMHmKnbc7" target="_blank" rel="noopener noreferrer">
-        お申し込みフォームを開く
+      <a class="btn-primary" id="join-form-btn" href="https://forms.gle/X2P4A2t1pMHmKnbc7" target="_blank" rel="noopener noreferrer" data-release-at="2026-05-30T09:45:00+09:00">
+        <span class="join-form-btn-label">お申し込みフォームを開く</span>
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
       <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
@@ -5587,6 +5599,7 @@
 
   function renderUpcomingHome() {
     const list = document.getElementById('upcoming-list');
+    const title = document.getElementById('upcoming-section-title');
     if (!list) return;
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -5598,9 +5611,13 @@
       .sort((a, b) => a.date - b.date);
     list.innerHTML = '';
     if (upcoming.length === 0) {
-      list.innerHTML = '<div class="upcoming-empty">2週間以内の開催予定はありません</div>';
+      // Hide the whole section (title + list) until events enter the 2-week window
+      list.style.display = 'none';
+      if (title) title.style.display = 'none';
       return;
     }
+    list.style.display = '';
+    if (title) title.style.display = '';
     upcoming.forEach(e => {
       const item = document.createElement('div');
       item.className = 'upcoming-item is-soon';
@@ -5699,6 +5716,54 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
   });
+
+  // ============ Scheduled CTA unlock ============
+  // Any element with [data-release-at="<ISO datetime>"] is locked until that
+  // time, then auto-unlocks. JST is enforced via the +09:00 suffix in the ISO
+  // string regardless of viewer's device timezone.
+  (function initScheduledUnlock() {
+    const els = document.querySelectorAll('[data-release-at]');
+    els.forEach(el => {
+      const releaseAt = new Date(el.dataset.releaseAt).getTime();
+      if (isNaN(releaseAt)) return;
+      const originalHref = el.getAttribute('href');
+      const labelEl = el.querySelector('.join-form-btn-label') || null;
+      const originalLabel = labelEl ? labelEl.textContent : '';
+
+      const fmtReleaseLabel = () => {
+        const parts = new Intl.DateTimeFormat('ja-JP', {
+          timeZone: 'Asia/Tokyo',
+          month: 'numeric', day: 'numeric', weekday: 'short',
+          hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+        }).formatToParts(new Date(releaseAt));
+        const get = t => parts.find(p => p.type === t)?.value || '';
+        return `${get('month')}/${get('day')}(${get('weekday')}) ${get('hour')}:${get('minute')} 受付開始`;
+      };
+
+      const setLocked = () => {
+        el.removeAttribute('href');
+        el.classList.add('is-locked');
+        el.setAttribute('aria-disabled', 'true');
+        if (labelEl) labelEl.textContent = fmtReleaseLabel();
+      };
+      const setUnlocked = () => {
+        if (originalHref) el.setAttribute('href', originalHref);
+        el.classList.remove('is-locked');
+        el.removeAttribute('aria-disabled');
+        if (labelEl) labelEl.textContent = originalLabel;
+      };
+
+      const now = Date.now();
+      if (now < releaseAt) {
+        setLocked();
+        const ms = releaseAt - now;
+        // Only schedule auto-unlock if within 24h (avoid keeping long timers)
+        if (ms <= 24 * 60 * 60 * 1000) {
+          setTimeout(setUnlocked, ms + 200);
+        }
+      }
+    });
+  })();
 </script>
 
 <!-- BudouX: Japanese phrase-aware line break hints (~5KB).
