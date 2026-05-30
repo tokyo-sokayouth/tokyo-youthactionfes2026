@@ -3261,11 +3261,18 @@
   }
 
   /* ============================================================
-     ★ PC WIDE PREVIEW OVERRIDES（≥900px のみ適用）
-     phone-frame(420px)制限を解除し、各セクションを横に伸ばす。
-     900px未満ではこのブロックは無効＝既存のスマホ表示そのまま。
+     ★ PC WIDE PREVIEW OVERRIDES（≥900px のみ適用）v2
+     phone-frame(420px) を解除しつつ、各セクションは「読みやすい幅」に
+     キャップして、横に間延びしない自然なPC表示にする。
+     900px未満では一切適用されず、既存のスマホ表示そのまま。
      ============================================================ */
   @media (min-width: 900px) {
+    :root {
+      --container-narrow: 720px;  /* テキスト・カード・ボタン用 */
+      --container-mid: 960px;     /* 中サイズ用 */
+      --container-wide: 1100px;   /* グリッド・ヒーロー用 */
+    }
+
     body {
       padding: 0 !important;
       background: #F2EBD9 !important;
@@ -3282,106 +3289,89 @@
       overflow-x: hidden;
     }
 
-    /* TOPBAR: ハンバーガーは左端そのまま、右にロゴテキスト */
     .topbar {
       padding-left: 32px !important;
       padding-right: 32px !important;
       height: 60px !important;
     }
 
-    /* ============ HERO: フルワイドバナー ============ */
+    /* ============ HERO: フルワイド背景・中央コンテンツ ============ */
     .hero {
       padding: 72px 32px 56px !important;
       text-align: center;
       background:
-        radial-gradient(ellipse 1400px 700px at 20% 30%, rgba(242,107,91,0.16) 0%, transparent 60%),
-        radial-gradient(ellipse 1400px 700px at 80% 70%, rgba(177,152,212,0.16) 0%, transparent 60%),
-        radial-gradient(ellipse 700px 400px at 95% 15%, rgba(255,196,120,0.14) 0%, transparent 65%),
-        radial-gradient(ellipse 700px 400px at 5% 85%, rgba(125,196,182,0.12) 0%, transparent 65%);
+        radial-gradient(ellipse 1400px 700px at 20% 30%, rgba(242,107,91,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 1400px 700px at 80% 70%, rgba(177,152,212,0.14) 0%, transparent 60%);
     }
     .logo-wrap {
-      max-width: 560px !important;
+      max-width: 480px !important;
       margin: 0 auto !important;
     }
-    .hero-region {
-      font-size: 14px !important;
-      letter-spacing: 4px !important;
-    }
-    .hero-tagline {
-      font-size: 64px !important;
-    }
-    /* heroの装飾ドット: フルワイドでも違和感ないよう少し控えめに */
-    .hero-deco { max-width: 1200px; left: 50% !important; transform: translateX(-50%); }
+    .hero-region { font-size: 13px !important; letter-spacing: 3.5px !important; }
+    .hero-tagline { font-size: 52px !important; }
+    .hero-deco { max-width: 960px; left: 50% !important; transform: translateX(-50%); }
 
-    /* ============ ABOUT: 中央寄せ ============ */
+    /* ============ ABOUT ============ */
     .about-section {
-      max-width: 880px !important;
-      margin: 56px auto !important;
-      padding: 48px 56px !important;
+      max-width: var(--container-narrow) !important;
+      margin: 48px auto !important;
+      padding: 40px 44px !important;
       border-radius: 24px !important;
     }
-    .about-headline { font-size: 26px !important; }
-    .about-lead { font-size: 17px !important; }
+    .about-headline { font-size: 24px !important; }
+    .about-lead { font-size: 16px !important; }
 
     /* ============ FIND EVENTS: ボタン横並び ============ */
     .find-events {
-      max-width: 880px !important;
+      max-width: var(--container-narrow) !important;
       margin: 0 auto 24px !important;
-      padding: 32px 56px !important;
+      padding: 24px 44px !important;
     }
     .find-events-buttons {
       flex-direction: row !important;
       justify-content: center;
-      gap: 20px !important;
+      gap: 16px !important;
     }
-    .btn-find-solo {
-      max-width: 320px;
-      flex: 1;
-    }
+    .btn-find-solo { max-width: 280px; flex: 1; }
 
     /* ============ セクションタイトル ============ */
     .section-title {
-      max-width: 1100px;
+      max-width: var(--container-wide);
       margin-left: auto !important;
       margin-right: auto !important;
       text-align: center !important;
-      padding: 48px 32px 20px !important;
-    }
-    .section-title::before,
-    .section-title::after {
-      display: inline-block !important;
+      padding: 44px 32px 16px !important;
     }
 
-    /* ============ スケジュールカード ============ */
+    /* ============ スケジュールカード（ホーム） ============ */
     .schedule-card {
-      max-width: 1100px !important;
+      max-width: var(--container-mid) !important;
       margin: 0 auto !important;
     }
 
-    /* ============ まもなく開催: グリッド ============ */
+    /* ============ まもなく開催: 2-3カラムグリッド ============ */
     .upcoming-list {
-      max-width: 1200px !important;
+      max-width: var(--container-wide) !important;
       margin: 0 auto !important;
       display: grid !important;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
-      gap: 20px !important;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+      gap: 16px !important;
       padding: 0 32px !important;
     }
 
-    /* ============ すべてのスケジュールを見るボタン ============ */
     .all-schedule-btn {
-      max-width: 340px !important;
+      max-width: 320px !important;
       margin: 24px auto !important;
     }
 
-    /* ============ QAリンクカード ============ */
+    /* ============ ホームのQ&Aリンクカード ============ */
     #page-home > .link-card {
-      max-width: 880px !important;
+      max-width: var(--container-narrow) !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
 
-    /* ============ BOTTOM NAV: 横幅いっぱい ============ */
+    /* ============ BOTTOM NAV ============ */
     .bottom-nav {
       max-width: none !important;
       width: 100% !important;
@@ -3391,52 +3381,153 @@
       justify-content: center;
       gap: 8px;
     }
-    .bottom-nav .nav-item {
-      max-width: 160px;
-      flex: 0 1 140px !important;
-    }
+    .bottom-nav .nav-item { max-width: 140px; flex: 0 1 130px !important; }
 
-    /* ============ 他ページも同様に中央寄せ ============ */
-    .links-header,
-    .links-grid,
-    .schedule-controls,
-    .schedule-list,
-    .qa-section,
-    .gallery-grid,
-    .region-grid,
-    .region-detail-header,
-    .region-event-list {
-      max-width: 1100px !important;
+    /* ============ LINKS ページ ============ */
+    .links-header { max-width: var(--container-narrow); margin: 0 auto !important; }
+    /* LINKS: 各カードを単独で読みやすい幅にキャップ、縦並びを維持 */
+    #page-links .link-card {
+      max-width: var(--container-narrow) !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
+
+    /* ============ JOIN（参加する）ページ ============ */
+    .join-self-area,
+    .join-eligibility,
+    .join-actions,
+    .join-contact-note {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    /* ボタンを横並びに */
+    .join-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+    }
+    .join-actions > a { flex: 1; }
+
+    /* ============ SCHEDULE ページ ============ */
+    /* タイトル・説明 */
+    #page-schedule .links-header,
+    #page-schedule > .section-title {
+      max-width: var(--container-narrow) !important;
+      margin: 0 auto !important;
+    }
+    /* エリア選択タブ: コンパクトに中央集約 */
+    .area-grid {
+      max-width: 560px !important;
+      margin: 0 auto 20px !important;
+      padding: 0 24px !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+    /* スケジュールリスト（ALL view） */
+    .schedule-list {
+      max-width: var(--container-mid) !important;
+      margin: 0 auto 20px !important;
+    }
+    /* イベントカード（ポスタータイポ／フライヤー含む） */
+    #page-schedule .event-card,
+    #page-schedule .event-poster,
+    #page-schedule .event-poster-typo {
+      max-width: var(--container-mid) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ ★透かしロゴ修正：絶対サイズキャップ ============ */
+    /* PC幅で width:78% だとカードが横長になった時にロゴが画像縦サイズより
+       大きく描画されて上下が切れる → 絶対値で抑える */
+    .event-poster-watermark {
+      width: auto !important;
+      max-width: 360px !important;
+      max-height: 78% !important;
+      object-fit: contain !important;
+    }
+
+    /* ============ Q&A ページ ============ */
+    .qa-section,
+    .qa-list,
+    #page-qa .links-header {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /* ============ REGION ページ ============ */
     .region-grid {
+      max-width: var(--container-wide) !important;
+      margin: 0 auto !important;
       display: grid !important;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      grid-template-columns: repeat(3, 1fr) !important;
       gap: 20px !important;
       padding: 0 32px !important;
     }
-    .links-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
-      gap: 16px !important;
-      padding: 0 32px !important;
+    .panorama-wrap,
+    .region-detail-header,
+    .region-event-list {
+      max-width: var(--container-mid) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
+
+    /* ============ GALLERY ページ ============ */
     .gallery-grid {
+      max-width: var(--container-wide) !important;
+      margin: 0 auto !important;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
       padding: 0 32px !important;
     }
 
-    /* イベント詳細ヒーロー他は無理に広げず中央 */
-    .event-hero, .event-info-card, .event-actions, .event-description {
-      max-width: 880px !important;
+    /* ============ EVENT DETAIL ============ */
+    .event-hero,
+    .event-info-card,
+    .event-actions,
+    .event-description,
+    #page-event-detail > *,
+    #page-event-shinjuku > *,
+    #page-article-detail > * {
+      max-width: var(--container-narrow) !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
+    .event-hero { max-width: var(--container-mid) !important; }
+    /* event-detail内のtopbar / backボタンは内部のflexで動くのでoverride不要 */
+    #page-event-detail .topbar,
+    #page-event-shinjuku .topbar,
+    #page-article-detail .topbar {
+      max-width: none !important;
+    }
 
-    /* footer */
+    /* ============ ARTICLES / CAMPUS / MEDIA / SEARCH ============ */
+    #page-articles > *,
+    #page-campus > *,
+    #page-media > *,
+    #page-search > * {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #page-articles .topbar,
+    #page-campus .topbar,
+    #page-media .topbar,
+    #page-search .topbar {
+      max-width: none !important;
+    }
+
+    /* ============ PRIVACY ============ */
+    #page-privacy > * {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #page-privacy .topbar { max-width: none !important; }
+
+    /* ============ FOOTER ============ */
     .site-footer {
-      max-width: 1100px;
+      max-width: var(--container-wide);
       margin: 0 auto;
     }
   }
