@@ -89,14 +89,22 @@
   .event-no-external strong, .event-no-external p,
   .event-name-jp, .event-content-text,
   .sli-name, .sli-venue, .sli-desc, .sli-region,
-  .qa-body, .qa-summary,
-  .about-text, .about-list,
+  .qa-body, .qa-summary-text, .qa-quote, .qa-section-desc,
+  .about-lead, .about-body, .about-headline, .about-can-title, .about-can-list li,
   .join-eligibility-lead, .join-eligibility-note, .join-self-area p, .join-contact-note,
   .join-rule, .join-rule-title,
   .info-value, .info-value-sub,
-  .links-title, .article-title, .article-excerpt {
-    word-break: keep-all;
+  .links-title, .links-subtitle,
+  .link-name, .link-desc,
+  .article-title, .article-desc, .article-headline-title {
+    word-break: keep-all !important;
     overflow-wrap: anywhere;
+  }
+  /* Phrase-level no-break: wrap inline-block phrases. Browsers can wrap
+     BETWEEN phrases (each is inline-block) but never INSIDE one. This is the
+     most reliable Japanese line-break control across all browsers/iOS. */
+  .phrase-nb {
+    display: inline-block;
   }
 
   /* ============ PHONE FRAME (DESKTOP PREVIEW) ============ */
@@ -3168,10 +3176,10 @@
       <div class="about-tag">Think globally, Fes locally.</div>
       <div class="about-headline">私の街を、舞台にしよう。</div>
       <div class="about-body">
-        <p class="about-lead">一歩外に出れば、きっと素敵な出会いが待っている。<br>
-        ユースアクションフェスは、そんな“ときめき”を探しに来てほしい、<strong>あなたの街のフェスティバル</strong>です。</p>
-        <p>東京・山梨のあちこちで、同じ時代を生きる仲間たちがそれぞれの街で、本気のフェスを作っています。</p>
-        <p>あなたの街にも、きっと熱い舞台がある。</p>
+        <p class="about-lead"><span class="phrase-nb">一歩外に出れば、</span><span class="phrase-nb">きっと素敵な出会いが</span><span class="phrase-nb">待っている。</span><br>
+        <span class="phrase-nb">ユースアクションフェスは、</span><span class="phrase-nb">そんな“ときめき”を</span><span class="phrase-nb">探しに来てほしい、</span><span class="phrase-nb"><strong>あなたの街のフェスティバル</strong>です。</span></p>
+        <p><span class="phrase-nb">東京・山梨のあちこちで、</span><span class="phrase-nb">同じ時代を生きる仲間たちが</span><span class="phrase-nb">それぞれの街で、</span><span class="phrase-nb">本気のフェスを作っています。</span></p>
+        <p><span class="phrase-nb">あなたの街にも、</span><span class="phrase-nb">きっと熱い舞台がある。</span></p>
       </div>
 
       <div class="about-can">
@@ -5374,10 +5382,17 @@
       // Look up the soku name from the corresponding schedule pill
       const pill = document.querySelector(`.area-pill[data-event-id="${eventId}"] .area-pill-name`);
       const sokuName = (pill && pill.textContent.trim()) || '対象地域';
-      document.getElementById('ed-no-external-title').textContent =
-        `${sokuName}の会員の方、およびご友人・ご家族の方が対象です。`;
-      document.getElementById('ed-no-external-body').textContent =
-        '※お声がけいただいた方や、所属組織を通じてご参加ください。';
+      // Build with phrase-nb spans so the browser breaks only between phrases,
+      // never inside one. This guarantees natural breaks on every browser.
+      const safeSoku = sokuName.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      document.getElementById('ed-no-external-title').innerHTML =
+        `<span class="phrase-nb">${safeSoku}の会員の方、</span>` +
+        `<span class="phrase-nb">およびご友人・ご家族の方が</span>` +
+        `<span class="phrase-nb">対象です。</span>`;
+      document.getElementById('ed-no-external-body').innerHTML =
+        `<span class="phrase-nb">※お声がけいただいた方や、</span>` +
+        `<span class="phrase-nb">所属組織を通じて</span>` +
+        `<span class="phrase-nb">ご参加ください。</span>`;
       ngMsg.style.display = 'block';
     }
 
