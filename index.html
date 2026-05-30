@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#FF6B5B">
 <meta name="description" content="Fes Navi - 「YOUTH ACTION FES 2026」公式情報サイト。東京・山梨エリアでの開催スケジュール、注目イベント、参加申込はこちら。">
-<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="telephone=no, address=no, email=no, date=no">
 <meta property="og:type" content="website">
 <meta property="og:title" content="YOUTH ACTION FES 2026 | Fes Navi">
 <meta property="og:description" content="Fes Navi - 東京・山梨エリアで開催される「YOUTH ACTION FES 2026」の公式サイトです。">
@@ -105,6 +105,17 @@
      most reliable Japanese line-break control across all browsers/iOS. */
   .phrase-nb {
     display: inline-block;
+  }
+  /* Defeat iOS Safari auto data-detection (it underlines text it thinks is an
+     address/phone/date). The format-detection meta usually prevents creation,
+     but in case a detector still wraps content, neutralize the styling. */
+  a[x-apple-data-detectors],
+  a[x-apple-data-detectors] * {
+    color: inherit !important;
+    text-decoration: none !important;
+    -webkit-text-decoration-color: transparent !important;
+    cursor: inherit !important;
+    pointer-events: none !important;
   }
 
   /* ============ PHONE FRAME (DESKTOP PREVIEW) ============ */
