@@ -3311,15 +3311,49 @@
     .hero-tagline { font-size: 52px !important; }
     .hero-deco { max-width: 960px; left: 50% !important; transform: translateX(-50%); }
 
-    /* ============ ABOUT ============ */
+    /* ============ ABOUT: 横長＋装飾の円を追加 ============ */
     .about-section {
-      max-width: var(--container-narrow) !important;
+      max-width: 920px !important;
       margin: 48px auto !important;
-      padding: 40px 44px !important;
-      border-radius: 24px !important;
+      padding: 44px 56px !important;
+      border-radius: 28px !important;
+      /* ベース色 + 装飾円4つ（多色） */
+      background-image:
+        radial-gradient(circle 70px at 14% 22%, rgba(255,196,120,0.36) 0%, rgba(255,196,120,0) 65%),
+        radial-gradient(circle 56px at 88% 16%, rgba(125,196,182,0.32) 0%, rgba(125,196,182,0) 65%),
+        radial-gradient(circle 90px at 92% 72%, rgba(177,152,212,0.30) 0%, rgba(177,152,212,0) 65%),
+        radial-gradient(circle 44px at 56% 88%, rgba(242,107,91,0.26) 0%, rgba(242,107,91,0) 65%),
+        radial-gradient(circle 48px at 32% 78%, rgba(255,196,120,0.24) 0%, rgba(255,196,120,0) 65%) !important;
+      background-color: var(--color-coral-soft) !important;
+      background-size: 110% 110% !important;
+      background-repeat: no-repeat !important;
+      /* 全ての装飾円がふんわり浮遊するようにbg-positionをアニメート */
+      animation: aboutBgFloat 14s ease-in-out infinite !important;
     }
-    .about-headline { font-size: 24px !important; }
-    .about-lead { font-size: 16px !important; }
+    /* 既存の ::before / ::after の白＋黄色の大きな blob は維持しつつサイズUP */
+    .about-section::before {
+      width: 180px !important;
+      height: 180px !important;
+      top: -56px !important;
+      right: -56px !important;
+    }
+    .about-section::after {
+      width: 150px !important;
+      height: 150px !important;
+      bottom: -64px !important;
+      left: -40px !important;
+    }
+    .about-headline { font-size: 26px !important; }
+    .about-lead { font-size: 17px !important; }
+  }
+  @keyframes aboutBgFloat {
+    0%, 100% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    50%      { background-position: -10px 8px, 8px -6px, -14px 10px, 6px -8px, 4px 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-section { animation: none !important; }
+  }
+  @media (min-width: 900px) {
 
     /* ============ FIND EVENTS: ボタン横並び ============ */
     .find-events {
@@ -3515,11 +3549,22 @@
     }
 
     /* ============ GALLERY ページ ============ */
-    .gallery-grid {
-      max-width: var(--container-wide) !important;
+    /* 実際のクラスは .gallery-coming-soon + .gallery-photo-grid (3x3) */
+    .gallery-header {
+      max-width: var(--container-narrow) !important;
       margin: 0 auto !important;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-      padding: 0 32px !important;
+    }
+    .gallery-coming-soon {
+      max-width: 720px !important;
+      margin: 8px auto 32px !important;
+      aspect-ratio: 1 !important;       /* 全体を正方形に */
+      min-height: auto !important;       /* mobile時の min-height を無効化 */
+    }
+    .gallery-photo-grid {
+      gap: 8px !important;               /* 写真間の隙間を少し広く */
+    }
+    .gallery-overlay {
+      padding: 100px 24px !important;    /* 縦中央に「Coming Soon」が来るよう */
     }
 
     /* ============ EVENT DETAIL ============ */
