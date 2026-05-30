@@ -333,12 +333,27 @@
       max-width: var(--container-narrow) !important;
       margin: 0 auto !important;
     }
-    .area-grid {
-      max-width: 560px !important;
-      margin: 0 auto 20px !important;
-      padding: 0 24px !important;
-      grid-template-columns: repeat(4, 1fr) !important;
+    /* 上部タブ（ALL + 3地域）: ページ幅まで広がるのを抑え中央集約 */
+    #page-schedule > .tabs.schedule-tabs {
+      max-width: var(--container-narrow) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
+    /* 月別セクション: header と area-grid を同じ幅で揃え見た目を統一 */
+    .month-section {
+      max-width: var(--container-mid) !important;
+      margin: 0 auto 32px !important;
+      padding: 0 24px;
+    }
+    /* 月別の area-grid: 2列固定 → レスポンシブな多列で読みやすく */
+    .month-section .area-grid {
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+      gap: 10px !important;
+    }
+    /* トップレベル（地域選択）の area-grid は対象外 — month-section内のみ上書き */
     /* ALL view: 3カラムグリッド */
     .schedule-list:not([hidden]) {
       max-width: var(--container-wide) !important;
