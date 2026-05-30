@@ -3431,9 +3431,12 @@
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
       gap: 16px !important;
       padding: 0 24px !important;
+      align-items: start !important;  /* カード毎に自然な高さに（行内引き伸ばし防止） */
     }
-    /* .sli 内のメディアバナーが card 幅で扱われるようリセット */
     .sli { width: auto !important; }
+    /* メディア領域の高さを均し過剰な余白を防ぐ */
+    .sli-media.is-poster { aspect-ratio: 5 / 3 !important; }
+    .sli-media.is-flyer.is-fitted { max-height: 360px; }
 
     /* イベントカード（per-month area-pillはタブの一種なので変更しない） */
     #page-schedule .event-poster,
@@ -3483,13 +3486,26 @@
     #page-region > .region-illust-card:nth-of-type(1) { grid-area: c1; }
     #page-region > .region-illust-card:nth-of-type(2) { grid-area: c2; }
     #page-region > .region-illust-card:nth-of-type(3) { grid-area: c3; }
-    /* 3列に並んだ各カードはコンパクトに、illustration を程よい高さで */
+    /* 3列に並んだ各カード: 横長アスペクトに戻し、ランドマーク絵が見えるよう調整 */
     #page-region > .region-illust-card {
       width: 100% !important;
       margin: 0 !important;
-      aspect-ratio: 5 / 4 !important;
-      min-height: 200px !important;
+      aspect-ratio: 16 / 10 !important;  /* 5:4 → 16:10 (1.6:1) より landscape */
+      min-height: 180px !important;
     }
+    /* テキストグラデーション幅を縮小して、右側のランドマーク絵を広く露出 */
+    #page-region .ric-text {
+      max-width: 50% !important;
+      padding: 12px 6px 12px 16px !important;
+    }
+    /* 元画像のランドマーク（東京タワー/建物/富士山）は右端寄りに配置されているので
+       右下を基準にして見切れを最小化 */
+    #page-region .ric-bg {
+      object-position: right bottom !important;
+    }
+    #page-region .ric-name-jp { font-size: 17px !important; }
+    #page-region .ric-name-en { font-size: 9px !important; }
+    #page-region .ric-arrow { width: 30px !important; height: 30px !important; margin: auto 10px auto auto !important; }
     /* 地域詳細ページ等の他要素 */
     .region-detail-header,
     .region-event-list {
