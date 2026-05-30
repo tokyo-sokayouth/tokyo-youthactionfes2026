@@ -3313,7 +3313,7 @@
 
     /* ============ ABOUT: 横長＋装飾の円を追加 ============ */
     .about-section {
-      max-width: 920px !important;
+      max-width: 1080px !important;
       margin: 48px auto !important;
       padding: 44px 56px !important;
       border-radius: 28px !important;
@@ -3537,6 +3537,11 @@
     #page-region .ric-bg {
       object-position: right bottom !important;
     }
+    /* 多摩地域: 建物が中央寄りに見えていたので、もう少し右にシフト
+       （右端のデコ円ドット部分をトリミングして建物を右寄せ） */
+    #page-region .region-illust-card[data-region="tokyo-2nd"] .ric-bg {
+      object-position: 94% bottom !important;
+    }
     #page-region .ric-name-jp { font-size: 17px !important; }
     #page-region .ric-name-en { font-size: 9px !important; }
     #page-region .ric-arrow { width: 30px !important; height: 30px !important; margin: auto 10px auto auto !important; }
@@ -3557,14 +3562,21 @@
     .gallery-coming-soon {
       max-width: 720px !important;
       margin: 8px auto 32px !important;
-      aspect-ratio: 1 !important;       /* 全体を正方形に */
-      min-height: auto !important;       /* mobile時の min-height を無効化 */
+      aspect-ratio: 1 !important;
+      min-height: auto !important;
     }
     .gallery-photo-grid {
-      gap: 8px !important;               /* 写真間の隙間を少し広く */
+      gap: 8px !important;
     }
+    /* Coming Soon オーバーレイを正方形コンテナの中央に */
     .gallery-overlay {
-      padding: 100px 24px !important;    /* 縦中央に「Coming Soon」が来るよう */
+      position: absolute !important;
+      inset: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 32px !important;
     }
 
     /* ============ EVENT DETAIL ============ */
