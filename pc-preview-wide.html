@@ -3423,13 +3423,19 @@
       padding: 0 24px !important;
       grid-template-columns: repeat(4, 1fr) !important;
     }
-    /* スケジュールリスト（ALL view） */
-    .schedule-list {
-      max-width: var(--container-mid) !important;
+    /* スケジュールリスト（ALL view）: 3カラムグリッド */
+    .schedule-list:not([hidden]) {
+      max-width: var(--container-wide) !important;
       margin: 0 auto 20px !important;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      gap: 16px !important;
+      padding: 0 24px !important;
     }
-    /* イベントカード（ポスタータイポ／フライヤー含む） */
-    #page-schedule .event-card,
+    /* .sli 内のメディアバナーが card 幅で扱われるようリセット */
+    .sli { width: auto !important; }
+
+    /* イベントカード（per-month area-pillはタブの一種なので変更しない） */
     #page-schedule .event-poster,
     #page-schedule .event-poster-typo {
       max-width: var(--container-mid) !important;
@@ -3438,8 +3444,6 @@
     }
 
     /* ============ ★透かしロゴ修正：絶対サイズキャップ ============ */
-    /* PC幅で width:78% だとカードが横長になった時にロゴが画像縦サイズより
-       大きく描画されて上下が切れる → 絶対値で抑える */
     .event-poster-watermark {
       width: auto !important;
       max-width: 360px !important;
@@ -3456,16 +3460,37 @@
       margin-right: auto !important;
     }
 
-    /* ============ REGION ページ ============ */
-    .region-grid {
+    /* ============ REGION ページ: grid-template-areas で3カード横並び ============ */
+    #page-region.active {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+      grid-template-areas:
+        "tb tb tb"
+        "rh rh rh"
+        "rp rp rp"
+        "ts ts ts"
+        "c1 c2 c3" !important;
       max-width: var(--container-wide) !important;
       margin: 0 auto !important;
-      display: grid !important;
-      grid-template-columns: repeat(3, 1fr) !important;
-      gap: 20px !important;
-      padding: 0 32px !important;
+      column-gap: 16px;
+      row-gap: 12px;
+      padding: 0 24px 40px !important;
     }
-    .panorama-wrap,
+    #page-region > .topbar          { grid-area: tb; }
+    #page-region > .region-hero     { grid-area: rh; }
+    #page-region > .region-panorama { grid-area: rp; }
+    #page-region > .region-section-title { grid-area: ts; text-align: center; }
+    #page-region > .region-illust-card:nth-of-type(1) { grid-area: c1; }
+    #page-region > .region-illust-card:nth-of-type(2) { grid-area: c2; }
+    #page-region > .region-illust-card:nth-of-type(3) { grid-area: c3; }
+    /* 3列に並んだ各カードはコンパクトに、illustration を程よい高さで */
+    #page-region > .region-illust-card {
+      width: 100% !important;
+      margin: 0 !important;
+      aspect-ratio: 5 / 4 !important;
+      min-height: 200px !important;
+    }
+    /* 地域詳細ページ等の他要素 */
     .region-detail-header,
     .region-event-list {
       max-width: var(--container-mid) !important;
