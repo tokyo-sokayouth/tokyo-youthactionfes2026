@@ -2431,6 +2431,17 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
+  /* Pre-release (locked) state for the linktree button */
+  .event-linktree.is-locked {
+    background: #EFEAE0;
+    border-color: #C8C2B5;
+    color: #9A938A;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+    font-size: 12.5px;
+  }
+  .event-linktree.is-locked:active { transform: none; box-shadow: none; }
 
   /* ============ ARTICLE DETAIL PAGE ============ */
   .article-eyebrow {
@@ -4727,6 +4738,7 @@
       flyer: 'https://drive.google.com/open?id=1vau7ferXqQGK1r8dz2xfGLVcISKSPL3p',
       youtube: null,
       linktree: 'https://setagaya2026.github.io/setagaya-daiku/',
+      linktreeReleaseAt: '2026-06-22T00:00:00+09:00',
       description: 'フロイデ合唱団600名（300名×2公演・総入替）・富士交響楽団・ソリスト4名・銀河合唱団によるベートーヴェン交響曲第9番 第4楽章「歓喜の歌」合唱を中心とした青年世代によるユースアクションフェス。参加型ブース・平和学習団体との連携展示・体験発表などを併設し、地域に開かれた平和の連帯の場として開催します。15年前の世田谷第九合唱祭の精神を継承し、青年世代600名が「苦悩を突き抜けて歓喜に至れ」を体現します。'
     },
     'murayama': {
@@ -5298,13 +5310,45 @@
     // Linktree / external link
     const lt = document.getElementById('ed-linktree');
     const ltLabel = document.getElementById('ed-linktree-label');
+    if (lt._unlockTimer) { clearTimeout(lt._unlockTimer); lt._unlockTimer = null; }
     if (e.linktree) {
-      lt.href = e.linktree;
-      ltLabel.textContent = '公式サイトを見る';
+      const releaseAt = e.linktreeReleaseAt ? new Date(e.linktreeReleaseAt).getTime() : 0;
+      const now = Date.now();
+      const setUnlocked = () => {
+        lt.href = e.linktree;
+        ltLabel.textContent = '公式サイトを見る';
+        lt.classList.remove('is-locked');
+        lt.removeAttribute('aria-disabled');
+      };
+      const setLocked = () => {
+        lt.removeAttribute('href');
+        lt.classList.add('is-locked');
+        lt.setAttribute('aria-disabled', 'true');
+        // Format release datetime in JST regardless of viewer's timezone
+        const parts = new Intl.DateTimeFormat('ja-JP', {
+          timeZone: 'Asia/Tokyo',
+          month: 'numeric', day: 'numeric', weekday: 'short',
+          hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+        }).formatToParts(new Date(e.linktreeReleaseAt));
+        const get = t => parts.find(p => p.type === t)?.value || '';
+        ltLabel.textContent = `公式サイトは${get('month')}/${get('day')}(${get('weekday')}) ${get('hour')}:${get('minute')}公開`;
+      };
+      if (releaseAt && now < releaseAt) {
+        setLocked();
+        // Auto-unlock when the release time passes (only schedule if within 24h)
+        const ms = releaseAt - now;
+        if (ms <= 24 * 60 * 60 * 1000) {
+          lt._unlockTimer = setTimeout(setUnlocked, ms + 200);
+        }
+      } else {
+        setUnlocked();
+      }
       lt.style.display = 'flex';
     } else {
       lt.style.display = 'none';
       lt.removeAttribute('href');
+      lt.classList.remove('is-locked');
+      lt.removeAttribute('aria-disabled');
     }
 
     // External participation
