@@ -34,7 +34,15 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-J45KT9XV8G');
+  // SPA: 自動 page_view を無効化（goToPage() から手動で送信）
+  gtag('config', 'G-J45KT9XV8G', { send_page_view: false });
+
+  // GA4 イベント送信ヘルパー（gtag 未定義時のガード付き）
+  function gaEvent(name, params) {
+    if (typeof gtag === 'function') {
+      gtag('event', name, params || {});
+    }
+  }
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -5327,6 +5335,9 @@
   }
 
   function openEventDetail(eventId) {
+    // GA4: イベント詳細の閲覧を計測
+    gaEvent('event_detail_view', { event_id: eventId });
+
     const e = REGION_EVENTS[eventId];
     if (!e) {
       // fallback: just show the page with placeholder content
@@ -5606,6 +5617,13 @@
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // GA4: SPA ページ切替を計測
+    gaEvent('page_view', {
+      page_path: '/#' + pageId,
+      page_title: pageId,
+      page_location: window.location.origin + window.location.pathname + '#' + pageId
+    });
   }
 
   document.querySelectorAll('.nav-item').forEach(item => {
@@ -5885,6 +5903,56 @@
       }
     });
   })();
+
+  // ============ GA4 カスタムイベント計測 ============
+  // 初期表示ページの page_view を送信（goToPage 経由ではないため明示）
+  (function gaInitialPageView() {
+    const initialPage = document.querySelector('.page.active')?.id || 'page-home';
+    gaEvent('page_view', {
+      page_path: '/#' + initialPage,
+      page_title: initialPage,
+      page_location: window.location.origin + window.location.pathname + '#' + initialPage
+    });
+  })();
+
+  // クリック系のカスタムイベントを一括捕捉（動的生成要素も対応）
+  document.addEventListener('click', (e) => {
+    // 申込フォームボタン
+    const signupBtn = e.target.closest('#join-form-btn');
+    if (signupBtn) {
+      gaEvent('form_open_signup', { url: signupBtn.href || '' });
+      return;
+    }
+    // お問い合わせボタン（btn-secondary かつ「お問い合わせ」文言を含む）
+    const contactBtn = e.target.closest('a.btn-secondary');
+    if (contactBtn && contactBtn.textContent.includes('お問い合わせ')) {
+      gaEvent('form_open_contact', { url: contactBtn.href || '' });
+      return;
+    }
+    // イベント詳細の公式リンク（Linktree 等）
+    const linktree = e.target.closest('#ed-linktree');
+    if (linktree) {
+      gaEvent('linktree_click', { url: linktree.href || '' });
+      return;
+    }
+    // 地域カード
+    const regionCard = e.target.closest('.region-illust-card[data-region]');
+    if (regionCard) {
+      gaEvent('region_select', { region: regionCard.dataset.region });
+      return;
+    }
+  });
+
+  // 自前ホスト動画の再生（capture phase で <video> の play を捕捉）
+  document.addEventListener('play', (e) => {
+    if (e.target.tagName === 'VIDEO') {
+      const src = e.target.currentSrc || e.target.src || '';
+      gaEvent('video_play_self', {
+        video_src: src.split('/').pop() || src,
+        video_id: e.target.id || ''
+      });
+    }
+  }, true);
 </script>
 
 <!-- BudouX: Japanese phrase-aware line break hints (~5KB).
