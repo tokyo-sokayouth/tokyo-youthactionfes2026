@@ -155,32 +155,47 @@
     body {
       padding: 24px 0;
       /* デスクトップ装飾背景:
-         - Fes Naviブランドのコーラル/パープルでソフトな光彩
-         - 細かなドット模様で紙のテクスチャ感
+         - Fes Naviブランドカラー（コーラル・パープル・イエロー・ティール）で
+           ロゴの遊び心ある雰囲気に合わせたカラフルなコンフェッティ風
+         - 大きめのグラデーション光彩でPC余白を埋める
          - background-attachment: fixed でスクロール時もずれず安定
          スマホ表示には影響しない（min-width: 768px 配下） */
       background-color: #F2EBD9;
       background-image:
-        radial-gradient(ellipse 720px 480px at 14% 18%, rgba(242,107,91,0.13) 0%, transparent 62%),
-        radial-gradient(ellipse 720px 480px at 86% 82%, rgba(177,152,212,0.13) 0%, transparent 62%),
-        radial-gradient(circle 240px at 85% 15%, rgba(255,180,140,0.10) 0%, transparent 72%),
-        radial-gradient(circle 280px at 15% 85%, rgba(242,222,178,0.16) 0%, transparent 72%),
-        radial-gradient(circle 1px at 18% 24%, rgba(45,42,38,0.18) 50%, transparent 51%),
-        radial-gradient(circle 1px at 82% 31%, rgba(45,42,38,0.14) 50%, transparent 51%),
-        radial-gradient(circle 1px at 88% 62%, rgba(45,42,38,0.16) 50%, transparent 51%),
-        radial-gradient(circle 1px at 12% 71%, rgba(45,42,38,0.12) 50%, transparent 51%),
-        radial-gradient(circle 1.5px at 22% 88%, rgba(242,107,91,0.30) 50%, transparent 51%),
-        radial-gradient(circle 1.5px at 78% 12%, rgba(177,152,212,0.30) 50%, transparent 51%);
+        /* 大きなグラデーション光彩（4色） */
+        radial-gradient(ellipse 880px 600px at 12% 16%, rgba(242,107,91,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 880px 600px at 88% 84%, rgba(177,152,212,0.26) 0%, transparent 60%),
+        radial-gradient(ellipse 520px 360px at 92% 18%, rgba(255,196,120,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 520px 360px at 8% 82%, rgba(125,196,182,0.18) 0%, transparent 65%),
+        /* カラフルなコンフェッティドット（左側） */
+        radial-gradient(circle 5px at 14% 12%, rgba(242,107,91,0.55) 50%, transparent 51%),
+        radial-gradient(circle 4px at 7% 28%, rgba(255,196,120,0.65) 50%, transparent 51%),
+        radial-gradient(circle 3px at 18% 42%, rgba(177,152,212,0.55) 50%, transparent 51%),
+        radial-gradient(circle 4px at 5% 58%, rgba(125,196,182,0.55) 50%, transparent 51%),
+        radial-gradient(circle 5px at 16% 74%, rgba(242,107,91,0.50) 50%, transparent 51%),
+        radial-gradient(circle 3px at 9% 88%, rgba(255,196,120,0.55) 50%, transparent 51%),
+        /* カラフルなコンフェッティドット（右側） */
+        radial-gradient(circle 4px at 88% 14%, rgba(177,152,212,0.60) 50%, transparent 51%),
+        radial-gradient(circle 5px at 95% 32%, rgba(242,107,91,0.55) 50%, transparent 51%),
+        radial-gradient(circle 3px at 84% 48%, rgba(125,196,182,0.55) 50%, transparent 51%),
+        radial-gradient(circle 4px at 92% 64%, rgba(255,196,120,0.60) 50%, transparent 51%),
+        radial-gradient(circle 5px at 86% 78%, rgba(177,152,212,0.55) 50%, transparent 51%),
+        radial-gradient(circle 3px at 94% 92%, rgba(242,107,91,0.50) 50%, transparent 51%),
+        /* 細かなアクセントドット */
+        radial-gradient(circle 2px at 22% 22%, rgba(45,42,38,0.20) 50%, transparent 51%),
+        radial-gradient(circle 2px at 78% 24%, rgba(45,42,38,0.18) 50%, transparent 51%),
+        radial-gradient(circle 2px at 12% 50%, rgba(45,42,38,0.15) 50%, transparent 51%),
+        radial-gradient(circle 2px at 90% 50%, rgba(45,42,38,0.15) 50%, transparent 51%);
       background-attachment: fixed;
       background-repeat: no-repeat;
     }
     .phone-frame {
       border-radius: 32px;
       min-height: calc(100vh - 48px);
-      /* デスクトップ時はフレームの浮き上がりを少し強める */
+      /* デスクトップ時はフレームの浮き上がりをハッキリ強める */
       box-shadow:
-        0 28px 80px rgba(45,42,38,0.16),
-        0 4px 12px rgba(45,42,38,0.06);
+        0 32px 88px rgba(45,42,38,0.20),
+        0 8px 20px rgba(45,42,38,0.08);
     }
   }
 
