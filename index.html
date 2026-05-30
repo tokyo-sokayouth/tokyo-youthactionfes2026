@@ -329,8 +329,6 @@
     cursor: not-allowed;
     pointer-events: none;
     box-shadow: none;
-    font-size: 14px;
-    letter-spacing: 0.04em;
   }
   .btn-primary.is-locked:active { transform: none; box-shadow: none; }
   .btn-primary.is-locked svg { opacity: 0.6; }
@@ -2459,7 +2457,6 @@
     cursor: not-allowed;
     box-shadow: none;
     pointer-events: none;
-    font-size: 12.5px;
   }
   .event-linktree.is-locked:active { transform: none; box-shadow: none; }
 
@@ -3176,10 +3173,10 @@
       <div class="about-tag">Think globally, Fes locally.</div>
       <div class="about-headline">私の街を、舞台にしよう。</div>
       <div class="about-body">
-        <p class="about-lead"><span class="phrase-nb">一歩外に出れば、</span><span class="phrase-nb">きっと素敵な出会いが</span><span class="phrase-nb">待っている。</span><br>
-        <span class="phrase-nb">ユースアクションフェスは、</span><span class="phrase-nb">そんな“ときめき”を</span><span class="phrase-nb">探しに来てほしい、</span><span class="phrase-nb"><strong>あなたの街のフェスティバル</strong>です。</span></p>
-        <p><span class="phrase-nb">東京・山梨のあちこちで、</span><span class="phrase-nb">同じ時代を生きる仲間たちが</span><span class="phrase-nb">それぞれの街で、</span><span class="phrase-nb">本気のフェスを作っています。</span></p>
-        <p><span class="phrase-nb">あなたの街にも、</span><span class="phrase-nb">きっと熱い舞台がある。</span></p>
+        <p class="about-lead">一歩外に出れば、<wbr>きっと素敵な出会いが<wbr>待っている。<br>
+        ユースアクションフェスは、<wbr>そんな“ときめき”を<wbr>探しに来てほしい、<wbr><strong>あなたの街のフェスティバル</strong>です。</p>
+        <p>東京・山梨のあちこちで、<wbr>同じ時代を生きる仲間たちが<wbr>それぞれの街で、<wbr>本気のフェスを作っています。</p>
+        <p>あなたの街にも、<wbr>きっと熱い舞台がある。</p>
       </div>
 
       <div class="about-can">
@@ -5334,9 +5331,9 @@
     if (e.linktree) {
       const releaseAt = e.linktreeReleaseAt ? new Date(e.linktreeReleaseAt).getTime() : 0;
       const now = Date.now();
+      ltLabel.textContent = '公式サイトを見る';
       const setUnlocked = () => {
         lt.href = e.linktree;
-        ltLabel.textContent = '公式サイトを見る';
         lt.classList.remove('is-locked');
         lt.removeAttribute('aria-disabled');
       };
@@ -5344,14 +5341,6 @@
         lt.removeAttribute('href');
         lt.classList.add('is-locked');
         lt.setAttribute('aria-disabled', 'true');
-        // Format release datetime in JST regardless of viewer's timezone
-        const parts = new Intl.DateTimeFormat('ja-JP', {
-          timeZone: 'Asia/Tokyo',
-          month: 'numeric', day: 'numeric', weekday: 'short',
-          hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
-        }).formatToParts(new Date(e.linktreeReleaseAt));
-        const get = t => parts.find(p => p.type === t)?.value || '';
-        ltLabel.textContent = `公式サイトは${get('month')}/${get('day')}(${get('weekday')}) ${get('hour')}:${get('minute')}公開`;
       };
       if (releaseAt && now < releaseAt) {
         setLocked();
@@ -5382,17 +5371,14 @@
       // Look up the soku name from the corresponding schedule pill
       const pill = document.querySelector(`.area-pill[data-event-id="${eventId}"] .area-pill-name`);
       const sokuName = (pill && pill.textContent.trim()) || '対象地域';
-      // Build with phrase-nb spans so the browser breaks only between phrases,
-      // never inside one. This guarantees natural breaks on every browser.
+      // Insert <wbr> phrase-break hints so the browser fills each line as much
+      // as possible while breaking only at our preferred boundaries (combined
+      // with word-break:keep-all on this element via the global CSS).
       const safeSoku = sokuName.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       document.getElementById('ed-no-external-title').innerHTML =
-        `<span class="phrase-nb">${safeSoku}の会員の方、</span>` +
-        `<span class="phrase-nb">およびご友人・ご家族の方が</span>` +
-        `<span class="phrase-nb">対象です。</span>`;
+        `${safeSoku}の会員の方、<wbr>およびご友人・ご家族の方が<wbr>対象です。`;
       document.getElementById('ed-no-external-body').innerHTML =
-        `<span class="phrase-nb">※お声がけいただいた方や、</span>` +
-        `<span class="phrase-nb">所属組織を通じて</span>` +
-        `<span class="phrase-nb">ご参加ください。</span>`;
+        `※お声がけいただいた方や、<wbr>所属組織を通じて<wbr>ご参加ください。`;
       ngMsg.style.display = 'block';
     }
 
@@ -5742,30 +5728,16 @@
       const releaseAt = new Date(el.dataset.releaseAt).getTime();
       if (isNaN(releaseAt)) return;
       const originalHref = el.getAttribute('href');
-      const labelEl = el.querySelector('.join-form-btn-label') || null;
-      const originalLabel = labelEl ? labelEl.textContent : '';
-
-      const fmtReleaseLabel = () => {
-        const parts = new Intl.DateTimeFormat('ja-JP', {
-          timeZone: 'Asia/Tokyo',
-          month: 'numeric', day: 'numeric', weekday: 'short',
-          hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
-        }).formatToParts(new Date(releaseAt));
-        const get = t => parts.find(p => p.type === t)?.value || '';
-        return `${get('month')}/${get('day')}(${get('weekday')}) ${get('hour')}:${get('minute')} 受付開始`;
-      };
 
       const setLocked = () => {
         el.removeAttribute('href');
         el.classList.add('is-locked');
         el.setAttribute('aria-disabled', 'true');
-        if (labelEl) labelEl.textContent = fmtReleaseLabel();
       };
       const setUnlocked = () => {
         if (originalHref) el.setAttribute('href', originalHref);
         el.classList.remove('is-locked');
         el.removeAttribute('aria-disabled');
-        if (labelEl) labelEl.textContent = originalLabel;
       };
 
       const now = Date.now();
