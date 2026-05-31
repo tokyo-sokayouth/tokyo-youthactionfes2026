@@ -4285,7 +4285,7 @@
 
       <!-- Hero: self-hosted video (when available, highest priority) -->
       <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
-        <video id="ed-hero-selfvideo" controls autoplay muted loop playsinline preload="auto"></video>
+        <video id="ed-hero-selfvideo" controls muted loop playsinline preload="metadata"></video>
         <button class="selfvideo-unmute" id="ed-selfvideo-unmute" type="button" aria-label="音声をONにする">
           <svg class="selfvideo-unmute-icon-muted" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
             <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/>
@@ -5610,7 +5610,7 @@
       const videoFile = ev.videoFile || '';
       let mediaHTML;
       if (videoFile) {
-        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls autoplay muted loop playsinline preload="auto"></video></div>`;
+        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls muted loop playsinline preload="metadata"></video></div>`;
       } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
