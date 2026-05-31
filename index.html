@@ -5326,10 +5326,10 @@
       venue: '創価学会 目黒国際文化会館',
       address: '東京都目黒区碑文谷5丁目15-13',
       allowExternal: true,
-      flyer: null,
+      flyer: 'assets/meguro-flyer.jpg',
       youtube: null,
       linktree: null,
-      description: 'にぎやかに楽しむのも、ひとりで静かに過ごすのも。何かに夢中になるのも、ただ眺めているだけでも。あなたの『ちょうどいい』がきっと見つかる — そんな1日を過ごしてみませんか？ メインステージでのライブ、スタンプラリー、絵画等の展示、エクササイズ体験、フォトブースの設置、起震車体験、簡易カフェなど、各コンテンツを会館中の部屋・スペースを使用して展開します。'
+      description: 'にぎやかに楽しむのも、ひとりで静かに過ごすのも。何かに夢中になるのも、ただ眺めているだけでも。あなたの『ちょうどいい』がきっと見つかる — そんな1日を過ごしてみませんか？ メインステージでのライブ、スタンプラリー、絵画等の展示、エクササイズ体験、フォトブースの設置、簡易カフェなど、各コンテンツを会館中の部屋・スペースを使用して展開します。'
     },
     'chofu': {
       region: 'tokyo-2nd',
@@ -5679,7 +5679,9 @@
     if (!driveUrl) return null;
     const m = driveUrl.match(/[?&/]id=([^&]+)|\/d\/([^/]+)/);
     const id = m ? (m[1] || m[2]) : null;
-    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : null;
+    if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
+    // ローカルアセット（assets/...）や直接の画像URLはそのまま返す
+    return driveUrl;
   }
 
   function extractYouTubeId(url) {
