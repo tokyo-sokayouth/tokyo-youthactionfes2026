@@ -4285,7 +4285,7 @@
 
       <!-- Hero: self-hosted video (when available, highest priority) -->
       <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
-        <video id="ed-hero-selfvideo" controls muted loop playsinline preload="metadata"></video>
+        <video id="ed-hero-selfvideo" controls muted loop playsinline preload="metadata" poster="assets/shibuya-poster.jpg"></video>
         <button class="selfvideo-unmute" id="ed-selfvideo-unmute" type="button" aria-label="音声をONにする">
           <svg class="selfvideo-unmute-icon-muted" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
             <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/>
@@ -5168,6 +5168,7 @@
       flyer: 'https://drive.google.com/open?id=1-5-ZmDRQ7hWJirjXlJjRjE6nciGnMZp2',
       youtube: null,
       videoFile: 'assets/shibuya_20260518%20-%20otaku%20otaku.MP4',
+      videoPoster: 'assets/shibuya-poster.jpg',
       linktree: null,
       description: '「本当に勝ちたい。」（リーチ・マイケル）— 運動を中心とした体験イベント。詳細決定次第お知らせします。'
     },
@@ -5610,7 +5611,8 @@
       const videoFile = ev.videoFile || '';
       let mediaHTML;
       if (videoFile) {
-        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls muted loop playsinline preload="metadata"></video></div>`;
+        const posterAttr = ev.videoPoster ? ` poster="${ev.videoPoster}"` : '';
+        mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls muted loop playsinline preload="metadata"${posterAttr}></video></div>`;
       } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
@@ -5746,9 +5748,8 @@
           if (p2 && typeof p2.catch === 'function') p2.catch(() => {});
         };
       }
-      // Kick off playback (browsers allow muted autoplay)
-      const p = selfVideoEl.play();
-      if (p && typeof p.catch === 'function') p.catch(() => {});
+      // 自動再生はしない（ユーザーがcontrolsの▶ボタンを押した時のみ再生）
+      // ※帯域節約のため preload="metadata" と組み合わせて使用
     } else if (flyerUrl) {
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
