@@ -3466,6 +3466,7 @@
     .join-self-area,
     .join-eligibility,
     .join-actions,
+    .join-transport,
     .join-contact-note {
       max-width: var(--container-narrow) !important;
       margin-left: auto !important;
@@ -5053,9 +5054,9 @@
   // ====================== REGION EVENTS DATA ======================
   // 各総区イベントのデータ。
   // 任意フィールド（各総区からのフォーム報告をもとに後日記入）:
-  //   kidsSpace:        キッズスペースの案内文（例: 'あり（授乳・おむつ替えスペース併設）'）。記入すると詳細ページに「KIDS SPACE」欄が表示されます。
-  //   externalCapacity: 他総区からご参加の場合の定員（例: '先着50名'）。記入すると詳細ページに「CAPACITY」欄が表示されます。
-  // どちらも未記入（未設定）の場合は、その欄は自動的に非表示になります。
+  //   kidsSpace:        キッズスペースの案内文（例: 'あり（授乳・おむつ替えスペース併設）'）。詳細ページの「KIDS SPACE」欄に表示されます。
+  //   externalCapacity: 他総区からご参加の場合の定員（例: '先着50名'）。詳細ページの「CAPACITY」欄に表示されます。
+  // 「KIDS SPACE」「CAPACITY」欄は常に表示され、未記入（未設定）の場合は「—」が表示されます。
   const REGION_EVENTS = {
     'nakano': {
       region: 'tokyo23',
@@ -5362,7 +5363,7 @@
     'toshima': {
       region: 'tokyo23',
       eyebrow: 'TOSHIMA AREA',
-      eventNameJp: '豊島区ユースアクションフェス',
+      eventNameJp: '豊島総区ユースアクションフェス',
       eventNameEn: 'Toshima Youth Action Fes',
       sessions: [{ dateLabel: '2026年10月中' }],
       venue: '創価学会 東京戸田記念講堂',
@@ -5963,23 +5964,13 @@
     document.getElementById('ed-venue').textContent = e.venue || '';
     document.getElementById('ed-address').textContent = e.address || '';
 
-    // Kids space (optional — 各総区からのフォーム報告をもとに記載)
-    const kidsBlock = document.getElementById('ed-kids-block');
-    if (e.kidsSpace) {
-      document.getElementById('ed-kids').textContent = e.kidsSpace;
-      kidsBlock.style.display = '';
-    } else {
-      kidsBlock.style.display = 'none';
-    }
+    // Kids space (各総区からのフォーム報告をもとに記載。未記入の場合は「—」を表示)
+    document.getElementById('ed-kids-block').style.display = '';
+    document.getElementById('ed-kids').textContent = e.kidsSpace || '—';
 
-    // External-participant capacity (optional — 各総区からのフォーム報告をもとに記載)
-    const capacityBlock = document.getElementById('ed-capacity-block');
-    if (e.externalCapacity) {
-      document.getElementById('ed-capacity').textContent = e.externalCapacity;
-      capacityBlock.style.display = '';
-    } else {
-      capacityBlock.style.display = 'none';
-    }
+    // External-participant capacity (各総区からのフォーム報告をもとに記載。未記入の場合は「—」を表示)
+    document.getElementById('ed-capacity-block').style.display = '';
+    document.getElementById('ed-capacity').textContent = e.externalCapacity || '—';
 
     // Description
     const descWrap = document.getElementById('ed-content-wrap');
