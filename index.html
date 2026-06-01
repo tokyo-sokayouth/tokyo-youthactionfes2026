@@ -4147,6 +4147,21 @@
       </div>
     </div>
 
+    <!-- 9月 -->
+    <div class="month-section" id="schedule-month-9">
+      <div class="month-header">
+        <span class="month-num">9</span>
+        <span class="month-suffix">月開催</span>
+        <span class="month-label">SEPTEMBER</span>
+      </div>
+      <div class="area-grid">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-09-27" data-event-id="akigawa" onclick="openEventDetail('akigawa')">
+          <div class="area-pill-name">秋川総区</div>
+          <div class="area-pill-sub is-compact">福生市・あきる野市・日の出町・檜原村</div>
+        </div>
+      </div>
+    </div>
+
     <!-- 10月 -->
     <div class="month-section" id="schedule-month-10">
       <div class="month-header">
@@ -5085,6 +5100,20 @@
       linktree: null,
       description: '誰でも気軽に足を運べるオープンなイベント。和太鼓の演奏＆体験や外国の文化に触れられる企画、青梅・羽村・奥多摩・瑞穂のディープな地元情報が満載の展示企画などを予定しています。和太鼓フィットネスでストレス発散、ジャーナリングで心を整える若者向けフェス。白熱のレースゲーム大会や子育て座談会、縁日キッズコーナーも完備で家族みんなで楽しめます。'
     },
+    'akigawa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'AKIGAWA AREA',
+      eventNameJp: '秋川総区 ユースアクションフェス',
+      eventNameEn: 'Akigawa Youth Action Fes',
+      sessions: [{ dateLabel: '2026年9月27日(日)' }],
+      venue: '会場調整中',
+      address: '',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: ''
+    },
     'chiyoda': {
       region: 'tokyo23',
       eyebrow: 'CHIYODA AREA',
@@ -5505,7 +5534,7 @@
       { city: '東村山市',     eventId: null },
       { city: '国分寺市',     eventId: 'koganei' },
       { city: '国立市',       eventId: 'koganei' },
-      { city: '福生市',       eventId: null },
+      { city: '福生市',       eventId: 'akigawa' },
       { city: '狛江市',       eventId: 'chofu' },
       { city: '東大和市',     eventId: 'murayama' },
       { city: '清瀬市',       eventId: null },
@@ -5514,11 +5543,11 @@
       { city: '多摩市',       eventId: 'tama-ikeda' },
       { city: '稲城市',       eventId: null },
       { city: '羽村市',       eventId: null },
-      { city: 'あきる野市',   eventId: null },
+      { city: 'あきる野市',   eventId: 'akigawa' },
       { city: '西東京市',     eventId: 'gakuen' },
       { city: '瑞穂町',       eventId: null },
-      { city: '日の出町',     eventId: null },
-      { city: '檜原村',       eventId: null },
+      { city: '日の出町',     eventId: 'akigawa' },
+      { city: '檜原村',       eventId: 'akigawa' },
       { city: '奥多摩町',     eventId: null }
     ],
     'yamanashi': [
