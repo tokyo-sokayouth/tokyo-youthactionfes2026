@@ -2527,6 +2527,12 @@
     margin-top: 4px;
     line-height: 1.3;
   }
+  /* 市町村数が多い総区: 字を小さくしてバランスを取る */
+  .area-pill-sub.is-compact {
+    font-size: 8.5px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
 
   /* ============ EVENT DETAIL PAGE ============ */
   .event-hero {
@@ -4058,7 +4064,7 @@
 
     <div class="links-header">
       <h1 class="links-title">開催スケジュール</h1>
-      <p class="links-subtitle">エリア名をタップして、<br>近くの会場を探そう！</p>
+      <p class="links-subtitle">エリア名をタップして、<br>気になる会場を探そう！</p>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
@@ -4089,7 +4095,7 @@
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="tama-ikeda" onclick="openEventDetail('tama-ikeda')">
           <div class="area-pill-name">多摩池田総区</div>
-          <div class="area-pill-sub">多摩市</div>
+          <div class="area-pill-sub">多摩市・稲城市</div>
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-05" data-event-id="gakuen" onclick="openEventDetail('gakuen')">
           <div class="area-pill-name">学園総区</div>
@@ -4115,7 +4121,7 @@
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="ome" onclick="openEventDetail('ome')">
           <div class="area-pill-name">青梅総区</div>
-          <div class="area-pill-sub">青梅市</div>
+          <div class="area-pill-sub is-compact">青梅市・羽村市・瑞穂町・奥多摩町</div>
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-26" data-event-id="fuchu" onclick="openEventDetail('fuchu')">
           <div class="area-pill-name">府中総区</div>
@@ -4137,6 +4143,21 @@
       <div class="area-grid">
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-08-29" data-event-id="chuo" onclick="openEventDetail('chuo')">
           <div class="area-pill-name">中央区</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9月 -->
+    <div class="month-section" id="schedule-month-9">
+      <div class="month-header">
+        <span class="month-num">9</span>
+        <span class="month-suffix">月開催</span>
+        <span class="month-label">SEPTEMBER</span>
+      </div>
+      <div class="area-grid">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-09-27" data-event-id="akigawa" onclick="openEventDetail('akigawa')">
+          <div class="area-pill-name">秋川総区</div>
+          <div class="area-pill-sub is-compact">福生市・あきる野市・日の出町・檜原村</div>
         </div>
       </div>
     </div>
@@ -4175,7 +4196,7 @@
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa" onclick="openEventDetail('shintachikawa')">
           <div class="area-pill-name">新立川総区</div>
-          <div class="area-pill-sub">昭島市・日野市・立川市（4会場）</div>
+          <div class="area-pill-sub">立川市（4会場）・昭島市・日野市</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="suginami" onclick="openEventDetail('suginami')">
           <div class="area-pill-name">杉並総区</div>
@@ -4185,7 +4206,7 @@
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="murayama" onclick="openEventDetail('murayama')">
           <div class="area-pill-name">村山総区</div>
-          <div class="area-pill-sub">東大和市</div>
+          <div class="area-pill-sub is-compact">武蔵村山市・東大和市・東村山市・東久留米市・清瀬市</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="itabashi" onclick="openEventDetail('itabashi')">
           <div class="area-pill-name">板橋総区</div>
@@ -4645,7 +4666,7 @@
             <span class="chev">›</span>
           </summary>
           <div class="qa-body">
-            <p>学会の会館だけでなく、区民ホールや街なかの会場で開催します。気軽な格好でご来場いただけます。</p>
+            <p>学会の会館だけでなく、街なかの会場で開催します。気軽な格好でご来場いただけます。</p>
             <p>出演やステージ企画は地元の若者が中心。地域にお住まいの方々もたくさん足を運んでくださり、温かい雰囲気のなかで楽しんでいただけます。</p>
           </div>
         </details>
@@ -4675,7 +4696,6 @@
         <div class="qa-section-header">
           <span class="qa-section-eyebrow">LEARN MORE</span>
           <h2 class="qa-section-title">もっと詳しく</h2>
-          <p class="qa-section-desc">私たちが大切にしている考えについて</p>
         </div>
 
         <details class="qa-item">
@@ -4933,7 +4953,7 @@
       venue: '創価学会 桜ヶ丘文化会館',
       address: '東京都多摩市一ノ宮2-20-1',
       allowExternal: true,
-      flyer: 'https://drive.google.com/open?id=14zCS-pQIL_y3roQaEJmsnMP3pcBx_omp',
+      flyer: 'assets/tamaikeda-flyer.jpg',
       youtube: null,
       linktree: null,
       description: '青年による夏らしい爽やかなイベント。トークセッション、アポロ合唱団、キッズコーナーなど、お子様と一緒に楽しめる企画や、スペシャルゲストとして創価大学ダンスサークル D.I.CREW によるパフォーマンスもあります。ぜひご友人の方と共にお越しください。'
@@ -5079,6 +5099,20 @@
       youtube: null,
       linktree: null,
       description: '誰でも気軽に足を運べるオープンなイベント。和太鼓の演奏＆体験や外国の文化に触れられる企画、青梅・羽村・奥多摩・瑞穂のディープな地元情報が満載の展示企画などを予定しています。和太鼓フィットネスでストレス発散、ジャーナリングで心を整える若者向けフェス。白熱のレースゲーム大会や子育て座談会、縁日キッズコーナーも完備で家族みんなで楽しめます。'
+    },
+    'akigawa': {
+      region: 'tokyo-2nd',
+      eyebrow: 'AKIGAWA AREA',
+      eventNameJp: '秋川総区 ユースアクションフェス',
+      eventNameEn: 'Akigawa Youth Action Fes',
+      sessions: [{ dateLabel: '2026年9月27日(日)' }],
+      venue: '会場調整中',
+      address: '',
+      allowExternal: true,
+      flyer: null,
+      youtube: null,
+      linktree: null,
+      description: ''
     },
     'chiyoda': {
       region: 'tokyo23',
@@ -5500,7 +5534,7 @@
       { city: '東村山市',     eventId: null },
       { city: '国分寺市',     eventId: 'koganei' },
       { city: '国立市',       eventId: 'koganei' },
-      { city: '福生市',       eventId: null },
+      { city: '福生市',       eventId: 'akigawa' },
       { city: '狛江市',       eventId: 'chofu' },
       { city: '東大和市',     eventId: 'murayama' },
       { city: '清瀬市',       eventId: null },
@@ -5509,11 +5543,11 @@
       { city: '多摩市',       eventId: 'tama-ikeda' },
       { city: '稲城市',       eventId: null },
       { city: '羽村市',       eventId: null },
-      { city: 'あきる野市',   eventId: null },
+      { city: 'あきる野市',   eventId: 'akigawa' },
       { city: '西東京市',     eventId: 'gakuen' },
       { city: '瑞穂町',       eventId: null },
-      { city: '日の出町',     eventId: null },
-      { city: '檜原村',       eventId: null },
+      { city: '日の出町',     eventId: 'akigawa' },
+      { city: '檜原村',       eventId: 'akigawa' },
       { city: '奥多摩町',     eventId: null }
     ],
     'yamanashi': [
