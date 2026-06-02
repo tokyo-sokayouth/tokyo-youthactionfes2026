@@ -3091,6 +3091,100 @@
     color: var(--color-ink-soft) !important;
   }
 
+  /* ============ JOIN: ①ヒーロー＋②③サブカード ============ */
+  /* ① 最重要：お住まいの総区＝お申し込み不要（最も強調） */
+  .join-hero {
+    margin: 0 20px 16px;
+    padding: 26px 24px 24px;
+    border-radius: var(--radius-lg);
+    background: var(--color-green);
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0) 60%);
+    color: var(--color-ink);
+    text-align: center;
+    box-shadow: 0 8px 22px rgba(140,165,40,0.32);
+  }
+  .join-hero-icon {
+    width: 48px; height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+  }
+  .join-hero-icon svg {
+    width: 26px; height: 26px;
+    fill: none; stroke: var(--color-green);
+    stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .join-hero-eyebrow {
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .join-hero-title {
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.42;
+    margin-bottom: 12px;
+    letter-spacing: 0.2px;
+  }
+  .join-hero-sub {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.75;
+  }
+
+  /* ②③ サブ情報（①より控えめ・小さめ） */
+  .join-sub-grid {
+    margin: 0 20px 4px;
+    display: grid;
+    gap: 12px;
+  }
+  .join-card {
+    padding: 16px 18px;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .join-card-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+  .join-card-icon {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .join-card-icon svg {
+    width: 14px; height: 14px;
+    fill: none; stroke: #fff; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .join-card-icon.coral { background: var(--color-coral); }
+  .join-card-icon.teal { background: var(--color-teal); }
+  .join-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.45;
+  }
+  .join-card-body {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--color-ink);
+  }
+  .join-card-note {
+    margin: 8px 0 0;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
   /* ============ Q&A ACCORDION ============ */
   .qa-list {
     margin: 0 20px;
@@ -3465,12 +3559,19 @@
     /* ============ JOIN（参加する）ページ ============ */
     .join-self-area,
     .join-eligibility,
+    .join-hero,
+    .join-sub-grid,
     .join-actions,
     .join-transport,
     .join-contact-note {
       max-width: var(--container-narrow) !important;
       margin-left: auto !important;
       margin-right: auto !important;
+    }
+    /* ②③ サブカードは横並び2列に */
+    .join-sub-grid {
+      grid-template-columns: 1fr 1fr !important;
+      align-items: start !important;
     }
     /* ボタンを横並びに */
     .join-actions {
@@ -4585,22 +4686,41 @@
       <h1 class="links-title">参加する</h1>
     </div>
 
-    <div class="join-self-area">
-      <div class="join-self-area-icon">✓</div>
-      <div>
-        <p>お住まいの地域で開催されるフェスへ参加される方は、<strong>こちらのフォームでのお申し込みは不要です。</strong><br>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
+    <!-- ① 最重要：お住まいの総区で開催 ＝ お申し込み不要 -->
+    <div class="join-hero">
+      <div class="join-hero-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
+      <div class="join-hero-eyebrow">お住まいの総区で開催されるフェスに参加する方へ</div>
+      <div class="join-hero-title">こちらのフォームでの<br>お申し込みは不要です</div>
+      <p class="join-hero-sub">所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
     </div>
 
-    <div class="join-eligibility">
-      <p class="join-eligibility-lead"><strong style="text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--color-coral);">お住まいの地域以外のフェスに参加されたい方</strong>は、下記フォームよりお申し込みください。</p>
-
-      <div class="join-rule">
-        <div class="join-rule-title">お申し込み方法</div>
-        <p>下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえご送信ください。</p>
+    <!-- ②③ 補足情報（①より控えめ） -->
+    <div class="join-sub-grid">
+      <!-- ② お住まいの総区以外のフェスに参加する方 -->
+      <div class="join-card">
+        <div class="join-card-head">
+          <span class="join-card-icon coral" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
+        </div>
+        <p class="join-card-body">下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえお申し込みください。</p>
+        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
       </div>
 
-      <p class="join-eligibility-note">※&nbsp;会場によっては他地域からのご参加を受け付けていない場合があります。<wbr>各総区の詳細ページにてご確認のうえお申し込みください。</p>
+      <!-- ③ ご来場について -->
+      <div class="join-card">
+        <div class="join-card-head">
+          <span class="join-card-icon teal" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
+          </span>
+          <span class="join-card-title">ご来場は公共交通機関をご利用ください</span>
+        </div>
+        <p class="join-card-body">会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
+        <p class="join-card-note">※&nbsp;山梨総県は除きます。各会場のご案内に従ってください。</p>
+      </div>
     </div>
 
     <div class="join-actions">
@@ -4618,17 +4738,6 @@
       <li>回答にはお時間をいただくことがありますので、あらかじめご了承ください。</li>
       <li>開催が1ヶ月以上先のフェスについては、詳細が未定の場合があります。開催3週間まえ以降にお問い合わせをいただけますと幸いです。</li>
     </ul>
-
-    <div class="join-transport">
-      <div class="join-transport-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/><circle cx="8.5" cy="14" r="0.5"/><circle cx="15.5" cy="14" r="0.5"/></svg>
-      </div>
-      <div>
-        <div class="join-transport-title">ご来場は公共交通機関をご利用ください</div>
-        <p>会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
-        <p class="join-transport-sub">※&nbsp;山梨総県は除きます。各会場のご案内に従ってください。</p>
-      </div>
-    </div>
   </div>
 
   <!-- ====================== ARTICLE LIST PAGE (CAMPUS-style) ====================== -->
@@ -6482,6 +6591,7 @@
     '.about-text', '.about-list',
     '.join-eligibility-lead', '.join-eligibility-note',
     '.join-self-area p', '.join-contact-note',
+    '.join-hero-eyebrow', '.join-hero-title', '.join-card-title',
     '.join-rule', '.join-rule-title',
     '.info-value', '.info-value-sub',
     '.links-title', '.article-title', '.article-excerpt'
