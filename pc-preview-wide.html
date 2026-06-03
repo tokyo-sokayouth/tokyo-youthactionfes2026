@@ -3092,27 +3092,30 @@
     color: var(--color-ink-soft) !important;
   }
 
-  /* ============ JOIN: ①②③を1つの枠にまとめる（③は補足） ============ */
+  /* ============ JOIN: 1枚のカードに①②の説明＋③交通の補足 ============ */
   .join-panel {
     margin: 0 20px 4px;
+    padding: 18px;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
-    overflow: hidden;
   }
-  .join-row {
-    padding: 16px 18px;
-    border-top: 1.5px solid var(--color-border);
-  }
-  .join-row:first-child { border-top: none; }
-  /* ①：薄緑で控えめに強調 */
+  /* ①：薄緑のコールアウトとして枠内で強調 */
   .join-row.is-primary {
+    margin-bottom: 14px;
+    padding: 13px 14px;
     background: var(--color-green-soft);
+    border-radius: 10px;
   }
-  /* ③：補足として控えめに */
+  /* ②：通常テキスト */
+  .join-row.is-secondary {
+    margin-bottom: 0;
+  }
+  /* ③：交通の補足（区切り線＋控えめ） */
   .join-row.is-note {
-    padding: 14px 18px;
-    background: rgba(45,42,38,0.025);
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1px solid var(--color-border);
   }
   .join-row.is-note .join-card-head { margin-bottom: 6px; }
   .join-row.is-note .join-card-icon { width: 20px; height: 20px; }
@@ -4658,7 +4661,7 @@
       <h1 class="links-title">参加する</h1>
     </div>
 
-    <!-- 参加に関する3項目を1つの枠にまとめる（③は補足） -->
+    <!-- 1枚のカードに①②の説明＋③交通の補足 -->
     <div class="join-panel">
       <!-- ① 最重要：お住まいの総区で開催 ＝ お申し込み不要 -->
       <div class="join-row is-primary">
@@ -4672,7 +4675,7 @@
       </div>
 
       <!-- ② お住まいの総区以外のフェスに参加する方 -->
-      <div class="join-row">
+      <div class="join-row is-secondary">
         <div class="join-card-head">
           <span class="join-card-icon coral" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
