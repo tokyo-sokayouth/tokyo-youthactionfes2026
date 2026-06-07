@@ -99,6 +99,11 @@
        Browsers that don't support it fall back to default — no regression. */
     word-break: auto-phrase;
     line-break: strict;
+    /* 行末の句読点（。、）をぶら下げ、overflow-wrap の保険が働いても
+       「。」だけが次行頭に押し出されないようにする（Safari/iOS対応。
+       未対応ブラウザは無視＝リグレッションなし）。 */
+    hanging-punctuation: allow-end;
+    -webkit-hanging-punctuation: allow-end;
   }
   /* For browsers without word-break:auto-phrase, BudouX inserts <wbr> hints
      into Japanese text below. word-break:keep-all forces breaks only at wbr
