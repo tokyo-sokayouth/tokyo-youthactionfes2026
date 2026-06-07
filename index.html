@@ -1720,6 +1720,14 @@
   .detail-cta.coral button, .detail-cta.coral a { background: var(--color-coral); box-shadow: 0 3px 0 rgba(214,72,57,0.4); }
   .detail-cta.green button, .detail-cta.green a { background: var(--color-green); box-shadow: 0 3px 0 rgba(140,165,40,0.4); }
   .detail-cta.purple button, .detail-cta.purple a { background: var(--color-purple); box-shadow: 0 3px 0 rgba(140,114,170,0.4); }
+  /* 申込フォーム準備中（グレーアウト）状態 */
+  .detail-cta a.is-locked {
+    background: #bdbab4 !important;
+    box-shadow: none !important;
+    cursor: default;
+    pointer-events: none;
+    color: #fff;
+  }
 
   /* ============ REGION SELECT PAGE ============ */
   .region-hero {
@@ -4612,7 +4620,7 @@
 
     <div class="detail-cta coral" id="ed-cta" style="margin-top:20px; display:none;">
       <a id="ed-apply-link" target="_blank" rel="noopener noreferrer">
-        お申し込みフォームを開く
+        <span id="ed-apply-label">お申し込みフォームを開く</span>
         <svg class="icon-svg" style="width:16px;height:16px;stroke:white;fill:none;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
     </div>
@@ -5114,7 +5122,7 @@
       sessions: [{ dateLabel: '2026年11月8日(日)' }],
       venue: 'なかのZERO 視聴覚ホール',
       address: '東京都中野区中野2-9-7',
-      allowExternal: true,
+      allowExternal: false,
       flyer: null,
       youtube: 'https://youtu.be/Qt77FpOamkg',
       linktree: null,
@@ -5176,7 +5184,7 @@
       flyer: null,
       youtube: null,
       linktree: null,
-      description: '「えっ、ここ会館!?」ヨガや最新コスメ体験、eスポーツに音楽ライブまで！いつもの場所が1日限定の体験型フェス会場に変身します。会館オープンデー、パフォーマンスなどのステージ、出し物や展示など、3会場（小金井黄金区・国分寺栄光区・国立常勝区）で同日開催の分区企画です。'
+      description: '小金井の「ユースアクションフェス」は、いつもの会館を地域に大開放！学会員も近所のお友達も、全世代が「学会ってなんか素敵！」と笑顔になれるフェスを目指します✨'
     },
     'gakuen': {
       region: 'tokyo-2nd',
@@ -5299,6 +5307,7 @@
       venue: 'あきる野ルピア 3Fホール',
       address: '東京都あきる野市秋川1丁目8',
       allowExternal: true,
+      applyPending: true,
       flyer: null,
       youtube: null,
       linktree: null,
@@ -5488,7 +5497,7 @@
     'itabashi': {
       region: 'tokyo23',
       eyebrow: 'ITABASHI AREA',
-      eventNameJp: 'ユースアクションフェス',
+      eventNameJp: '板橋Action Fes',
       eventNameEn: 'Itabashi Youth Action Fes',
       sessions: [{ dateLabel: '2026年10月25日(日)' }],
       venue: '創価学会 板橋文化会館',
@@ -6224,14 +6233,27 @@
     const ngMsg = document.getElementById('ed-no-external');
     // 中央フォーム（事前参加者フォーム）。専用フォームを持たない総区の既定リンク先。
     const CENTRAL_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd3BJRNs7r-1VBXGcItKG9MGoy-5VTKKYv8E7tITdoLcZcURQ/viewform';
-    if (e.applyUrl) {
+    const applyLabel = document.getElementById('ed-apply-label');
+    applyLink.classList.remove('is-locked');
+    applyLink.removeAttribute('aria-disabled');
+    if (e.applyPending) {
+      // 申込フォーム準備中 → グレーアウト（リンク無効）
+      applyLink.removeAttribute('href');
+      applyLink.classList.add('is-locked');
+      applyLink.setAttribute('aria-disabled', 'true');
+      if (applyLabel) applyLabel.textContent = '申込フォーム準備中（近日公開）';
+      cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else if (e.applyUrl) {
       // この総区は専用の申込フォームを持っている → 直接そのフォームへ
       applyLink.href = e.applyUrl;
+      if (applyLabel) applyLabel.textContent = 'お申し込みフォームを開く';
       cta.style.display = 'block';
       ngMsg.style.display = 'none';
     } else if (e.allowExternal) {
       // 専用フォーム未設定だが他総区受け入れOK → 中央フォームへ
       applyLink.href = CENTRAL_FORM_URL;
+      if (applyLabel) applyLabel.textContent = 'お申し込みフォームを開く';
       cta.style.display = 'block';
       ngMsg.style.display = 'none';
     } else {
