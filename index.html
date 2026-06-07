@@ -2841,11 +2841,14 @@
   }
   .event-poster-typo .event-poster-title-jp {
     font-family: var(--font-body);
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 800;
     color: var(--color-ink);
-    line-height: 1.3;
+    line-height: 1.35;
     margin-bottom: 6px;
+    /* 空白位置でのみ折り返す＝「〜ほっとするいちにち〜」が途中で割れず2行目に収まる */
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
   .event-poster-typo .event-poster-sub-jp {
     font-family: var(--font-script);
