@@ -3468,26 +3468,24 @@
     border-radius: var(--radius-md);
   }
   .join-notice-item {
+    display: flex;
+    gap: 7px;
     margin: 0;
     font-size: 12.5px;
     line-height: 1.7;
     color: var(--color-ink);
   }
   .join-notice-item + .join-notice-item {
-    margin-top: 7px;
+    margin-top: 8px;
+  }
+  .join-notice-ico {
+    flex-shrink: 0;
   }
   .join-notice-item strong {
     font-weight: 700;
   }
-  .join-notice-item .join-emph {
-    font-weight: 800;
-    color: #6b8412;
-  }
-  .join-notice-item.is-sub {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--color-border);
-    font-size: 11.5px;
+  .join-notice-sub {
+    font-size: 11px;
     color: var(--color-ink-soft);
   }
 
@@ -4205,9 +4203,9 @@
 
     <!-- ご参加にあたって（コンパクト版） -->
     <div class="join-notice">
-      <p class="join-notice-item"><strong>自総区のフェス</strong>は<span class="join-emph">お申し込み不要</span>。ご案内に沿ってご参加ください。</p>
-      <p class="join-notice-item"><strong>他総区のフェス</strong>は各総区ページの「お申し込みフォームを開く」から事前にお申し込みください（受け入れ不可の会場あり）。</p>
-      <p class="join-notice-item is-sub"><span class="phrase-nb">ご来場は公共交通機関を</span><span class="phrase-nb">ご利用ください</span><span class="phrase-nb">（山梨総県を除く）。</span></p>
+      <p class="join-notice-item"><span class="join-notice-ico" aria-hidden="true">✅</span><span><strong>自総区のフェス</strong>はお申し込み不要です。ご案内に沿ってご参加ください。</span></p>
+      <p class="join-notice-item"><span class="join-notice-ico" aria-hidden="true">📝</span><span><strong>他総区のフェス</strong>は各総区ページの「お申し込みフォームを開く」から事前にお申し込みください。<span class="join-notice-sub">※受け入れ可能な総区のみ</span></span></p>
+      <p class="join-notice-item"><span class="join-notice-ico" aria-hidden="true">🚃</span><span>ご来場は公共交通機関をご利用ください。<span class="join-notice-sub">※山梨総県を除く</span></span></p>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
