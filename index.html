@@ -3170,6 +3170,49 @@
   }
   .nav-label { font-size: 10px; white-space: nowrap; }
 
+  /* ============ SCROLL HINT (各ページ右下の控えめなスクロール表記) ============ */
+  .scroll-hint {
+    position: fixed;
+    bottom: 80px;
+    right: max(14px, calc(50vw - 210px + 14px));
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 6px 7px;
+    background: rgba(253,250,242,0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-ink-soft);
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .scroll-hint.show {
+    opacity: 0.92;
+    transform: translateY(0);
+  }
+  .scroll-hint svg {
+    width: 12px; height: 12px;
+    fill: none; stroke: currentColor; stroke-width: 2.2;
+    stroke-linecap: round; stroke-linejoin: round;
+    animation: scrollHintBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollHintBounce {
+    0%, 100% { transform: translateY(-1px); }
+    50% { transform: translateY(2px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint svg { animation: none; }
+  }
+
   /* ============ ICONS (inline SVG) ============ */
   .icon-svg { width: 22px; height: 22px; stroke-width: 1.8; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -4988,6 +5031,12 @@
     </div>
   </footer>
 
+  <!-- ====================== SCROLL HINT ====================== -->
+  <div class="scroll-hint" id="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="page-home">
@@ -6293,7 +6342,24 @@
       page_title: pageId,
       page_location: window.location.origin + window.location.pathname + '#' + pageId
     });
+
+    // ページ切替後にスクロールヒントを再判定（スムーズスクロール完了を待つ）
+    setTimeout(updateScrollHint, 400);
   }
+
+  // 各ページ右下のスクロールヒント: まだ下にコンテンツがある時だけ表示し、
+  // 末尾付近では自動で隠す。
+  const scrollHintEl = document.getElementById('scroll-hint');
+  function updateScrollHint() {
+    if (!scrollHintEl) return;
+    const doc = document.documentElement;
+    const remaining = doc.scrollHeight - (window.scrollY + window.innerHeight);
+    // 残り120px以上スクロールできる時だけ表示
+    scrollHintEl.classList.toggle('show', remaining > 120);
+  }
+  window.addEventListener('scroll', updateScrollHint, { passive: true });
+  window.addEventListener('resize', updateScrollHint);
+  window.addEventListener('load', () => setTimeout(updateScrollHint, 200));
 
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {
