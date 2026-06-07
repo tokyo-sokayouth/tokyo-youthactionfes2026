@@ -5357,7 +5357,8 @@
       venue: '大森スポーツセンター 競技場',
       address: '東京都大田区大森本町2-2-5',
       allowExternal: true,
-      flyer: 'https://drive.google.com/open?id=1t3uubwxoBW5K-XBmcNCzvi2-MQW4fOTm',
+      flyer: 'assets/ota-flyer-1.jpg',
+      flyers: ['assets/ota-flyer-1.jpg', 'assets/ota-flyer-2.jpg'],
       youtube: null,
       linktree: 'https://lit.link/kizunafes2026',
       applyUrl: 'https://docs.google.com/forms/d/1Udso81wNfH42_WYe6WK7QG51k7BtPi2ertzhVw2j6T8/viewform',
@@ -5865,6 +5866,32 @@
     return m ? m[1] : '';
   }
 
+  // ===== フライヤー自動切り替え（複数枚を一定間隔でクロスフェード）=====
+  let flyerSlideTimer = null;
+  function stopFlyerSlideshow() {
+    if (flyerSlideTimer) { clearInterval(flyerSlideTimer); flyerSlideTimer = null; }
+  }
+  function startFlyerSlideshow(urls) {
+    stopFlyerSlideshow();
+    const img = document.getElementById('ed-hero-flyer');
+    if (!img) return;
+    urls.forEach(u => { const im = new Image(); im.src = u; }); // 事前読み込み
+    let idx = 0;
+    img.onerror = null;
+    img.style.transition = 'opacity 0.6s ease';
+    img.style.opacity = '1';
+    img.src = urls[0];
+    if (urls.length < 2) return;
+    flyerSlideTimer = setInterval(() => {
+      img.style.opacity = '0';
+      setTimeout(() => {
+        idx = (idx + 1) % urls.length;
+        img.src = urls[idx];
+        img.style.opacity = '1';
+      }, 600);
+    }, 3500);
+  }
+
   function openEventDetail(eventId) {
     // GA4: イベント詳細の閲覧を計測
     gaEvent('event_detail_view', { event_id: eventId });
@@ -5895,6 +5922,7 @@
 
     // Reset self-video first (avoid leftover state when switching events)
     selfVideoEl.pause();
+    stopFlyerSlideshow(); // 別イベントへ移動時に前のスライドを止める
     if (videoFile) {
       selfVideoEl.muted = true; // required for autoplay on mobile
       selfVideoEl.src = videoFile;
@@ -5927,6 +5955,20 @@
       }
       // 自動再生はしない（ユーザーがcontrolsの▶ボタンを押した時のみ再生）
       // ※帯域節約のため preload="metadata" と組み合わせて使用
+    } else if (Array.isArray(e.flyers) && e.flyers.length) {
+      // 複数フライヤー: 自動で切り替えるスライドショー
+      selfVideoEl.removeAttribute('src'); selfVideoEl.load();
+      selfVideoWrap.style.display = 'none';
+      startFlyerSlideshow(e.flyers);
+      flyerWrap.style.display = 'block';
+      typo.style.display = 'none';
+      if (ytId) {
+        videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+        videoWrap.style.display = 'block';
+      } else {
+        videoIframe.src = '';
+        videoWrap.style.display = 'none';
+      }
     } else if (flyerUrl) {
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
@@ -6085,10 +6127,11 @@
     const leaving = document.querySelector('.page.active');
     if (leaving && leaving.id !== pageId) {
       leaving.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
-      // stop YouTube iframe on the event-detail page when leaving it
+      // stop YouTube iframe & flyer slideshow on the event-detail page when leaving it
       if (leaving.id === 'page-event-detail') {
         const iframe = document.getElementById('ed-video-iframe');
         if (iframe && iframe.src) iframe.src = '';
+        stopFlyerSlideshow();
       }
     }
     // hide all pages
