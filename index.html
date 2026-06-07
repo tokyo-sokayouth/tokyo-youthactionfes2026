@@ -2684,28 +2684,27 @@
     width: 100%;
     height: auto;
   }
-  /* 複数フライヤー: 横スワイプ・カルーセル */
+  /* 複数フライヤー: JS制御の横スワイプ・スライダー（タッチ/マウス両対応） */
   .flyer-carousel {
-    display: flex;
-    align-items: flex-start;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    touch-action: pan-x;     /* タッチで横パンを明示許可 */
-    cursor: grab;            /* PCでドラッグできることを示す */
+    overflow: hidden;
+    width: 100%;
+    touch-action: pan-y;   /* 縦は通常スクロール、横はJSで処理 */
+    cursor: grab;
   }
-  .flyer-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; }
-  .flyer-carousel::-webkit-scrollbar { display: none; }
-  .flyer-carousel img {
+  .flyer-track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1);
+    will-change: transform;
+  }
+  .flyer-track.is-dragging { transition: none; cursor: grabbing; }
+  .flyer-track img {
     flex: 0 0 100%;
     min-width: 100%;
     width: 100%;
     height: auto;
     display: block;
-    scroll-snap-align: start;
     user-select: none;
-    -webkit-user-drag: none;   /* PCで画像が点線でドラッグされるのを防ぐ */
+    -webkit-user-drag: none;
   }
   .flyer-dots {
     display: flex;
@@ -5962,61 +5961,73 @@
     if (dots) { dots.style.display = 'none'; dots.innerHTML = ''; }
     if (single) single.style.display = '';
   }
-  // 複数フライヤーを横スワイプできるカルーセルとして構築
+  // 複数フライヤーを横スワイプできるスライダーとして構築（JSで完全制御）
   function buildFlyerCarousel(urls) {
     const single = document.getElementById('ed-hero-flyer');
     const car = document.getElementById('ed-hero-carousel');
     const dots = document.getElementById('ed-hero-dots');
     if (!car) return;
     if (single) single.style.display = 'none';
-    // 1枚目は即時、それ以降はスワイプ時に読み込む（通信節約）
-    car.innerHTML = urls.map((u, i) =>
+    // 1枚目は即時、それ以降は必要時に読み込む（通信節約）
+    car.innerHTML = `<div class="flyer-track">` + urls.map((u, i) =>
       `<img src="${u}" alt="イベントフライヤー${i + 1}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
-    ).join('');
-    car.style.display = 'flex';
-    car.scrollLeft = 0;
+    ).join('') + `</div>`;
+    car.style.display = 'block';
+    const track = car.querySelector('.flyer-track');
+    const count = urls.length;
+    let index = 0;
 
-    // PC: マウスのドラッグでスワイプ（タッチはネイティブの横スクロールに任せる）
-    let dragging = false, startX = 0, startScroll = 0;
-    car.onpointerdown = (ev) => {
-      if (ev.pointerType !== 'mouse') return; // touch/penはネイティブ任せ
-      dragging = true;
-      startX = ev.clientX;
-      startScroll = car.scrollLeft;
-      car.classList.add('is-dragging');
-      try { car.setPointerCapture(ev.pointerId); } catch (_) {}
-      ev.preventDefault();
-    };
-    car.onpointermove = (ev) => {
-      if (!dragging) return;
-      car.scrollLeft = startScroll - (ev.clientX - startX);
-    };
-    const endDrag = () => {
-      if (!dragging) return;
-      dragging = false;
-      car.classList.remove('is-dragging');
-      const idx = Math.round(car.scrollLeft / Math.max(car.clientWidth, 1));
-      car.scrollTo({ left: car.clientWidth * idx, behavior: 'smooth' });
-    };
-    car.onpointerup = endDrag;
-    car.onpointercancel = endDrag;
-    car.onpointerleave = endDrag;
-    if (urls.length > 1) {
+    const dotEls = [];
+    if (count > 1) {
       dots.innerHTML = urls.map((_, i) =>
         `<button type="button" aria-label="${i + 1}枚目を表示" class="${i === 0 ? 'is-active' : ''}"></button>`
       ).join('');
       dots.style.display = 'flex';
-      const dotEls = Array.from(dots.children);
-      dotEls.forEach((b, i) => {
-        b.onclick = () => car.scrollTo({ left: car.clientWidth * i, behavior: 'smooth' });
-      });
-      car.onscroll = () => {
-        const idx = Math.round(car.scrollLeft / Math.max(car.clientWidth, 1));
-        dotEls.forEach((b, j) => b.classList.toggle('is-active', j === idx));
-      };
+      Array.from(dots.children).forEach((b, i) => { dotEls.push(b); b.onclick = () => go(i); });
     } else {
       dots.style.display = 'none';
     }
+
+    function go(i) {
+      index = Math.max(0, Math.min(count - 1, i));
+      track.style.transform = `translateX(${-index * 100}%)`;
+      dotEls.forEach((b, j) => b.classList.toggle('is-active', j === index));
+    }
+
+    // ドラッグ/スワイプ（タッチ・マウス共通の Pointer Events）
+    let down = false, startX = 0, startY = 0, dx = 0, decided = false, horiz = false, w = 0;
+    car.onpointerdown = (e) => {
+      down = true; decided = false; horiz = false; dx = 0;
+      startX = e.clientX; startY = e.clientY; w = car.clientWidth || 1;
+      track.classList.add('is-dragging');
+      if (e.pointerType === 'mouse') { try { car.setPointerCapture(e.pointerId); } catch (_) {} }
+    };
+    car.onpointermove = (e) => {
+      if (!down) return;
+      const mx = e.clientX - startX, my = e.clientY - startY;
+      if (!decided && (Math.abs(mx) > 6 || Math.abs(my) > 6)) {
+        decided = true; horiz = Math.abs(mx) > Math.abs(my);
+      }
+      if (decided && horiz) {
+        dx = mx;
+        track.style.transform = `translateX(calc(${-index * 100}% + ${dx}px))`;
+      }
+    };
+    const up = () => {
+      if (!down) return;
+      down = false;
+      track.classList.remove('is-dragging');
+      if (horiz) {
+        if (dx < -w * 0.18) go(index + 1);
+        else if (dx > w * 0.18) go(index - 1);
+        else go(index);
+      }
+    };
+    car.onpointerup = up;
+    car.onpointercancel = up;
+    car.onpointerleave = up;
+
+    go(0);
   }
 
   function openEventDetail(eventId) {
