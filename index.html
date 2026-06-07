@@ -2684,6 +2684,45 @@
     width: 100%;
     height: auto;
   }
+  /* 複数フライヤー: 横スワイプ・カルーセル */
+  .flyer-carousel {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .flyer-carousel::-webkit-scrollbar { display: none; }
+  .flyer-carousel img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    scroll-snap-align: start;
+  }
+  .flyer-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 0 4px;
+    background: var(--color-card-alt);
+  }
+  .flyer-dots button {
+    width: 7px; height: 7px;
+    padding: 0; border: none; border-radius: 50%;
+    background: rgba(45,42,38,0.25);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .flyer-dots button.is-active { background: var(--color-coral); transform: scale(1.25); }
+  .flyer-swipe-hint {
+    text-align: center;
+    font-size: 11px;
+    color: var(--color-ink-soft);
+    padding: 0 0 8px;
+    background: var(--color-card-alt);
+  }
   .event-selfvideo-wrap {
     position: relative;
   }
@@ -4496,6 +4535,9 @@
       <!-- Hero: flyer image (when available) -->
       <div class="event-flyer-wrap" id="ed-hero-flyer-wrap" style="display:none;">
         <img id="ed-hero-flyer" alt="イベントフライヤー">
+        <!-- 複数フライヤー用スワイプカルーセル -->
+        <div id="ed-hero-carousel" class="flyer-carousel" style="display:none;"></div>
+        <div id="ed-hero-dots" class="flyer-dots" style="display:none;"></div>
       </div>
 
       <!-- Hero: YouTube embed (when no flyer but video exists) -->
@@ -5895,30 +5937,49 @@
     return m ? m[1] : '';
   }
 
-  // ===== フライヤー自動切り替え（複数枚を一定間隔でクロスフェード）=====
-  let flyerSlideTimer = null;
+  // ===== 詳細ページのフライヤー: 複数枚は横スワイプ・カルーセル =====
+  let flyerSlideTimer = null; // （旧自動切替の名残・互換のため残置）
   function stopFlyerSlideshow() {
     if (flyerSlideTimer) { clearInterval(flyerSlideTimer); flyerSlideTimer = null; }
   }
-  function startFlyerSlideshow(urls) {
-    stopFlyerSlideshow();
-    const img = document.getElementById('ed-hero-flyer');
-    if (!img) return;
-    urls.forEach(u => { const im = new Image(); im.src = u; }); // 事前読み込み
-    let idx = 0;
-    img.onerror = null;
-    img.style.transition = 'opacity 0.6s ease';
-    img.style.opacity = '1';
-    img.src = urls[0];
-    if (urls.length < 2) return;
-    flyerSlideTimer = setInterval(() => {
-      img.style.opacity = '0';
-      setTimeout(() => {
-        idx = (idx + 1) % urls.length;
-        img.src = urls[idx];
-        img.style.opacity = '1';
-      }, 600);
-    }, 3500);
+  // 単一フライヤー表示に戻す（カルーセルを隠す）
+  function resetFlyerCarousel() {
+    const single = document.getElementById('ed-hero-flyer');
+    const car = document.getElementById('ed-hero-carousel');
+    const dots = document.getElementById('ed-hero-dots');
+    if (car) { car.style.display = 'none'; car.innerHTML = ''; car.onscroll = null; }
+    if (dots) { dots.style.display = 'none'; dots.innerHTML = ''; }
+    if (single) single.style.display = '';
+  }
+  // 複数フライヤーを横スワイプできるカルーセルとして構築
+  function buildFlyerCarousel(urls) {
+    const single = document.getElementById('ed-hero-flyer');
+    const car = document.getElementById('ed-hero-carousel');
+    const dots = document.getElementById('ed-hero-dots');
+    if (!car) return;
+    if (single) single.style.display = 'none';
+    // 1枚目は即時、それ以降はスワイプ時に読み込む（通信節約）
+    car.innerHTML = urls.map((u, i) =>
+      `<img src="${u}" alt="イベントフライヤー${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}">`
+    ).join('');
+    car.style.display = 'flex';
+    car.scrollLeft = 0;
+    if (urls.length > 1) {
+      dots.innerHTML = urls.map((_, i) =>
+        `<button type="button" aria-label="${i + 1}枚目を表示" class="${i === 0 ? 'is-active' : ''}"></button>`
+      ).join('');
+      dots.style.display = 'flex';
+      const dotEls = Array.from(dots.children);
+      dotEls.forEach((b, i) => {
+        b.onclick = () => car.scrollTo({ left: car.clientWidth * i, behavior: 'smooth' });
+      });
+      car.onscroll = () => {
+        const idx = Math.round(car.scrollLeft / Math.max(car.clientWidth, 1));
+        dotEls.forEach((b, j) => b.classList.toggle('is-active', j === idx));
+      };
+    } else {
+      dots.style.display = 'none';
+    }
   }
 
   function openEventDetail(eventId) {
@@ -5951,7 +6012,8 @@
 
     // Reset self-video first (avoid leftover state when switching events)
     selfVideoEl.pause();
-    stopFlyerSlideshow(); // 別イベントへ移動時に前のスライドを止める
+    stopFlyerSlideshow();
+    resetFlyerCarousel(); // 別イベントへ移動時にカルーセルを初期化
     if (videoFile) {
       selfVideoEl.muted = true; // required for autoplay on mobile
       selfVideoEl.src = videoFile;
@@ -5985,10 +6047,10 @@
       // 自動再生はしない（ユーザーがcontrolsの▶ボタンを押した時のみ再生）
       // ※帯域節約のため preload="metadata" と組み合わせて使用
     } else if (Array.isArray(e.flyers) && e.flyers.length) {
-      // 複数フライヤー: 自動で切り替えるスライドショー
+      // 複数フライヤー: 横スワイプのカルーセル
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
-      startFlyerSlideshow(e.flyers);
+      buildFlyerCarousel(e.flyers);
       flyerWrap.style.display = 'block';
       typo.style.display = 'none';
       if (ytId) {
