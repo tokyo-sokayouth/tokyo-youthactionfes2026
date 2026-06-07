@@ -4078,7 +4078,7 @@
   <!-- ====================== SEARCH DETAIL ====================== -->
   <div class="page" id="page-search">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-links')">‹</button>
+      <button class="back-btn" onclick="goBack('page-links')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4134,7 +4134,7 @@
   <!-- ====================== CAMPUS DETAIL ====================== -->
   <div class="page" id="page-campus">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-links')">‹</button>
+      <button class="back-btn" onclick="goBack('page-links')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4211,7 +4211,7 @@
   <!-- ====================== MEDIA DETAIL ====================== -->
   <div class="page" id="page-media">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-links')">‹</button>
+      <button class="back-btn" onclick="goBack('page-links')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4277,7 +4277,7 @@
   <!-- ====================== REGION SELECT PAGE ====================== -->
   <div class="page" id="page-region">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-home')">‹</button>
+      <button class="back-btn" onclick="goBack('page-home')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4590,7 +4590,7 @@
   <!-- ====================== EVENT DETAIL PAGE (template) ====================== -->
   <div class="page" id="page-event-detail">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-schedule')">‹</button>
+      <button class="back-btn" onclick="goBack('page-schedule')">‹</button>
       <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
@@ -4691,7 +4691,7 @@
   <!-- ====================== SHINJUKU EVENT DETAIL ====================== -->
   <div class="page" id="page-event-shinjuku">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-schedule')">‹</button>
+      <button class="back-btn" onclick="goBack('page-schedule')">‹</button>
       <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
@@ -4761,7 +4761,7 @@
   <!-- ====================== ARTICLE LIST PAGE (CAMPUS-style) ====================== -->
   <div class="page" id="page-articles">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-campus')">‹</button>
+      <button class="back-btn" onclick="goBack('page-campus')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4821,7 +4821,7 @@
   <!-- ====================== ARTICLE DETAIL PAGE ====================== -->
   <div class="page" id="page-article-detail">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-articles')">‹</button>
+      <button class="back-btn" onclick="goBack('page-articles')">‹</button>
       <button class="menu-btn"><span></span><span></span><span></span></button>
     </div>
 
@@ -4876,7 +4876,7 @@
   <!-- ====================== Q&A PAGE ====================== -->
   <div class="page" id="page-qa">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-home')">‹</button>
+      <button class="back-btn" onclick="goBack('page-home')">‹</button>
       <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
@@ -5063,7 +5063,7 @@
   <!-- ====================== PAGE: PRIVACY POLICY ====================== -->
   <div class="page" id="page-privacy">
     <div class="topbar">
-      <button class="back-btn" onclick="goToPage('page-home')">‹</button>
+      <button class="back-btn" onclick="goBack('page-home')">‹</button>
       <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
 
@@ -6355,9 +6355,17 @@
     }
   }
 
-  function goToPage(pageId, tabKey, monthAnchor) {
+  // ページ遷移履歴（{pageId, scrollY}）。戻る操作で元の位置に復元するために使う。
+  const navHistory = [];
+  function goToPage(pageId, tabKey, monthAnchor, opts) {
+    opts = opts || {};
     // Pause videos only on the page we're LEAVING (not the one we're entering)
     const leaving = document.querySelector('.page.active');
+    // 前進ナビのみ履歴に積む（戻る操作・同一ページは除く）
+    if (!opts.isBack && leaving && leaving.id !== pageId) {
+      navHistory.push({ pageId: leaving.id, scrollY: window.scrollY || window.pageYOffset || 0 });
+      if (navHistory.length > 50) navHistory.shift();
+    }
     if (leaving && leaving.id !== pageId) {
       leaving.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
       // stop YouTube iframe & flyer slideshow on the event-detail page when leaving it
@@ -6423,8 +6431,12 @@
     const activeNav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
     if (activeNav) activeNav.classList.add('active');
 
-    // scroll to top, or to a specific month anchor on schedule
-    if (pageId === 'page-schedule' && monthAnchor) {
+    // 戻る操作なら元のスクロール位置へ復元 / それ以外は先頭へ（スケジュールの月指定は従来通り）
+    if (opts.isBack && typeof opts.restoreY === 'number') {
+      const ry = opts.restoreY;
+      window.scrollTo({ top: ry });
+      requestAnimationFrame(() => window.scrollTo({ top: ry }));
+    } else if (pageId === 'page-schedule' && monthAnchor) {
       window.scrollTo({ top: 0 });
       requestAnimationFrame(() => {
         // ALL view shows the chronological card list; scroll to the first card of that month.
@@ -6451,6 +6463,38 @@
     // ページ切替後にスクロールヒントを再判定（スムーズスクロール完了を待つ）
     setTimeout(updateScrollHint, 400);
   }
+
+  // 戻る操作: 履歴があれば前のページとスクロール位置へ復元。無ければフォールバック先（各戻るボタンの既定遷移先）へ。
+  function goBack(fallbackPageId) {
+    const prev = navHistory.pop();
+    if (prev) {
+      goToPage(prev.pageId, null, null, { isBack: true, restoreY: prev.scrollY });
+    } else if (fallbackPageId) {
+      goToPage(fallbackPageId, null, null, { isBack: true, restoreY: 0 });
+    }
+  }
+  window.goBack = goBack;
+
+  // 右スワイプでページを戻る（フライヤーの横スワイプ・カルーセル上は除外）
+  (function enableSwipeBack() {
+    let sx = 0, sy = 0, st = 0, track = false;
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) { track = false; return; }
+      if (e.target.closest && e.target.closest('.flyer-carousel, .flyer-track')) { track = false; return; }
+      const t = e.touches[0];
+      sx = t.clientX; sy = t.clientY; st = Date.now(); track = true;
+    }, { passive: true });
+    document.addEventListener('touchend', (e) => {
+      if (!track) return;
+      track = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx, dy = t.clientY - sy, dt = Date.now() - st;
+      // 右方向に十分な距離・横方向優位・短時間のスワイプのみ「戻る」
+      if (dx > 70 && Math.abs(dx) > Math.abs(dy) * 1.8 && dt < 600) {
+        goBack();
+      }
+    }, { passive: true });
+  })();
 
   // 各ページ右下のスクロールヒント: まだ下にコンテンツがある時だけ表示し、
   // 末尾付近では自動で隠す。
