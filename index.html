@@ -1700,7 +1700,8 @@
   .detail-cta {
     margin: 24px 20px 0;
   }
-  .detail-cta button {
+  .detail-cta button,
+  .detail-cta a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1714,10 +1715,11 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
   }
-  .detail-cta.coral button { background: var(--color-coral); box-shadow: 0 3px 0 rgba(214,72,57,0.4); }
-  .detail-cta.green button { background: var(--color-green); box-shadow: 0 3px 0 rgba(140,165,40,0.4); }
-  .detail-cta.purple button { background: var(--color-purple); box-shadow: 0 3px 0 rgba(140,114,170,0.4); }
+  .detail-cta.coral button, .detail-cta.coral a { background: var(--color-coral); box-shadow: 0 3px 0 rgba(214,72,57,0.4); }
+  .detail-cta.green button, .detail-cta.green a { background: var(--color-green); box-shadow: 0 3px 0 rgba(140,165,40,0.4); }
+  .detail-cta.purple button, .detail-cta.purple a { background: var(--color-purple); box-shadow: 0 3px 0 rgba(140,114,170,0.4); }
 
   /* ============ REGION SELECT PAGE ============ */
   .region-hero {
@@ -3406,6 +3408,12 @@
   }
 
   /* ============ JOIN: 1枚のカードに①②の説明＋③交通の補足 ============ */
+  .join-notice-heading {
+    margin: 0 20px 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
   .join-panel {
     margin: 0 20px 4px;
     padding: 18px;
@@ -3580,6 +3588,17 @@
     line-height: 1.85;
   }
   .qa-body p { margin-bottom: 10px; }
+  .qa-contact {
+    margin: 28px 20px 0;
+    text-align: center;
+  }
+  .qa-contact-lead {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+    margin: 0 0 12px;
+  }
+  .qa-contact .btn-secondary { text-decoration: none; }
   .qa-cta-btn {
     display: inline-flex;
     align-items: center;
@@ -3671,9 +3690,9 @@
   }
 
   /* Button hover lift (subtle) */
-  .btn-primary, .btn-secondary, .detail-cta button { transition: transform 0.15s ease, box-shadow 0.2s ease; }
+  .btn-primary, .btn-secondary, .detail-cta button, .detail-cta a { transition: transform 0.15s ease, box-shadow 0.2s ease; }
   @media (hover: hover) {
-    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover { transform: translateY(-2px); }
+    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover, .detail-cta a:hover { transform: translateY(-2px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -4181,6 +4200,45 @@
       <p class="links-subtitle">エリア名をタップして、<br>気になる会場を探そう！</p>
     </div>
 
+    <!-- ご参加にあたっての3つの案内（旧「参加する」ページより移設） -->
+    <h2 class="join-notice-heading">ご参加にあたって</h2>
+    <div class="join-panel" style="margin-bottom:24px;">
+      <!-- ① お住まいの総区で開催 ＝ お申し込み不要 -->
+      <div class="join-row is-primary">
+        <div class="join-card-head">
+          <span class="join-card-icon green" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="join-card-title">お住まいの総区で開催されるフェスに参加する方へ</span>
+        </div>
+        <p class="join-card-body"><span class="join-emph">お申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
+      </div>
+
+      <!-- ② お住まいの総区以外のフェスに参加する方 -->
+      <div class="join-row is-secondary">
+        <div class="join-card-head">
+          <span class="join-card-icon coral" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
+        </div>
+        <p class="join-card-body">参加したいフェスの<span class="join-emph">総区ページにある「お申し込みフォームを開く」ボタン</span>からお申し込みください。</p>
+        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認ください。</p>
+      </div>
+
+      <!-- ③ ご来場について（補足） -->
+      <div class="join-row is-note">
+        <div class="join-card-head">
+          <span class="join-card-icon teal" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
+          </span>
+          <span class="join-card-title">ご来場は公共交通機関をご利用ください</span>
+        </div>
+        <p class="join-card-body">会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
+        <p class="join-card-note">※&nbsp;山梨総県は除きます。</p>
+      </div>
+    </div>
+
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
       <button class="tab tab-all active" data-schedule-tab="all">ALL</button>
       <button class="tab" data-schedule-tab="tokyo23">東京（23区）</button>
@@ -4505,11 +4563,11 @@
       <p id="ed-no-external-body"></p>
     </div>
 
-    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
-      <button onclick="goToPage('page-join')">
-        参加を申し込む
-        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px; display:none;">
+      <a id="ed-apply-link" target="_blank" rel="noopener noreferrer">
+        お申し込みフォームを開く
+        <svg class="icon-svg" style="width:16px;height:16px;stroke:white;fill:none;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
     </div>
   </div>
 
@@ -4564,7 +4622,7 @@
       <div class="info-label">FORM</div>
       <div class="info-value" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <span>事前登録が必要です</span>
-        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-join')">登録する</button>
+        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-schedule')">登録する</button>
       </div>
     </div>
 
@@ -4576,77 +4634,11 @@
     </div>
 
     <div class="detail-cta coral" style="margin-top:20px;">
-      <button onclick="goToPage('page-join')">
-        参加を申し込む
+      <button onclick="goToPage('page-schedule')">
+        スケジュールへ戻る
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
-  </div>
-
-  <!-- ====================== JOIN PAGE (GOOGLE FORM) ====================== -->
-  <div class="page" id="page-join">
-    <div class="topbar">
-      <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
-      <div></div>
-    </div>
-
-    <div class="links-header">
-      <h1 class="links-title">参加する</h1>
-    </div>
-
-    <!-- 1枚のカードに①②の説明＋③交通の補足 -->
-    <div class="join-panel">
-      <!-- ① 最重要：お住まいの総区で開催 ＝ お申し込み不要 -->
-      <div class="join-row is-primary">
-        <div class="join-card-head">
-          <span class="join-card-icon green" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          <span class="join-card-title">お住まいの総区で開催されるフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body"><span class="join-emph">こちらのフォームでのお申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
-      </div>
-
-      <!-- ② お住まいの総区以外のフェスに参加する方 -->
-      <div class="join-row is-secondary">
-        <div class="join-card-head">
-          <span class="join-card-icon coral" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </span>
-          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body">下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえお申し込みください。</p>
-        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
-      </div>
-
-      <!-- ③ ご来場について（補足） -->
-      <div class="join-row is-note">
-        <div class="join-card-head">
-          <span class="join-card-icon teal" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
-          </span>
-          <span class="join-card-title">ご来場は公共交通機関をご利用ください</span>
-        </div>
-        <p class="join-card-body">会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
-        <p class="join-card-note">※&nbsp;山梨総県は除きます。</p>
-      </div>
-    </div>
-
-    <div class="join-actions">
-      <a class="btn-primary" id="join-form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd3BJRNs7r-1VBXGcItKG9MGoy-5VTKKYv8E7tITdoLcZcURQ/viewform" target="_blank" rel="noopener noreferrer" data-release-at="2026-05-30T09:45:00+09:00">
-        <span class="join-form-btn-label">お申し込みフォームを開く</span>
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
-        お問い合わせはこちら
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </a>
-    </div>
-
-    <ul class="join-contact-note">
-      <li>回答にはお時間をいただくことがありますので、あらかじめご了承ください。</li>
-      <li>開催が1ヶ月以上先のフェスについては、詳細が未定の場合があります。開催3週間まえ以降にお問い合わせをいただけますと幸いです。</li>
-    </ul>
   </div>
 
   <!-- ====================== ARTICLE LIST PAGE (CAMPUS-style) ====================== -->
@@ -4832,9 +4824,9 @@
           </summary>
           <div class="qa-body">
             <p>はい、ご参加いただけます。東京では、自分の住んでいる地域以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
-            <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。</p>
-            <button type="button" class="qa-cta-btn" onclick="goToPage('page-join')">
-              「参加する」ページへ
+            <p>他地域へ参加される場合は、<strong>各総区のページにある「お申し込みフォームを開く」ボタン</strong>から事前のお申し込みをお願いします。</p>
+            <button type="button" class="qa-cta-btn" onclick="goToPage('page-schedule')">
+              スケジュールから探す
               <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
           </div>
@@ -4934,6 +4926,15 @@
         </details>
       </section>
 
+      <!-- お問い合わせフォームへの導線 -->
+      <div class="qa-contact">
+        <p class="qa-contact-lead">解決しないご質問は、お問い合わせフォームよりお気軽にどうぞ。</p>
+        <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
+          お問い合わせはこちら
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+      </div>
+
     </div>
 
     <div style="height:24px;"></div>
@@ -4995,7 +4996,6 @@
     <ul class="drawer-list">
       <li><button data-target="page-home">ホーム<span class="chev">›</span></button></li>
       <li><button data-target="page-schedule">スケジュール<span class="chev">›</span></button></li>
-      <li><button data-target="page-join">参加申込<span class="chev">›</span></button></li>
       <li><button data-target="page-qa">Q&amp;A<span class="chev">›</span></button></li>
       <li><button data-target="page-event">ギャラリー<span class="chev">›</span></button></li>
       <li><button data-target="page-links">リンク一覧<span class="chev">›</span></button></li>
@@ -5025,13 +5025,6 @@
         <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </div>
       <span class="nav-label">スケジュール</span>
-      <div class="nav-indicator"></div>
-    </button>
-    <button class="nav-item" data-page="page-join">
-      <div class="nav-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
-      <span class="nav-label">参加する</span>
       <div class="nav-indicator"></div>
     </button>
     <button class="nav-item" data-page="page-qa">
@@ -5367,6 +5360,7 @@
       flyer: 'https://drive.google.com/open?id=1t3uubwxoBW5K-XBmcNCzvi2-MQW4fOTm',
       youtube: null,
       linktree: 'https://lit.link/kizunafes2026',
+      applyUrl: 'https://docs.google.com/forms/d/1Udso81wNfH42_WYe6WK7QG51k7BtPi2ertzhVw2j6T8/viewform',
       description: '「つながる。未来（あした）へ動き出す」をテーマに、スポーツ総合イベントを開催します。体を動かしたり、トークイベントや展示、自由な対話を楽しんだりと、世代や性別を問わずどなたでも楽しめます（キッズスペースも充実）。キズナアンケートやコンテストも実施します。'
     },
     'machida': {
@@ -6045,9 +6039,16 @@
 
     // External participation
     const cta = document.getElementById('ed-cta');
+    const applyLink = document.getElementById('ed-apply-link');
     const ngMsg = document.getElementById('ed-no-external');
-    if (e.allowExternal) {
+    if (e.applyUrl) {
+      // この総区は専用の申込フォームを持っている → 直接そのフォームへ
+      applyLink.href = e.applyUrl;
       cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else if (e.allowExternal) {
+      // 他総区から参加OKだが、専用フォーム未設定 → 申込ボタンは出さない
+      cta.style.display = 'none';
       ngMsg.style.display = 'none';
     } else {
       cta.style.display = 'none';
@@ -6138,8 +6139,7 @@
       'page-event': 'page-event',
       'page-event-detail': 'page-schedule',
       'page-event-shinjuku': 'page-schedule',
-      'page-qa': 'page-qa',
-      'page-join': 'page-join'
+      'page-qa': 'page-qa'
     };
     const activeNav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
     if (activeNav) activeNav.classList.add('active');
