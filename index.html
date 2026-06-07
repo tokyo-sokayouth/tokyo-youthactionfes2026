@@ -5357,8 +5357,9 @@
       venue: '大森スポーツセンター 競技場',
       address: '東京都大田区大森本町2-2-5',
       allowExternal: true,
-      flyer: 'assets/ota-flyer-1.jpg',
+      flyer: 'assets/ota-flyer-1-sm.jpg',
       flyers: ['assets/ota-flyer-1.jpg', 'assets/ota-flyer-2.jpg'],
+      flyersThumb: ['assets/ota-flyer-1-sm.jpg', 'assets/ota-flyer-2-sm.jpg'],
       youtube: null,
       linktree: 'https://lit.link/kizunafes2026',
       applyUrl: 'https://docs.google.com/forms/d/1Udso81wNfH42_WYe6WK7QG51k7BtPi2ertzhVw2j6T8/viewform',
@@ -5789,6 +5790,11 @@
       if (videoFile) {
         const posterAttr = ev.videoPoster ? ` poster="${ev.videoPoster}"` : '';
         mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls muted loop playsinline preload="metadata"${posterAttr}></video></div>`;
+      } else if (Array.isArray(ev.flyers) && ev.flyers.length) {
+        // 複数フライヤー → 一覧でも自動切り替え（軽量サムネ flyersThumb を使用）
+        const thumbs = (ev.flyersThumb && ev.flyersThumb.length) ? ev.flyersThumb : ev.flyers;
+        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
+        mediaHTML = `<div class="sli-media is-flyer" data-flyers="${thumbs.join('|')}"><img src="${thumbs[0]}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
       } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
@@ -5819,6 +5825,29 @@
         </div>
       </button>`;
     }).join('');
+    initListFlyerSlideshows();
+  }
+
+  // 一覧カードの複数フライヤーを自動切り替え（軽量サムネ）
+  function initListFlyerSlideshows() {
+    document.querySelectorAll('.sli-media[data-flyers]').forEach(el => {
+      if (el._slideTimer) { clearInterval(el._slideTimer); el._slideTimer = null; }
+      const urls = (el.dataset.flyers || '').split('|').filter(Boolean);
+      if (urls.length < 2) return;
+      const img = el.querySelector('img');
+      if (!img) return;
+      urls.forEach(u => { const im = new Image(); im.src = u; }); // 事前読み込み
+      img.style.transition = 'opacity 0.5s ease';
+      let i = 0;
+      el._slideTimer = setInterval(() => {
+        img.style.opacity = '0';
+        setTimeout(() => {
+          i = (i + 1) % urls.length;
+          img.src = urls[i];
+          img.style.opacity = '1';
+        }, 500);
+      }, 3500);
+    });
   }
 
   function escapeHtml(s) {
