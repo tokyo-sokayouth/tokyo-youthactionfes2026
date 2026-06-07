@@ -314,7 +314,7 @@
     /* ============ JOIN（参加する）ページ ============ */
     .join-self-area,
     .join-eligibility,
-    .join-panel,
+    .join-notice,
     .join-actions,
     .join-transport,
     .join-contact-note {
@@ -3459,84 +3459,35 @@
     color: var(--color-ink-soft) !important;
   }
 
-  /* ============ JOIN: 1枚のカードに①②の説明＋③交通の補足 ============ */
-  .join-notice-heading {
-    margin: 0 20px 8px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-ink);
-  }
-  .join-panel {
-    margin: 0 20px 4px;
-    padding: 18px;
+  /* ============ JOIN: ご参加にあたって（コンパクト・テキスト版） ============ */
+  .join-notice {
+    margin: 0 20px 24px;
+    padding: 13px 16px;
     background: var(--color-card);
-    border: 1.5px solid var(--color-border);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
-  /* ①：薄緑のコールアウトとして枠内で強調 */
-  .join-row.is-primary {
-    margin-bottom: 14px;
-    padding: 13px 14px;
-    background: var(--color-green-soft);
-    border-radius: 10px;
-  }
-  /* ②：通常テキスト */
-  .join-row.is-secondary {
-    margin-bottom: 0;
-  }
-  /* ③：交通の補足（区切り線＋控えめ） */
-  .join-row.is-note {
-    margin-top: 14px;
-    padding-top: 13px;
-    border-top: 1px solid var(--color-border);
-  }
-  .join-row.is-note .join-card-head { margin-bottom: 6px; }
-  .join-row.is-note .join-card-icon { width: 20px; height: 20px; }
-  .join-row.is-note .join-card-icon svg { width: 12px; height: 12px; }
-  .join-row.is-note .join-card-title { font-size: 12px; }
-  .join-row.is-note .join-card-body { font-size: 11.5px; color: var(--color-ink-soft); }
-
-  .join-card-head {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 9px;
-  }
-  .join-card-icon {
-    width: 24px; height: 24px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .join-card-icon svg {
-    width: 14px; height: 14px;
-    fill: none; stroke: #fff; stroke-width: 2;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
-  .join-card-icon.coral { background: var(--color-coral); }
-  .join-card-icon.teal { background: var(--color-teal); }
-  .join-card-icon.green { background: var(--color-green); }
-  .join-card-icon.green svg { stroke-width: 2.6; }
-  .join-card-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-ink);
-    line-height: 1.45;
-  }
-  .join-card-body {
+  .join-notice-item {
     margin: 0;
     font-size: 12.5px;
     line-height: 1.7;
     color: var(--color-ink);
   }
-  .join-card-body .join-emph {
+  .join-notice-item + .join-notice-item {
+    margin-top: 7px;
+  }
+  .join-notice-item strong {
+    font-weight: 700;
+  }
+  .join-notice-item .join-emph {
     font-weight: 800;
     color: #6b8412;
   }
-  .join-card-note {
-    margin: 8px 0 0;
-    font-size: 11px;
-    line-height: 1.6;
+  .join-notice-item.is-sub {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+    font-size: 11.5px;
     color: var(--color-ink-soft);
   }
 
@@ -4252,42 +4203,11 @@
       <p class="links-subtitle">エリア名をタップして、<br>気になる会場を探そう！</p>
     </div>
 
-    <!-- ご参加にあたっての3つの案内（旧「参加する」ページより移設） -->
-    <h2 class="join-notice-heading">ご参加にあたって</h2>
-    <div class="join-panel" style="margin-bottom:24px;">
-      <!-- ① 自総区で開催 ＝ お申し込み不要 -->
-      <div class="join-row is-primary">
-        <div class="join-card-head">
-          <span class="join-card-icon green" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          <span class="join-card-title">自総区で開催されるフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body"><span class="join-emph">お申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
-      </div>
-
-      <!-- ② 他総区のフェスに参加する方 -->
-      <div class="join-row is-secondary">
-        <div class="join-card-head">
-          <span class="join-card-icon coral" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </span>
-          <span class="join-card-title">他総区のフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body">参加したいフェスの<span class="join-emph">総区ページにある「お申し込みフォームを開く」ボタン</span>からお申し込みください。</p>
-        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認ください。</p>
-      </div>
-
-      <!-- ③ ご来場について（補足） -->
-      <div class="join-row is-note">
-        <div class="join-card-head">
-          <span class="join-card-icon teal" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
-          </span>
-          <span class="join-card-title"><span class="phrase-nb">ご来場は、</span><span class="phrase-nb">公共交通機関を</span><span class="phrase-nb">ご利用ください。</span></span>
-        </div>
-        <p class="join-card-note">（山梨総県を除く）</p>
-      </div>
+    <!-- ご参加にあたって（コンパクト版） -->
+    <div class="join-notice">
+      <p class="join-notice-item"><strong>自総区のフェス</strong>は<span class="join-emph">お申し込み不要</span>。ご案内に沿ってご参加ください。</p>
+      <p class="join-notice-item"><strong>他総区のフェス</strong>は各総区ページの「お申し込みフォームを開く」から事前にお申し込みください（受け入れ不可の会場あり）。</p>
+      <p class="join-notice-item is-sub"><span class="phrase-nb">ご来場は公共交通機関を</span><span class="phrase-nb">ご利用ください</span><span class="phrase-nb">（山梨総県を除く）。</span></p>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
@@ -6721,7 +6641,7 @@
     '.join-eligibility-lead', '.join-eligibility-note',
     '.join-self-area p', '.join-contact-note',
     '.join-rule', '.join-rule-title',
-    '.join-card-title', '.join-card-body',
+    '.join-notice-item',
     '.info-value', '.info-value-sub',
     '.links-title', '.article-title', '.article-excerpt'
   ].join(', ');
