@@ -3213,6 +3213,36 @@
     .scroll-hint svg { animation: none; }
   }
 
+  /* ============ BACK TO TOP（先頭へ戻る・右下／Scrollヒントと同位置で切替） ============ */
+  .to-top {
+    position: fixed;
+    bottom: 78px;
+    right: max(14px, calc(50vw - 210px + 14px));
+    z-index: 95;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-coral);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.16);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .to-top.show {
+    opacity: 0.95;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .to-top svg {
+    width: 20px; height: 20px;
+    fill: none; stroke: currentColor; stroke-width: 2.2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
   /* ============ ICONS (inline SVG) ============ */
   .icon-svg { width: 22px; height: 22px; stroke-width: 1.8; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -5081,6 +5111,11 @@
     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 
+  <!-- ====================== BACK TO TOP ====================== -->
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="6 11 12 5 18 11"/></svg>
+  </button>
+
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="page-home">
@@ -6394,12 +6429,18 @@
   // 各ページ右下のスクロールヒント: まだ下にコンテンツがある時だけ表示し、
   // 末尾付近では自動で隠す。
   const scrollHintEl = document.getElementById('scroll-hint');
+  const toTopEl = document.getElementById('to-top');
   function updateScrollHint() {
-    if (!scrollHintEl) return;
     const doc = document.documentElement;
-    const remaining = doc.scrollHeight - (window.scrollY + window.innerHeight);
-    // 残り120px以上スクロールできる時だけ表示
-    scrollHintEl.classList.toggle('show', remaining > 120);
+    const y = window.scrollY;
+    const remaining = doc.scrollHeight - (y + window.innerHeight);
+    // Scrollヒント: 上部付近で、まだ下にコンテンツがある時だけ表示
+    if (scrollHintEl) scrollHintEl.classList.toggle('show', y < 300 && remaining > 120);
+    // 先頭へ戻る: 300px以上スクロールしたら表示（Scrollヒントと同じ位置で切替）
+    if (toTopEl) toTopEl.classList.toggle('show', y >= 300);
+  }
+  if (toTopEl) {
+    toTopEl.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
   window.addEventListener('scroll', updateScrollHint, { passive: true });
   window.addEventListener('resize', updateScrollHint);
