@@ -3493,7 +3493,7 @@
   .join-row.is-note .join-card-head { margin-bottom: 6px; }
   .join-row.is-note .join-card-icon { width: 20px; height: 20px; }
   .join-row.is-note .join-card-icon svg { width: 12px; height: 12px; }
-  .join-row.is-note .join-card-title { font-size: 12px; word-break: keep-all; overflow-wrap: anywhere; }
+  .join-row.is-note .join-card-title { font-size: 12px; }
   .join-row.is-note .join-card-body { font-size: 11.5px; color: var(--color-ink-soft); }
 
   .join-card-head {
@@ -3803,16 +3803,16 @@
       <div class="about-can">
         <div class="about-can-title">Fes Naviでできること</div>
         <ul class="about-can-list">
-          <li>お住まいの地域や、気になる街のフェス情報を <strong>まとめてチェック</strong></li>
+          <li>自総区や、気になる街のフェス情報を <strong>まとめてチェック</strong></li>
           <li>各フェスの <strong>開催日・会場・雰囲気</strong> を一覧で確認</li>
-          <li>お住まいではない地域のフェスへの <strong>事前申し込み</strong></li>
+          <li>他総区のフェスへの <strong>事前申し込み</strong></li>
         </ul>
       </div>
     </section>
 
     <section class="find-events">
       <div class="find-events-title">Find Your Events</div>
-      <p class="find-events-note">お住まいの地域以外のフェスにも参加できます。</p>
+      <p class="find-events-note">他総区のフェスにも参加できます。</p>
       <div class="find-events-buttons">
         <button class="btn-primary btn-find btn-find-solo" onclick="goToPage('page-region')">
           <span class="btn-find-main">近くの会場を探す</span>
@@ -4255,24 +4255,24 @@
     <!-- ご参加にあたっての3つの案内（旧「参加する」ページより移設） -->
     <h2 class="join-notice-heading">ご参加にあたって</h2>
     <div class="join-panel" style="margin-bottom:24px;">
-      <!-- ① お住まいの総区で開催 ＝ お申し込み不要 -->
+      <!-- ① 自総区で開催 ＝ お申し込み不要 -->
       <div class="join-row is-primary">
         <div class="join-card-head">
           <span class="join-card-icon green" aria-hidden="true">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="join-card-title">お住まいの総区で開催されるフェスに参加する方へ</span>
+          <span class="join-card-title">自総区で開催されるフェスに参加する方へ</span>
         </div>
         <p class="join-card-body"><span class="join-emph">お申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
       </div>
 
-      <!-- ② お住まいの総区以外のフェスに参加する方 -->
+      <!-- ② 他総区のフェスに参加する方 -->
       <div class="join-row is-secondary">
         <div class="join-card-head">
           <span class="join-card-icon coral" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </span>
-          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
+          <span class="join-card-title">他総区のフェスに参加する方へ</span>
         </div>
         <p class="join-card-body">参加したいフェスの<span class="join-emph">総区ページにある「お申し込みフォームを開く」ボタン</span>からお申し込みください。</p>
         <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認ください。</p>
@@ -4284,7 +4284,7 @@
           <span class="join-card-icon teal" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
           </span>
-          <span class="join-card-title">ご来場は、<wbr>公共交通機関を<wbr>ご利用ください。</span>
+          <span class="join-card-title"><span class="phrase-nb">ご来場は、</span><span class="phrase-nb">公共交通機関を</span><span class="phrase-nb">ご利用ください。</span></span>
         </div>
         <p class="join-card-note">（山梨総県を除く）</p>
       </div>
@@ -4835,7 +4835,7 @@
             <span class="chev">›</span>
           </summary>
           <div class="qa-body">
-            <p>お住まいの地域や、気になるフェス情報をまとめてご覧いただけます。</p>
+            <p>自総区や、気になるフェス情報をまとめてご覧いただけます。</p>
             <p>開催スケジュールや各地域の様子を掲載していますので、参加の際の参考としてご活用ください。</p>
           </div>
         </details>
@@ -4873,12 +4873,12 @@
             <span class="qa-icon coral" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </span>
-            <span class="qa-summary-text">自分が住んでいる地域以外でも参加できる？</span>
+            <span class="qa-summary-text">自分が住んでいる総区以外でも参加できる？</span>
             <span class="chev">›</span>
           </summary>
           <div class="qa-body">
-            <p>はい、ご参加いただけます。東京では、自分の住んでいる地域以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
-            <p>他地域へ参加される場合は、<strong>各総区のページにある「お申し込みフォームを開く」ボタン</strong>から事前のお申し込みをお願いします。</p>
+            <p>はい、ご参加いただけます。東京では、自分の住んでいる総区以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
+            <p>他総区へ参加される場合は、<strong>各総区のページにある「お申し込みフォームを開く」ボタン</strong>から事前のお申し込みをお願いします。</p>
             <button type="button" class="qa-cta-btn" onclick="goToPage('page-schedule')">
               スケジュールから探す
               <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -5833,7 +5833,7 @@
       const venue = (ev.venue || '').replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim() || '会場未定';
       const desc = (ev.description || '').replace(/\n+/g, ' ').slice(0, 70);
       const allow = ev.allowExternal
-        ? '<span class="sli-badge open">他地域からの参加OK</span>'
+        ? '<span class="sli-badge open">他総区からの参加OK</span>'
         : '<span class="sli-badge closed">対象地域のみ</span>';
       const regionEn = REGION_EN[region] || '';
 
