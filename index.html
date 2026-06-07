@@ -4525,15 +4525,6 @@
       </div>
     </div>
 
-    <!-- 他総区からご参加の場合の定員（各総区からのフォーム報告をもとに記載） -->
-    <div class="info-block" id="ed-capacity-block" style="display:none;">
-      <div class="info-label">CAPACITY</div>
-      <div class="info-value">
-        <span id="ed-capacity"></span>
-        <span class="info-value-sub">他総区からご参加の場合の定員</span>
-      </div>
-    </div>
-
     <div class="event-content" id="ed-content-wrap" style="display:none;">
       <div class="event-content-title">EVENT CONTENT</div>
       <div class="event-content-text" id="ed-description"></div>
@@ -5042,8 +5033,7 @@
   // 各総区イベントのデータ。
   // 任意フィールド（各総区からのフォーム報告をもとに後日記入）:
   //   kidsSpace:        キッズスペースの案内文（例: 'あり（授乳・おむつ替えスペース併設）'）。詳細ページの「KIDS SPACE」欄に表示されます。
-  //   externalCapacity: 他総区からご参加の場合の定員（例: '先着50名'）。詳細ページの「CAPACITY」欄に表示されます。
-  // 「KIDS SPACE」「CAPACITY」欄は常に表示され、未記入（未設定）の場合は「—」が表示されます。
+  // 「KIDS SPACE」欄は常に表示され、未記入（未設定）の場合は「—」が表示されます。
   const REGION_EVENTS = {
     'nakano': {
       region: 'tokyo23',
@@ -6108,10 +6098,6 @@
     // Kids space (各総区からのフォーム報告をもとに記載。未記入の場合は「—」を表示)
     document.getElementById('ed-kids-block').style.display = '';
     document.getElementById('ed-kids').textContent = e.kidsSpace || '—';
-
-    // External-participant capacity (各総区からのフォーム報告をもとに記載。未記入の場合は「—」を表示)
-    document.getElementById('ed-capacity-block').style.display = '';
-    document.getElementById('ed-capacity').textContent = e.externalCapacity || '—';
 
     // Description
     const descWrap = document.getElementById('ed-content-wrap');
