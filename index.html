@@ -2683,6 +2683,10 @@
     color: var(--color-ink);
     line-height: 1.7;
     white-space: pre-line;
+    /* 通常のCJK折り返し＋禁則処理。閉じ括弧「」」や句読点が行頭に来ないようにする
+       （keep-all + overflow-wrap:anywhere だと強制改行で括弧が行頭に孤立していた）。 */
+    word-break: normal !important;
+    overflow-wrap: normal;
   }
 
   /* ====== EVENT DETAIL: flyer / typography / sessions / extras ====== */
@@ -5496,7 +5500,7 @@
     'toshima': {
       region: 'tokyo23',
       eyebrow: 'TOSHIMA AREA',
-      eventNameJp: '豊島総区ユースアクションフェス',
+      eventNameJp: '豊島総区 ユースアクションフェス',
       eventNameEn: 'Toshima Youth Action Fes',
       sessions: [{ dateLabel: '2026年10月中' }],
       venue: '創価学会 東京戸田記念講堂',
