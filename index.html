@@ -3661,6 +3661,8 @@
     font-size: 11.5px;
     color: var(--color-ink-soft);
     line-height: 1.6;
+    word-break: normal !important;
+    overflow-wrap: normal;
   }
   .qa-item {
     background: var(--color-card);
@@ -3717,6 +3719,9 @@
     font-size: 13.5px;
     color: var(--color-ink);
     line-height: 1.85;
+    /* 通常のCJK折り返し＋禁則処理。「。」「」」が行頭に孤立しないように */
+    word-break: normal !important;
+    overflow-wrap: normal;
   }
   .qa-body p { margin-bottom: 10px; }
   .qa-contact {
@@ -3784,6 +3789,8 @@
     font-size: 13px;
     line-height: 1.75;
     color: var(--color-ink);
+    word-break: normal !important;
+    overflow-wrap: normal;
   }
   .qa-quote-source {
     display: block;
