@@ -3684,7 +3684,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .qa-summary-text { flex: 1; }
+  .qa-summary-text { flex: 1; word-break: normal !important; overflow-wrap: normal; }
   .qa-item summary .chev {
     margin-left: auto;
     color: var(--color-ink-soft);
@@ -5019,7 +5019,7 @@
 
       <!-- お問い合わせフォームへの導線 -->
       <div class="qa-contact">
-        <p class="qa-contact-lead">他総区への参加についてのお問い合わせは、こちらのフォームから</p>
+        <p class="qa-contact-lead">他総区への参加についてのお問い合わせは、<br>こちらのフォームから</p>
         <div class="qa-contact-arrow" aria-hidden="true">
           <svg viewBox="0 0 24 24"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>
         </div>
