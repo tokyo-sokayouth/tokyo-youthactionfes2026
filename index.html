@@ -1700,7 +1700,8 @@
   .detail-cta {
     margin: 24px 20px 0;
   }
-  .detail-cta button {
+  .detail-cta button,
+  .detail-cta a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1714,10 +1715,19 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
   }
-  .detail-cta.coral button { background: var(--color-coral); box-shadow: 0 3px 0 rgba(214,72,57,0.4); }
-  .detail-cta.green button { background: var(--color-green); box-shadow: 0 3px 0 rgba(140,165,40,0.4); }
-  .detail-cta.purple button { background: var(--color-purple); box-shadow: 0 3px 0 rgba(140,114,170,0.4); }
+  .detail-cta.coral button, .detail-cta.coral a { background: var(--color-coral); box-shadow: 0 3px 0 rgba(214,72,57,0.4); }
+  .detail-cta.green button, .detail-cta.green a { background: var(--color-green); box-shadow: 0 3px 0 rgba(140,165,40,0.4); }
+  .detail-cta.purple button, .detail-cta.purple a { background: var(--color-purple); box-shadow: 0 3px 0 rgba(140,114,170,0.4); }
+  /* 申込フォーム準備中（グレーアウト）状態 */
+  .detail-cta a.is-locked {
+    background: #bdbab4 !important;
+    box-shadow: none !important;
+    cursor: default;
+    pointer-events: none;
+    color: #fff;
+  }
 
   /* ============ REGION SELECT PAGE ============ */
   .region-hero {
@@ -2682,6 +2692,50 @@
     width: 100%;
     height: auto;
   }
+  /* 複数フライヤー: JS制御の横スワイプ・スライダー（タッチ/マウス両対応） */
+  .flyer-carousel {
+    overflow: hidden;
+    width: 100%;
+    touch-action: pan-y;   /* 縦は通常スクロール、横はJSで処理 */
+    cursor: grab;
+  }
+  .flyer-track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1);
+    will-change: transform;
+  }
+  .flyer-track.is-dragging { transition: none; cursor: grabbing; }
+  .flyer-track img {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .flyer-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 0 4px;
+    background: var(--color-card-alt);
+  }
+  .flyer-dots button {
+    width: 7px; height: 7px;
+    padding: 0; border: none; border-radius: 50%;
+    background: rgba(45,42,38,0.25);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .flyer-dots button.is-active { background: var(--color-coral); transform: scale(1.25); }
+  .flyer-swipe-hint {
+    text-align: center;
+    font-size: 11px;
+    color: var(--color-ink-soft);
+    padding: 0 0 8px;
+    background: var(--color-card-alt);
+  }
   .event-selfvideo-wrap {
     position: relative;
   }
@@ -3406,6 +3460,12 @@
   }
 
   /* ============ JOIN: 1枚のカードに①②の説明＋③交通の補足 ============ */
+  .join-notice-heading {
+    margin: 0 20px 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
   .join-panel {
     margin: 0 20px 4px;
     padding: 18px;
@@ -3580,6 +3640,17 @@
     line-height: 1.85;
   }
   .qa-body p { margin-bottom: 10px; }
+  .qa-contact {
+    margin: 28px 20px 0;
+    text-align: center;
+  }
+  .qa-contact-lead {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+    margin: 0 0 12px;
+  }
+  .qa-contact .btn-secondary { text-decoration: none; }
   .qa-cta-btn {
     display: inline-flex;
     align-items: center;
@@ -3671,9 +3742,9 @@
   }
 
   /* Button hover lift (subtle) */
-  .btn-primary, .btn-secondary, .detail-cta button { transition: transform 0.15s ease, box-shadow 0.2s ease; }
+  .btn-primary, .btn-secondary, .detail-cta button, .detail-cta a { transition: transform 0.15s ease, box-shadow 0.2s ease; }
   @media (hover: hover) {
-    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover { transform: translateY(-2px); }
+    .btn-primary:hover, .btn-secondary:hover, .detail-cta button:hover, .detail-cta a:hover { transform: translateY(-2px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -4181,6 +4252,45 @@
       <p class="links-subtitle">エリア名をタップして、<br>気になる会場を探そう！</p>
     </div>
 
+    <!-- ご参加にあたっての3つの案内（旧「参加する」ページより移設） -->
+    <h2 class="join-notice-heading">ご参加にあたって</h2>
+    <div class="join-panel" style="margin-bottom:24px;">
+      <!-- ① お住まいの総区で開催 ＝ お申し込み不要 -->
+      <div class="join-row is-primary">
+        <div class="join-card-head">
+          <span class="join-card-icon green" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="join-card-title">お住まいの総区で開催されるフェスに参加する方へ</span>
+        </div>
+        <p class="join-card-body"><span class="join-emph">お申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
+      </div>
+
+      <!-- ② お住まいの総区以外のフェスに参加する方 -->
+      <div class="join-row is-secondary">
+        <div class="join-card-head">
+          <span class="join-card-icon coral" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
+        </div>
+        <p class="join-card-body">参加したいフェスの<span class="join-emph">総区ページにある「お申し込みフォームを開く」ボタン</span>からお申し込みください。</p>
+        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認ください。</p>
+      </div>
+
+      <!-- ③ ご来場について（補足） -->
+      <div class="join-row is-note">
+        <div class="join-card-head">
+          <span class="join-card-icon teal" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
+          </span>
+          <span class="join-card-title">ご来場は公共交通機関をご利用ください</span>
+        </div>
+        <p class="join-card-body">会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
+        <p class="join-card-note">※&nbsp;山梨総県は除きます。</p>
+      </div>
+    </div>
+
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
       <button class="tab tab-all active" data-schedule-tab="all">ALL</button>
       <button class="tab" data-schedule-tab="tokyo23">東京（23区）</button>
@@ -4438,6 +4548,9 @@
       <!-- Hero: flyer image (when available) -->
       <div class="event-flyer-wrap" id="ed-hero-flyer-wrap" style="display:none;">
         <img id="ed-hero-flyer" alt="イベントフライヤー">
+        <!-- 複数フライヤー用スワイプカルーセル -->
+        <div id="ed-hero-carousel" class="flyer-carousel" style="display:none;"></div>
+        <div id="ed-hero-dots" class="flyer-dots" style="display:none;"></div>
       </div>
 
       <!-- Hero: YouTube embed (when no flyer but video exists) -->
@@ -4505,11 +4618,11 @@
       <p id="ed-no-external-body"></p>
     </div>
 
-    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px;">
-      <button onclick="goToPage('page-join')">
-        参加を申し込む
-        <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+    <div class="detail-cta coral" id="ed-cta" style="margin-top:20px; display:none;">
+      <a id="ed-apply-link" target="_blank" rel="noopener noreferrer">
+        <span id="ed-apply-label">お申し込みフォームを開く</span>
+        <svg class="icon-svg" style="width:16px;height:16px;stroke:white;fill:none;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
     </div>
   </div>
 
@@ -4564,7 +4677,7 @@
       <div class="info-label">FORM</div>
       <div class="info-value" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <span>事前登録が必要です</span>
-        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-join')">登録する</button>
+        <button class="link-cta coral" style="width:auto;padding:8px 18px;font-size:12px;" onclick="goToPage('page-schedule')">登録する</button>
       </div>
     </div>
 
@@ -4576,77 +4689,11 @@
     </div>
 
     <div class="detail-cta coral" style="margin-top:20px;">
-      <button onclick="goToPage('page-join')">
-        参加を申し込む
+      <button onclick="goToPage('page-schedule')">
+        スケジュールへ戻る
         <svg class="icon-svg" style="width:14px;height:14px;stroke:white;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
-  </div>
-
-  <!-- ====================== JOIN PAGE (GOOGLE FORM) ====================== -->
-  <div class="page" id="page-join">
-    <div class="topbar">
-      <button class="menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
-      <div></div>
-    </div>
-
-    <div class="links-header">
-      <h1 class="links-title">参加する</h1>
-    </div>
-
-    <!-- 1枚のカードに①②の説明＋③交通の補足 -->
-    <div class="join-panel">
-      <!-- ① 最重要：お住まいの総区で開催 ＝ お申し込み不要 -->
-      <div class="join-row is-primary">
-        <div class="join-card-head">
-          <span class="join-card-icon green" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          <span class="join-card-title">お住まいの総区で開催されるフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body"><span class="join-emph">こちらのフォームでのお申し込みは不要です。</span>所属組織や、お声がけいただいた方からのご案内に沿ってご参加ください。</p>
-      </div>
-
-      <!-- ② お住まいの総区以外のフェスに参加する方 -->
-      <div class="join-row is-secondary">
-        <div class="join-card-head">
-          <span class="join-card-icon coral" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </span>
-          <span class="join-card-title">お住まいの総区以外のフェスに参加する方へ</span>
-        </div>
-        <p class="join-card-body">下記の「お申し込みフォームを開く」ボタンから、必要事項をご記入のうえお申し込みください。</p>
-        <p class="join-card-note">※&nbsp;会場によっては他総区からのご参加を受け付けていない場合があります。各総区の詳細ページにてご確認のうえお申し込みください。</p>
-      </div>
-
-      <!-- ③ ご来場について（補足） -->
-      <div class="join-row is-note">
-        <div class="join-card-head">
-          <span class="join-card-icon teal" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg>
-          </span>
-          <span class="join-card-title">ご来場は公共交通機関をご利用ください</span>
-        </div>
-        <p class="join-card-body">会場周辺には駐車場のご用意がない場合があります。混雑の緩和と安全のため、電車・バスなど公共交通機関でのご来場にご協力をお願いします。</p>
-        <p class="join-card-note">※&nbsp;山梨総県は除きます。</p>
-      </div>
-    </div>
-
-    <div class="join-actions">
-      <a class="btn-primary" id="join-form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd3BJRNs7r-1VBXGcItKG9MGoy-5VTKKYv8E7tITdoLcZcURQ/viewform" target="_blank" rel="noopener noreferrer" data-release-at="2026-05-30T09:45:00+09:00">
-        <span class="join-form-btn-label">お申し込みフォームを開く</span>
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
-        お問い合わせはこちら
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </a>
-    </div>
-
-    <ul class="join-contact-note">
-      <li>回答にはお時間をいただくことがありますので、あらかじめご了承ください。</li>
-      <li>開催が1ヶ月以上先のフェスについては、詳細が未定の場合があります。開催3週間まえ以降にお問い合わせをいただけますと幸いです。</li>
-    </ul>
   </div>
 
   <!-- ====================== ARTICLE LIST PAGE (CAMPUS-style) ====================== -->
@@ -4832,9 +4879,9 @@
           </summary>
           <div class="qa-body">
             <p>はい、ご参加いただけます。東京では、自分の住んでいる地域以外のユースアクションフェスにも参加が可能です（受け入れ可能な会場のみ）。</p>
-            <p>他地域へ参加される場合は、<strong>「参加する」ページから事前のお申し込み</strong>をお願いします。</p>
-            <button type="button" class="qa-cta-btn" onclick="goToPage('page-join')">
-              「参加する」ページへ
+            <p>他地域へ参加される場合は、<strong>各総区のページにある「お申し込みフォームを開く」ボタン</strong>から事前のお申し込みをお願いします。</p>
+            <button type="button" class="qa-cta-btn" onclick="goToPage('page-schedule')">
+              スケジュールから探す
               <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
           </div>
@@ -4934,6 +4981,15 @@
         </details>
       </section>
 
+      <!-- お問い合わせフォームへの導線 -->
+      <div class="qa-contact">
+        <p class="qa-contact-lead">解決しないご質問は、お問い合わせフォームよりお気軽にどうぞ。</p>
+        <a class="btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSeWD33ExGHlBBq8nt8rvfYrhCRj4aS1j17yZDjH3GxHVGvqVw/viewform" target="_blank" rel="noopener noreferrer">
+          お問い合わせはこちら
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+      </div>
+
     </div>
 
     <div style="height:24px;"></div>
@@ -4995,7 +5051,6 @@
     <ul class="drawer-list">
       <li><button data-target="page-home">ホーム<span class="chev">›</span></button></li>
       <li><button data-target="page-schedule">スケジュール<span class="chev">›</span></button></li>
-      <li><button data-target="page-join">参加申込<span class="chev">›</span></button></li>
       <li><button data-target="page-qa">Q&amp;A<span class="chev">›</span></button></li>
       <li><button data-target="page-event">ギャラリー<span class="chev">›</span></button></li>
       <li><button data-target="page-links">リンク一覧<span class="chev">›</span></button></li>
@@ -5025,13 +5080,6 @@
         <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </div>
       <span class="nav-label">スケジュール</span>
-      <div class="nav-indicator"></div>
-    </button>
-    <button class="nav-item" data-page="page-join">
-      <div class="nav-icon">
-        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
-      <span class="nav-label">参加する</span>
       <div class="nav-indicator"></div>
     </button>
     <button class="nav-item" data-page="page-qa">
@@ -5074,7 +5122,7 @@
       sessions: [{ dateLabel: '2026年11月8日(日)' }],
       venue: 'なかのZERO 視聴覚ホール',
       address: '東京都中野区中野2-9-7',
-      allowExternal: true,
+      allowExternal: false,
       flyer: null,
       youtube: 'https://youtu.be/Qt77FpOamkg',
       linktree: null,
@@ -5136,7 +5184,7 @@
       flyer: null,
       youtube: null,
       linktree: null,
-      description: '「えっ、ここ会館!?」ヨガや最新コスメ体験、eスポーツに音楽ライブまで！いつもの場所が1日限定の体験型フェス会場に変身します。会館オープンデー、パフォーマンスなどのステージ、出し物や展示など、3会場（小金井黄金区・国分寺栄光区・国立常勝区）で同日開催の分区企画です。'
+      description: '小金井の「ユースアクションフェス」は、いつもの会館を地域に大開放！学会員も近所のお友達も、全世代が「学会ってなんか素敵！」と笑顔になれるフェスを目指します✨'
     },
     'gakuen': {
       region: 'tokyo-2nd',
@@ -5259,6 +5307,7 @@
       venue: 'あきる野ルピア 3Fホール',
       address: '東京都あきる野市秋川1丁目8',
       allowExternal: true,
+      applyPending: true,
       flyer: null,
       youtube: null,
       linktree: null,
@@ -5364,7 +5413,9 @@
       venue: '大森スポーツセンター 競技場',
       address: '東京都大田区大森本町2-2-5',
       allowExternal: true,
-      flyer: 'https://drive.google.com/open?id=1t3uubwxoBW5K-XBmcNCzvi2-MQW4fOTm',
+      flyer: 'assets/ota-flyer-1-sm.jpg',
+      flyers: ['assets/ota-flyer-1.jpg', 'assets/ota-flyer-2.jpg'],
+      flyersThumb: ['assets/ota-flyer-1-sm.jpg', 'assets/ota-flyer-2-sm.jpg'],
       youtube: null,
       linktree: 'https://lit.link/kizunafes2026',
       description: '「つながる。未来（あした）へ動き出す」をテーマに、スポーツ総合イベントを開催します。体を動かしたり、トークイベントや展示、自由な対話を楽しんだりと、世代や性別を問わずどなたでも楽しめます（キッズスペースも充実）。キズナアンケートやコンテストも実施します。'
@@ -5445,7 +5496,7 @@
     'itabashi': {
       region: 'tokyo23',
       eyebrow: 'ITABASHI AREA',
-      eventNameJp: 'ユースアクションフェス',
+      eventNameJp: '板橋Action Fes',
       eventNameEn: 'Itabashi Youth Action Fes',
       sessions: [{ dateLabel: '2026年10月25日(日)' }],
       venue: '創価学会 板橋文化会館',
@@ -5794,6 +5845,11 @@
       if (videoFile) {
         const posterAttr = ev.videoPoster ? ` poster="${ev.videoPoster}"` : '';
         mediaHTML = `<div class="sli-media is-self-video"><video src="${videoFile}" controls muted loop playsinline preload="metadata"${posterAttr}></video></div>`;
+      } else if (Array.isArray(ev.flyers) && ev.flyers.length) {
+        // 複数フライヤー → 一覧でも自動切り替え（軽量サムネ flyersThumb を使用）
+        const thumbs = (ev.flyersThumb && ev.flyersThumb.length) ? ev.flyersThumb : ev.flyers;
+        const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
+        mediaHTML = `<div class="sli-media is-flyer" data-flyers="${thumbs.join('|')}"><img src="${thumbs[0]}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
       } else if (flyerUrl) {
         const ytBadge = ytId ? '<span class="sli-media-yt-badge">動画あり</span>' : '';
         mediaHTML = `<div class="sli-media is-flyer"><img src="${flyerUrl}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="fitFlyerMedia(this)" onerror="posterFallback(this, '${id}')">${ytBadge}</div>`;
@@ -5824,6 +5880,29 @@
         </div>
       </button>`;
     }).join('');
+    initListFlyerSlideshows();
+  }
+
+  // 一覧カードの複数フライヤーを自動切り替え（軽量サムネ）
+  function initListFlyerSlideshows() {
+    document.querySelectorAll('.sli-media[data-flyers]').forEach(el => {
+      if (el._slideTimer) { clearInterval(el._slideTimer); el._slideTimer = null; }
+      const urls = (el.dataset.flyers || '').split('|').filter(Boolean);
+      if (urls.length < 2) return;
+      const img = el.querySelector('img');
+      if (!img) return;
+      urls.forEach(u => { const im = new Image(); im.src = u; }); // 事前読み込み
+      img.style.transition = 'opacity 0.5s ease';
+      let i = 0;
+      el._slideTimer = setInterval(() => {
+        img.style.opacity = '0';
+        setTimeout(() => {
+          i = (i + 1) % urls.length;
+          img.src = urls[i];
+          img.style.opacity = '1';
+        }, 500);
+      }, 3500);
+    });
   }
 
   function escapeHtml(s) {
@@ -5871,6 +5950,94 @@
     return m ? m[1] : '';
   }
 
+  // ===== 詳細ページのフライヤー: 複数枚は横スワイプ・カルーセル =====
+  let flyerSlideTimer = null; // （旧自動切替の名残・互換のため残置）
+  function stopFlyerSlideshow() {
+    if (flyerSlideTimer) { clearInterval(flyerSlideTimer); flyerSlideTimer = null; }
+  }
+  // 単一フライヤー表示に戻す（カルーセルを隠す）
+  function resetFlyerCarousel() {
+    const single = document.getElementById('ed-hero-flyer');
+    const car = document.getElementById('ed-hero-carousel');
+    const dots = document.getElementById('ed-hero-dots');
+    if (car) {
+      car.style.display = 'none'; car.innerHTML = '';
+      car.onscroll = null; car.onpointerdown = null; car.onpointermove = null;
+      car.onpointerup = null; car.onpointercancel = null; car.onpointerleave = null;
+      car.classList.remove('is-dragging');
+    }
+    if (dots) { dots.style.display = 'none'; dots.innerHTML = ''; }
+    if (single) single.style.display = '';
+  }
+  // 複数フライヤーを横スワイプできるスライダーとして構築（JSで完全制御）
+  function buildFlyerCarousel(urls) {
+    const single = document.getElementById('ed-hero-flyer');
+    const car = document.getElementById('ed-hero-carousel');
+    const dots = document.getElementById('ed-hero-dots');
+    if (!car) return;
+    if (single) single.style.display = 'none';
+    // 1枚目は即時、それ以降は必要時に読み込む（通信節約）
+    car.innerHTML = `<div class="flyer-track">` + urls.map((u, i) =>
+      `<img src="${u}" alt="イベントフライヤー${i + 1}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
+    ).join('') + `</div>`;
+    car.style.display = 'block';
+    const track = car.querySelector('.flyer-track');
+    const count = urls.length;
+    let index = 0;
+
+    const dotEls = [];
+    if (count > 1) {
+      dots.innerHTML = urls.map((_, i) =>
+        `<button type="button" aria-label="${i + 1}枚目を表示" class="${i === 0 ? 'is-active' : ''}"></button>`
+      ).join('');
+      dots.style.display = 'flex';
+      Array.from(dots.children).forEach((b, i) => { dotEls.push(b); b.onclick = () => go(i); });
+    } else {
+      dots.style.display = 'none';
+    }
+
+    function go(i) {
+      index = Math.max(0, Math.min(count - 1, i));
+      track.style.transform = `translateX(${-index * 100}%)`;
+      dotEls.forEach((b, j) => b.classList.toggle('is-active', j === index));
+    }
+
+    // ドラッグ/スワイプ（タッチ・マウス共通の Pointer Events）
+    let down = false, startX = 0, startY = 0, dx = 0, decided = false, horiz = false, w = 0;
+    car.onpointerdown = (e) => {
+      down = true; decided = false; horiz = false; dx = 0;
+      startX = e.clientX; startY = e.clientY; w = car.clientWidth || 1;
+      track.classList.add('is-dragging');
+      if (e.pointerType === 'mouse') { try { car.setPointerCapture(e.pointerId); } catch (_) {} }
+    };
+    car.onpointermove = (e) => {
+      if (!down) return;
+      const mx = e.clientX - startX, my = e.clientY - startY;
+      if (!decided && (Math.abs(mx) > 6 || Math.abs(my) > 6)) {
+        decided = true; horiz = Math.abs(mx) > Math.abs(my);
+      }
+      if (decided && horiz) {
+        dx = mx;
+        track.style.transform = `translateX(calc(${-index * 100}% + ${dx}px))`;
+      }
+    };
+    const up = () => {
+      if (!down) return;
+      down = false;
+      track.classList.remove('is-dragging');
+      if (horiz) {
+        if (dx < -w * 0.18) go(index + 1);
+        else if (dx > w * 0.18) go(index - 1);
+        else go(index);
+      }
+    };
+    car.onpointerup = up;
+    car.onpointercancel = up;
+    car.onpointerleave = up;
+
+    go(0);
+  }
+
   function openEventDetail(eventId) {
     // GA4: イベント詳細の閲覧を計測
     gaEvent('event_detail_view', { event_id: eventId });
@@ -5901,6 +6068,8 @@
 
     // Reset self-video first (avoid leftover state when switching events)
     selfVideoEl.pause();
+    stopFlyerSlideshow();
+    resetFlyerCarousel(); // 別イベントへ移動時にカルーセルを初期化
     if (videoFile) {
       selfVideoEl.muted = true; // required for autoplay on mobile
       selfVideoEl.src = videoFile;
@@ -5933,6 +6102,20 @@
       }
       // 自動再生はしない（ユーザーがcontrolsの▶ボタンを押した時のみ再生）
       // ※帯域節約のため preload="metadata" と組み合わせて使用
+    } else if (Array.isArray(e.flyers) && e.flyers.length) {
+      // 複数フライヤー: 横スワイプのカルーセル
+      selfVideoEl.removeAttribute('src'); selfVideoEl.load();
+      selfVideoWrap.style.display = 'none';
+      buildFlyerCarousel(e.flyers);
+      flyerWrap.style.display = 'block';
+      typo.style.display = 'none';
+      if (ytId) {
+        videoIframe.src = `https://www.youtube.com/embed/${ytId}`;
+        videoWrap.style.display = 'block';
+      } else {
+        videoIframe.src = '';
+        videoWrap.style.display = 'none';
+      }
     } else if (flyerUrl) {
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
@@ -6045,8 +6228,31 @@
 
     // External participation
     const cta = document.getElementById('ed-cta');
+    const applyLink = document.getElementById('ed-apply-link');
     const ngMsg = document.getElementById('ed-no-external');
-    if (e.allowExternal) {
+    // 中央フォーム（事前参加者フォーム）。専用フォームを持たない総区の既定リンク先。
+    const CENTRAL_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd3BJRNs7r-1VBXGcItKG9MGoy-5VTKKYv8E7tITdoLcZcURQ/viewform';
+    const applyLabel = document.getElementById('ed-apply-label');
+    applyLink.classList.remove('is-locked');
+    applyLink.removeAttribute('aria-disabled');
+    if (e.applyPending) {
+      // 申込フォーム準備中 → グレーアウト（リンク無効）
+      applyLink.removeAttribute('href');
+      applyLink.classList.add('is-locked');
+      applyLink.setAttribute('aria-disabled', 'true');
+      if (applyLabel) applyLabel.textContent = '申込フォーム準備中（近日公開）';
+      cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else if (e.applyUrl) {
+      // この総区は専用の申込フォームを持っている → 直接そのフォームへ
+      applyLink.href = e.applyUrl;
+      if (applyLabel) applyLabel.textContent = 'お申し込みフォームを開く';
+      cta.style.display = 'block';
+      ngMsg.style.display = 'none';
+    } else if (e.allowExternal) {
+      // 専用フォーム未設定だが他総区受け入れOK → 中央フォームへ
+      applyLink.href = CENTRAL_FORM_URL;
+      if (applyLabel) applyLabel.textContent = 'お申し込みフォームを開く';
       cta.style.display = 'block';
       ngMsg.style.display = 'none';
     } else {
@@ -6081,10 +6287,11 @@
     const leaving = document.querySelector('.page.active');
     if (leaving && leaving.id !== pageId) {
       leaving.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(_) {} });
-      // stop YouTube iframe on the event-detail page when leaving it
+      // stop YouTube iframe & flyer slideshow on the event-detail page when leaving it
       if (leaving.id === 'page-event-detail') {
         const iframe = document.getElementById('ed-video-iframe');
         if (iframe && iframe.src) iframe.src = '';
+        stopFlyerSlideshow();
       }
     }
     // hide all pages
@@ -6138,8 +6345,7 @@
       'page-event': 'page-event',
       'page-event-detail': 'page-schedule',
       'page-event-shinjuku': 'page-schedule',
-      'page-qa': 'page-qa',
-      'page-join': 'page-join'
+      'page-qa': 'page-qa'
     };
     const activeNav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
     if (activeNav) activeNav.classList.add('active');
