@@ -2692,14 +2692,20 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    touch-action: pan-x;     /* タッチで横パンを明示許可 */
+    cursor: grab;            /* PCでドラッグできることを示す */
   }
+  .flyer-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; }
   .flyer-carousel::-webkit-scrollbar { display: none; }
   .flyer-carousel img {
     flex: 0 0 100%;
+    min-width: 100%;
     width: 100%;
     height: auto;
     display: block;
     scroll-snap-align: start;
+    user-select: none;
+    -webkit-user-drag: none;   /* PCで画像が点線でドラッグされるのを防ぐ */
   }
   .flyer-dots {
     display: flex;
@@ -5947,7 +5953,12 @@
     const single = document.getElementById('ed-hero-flyer');
     const car = document.getElementById('ed-hero-carousel');
     const dots = document.getElementById('ed-hero-dots');
-    if (car) { car.style.display = 'none'; car.innerHTML = ''; car.onscroll = null; }
+    if (car) {
+      car.style.display = 'none'; car.innerHTML = '';
+      car.onscroll = null; car.onpointerdown = null; car.onpointermove = null;
+      car.onpointerup = null; car.onpointercancel = null; car.onpointerleave = null;
+      car.classList.remove('is-dragging');
+    }
     if (dots) { dots.style.display = 'none'; dots.innerHTML = ''; }
     if (single) single.style.display = '';
   }
@@ -5960,10 +5971,36 @@
     if (single) single.style.display = 'none';
     // 1枚目は即時、それ以降はスワイプ時に読み込む（通信節約）
     car.innerHTML = urls.map((u, i) =>
-      `<img src="${u}" alt="イベントフライヤー${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}">`
+      `<img src="${u}" alt="イベントフライヤー${i + 1}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
     ).join('');
     car.style.display = 'flex';
     car.scrollLeft = 0;
+
+    // PC: マウスのドラッグでスワイプ（タッチはネイティブの横スクロールに任せる）
+    let dragging = false, startX = 0, startScroll = 0;
+    car.onpointerdown = (ev) => {
+      if (ev.pointerType !== 'mouse') return; // touch/penはネイティブ任せ
+      dragging = true;
+      startX = ev.clientX;
+      startScroll = car.scrollLeft;
+      car.classList.add('is-dragging');
+      try { car.setPointerCapture(ev.pointerId); } catch (_) {}
+      ev.preventDefault();
+    };
+    car.onpointermove = (ev) => {
+      if (!dragging) return;
+      car.scrollLeft = startScroll - (ev.clientX - startX);
+    };
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      car.classList.remove('is-dragging');
+      const idx = Math.round(car.scrollLeft / Math.max(car.clientWidth, 1));
+      car.scrollTo({ left: car.clientWidth * idx, behavior: 'smooth' });
+    };
+    car.onpointerup = endDrag;
+    car.onpointercancel = endDrag;
+    car.onpointerleave = endDrag;
     if (urls.length > 1) {
       dots.innerHTML = urls.map((_, i) =>
         `<button type="button" aria-label="${i + 1}枚目を表示" class="${i === 0 ? 'is-active' : ''}"></button>`
