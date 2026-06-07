@@ -3545,6 +3545,30 @@
     font-size: 11px;
     color: var(--color-ink-soft);
   }
+  .join-notice-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .join-subnotes {
+    list-style: none;
+    margin: 5px 0 0;
+    padding: 0;
+  }
+  .join-subnotes li {
+    position: relative;
+    padding-left: 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .join-subnotes li + li {
+    margin-top: 2px;
+  }
+  .join-subnotes li::before {
+    content: "※";
+    position: absolute;
+    left: 0;
+  }
 
   /* ============ Q&A ACCORDION ============ */
   .qa-list {
@@ -4261,8 +4285,8 @@
     <!-- ご参加にあたって（コンパクト版） -->
     <div class="join-notice">
       <p class="join-notice-item"><span class="join-notice-ico green" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span><strong>自総区のフェス</strong>はお申し込み不要です。ご案内に沿ってご参加ください。</span></p>
-      <p class="join-notice-item"><span class="join-notice-ico coral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span><strong>他総区のフェス</strong>は各総区ページの「お申し込みフォームを開く」から事前にお申し込みください。<span class="join-notice-sub">※受け入れ可能な総区のみ</span></span></p>
-      <p class="join-notice-item"><span class="join-notice-ico teal" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="8" y1="17" x2="6" y2="21"/><line x1="16" y1="17" x2="18" y2="21"/></svg></span><span>ご来場は公共交通機関をご利用ください。<span class="join-notice-sub">※山梨総県を除く</span></span></p>
+      <div class="join-notice-item"><span class="join-notice-ico coral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div class="join-notice-body"><strong>他総区のフェス</strong>は各総区ページの「お申し込みフォームを開く」から事前にお申し込みください。<ul class="join-subnotes"><li>受け入れ可能な総区のみ参加できます</li><li>ご来場は公共交通機関をご利用ください（山梨総県を除く）</li></ul></div></div>
+    </div>
     </div>
 
     <div class="tabs schedule-tabs" style="margin-bottom:24px;">
@@ -6705,7 +6729,7 @@
     '.join-eligibility-lead', '.join-eligibility-note',
     '.join-self-area p', '.join-contact-note',
     '.join-rule', '.join-rule-title',
-    '.join-notice-item',
+    '.join-notice-item', '.join-notice-body', '.join-subnotes li',
     '.info-value', '.info-value-sub',
     '.links-title', '.article-title', '.article-excerpt'
   ].join(', ');
