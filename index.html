@@ -6041,14 +6041,17 @@
     const cta = document.getElementById('ed-cta');
     const applyLink = document.getElementById('ed-apply-link');
     const ngMsg = document.getElementById('ed-no-external');
+    // 中央フォーム（事前参加者フォーム）。専用フォームを持たない総区の既定リンク先。
+    const CENTRAL_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd3BJRNs7r-1VBXGcItKG9MGoy-5VTKKYv8E7tITdoLcZcURQ/viewform';
     if (e.applyUrl) {
       // この総区は専用の申込フォームを持っている → 直接そのフォームへ
       applyLink.href = e.applyUrl;
       cta.style.display = 'block';
       ngMsg.style.display = 'none';
     } else if (e.allowExternal) {
-      // 他総区から参加OKだが、専用フォーム未設定 → 申込ボタンは出さない
-      cta.style.display = 'none';
+      // 専用フォーム未設定だが他総区受け入れOK → 中央フォームへ
+      applyLink.href = CENTRAL_FORM_URL;
+      cta.style.display = 'block';
       ngMsg.style.display = 'none';
     } else {
       cta.style.display = 'none';
