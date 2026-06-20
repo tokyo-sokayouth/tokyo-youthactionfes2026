@@ -2297,6 +2297,11 @@
     background: var(--color-yellow-soft);
     color: #8a5a00;
   }
+  .sli-badge.soon {
+    background: var(--color-coral);
+    color: #fff;
+    animation: badgePulse 1.9s ease-in-out infinite;
+  }
   .sli-arrow {
     margin-left: auto;
     font-size: 18px;
@@ -5926,6 +5931,12 @@
       const allow = ev.allowExternal
         ? '<span class="sli-badge open">他総区からの参加OK</span>'
         : '<span class="sli-badge closed">対象地域のみ</span>';
+      // 開催2週間前〜当日は「まもなく開催！」バッジ（ホームの条件と同一）
+      const _soonNow = Date.now();
+      const _soonToday = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+      const _soonT = isoLike ? new Date(date.replace(' ', 'T')).getTime() : NaN;
+      const soonBadge = (!isNaN(_soonT) && _soonT >= _soonToday && (_soonT - _soonNow) <= 14 * 24 * 60 * 60 * 1000)
+        ? '<span class="sli-badge soon">まもなく開催！</span>' : '';
       const regionEn = REGION_EN[region] || '';
 
       // Media banner: self-hosted video > flyer > YouTube thumb > logo placeholder
@@ -5964,7 +5975,7 @@
             <div class="sli-venue">${escapeHtml(venue)}</div>
             <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
             <div class="sli-meta">
-              ${allow}
+              ${soonBadge}${allow}
               <span class="sli-arrow">›</span>
             </div>
           </div>
@@ -6626,6 +6637,7 @@
         date: d,
         name: pill.querySelector('.area-pill-name')?.textContent?.trim() || '',
         target: pill.dataset.eventTarget || 'page-event-detail',
+        eventId: pill.dataset.eventId || '',
         region: pill.dataset.region || '',
         pillEl: pill,
       });
@@ -6672,7 +6684,11 @@
     upcoming.forEach(e => {
       const item = document.createElement('div');
       item.className = 'upcoming-item is-soon';
-      item.addEventListener('click', () => goToPage(e.target));
+      // 総区IDがあれば詳細ページを生成して開く（空ページ回避）。無ければ従来の遷移先へ。
+      item.addEventListener('click', () => {
+        if (e.eventId) openEventDetail(e.eventId);
+        else goToPage(e.target);
+      });
       item.innerHTML = `
         <div class="upcoming-date">${formatEventDate(e.date)}</div>
         <div class="upcoming-name">${e.name}</div>
