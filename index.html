@@ -2537,8 +2537,13 @@
     font-weight: 700;
     color: var(--color-ink);
   }
+  .upcoming-evname {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+  }
   .upcoming-cta {
-    align-self: flex-start;
+    align-self: flex-end;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -6720,12 +6725,12 @@
         if (e.eventId) openEventDetail(e.eventId);
         else goToPage(e.target);
       });
+      const evName = (ev && ev.eventNameJp) ? `<span class="upcoming-evname">「${escapeHtml(ev.eventNameJp)}」</span>` : '';
       item.innerHTML = `
         ${flyerHTML}
         <div class="upcoming-head">
           <span class="upcoming-date">${formatEventDate(e.date)}</span>
-          <span class="upcoming-name">${e.name}</span>
-          <span class="upcoming-badge">まもなく開催！</span>
+          <span class="upcoming-name">${escapeHtml(e.name)}${evName}</span>
         </div>
         <div class="upcoming-cta">タップして詳細へ ›</div>
       `;
