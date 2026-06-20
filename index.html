@@ -2485,15 +2485,15 @@
     gap: 10px;
   }
   .upcoming-item {
-    padding: 14px 16px;
+    padding: 12px;
     background: var(--color-card);
     border: 1.5px solid var(--color-border);
     border-left: 4px solid var(--color-coral);
     border-radius: var(--radius-md);
     cursor: pointer;
     display: flex;
-    align-items: center;
-    gap: 14px;
+    flex-direction: column;
+    gap: 10px;
     transition: transform 0.15s ease;
   }
   .upcoming-item:active { transform: scale(0.99); }
@@ -2501,6 +2501,18 @@
     background: var(--color-yellow-soft);
     border-color: var(--color-yellow);
     border-left-color: var(--color-coral);
+  }
+  .upcoming-flyer {
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.04);
+    line-height: 0;
+  }
+  .upcoming-flyer img { width: 100%; height: auto; display: block; }
+  .upcoming-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .upcoming-badge {
     background: var(--color-coral);
@@ -2517,7 +2529,7 @@
     font-weight: 700;
     color: var(--color-coral);
     font-size: 14px;
-    min-width: 92px;
+    flex-shrink: 0;
   }
   .upcoming-name {
     flex: 1;
@@ -2525,10 +2537,18 @@
     font-weight: 700;
     color: var(--color-ink);
   }
-  .upcoming-arrow {
-    color: var(--color-ink-soft);
-    font-size: 20px;
-    line-height: 1;
+  .upcoming-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--color-coral);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(214,72,57,0.3);
   }
   .upcoming-empty {
     padding: 20px;
@@ -6682,6 +6702,11 @@
     list.style.display = '';
     if (title) title.style.display = '';
     upcoming.forEach(e => {
+      const ev = (typeof REGION_EVENTS !== 'undefined' && e.eventId) ? REGION_EVENTS[e.eventId] : null;
+      const thumb = ev ? ((ev.flyersThumb && ev.flyersThumb[0]) || ev.flyer || (ev.flyers && ev.flyers[0])) : '';
+      const flyerHTML = thumb
+        ? `<div class="upcoming-flyer"><img src="${driveImageUrl(thumb)}" alt="${e.name}のフライヤー" loading="lazy"></div>`
+        : '';
       const item = document.createElement('div');
       item.className = 'upcoming-item is-soon';
       // 総区IDがあれば詳細ページを生成して開く（空ページ回避）。無ければ従来の遷移先へ。
@@ -6690,10 +6715,13 @@
         else goToPage(e.target);
       });
       item.innerHTML = `
-        <div class="upcoming-date">${formatEventDate(e.date)}</div>
-        <div class="upcoming-name">${e.name}</div>
-        <span class="upcoming-badge">まもなく開催！</span>
-        <div class="upcoming-arrow">›</div>
+        ${flyerHTML}
+        <div class="upcoming-head">
+          <span class="upcoming-date">${formatEventDate(e.date)}</span>
+          <span class="upcoming-name">${e.name}</span>
+          <span class="upcoming-badge">まもなく開催！</span>
+        </div>
+        <div class="upcoming-cta">詳しくはこちらをタップ ›</div>
       `;
       list.appendChild(item);
     });
