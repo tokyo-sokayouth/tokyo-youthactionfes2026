@@ -2542,13 +2542,13 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: var(--color-coral);
-    color: #fff;
+    background: #fff;
+    color: var(--color-coral);
     font-size: 12px;
     font-weight: 700;
-    padding: 7px 14px;
+    padding: 6px 13px;
     border-radius: 999px;
-    box-shadow: 0 2px 6px rgba(214,72,57,0.3);
+    border: 1.5px solid rgba(214,72,57,0.35);
   }
   .upcoming-empty {
     padding: 20px;
@@ -6007,7 +6007,7 @@
 
   // 一覧カードの複数フライヤーを自動切り替え（軽量サムネ）
   function initListFlyerSlideshows() {
-    document.querySelectorAll('.sli-media[data-flyers]').forEach(el => {
+    document.querySelectorAll('.sli-media[data-flyers], .upcoming-flyer[data-flyers]').forEach(el => {
       if (el._slideTimer) { clearInterval(el._slideTimer); el._slideTimer = null; }
       const urls = (el.dataset.flyers || '').split('|').filter(Boolean);
       if (urls.length < 2) return;
@@ -6703,9 +6703,15 @@
     if (title) title.style.display = '';
     upcoming.forEach(e => {
       const ev = (typeof REGION_EVENTS !== 'undefined' && e.eventId) ? REGION_EVENTS[e.eventId] : null;
-      const thumb = ev ? ((ev.flyersThumb && ev.flyersThumb[0]) || ev.flyer || (ev.flyers && ev.flyers[0])) : '';
-      const flyerHTML = thumb
-        ? `<div class="upcoming-flyer"><img src="${driveImageUrl(thumb)}" alt="${e.name}のフライヤー" loading="lazy"></div>`
+      let thumbs = [];
+      if (ev) {
+        if (ev.flyersThumb && ev.flyersThumb.length) thumbs = ev.flyersThumb.slice();
+        else if (ev.flyers && ev.flyers.length) thumbs = ev.flyers.slice();
+        else if (ev.flyer) thumbs = [ev.flyer];
+      }
+      thumbs = thumbs.map(driveImageUrl);
+      const flyerHTML = thumbs.length
+        ? `<div class="upcoming-flyer"${thumbs.length > 1 ? ` data-flyers="${thumbs.join('|')}"` : ''}><img src="${thumbs[0]}" alt="${e.name}のフライヤー" loading="lazy"></div>`
         : '';
       const item = document.createElement('div');
       item.className = 'upcoming-item is-soon';
@@ -6721,10 +6727,11 @@
           <span class="upcoming-name">${e.name}</span>
           <span class="upcoming-badge">まもなく開催！</span>
         </div>
-        <div class="upcoming-cta">詳しくはこちらをタップ ›</div>
+        <div class="upcoming-cta">タップして詳細へ ›</div>
       `;
       list.appendChild(item);
     });
+    initListFlyerSlideshows();
   }
 
   function applySoonHighlight() {
