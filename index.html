@@ -2537,10 +2537,19 @@
     font-weight: 700;
     color: var(--color-ink);
   }
+  .upcoming-area {
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-ink);
+  }
   .upcoming-evname {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--color-ink-soft);
+    margin-top: -2px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #E8821E;
   }
   .upcoming-cta {
     align-self: flex-end;
@@ -6671,11 +6680,12 @@
   }
 
   function formatEventDate(d) {
+    const W = ['日','月','火','水','木','金','土'];
     const m = d.getMonth() + 1;
     const day = d.getDate();
     const h = d.getHours();
     const min = d.getMinutes();
-    let s = `${m}/${day}`;
+    let s = `${m}/${day}(${W[d.getDay()]})`;
     if (h !== 0 || min !== 0) {
       s += ` ${h}:${String(min).padStart(2, '0')}〜`;
     }
@@ -6725,13 +6735,15 @@
         if (e.eventId) openEventDetail(e.eventId);
         else goToPage(e.target);
       });
-      const evName = (ev && ev.eventNameJp) ? `<span class="upcoming-evname">「${escapeHtml(ev.eventNameJp)}」</span>` : '';
+      const areaEn = (ev && ev.eyebrow) ? ev.eyebrow : e.name;
+      const evName = (ev && ev.eventNameJp) ? `<div class="upcoming-evname">「${escapeHtml(ev.eventNameJp)}」</div>` : '';
       item.innerHTML = `
         ${flyerHTML}
         <div class="upcoming-head">
           <span class="upcoming-date">${formatEventDate(e.date)}</span>
-          <span class="upcoming-name">${escapeHtml(e.name)}${evName}</span>
+          <span class="upcoming-area">${escapeHtml(areaEn)}</span>
         </div>
+        ${evName}
         <div class="upcoming-cta">タップして詳細へ ›</div>
       `;
       list.appendChild(item);
