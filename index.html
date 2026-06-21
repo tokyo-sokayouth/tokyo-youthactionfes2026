@@ -2558,6 +2558,8 @@
     border: 1.5px solid rgba(232,130,30,0.28);
     box-shadow: 0 2px 0 rgba(232,130,30,0.18);
   }
+  .upcoming-evname .ue-main { display: block; }
+  .upcoming-evname .ue-sub { display: block; font-size: 12px; margin-top: 2px; }
   .upcoming-cta {
     align-self: flex-end;
     display: inline-flex;
@@ -6743,7 +6745,17 @@
         else goToPage(e.target);
       });
       const areaEn = (ev && ev.eyebrow) ? ev.eyebrow : e.name;
-      const evName = (ev && ev.eventNameJp) ? `<div class="upcoming-evname">「${escapeHtml(ev.eventNameJp)}」</div>` : '';
+      let evName = '';
+      if (ev && ev.eventNameJp) {
+        const raw = ev.eventNameJp;
+        const wi = raw.indexOf('〜');
+        if (wi > 0) {
+          // 副題（〜…〜）がある場合は2行に分ける
+          evName = `<div class="upcoming-evname"><span class="ue-main">${escapeHtml(raw.slice(0, wi).trim())}</span><span class="ue-sub">${escapeHtml(raw.slice(wi).trim())}</span></div>`;
+        } else {
+          evName = `<div class="upcoming-evname">${escapeHtml(raw)}</div>`;
+        }
+      }
       item.innerHTML = `
         ${flyerHTML}
         <div class="upcoming-head">
