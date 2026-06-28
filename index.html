@@ -2276,7 +2276,9 @@
   .sli-meta {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
+    row-gap: 6px;
     margin-top: 10px;
   }
   .sli-badge {
@@ -2301,6 +2303,10 @@
     background: var(--color-coral);
     color: #fff;
     animation: badgePulse 1.9s ease-in-out infinite;
+  }
+  .sli-badge.kids {
+    background: var(--color-teal-soft);
+    color: #2a847f;
   }
   .sli-arrow {
     margin-left: auto;
@@ -5990,6 +5996,9 @@
       const _soonT = isoLike ? new Date(date.replace(' ', 'T')).getTime() : NaN;
       const soonBadge = (!isNaN(_soonT) && _soonT >= _soonToday && (_soonT - _soonNow) <= 14 * 24 * 60 * 60 * 1000)
         ? '<span class="sli-badge soon">まもなく開催！</span>' : '';
+      // キッズスペースありの総区にKIDS SPACEバッジ
+      const kidsBadge = (ev.kidsSpace && /あり|有/.test(ev.kidsSpace))
+        ? '<span class="sli-badge kids">KIDS SPACE</span>' : '';
       const regionEn = REGION_EN[region] || '';
 
       // Media banner: self-hosted video > flyer > YouTube thumb > logo placeholder
@@ -6028,7 +6037,7 @@
             <div class="sli-venue">${escapeHtml(venue)}</div>
             <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
             <div class="sli-meta">
-              ${soonBadge}${allow}
+              ${soonBadge}${allow}${kidsBadge}
               <span class="sli-arrow">›</span>
             </div>
           </div>
