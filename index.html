@@ -2308,6 +2308,18 @@
     background: var(--color-teal-soft);
     color: #2a847f;
   }
+  .sli-soon-tag {
+    margin-top: 6px;
+    background: var(--color-coral);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    padding: 3px 7px;
+    border-radius: 8px;
+    animation: badgePulse 1.9s ease-in-out infinite;
+  }
   .sli-arrow {
     margin-left: auto;
     font-size: 18px;
@@ -5995,7 +6007,7 @@
       const _soonToday = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
       const _soonT = isoLike ? new Date(date.replace(' ', 'T')).getTime() : NaN;
       const soonBadge = (!isNaN(_soonT) && _soonT >= _soonToday && (_soonT - _soonNow) <= 14 * 24 * 60 * 60 * 1000)
-        ? '<span class="sli-badge soon">まもなく開催！</span>' : '';
+        ? '<span class="sli-soon-tag">まもなく<br>開催</span>' : '';
       // キッズスペースありの総区にKIDS SPACEバッジ
       const kidsBadge = (ev.kidsSpace && /あり|有/.test(ev.kidsSpace))
         ? '<span class="sli-badge kids">KIDS SPACE</span>' : '';
@@ -6030,14 +6042,14 @@
       return `<button class="sli reveal" type="button" data-region="${region}" data-month="${parseInt((date||'').slice(5,7),10)||''}" data-event-id="${id}" onclick="openEventDetail('${id}')">
         ${mediaHTML}
         <div class="sli-content">
-          <div class="sli-date">${dateBlock}</div>
+          <div class="sli-date">${dateBlock}${soonBadge}</div>
           <div class="sli-body">
             <div class="sli-region">${regionEn}${soku ? '・' + escapeHtml(soku) : ''}</div>
             <div class="sli-name">${escapeHtml(ev.eventNameJp || '')}</div>
             <div class="sli-venue">${escapeHtml(venue)}</div>
             <p class="sli-desc">${escapeHtml(desc)}${desc.length >= 70 ? '…' : ''}</p>
             <div class="sli-meta">
-              ${soonBadge}${allow}${kidsBadge}
+              ${allow}${kidsBadge}
               <span class="sli-arrow">›</span>
             </div>
           </div>
