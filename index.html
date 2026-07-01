@@ -2789,6 +2789,7 @@
   }
   .flyer-track {
     display: flex;
+    align-items: flex-start;
     transition: transform 0.35s cubic-bezier(.2,.7,.2,1);
     will-change: transform;
   }
@@ -6145,7 +6146,7 @@
     const car = document.getElementById('ed-hero-carousel');
     const dots = document.getElementById('ed-hero-dots');
     if (car) {
-      car.style.display = 'none'; car.innerHTML = '';
+      car.style.display = 'none'; car.innerHTML = ''; car.style.height = '';
       car.onscroll = null; car.onpointerdown = null; car.onpointermove = null;
       car.onpointerup = null; car.onpointercancel = null; car.onpointerleave = null;
       car.classList.remove('is-dragging');
@@ -6169,6 +6170,18 @@
     const count = urls.length;
     let index = 0;
 
+    // 各スライドの縦横比に合わせてカルーセルの高さを追従（縦長・横長の混在でも歪まない）
+    const imgs = track.querySelectorAll('img');
+    car.style.transition = 'height 0.35s cubic-bezier(.2,.7,.2,1)';
+    function updateHeight() {
+      const im = imgs[index];
+      if (im && im.naturalWidth) car.style.height = (car.clientWidth * im.naturalHeight / im.naturalWidth) + 'px';
+    }
+    car._updateHeight = updateHeight;
+    imgs.forEach(im => im.addEventListener('load', () => { if (imgs[index] === im) updateHeight(); }));
+    if (!car._resizeBound) { car._resizeBound = true; window.addEventListener('resize', () => car._updateHeight && car._updateHeight()); }
+    updateHeight();
+
     const dotEls = [];
     if (count > 1) {
       dots.innerHTML = urls.map((_, i) =>
@@ -6184,6 +6197,7 @@
       index = Math.max(0, Math.min(count - 1, i));
       track.style.transform = `translateX(${-index * 100}%)`;
       dotEls.forEach((b, j) => b.classList.toggle('is-active', j === index));
+      updateHeight();
     }
 
     // ドラッグ/スワイプ（タッチ・マウス共通の Pointer Events）
