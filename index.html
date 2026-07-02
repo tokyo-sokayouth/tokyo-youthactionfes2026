@@ -6469,7 +6469,10 @@
       ngMsg.style.display = 'block';
     }
 
-    goToPage('page-event-detail');
+    goToPage('page-event-detail', null, null, {
+      gaPath: '/event/' + eventId,
+      gaTitle: (e.eventNameJp || eventId) + '（' + eventId + '）'
+    });
 
     // replay hero media fade-in
     const hero = document.getElementById('ed-hero');
@@ -6578,11 +6581,13 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // GA4: SPA ページ切替を計測
+    // GA4: SPA ページ切替を計測（総区詳細などは opts.gaPath / opts.gaTitle で個別指定可能）
+    const gaPath = opts.gaPath || ('/#' + pageId);
+    const gaTitle = opts.gaTitle || pageId;
     gaEvent('page_view', {
-      page_path: '/#' + pageId,
-      page_title: pageId,
-      page_location: window.location.origin + window.location.pathname + '#' + pageId
+      page_path: gaPath,
+      page_title: gaTitle,
+      page_location: window.location.origin + window.location.pathname + gaPath
     });
 
     // ページ切替後にスクロールヒントを再判定（スムーズスクロール完了を待つ）
