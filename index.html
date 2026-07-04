@@ -2774,6 +2774,62 @@
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--color-card-alt);
+    position: relative;
+    cursor: zoom-in;
+  }
+  .flyer-zoom-hint {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 999px;
+    pointer-events: none;
+    backdrop-filter: blur(2px);
+  }
+  /* フライヤー拡大ビューア（ライトボックス） */
+  body.lb-open { overflow: hidden; }
+  .flyer-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    touch-action: none;
+  }
+  .flyer-lightbox.open { display: flex; }
+  .flyer-lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    transform-origin: center center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .flyer-lightbox-close {
+    position: fixed;
+    top: 12px;
+    right: 14px;
+    z-index: 301;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .event-flyer-wrap img {
     display: block;
@@ -4705,6 +4761,7 @@
         <!-- 複数フライヤー用スワイプカルーセル -->
         <div id="ed-hero-carousel" class="flyer-carousel" style="display:none;"></div>
         <div id="ed-hero-dots" class="flyer-dots" style="display:none;"></div>
+        <span class="flyer-zoom-hint" aria-hidden="true">🔍 タップで拡大</span>
       </div>
 
       <!-- Hero: YouTube embed (when no flyer but video exists) -->
@@ -5225,6 +5282,12 @@
   <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る">
     <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="6 11 12 5 18 11"/></svg>
   </button>
+
+  <!-- ====================== FLYER LIGHTBOX (ピンチ拡大ビューア) ====================== -->
+  <div class="flyer-lightbox" id="flyer-lightbox" aria-hidden="true">
+    <button class="flyer-lightbox-close" id="flyer-lightbox-close" aria-label="閉じる">×</button>
+    <img id="flyer-lightbox-img" alt="フライヤー拡大表示" draggable="false">
+  </div>
 
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
   <nav class="bottom-nav">
@@ -6231,6 +6294,10 @@
         if (dx < -w * 0.18) go(index + 1);
         else if (dx > w * 0.18) go(index - 1);
         else go(index);
+      } else if (!decided) {
+        // ドラッグでない＝タップ → 全画面で拡大表示
+        const cur = imgs[index];
+        if (cur && cur.src && window.openFlyerLightbox) window.openFlyerLightbox(cur.src);
       }
     };
     car.onpointerup = up;
@@ -6239,6 +6306,66 @@
 
     go(0);
   }
+
+  // ===== フライヤー拡大ビューア（タップで全画面／ピンチ拡大・ドラッグ移動・ダブルタップ・×で閉じる） =====
+  (function initFlyerLightbox() {
+    const box = document.getElementById('flyer-lightbox');
+    const img = document.getElementById('flyer-lightbox-img');
+    const closeBtn = document.getElementById('flyer-lightbox-close');
+    if (!box || !img) return;
+    let scale = 1, tx = 0, ty = 0;
+    let sDist = 0, sScale = 1, sTx = 0, sTy = 0, sMx = 0, sMy = 0;
+    let panning = false, pStartX = 0, pStartY = 0, lastTap = 0, moved = false;
+    const apply = () => { img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`; };
+    const reset = () => { scale = 1; tx = 0; ty = 0; apply(); };
+    window.openFlyerLightbox = (src) => {
+      if (!src) return;
+      img.src = src; reset();
+      box.classList.add('open'); box.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lb-open');
+    };
+    const close = () => {
+      box.classList.remove('open'); box.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lb-open'); img.src = '';
+    };
+    closeBtn.addEventListener('click', close);
+    box.addEventListener('click', (e) => { if (e.target === box) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && box.classList.contains('open')) close(); });
+    const distOf = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    const midOf = (t) => ({ x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2 });
+    box.addEventListener('touchstart', (e) => {
+      moved = false;
+      if (e.touches.length === 2) {
+        sDist = distOf(e.touches); sScale = scale;
+        const m = midOf(e.touches); sMx = m.x; sMy = m.y; sTx = tx; sTy = ty;
+      } else if (e.touches.length === 1 && scale > 1) {
+        panning = true; pStartX = e.touches[0].clientX - tx; pStartY = e.touches[0].clientY - ty;
+      }
+    }, { passive: true });
+    box.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        e.preventDefault(); moved = true;
+        scale = Math.min(Math.max(sScale * (distOf(e.touches) / sDist), 1), 5);
+        const m = midOf(e.touches); tx = sTx + (m.x - sMx); ty = sTy + (m.y - sMy); apply();
+      } else if (panning && e.touches.length === 1) {
+        e.preventDefault(); moved = true;
+        tx = e.touches[0].clientX - pStartX; ty = e.touches[0].clientY - pStartY; apply();
+      }
+    }, { passive: false });
+    box.addEventListener('touchend', (e) => {
+      if (e.touches.length > 0) return;
+      panning = false;
+      if (scale < 1.02) reset();
+      if (!moved) {
+        const now = Date.now();
+        if (now - lastTap < 300) { if (scale > 1) reset(); else { scale = 2.5; apply(); } }
+        lastTap = now;
+      }
+    }, { passive: true });
+    // 単一フライヤー（カルーセルでない場合）もタップで拡大
+    const heroFlyer = document.getElementById('ed-hero-flyer');
+    if (heroFlyer) heroFlyer.addEventListener('click', () => { if (heroFlyer.src) window.openFlyerLightbox(heroFlyer.src); });
+  })();
 
   function openEventDetail(eventId) {
     // GA4: イベント詳細の閲覧を計測
