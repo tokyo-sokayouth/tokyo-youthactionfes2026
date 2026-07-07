@@ -2308,6 +2308,38 @@
     background: var(--color-teal-soft);
     color: #2a847f;
   }
+  /* 開催終了：グレーアウト（薄め）＋ラベル */
+  .sli.is-ended {
+    position: relative;
+    background: #f5f3ee;
+    border-left-color: #cfc9bd;
+  }
+  .sli.is-ended .sli-media img,
+  .sli.is-ended .sli-media video {
+    filter: grayscale(0.65);
+    opacity: 0.6;
+  }
+  .sli.is-ended .sli-region,
+  .sli.is-ended .sli-name,
+  .sli.is-ended .sli-venue,
+  .sli.is-ended .sli-desc { color: var(--color-ink-soft); }
+  .sli.is-ended .sli-date { opacity: 0.55; }
+  .sli.is-ended .sli-meta { opacity: 0.75; }
+  .sli-ended-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(80,80,80,0.82);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
   .sli-soon-tag {
     margin-top: 7px;
     width: 52px;
@@ -6035,8 +6067,18 @@
         event: ev
       });
     });
-    // Sort by ISO date string (lexicographic works for YYYY-MM-DD[Thh:mm])
-    items.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+    // 開催終了（前日以前）の判定 → 終了イベントは一覧の下へ、各グループ内は日付昇順
+    const _todayStart = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+    const isEndedDate = (d) => {
+      if (!/^\d{4}-\d{2}-\d{2}/.test(d || '')) return false;
+      const t = new Date(String(d).replace(' ', 'T')).getTime();
+      return !isNaN(t) && t < _todayStart;
+    };
+    items.sort((a, b) => {
+      const ea = isEndedDate(a.date) ? 1 : 0, eb = isEndedDate(b.date) ? 1 : 0;
+      if (ea !== eb) return ea - eb;
+      return (a.date || '').localeCompare(b.date || '');
+    });
 
     const REGION_LABEL = {
       'tokyo23': '東京（23区）',
@@ -6115,8 +6157,10 @@
         </div>`;
       }
 
-      return `<button class="sli reveal" type="button" data-region="${region}" data-month="${parseInt((date||'').slice(5,7),10)||''}" data-event-id="${id}" onclick="openEventDetail('${id}')">
+      const isEnded = isEndedDate(date);
+      return `<button class="sli reveal${isEnded ? ' is-ended' : ''}" type="button" data-region="${region}" data-month="${parseInt((date||'').slice(5,7),10)||''}" data-event-id="${id}" onclick="openEventDetail('${id}')">
         ${mediaHTML}
+        ${isEnded ? '<span class="sli-ended-label">✓ 開催終了</span>' : ''}
         <div class="sli-content">
           <div class="sli-date">${dateBlock}${soonBadge}</div>
           <div class="sli-body">
