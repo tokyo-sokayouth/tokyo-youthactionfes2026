@@ -4577,7 +4577,7 @@
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-07-19T10:00" data-event-id="shinjuku" onclick="openEventDetail('shinjuku')">
           <div class="area-pill-name">新宿総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-20" data-event-id="chofu" onclick="openEventDetail('chofu')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-07-20T10:00" data-event-id="chofu" onclick="openEventDetail('chofu')">
           <div class="area-pill-name">調布総区</div>
           <div class="area-pill-sub">調布市・狛江市</div>
         </div>
@@ -6916,7 +6916,7 @@
   function collectScheduleEvents() {
     const events = [];
     document.querySelectorAll('#page-schedule .area-pill[data-event-date]').forEach(pill => {
-      const d = new Date(pill.dataset.eventDate);
+      const _raw = pill.dataset.eventDate; const d = new Date(/T/.test(_raw) ? _raw : _raw + 'T00:00');
       if (isNaN(d.getTime())) return;
       events.push({
         date: d,
@@ -7015,7 +7015,7 @@
   function applySoonHighlight() {
     const now = Date.now();
     document.querySelectorAll('.area-pill[data-event-date]').forEach(pill => {
-      const d = new Date(pill.dataset.eventDate);
+      const _raw = pill.dataset.eventDate; const d = new Date(/T/.test(_raw) ? _raw : _raw + 'T00:00');
       if (isNaN(d.getTime())) {
         pill.classList.remove('is-soon');
         return;
