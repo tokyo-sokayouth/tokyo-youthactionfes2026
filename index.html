@@ -5758,7 +5758,8 @@
       allowExternal: true,
       flyer: 'assets/murayama-flyer.jpg',
       youtube: null,
-      linktree: null,
+      linktree: 'https://www.instagram.com/tunagaru?utm_source=qr',
+      linkLabel: '公式Instagramを見る',
       description: '「町の文化祭」のような親しみやすさを重視し、多様な価値観や個性を発揮できる「ブース形式」を取り入れた開かれたフェスを目指しています。また合唱を通じてユースの人材育成とつながりをさらに深めていきます。子育て世代から学生世代まで、また学会員であるかどうかに関わらず、誰もがふらっと立ち寄り、同志・友人・地域の皆様ともっとつながるイベントです。'
     },
     'itabashi': {
@@ -6566,7 +6567,7 @@
     if (e.linktree) {
       const releaseAt = e.linktreeReleaseAt ? new Date(e.linktreeReleaseAt).getTime() : 0;
       const now = Date.now();
-      ltLabel.textContent = '公式サイトを見る';
+      ltLabel.textContent = e.linkLabel || '公式サイトを見る';
       const setUnlocked = () => {
         lt.href = e.linktree;
         lt.classList.remove('is-locked');
