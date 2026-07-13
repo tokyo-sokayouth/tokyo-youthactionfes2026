@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery Mock — Korean Style</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    background: #fff;
+    color: #222;
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 64px;
+  }
+
+  /* ---- top: year + tabs ---- */
+  .top-year {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 14px 0 10px;
+  }
+  .tabs {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 0 18px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-grid-ic { font-size: 15px; color: #bbb; flex: none; }
+  .tab {
+    font-size: 13.5px;
+    color: #a9a9a9;
+    font-weight: 500;
+    flex: none;
+    padding-bottom: 6px;
+    position: relative;
+  }
+  .tab.on {
+    color: #F26B5B;
+    font-weight: 700;
+  }
+  .tab.on::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: #F26B5B;
+  }
+
+  /* ---- hero ---- */
+  .hero {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #eee;
+  }
+  .hero img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%);
+  }
+  .hero-word {
+    position: absolute;
+    left: 18px;
+    top: 42%;
+    z-index: 2;
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 44px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.25);
+    line-height: 1;
+  }
+  .hero-word small {
+    display: block;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    margin-top: 8px;
+    opacity: 0.9;
+  }
+  .hero-cap {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    z-index: 2;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  }
+
+  /* ---- tight grid ---- */
+  .g3, .g2 {
+    display: grid;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .g3 { grid-template-columns: 1fr 1fr 1fr; }
+  .g2 { grid-template-columns: 3fr 2fr; }
+  .g2.rev { grid-template-columns: 2fr 3fr; }
+  .cell {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+  .g2 .cell { aspect-ratio: auto; height: 46vw; max-height: 220px; }
+  .cell img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+
+  /* ---- bottom nav (mock) ---- */
+  .nav {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 480px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    padding: 8px 0 12px;
+    z-index: 10;
+  }
+  .nav div {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #b5b5b5;
+  }
+  .nav div span { display: block; font-size: 17px; margin-bottom: 2px; }
+  .nav div.on { color: #F26B5B; font-weight: 700; }
+</style>
+</head>
+<body>
+
+  <div class="top-year">2026</div>
+  <div class="tabs">
+    <span class="tab-grid-ic">▦</span>
+    <span class="tab on">すべて</span>
+    <span class="tab">大田</span>
+    <span class="tab">多摩池田</span>
+    <span class="tab">学園</span>
+    <span class="tab">7月</span>
+    <span class="tab">6月</span>
+  </div>
+
+  <div class="hero">
+    <img id="hero-img" alt="">
+    <div class="hero-word">Summer<small>YOUTH ACTION FES 2026</small></div>
+    <div class="hero-cap">みんなの笑顔、あつめました</div>
+  </div>
+
+  <div id="rows"></div>
+
+  <div class="nav">
+    <div><span>🏠</span>ホーム</div>
+    <div><span>📅</span>スケジュール</div>
+    <div><span>👤</span>参加する</div>
+    <div><span>❓</span>Q&A</div>
+    <div class="on"><span>🖼</span>ギャラリー</div>
+  </div>
+
+<script>
+  var N = 167;
+  var photos = Array.from({length: N}, function(_, i){
+    return 'assets/gallery/g' + String(i+1).padStart(3,'0') + '.jpg';
+  });
+  // shuffle
+  for (var i = photos.length-1; i>0; i--) {
+    var j = Math.floor(Math.random()* (i+1));
+    var t = photos[i]; photos[i]=photos[j]; photos[j]=t;
+  }
+  // モックではヒーローを人物写真に固定（本実装ではランダム or 月替わり）
+  document.getElementById('hero-img').src = 'assets/gallery/g003.jpg';
+
+  // rows: pattern 3-square / 2-mixed / 3-square / 2-mixed(rev) ...
+  var rows = document.getElementById('rows');
+  var k = 1, r = 0, MAXROWS = 8;
+  while (r < MAXROWS && k + 3 < photos.length) {
+    var div = document.createElement('div');
+    var n;
+    if (r % 2 === 0) { div.className = 'g3'; n = 3; }
+    else { div.className = 'g2' + (r % 4 === 3 ? ' rev' : ''); n = 2; }
+    for (var c = 0; c < n; c++) {
+      var cell = document.createElement('div');
+      cell.className = 'cell';
+      var img = document.createElement('img');
+      img.src = photos[k++];
+      cell.appendChild(img);
+      div.appendChild(cell);
+    }
+    rows.appendChild(div);
+    r++;
+  }
+</script>
+</body>
+</html>
