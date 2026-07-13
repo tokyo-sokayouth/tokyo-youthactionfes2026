@@ -4701,7 +4701,7 @@
         <span class="month-label">NOVEMBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="yamanashi" data-event-date="2026-11-15" data-event-id="yamanashi" onclick="openEventDetail('yamanashi')">
+        <div class="area-pill" data-region="yamanashi" data-event-date="2026-11-01T10:30" data-event-id="yamanashi" onclick="openEventDetail('yamanashi')">
           <div class="area-pill-name">山梨総県</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-11-08" data-event-id="nakano" onclick="openEventDetail('nakano')">
@@ -4845,6 +4845,11 @@
     <a id="ed-linktree" class="event-linktree" target="_blank" rel="noopener noreferrer" style="display:none;">
       <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       <span id="ed-linktree-label">公式リンクを見る</span>
+    </a>
+
+    <a id="ed-instagram" class="event-linktree" target="_blank" rel="noopener noreferrer" style="display:none;">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      <span>公式Instagramを見る</span>
     </a>
 
     <div class="event-no-external" id="ed-no-external" style="display:none;">
@@ -5596,14 +5601,17 @@
       eyebrow: 'YAMANASHI AREA',
       eventNameJp: 'ニュー山梨 ユースアクションフェス',
       eventNameEn: 'New Yamanashi Youth Action Fes',
-      sessions: [{ dateLabel: '2026年11月中' }],
+      sessions: [{ dateLabel: '2026年11月1日(日)', timeLabel: '10:30〜17:00' }],
       venue: '創価学会 山梨文化会館',
       address: '山梨県甲府市荒川2丁目15-1',
       allowExternal: true,
-      flyer: null,
+      flyer: 'assets/yamanashi-flyer-sm.jpg',
+      flyers: ['assets/yamanashi-flyer.jpg', 'assets/yamanashi-flyer-2.jpg'],
+      flyersThumb: ['assets/yamanashi-flyer-sm.jpg', 'assets/yamanashi-flyer-2-sm.jpg'],
       youtube: null,
-      linktree: null,
-      description: '平和などをテーマに、展示・ワークショップ・シンポジウム・コンサートなどを実施する予定です。若者一人ひとりの意識が変わり、行動が変わり、社会が変わっていく流れを創っていきます。気候変動などの地球的課題とともに、一人ひとりが輝いていくための文化芸術、心を育む教育の大切さを伝えていきます。'
+      linktree: 'https://sgi-youth-yamanashi.netlify.app/',
+      instagram: 'https://www.instagram.com/sgiyouthyamanashi/',
+      description: '当日に向けてピースアクションカードを活用し、内外の友と身近にできる平和について語り合います。\nフェス本番では、平和などをテーマに、展示・ワークショップ・シンポジウム・コンサートなどを実施します。'
     },
     'nerima': {
       region: 'tokyo23',
@@ -6596,6 +6604,13 @@
       lt.removeAttribute('aria-disabled');
     }
 
+    // Instagram（任意・2つ目のボタン）
+    const ig = document.getElementById('ed-instagram');
+    if (ig) {
+      if (e.instagram) { ig.href = e.instagram; ig.style.display = 'flex'; }
+      else { ig.style.display = 'none'; ig.removeAttribute('href'); }
+    }
+
     // External participation
     const cta = document.getElementById('ed-cta');
     const applyLink = document.getElementById('ed-apply-link');
@@ -7164,7 +7179,7 @@
       return;
     }
     // イベント詳細の公式リンク（Linktree 等）
-    const linktree = e.target.closest('#ed-linktree');
+    const linktree = e.target.closest('#ed-linktree, #ed-instagram');
     if (linktree) {
       gaEvent('linktree_click', { url: linktree.href || '' });
       return;
