@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery Mock — Korean Style</title>
 <style>
+  @font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 700;
+    src: url('assets/caveat-700.woff2') format('woff2');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
@@ -15,46 +21,30 @@
     padding-bottom: 64px;
   }
 
-  /* ---- top: year + tabs ---- */
-  .top-year {
+  /* ---- header: handwritten logo ---- */
+  .mk-head {
     text-align: center;
-    font-size: 15px;
+    padding: 18px 0 12px;
+  }
+  .mk-logo {
+    font-family: 'Caveat', cursive;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    padding: 14px 0 10px;
-  }
-  .tabs {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    padding: 0 18px 12px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab-grid-ic { font-size: 15px; color: #bbb; flex: none; }
-  .tab {
-    font-size: 13.5px;
-    color: #a9a9a9;
-    font-weight: 500;
-    flex: none;
-    padding-bottom: 6px;
-    position: relative;
-  }
-  .tab.on {
+    font-size: 42px;
+    line-height: 1;
     color: #F26B5B;
-    font-weight: 700;
+    display: inline-block;
+    transform: rotate(-2deg);
+    text-shadow: 2px 2px 0 #FAF1D0;
   }
-  .tab.on::after {
-    content: '';
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 2px;
-    border-radius: 2px;
-    background: #F26B5B;
+  .mk-jp {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    color: #9a958c;
+    margin-top: 8px;
   }
 
-  /* ---- hero ---- */
+  /* ---- hero: crossfade slideshow + Ken Burns ---- */
   .hero {
     position: relative;
     width: 100%;
@@ -62,49 +52,64 @@
     overflow: hidden;
     background: #eee;
   }
-  .hero img {
+  .hero .slide {
+    position: absolute;
+    inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover; display: block;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.8s ease;
   }
+  .hero .slide.show { opacity: 1; }
+  /* ゆっくり寄っていくケンバーンズ（表示中の動き） */
+  .hero .slide.kb1 { animation: kb-a 16s ease-in-out infinite alternate; }
+  .hero .slide.kb2 { animation: kb-b 16s ease-in-out infinite alternate; }
+  @keyframes kb-a { from { transform: scale(1); } to { transform: scale(1.14) translate(-1.5%, 1.5%); } }
+  @keyframes kb-b { from { transform: scale(1.14) translate(1.5%, -1%); } to { transform: scale(1); } }
   .hero::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.4) 100%);
+    z-index: 2;
+    pointer-events: none;
   }
   .hero-word {
     position: absolute;
     left: 18px;
-    top: 42%;
-    z-index: 2;
+    top: 44%;
+    z-index: 3;
     color: #fff;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 44px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-shadow: 0 1px 12px rgba(0,0,0,0.25);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 58px;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.3);
     line-height: 1;
+    transform: rotate(-2deg);
   }
   .hero-word small {
     display: block;
-    font-family: inherit;
-    font-size: 13px;
-    letter-spacing: 0.22em;
-    margin-top: 8px;
-    opacity: 0.9;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    margin-top: 10px;
+    opacity: 0.92;
+    transform: none;
   }
   .hero-cap {
     position: absolute;
     left: 18px;
     bottom: 16px;
-    z-index: 2;
+    z-index: 3;
     color: #fff;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.04em;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
   }
 
-  /* ---- tight grid ---- */
+  /* ---- tight grid: scroll fade-in + slow drift ---- */
   .g3, .g2 {
     display: grid;
     gap: 2px;
@@ -116,12 +121,26 @@
   .cell {
     aspect-ratio: 1;
     overflow: hidden;
-    background: #f0f0f0;
+    background: #f4f2ee;
   }
   .g2 .cell { aspect-ratio: auto; height: 46vw; max-height: 220px; }
   .cell img {
     width: 100%; height: 100%;
     object-fit: cover; display: block;
+    opacity: 0;
+    transform: translateY(16px) scale(1.03);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  /* ふんわり出現（スクロールで画面に入ったら） */
+  .cell img.in {
+    opacity: 1;
+    transform: translateY(0) scale(1.03);
+  }
+  /* 表示中もごくゆっくり寄り続ける */
+  .cell img.in.drift { animation: drift var(--dur, 14s) ease-in-out var(--dly, 0s) infinite alternate; }
+  @keyframes drift {
+    from { transform: translateY(0) scale(1.03); }
+    to   { transform: translateY(0) scale(1.12) translate(var(--dx, -1.5%), var(--dy, 1%)); }
   }
 
   /* ---- bottom nav (mock) ---- */
@@ -148,19 +167,12 @@
 </head>
 <body>
 
-  <div class="top-year">2026</div>
-  <div class="tabs">
-    <span class="tab-grid-ic">▦</span>
-    <span class="tab on">すべて</span>
-    <span class="tab">大田</span>
-    <span class="tab">多摩池田</span>
-    <span class="tab">学園</span>
-    <span class="tab">7月</span>
-    <span class="tab">6月</span>
+  <div class="mk-head">
+    <h1 class="mk-logo">Photo Gallery</h1>
+    <div class="mk-jp">ギャラリー</div>
   </div>
 
-  <div class="hero">
-    <img id="hero-img" alt="">
+  <div class="hero" id="hero">
     <div class="hero-word">Summer<small>YOUTH ACTION FES 2026</small></div>
     <div class="hero-cap">みんなの笑顔、あつめました</div>
   </div>
@@ -180,17 +192,46 @@
   var photos = Array.from({length: N}, function(_, i){
     return 'assets/gallery/g' + String(i+1).padStart(3,'0') + '.jpg';
   });
-  // shuffle
   for (var i = photos.length-1; i>0; i--) {
     var j = Math.floor(Math.random()* (i+1));
     var t = photos[i]; photos[i]=photos[j]; photos[j]=t;
   }
-  // モックではヒーローを人物写真に固定（本実装ではランダム or 月替わり）
-  document.getElementById('hero-img').src = 'assets/gallery/g003.jpg';
 
-  // rows: pattern 3-square / 2-mixed / 3-square / 2-mixed(rev) ...
+  /* ---- hero slideshow: 6秒ごとにクロスフェード ---- */
+  var HERO_POOL = ['assets/gallery/g003.jpg'].concat(photos.slice(0, 5));
+  var hero = document.getElementById('hero');
+  var slides = [document.createElement('img'), document.createElement('img')];
+  slides.forEach(function(s, si){
+    s.className = 'slide ' + (si === 0 ? 'kb1' : 'kb2');
+    hero.insertBefore(s, hero.firstChild);
+  });
+  var heroIdx = 0, active = 0;
+  slides[0].src = HERO_POOL[0];
+  slides[0].classList.add('show');
+  setInterval(function(){
+    heroIdx = (heroIdx + 1) % HERO_POOL.length;
+    var nxt = 1 - active;
+    slides[nxt].src = HERO_POOL[heroIdx];
+    slides[nxt].classList.add('show');
+    slides[active].classList.remove('show');
+    active = nxt;
+  }, 6000);
+
+  /* ---- grid ---- */
   var rows = document.getElementById('rows');
-  var k = 1, r = 0, MAXROWS = 8;
+  var k = 6, r = 0, MAXROWS = 14;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        var img = e.target;
+        // ふんわり出現 → 出現後にドリフト開始
+        setTimeout(function(){ img.classList.add('in'); }, (img.dataset.stag || 0) * 90);
+        setTimeout(function(){ img.classList.add('drift'); }, 1100);
+        io.unobserve(img);
+      }
+    });
+  }, { rootMargin: '40px' });
+
   while (r < MAXROWS && k + 3 < photos.length) {
     var div = document.createElement('div');
     var n;
@@ -200,9 +241,17 @@
       var cell = document.createElement('div');
       cell.className = 'cell';
       var img = document.createElement('img');
+      img.loading = 'lazy';
       img.src = photos[k++];
+      img.dataset.stag = c;
+      // ドリフトの向き・速さを写真ごとに変えて自然に
+      img.style.setProperty('--dur', (11 + (k % 7)) + 's');
+      img.style.setProperty('--dly', ((k % 3) * 0.8) + 's');
+      img.style.setProperty('--dx', ((k % 2) ? '-1.5%' : '1.5%'));
+      img.style.setProperty('--dy', ((k % 3) ? '1%' : '-1%'));
       cell.appendChild(img);
       div.appendChild(cell);
+      io.observe(img);
     }
     rows.appendChild(div);
     r++;
