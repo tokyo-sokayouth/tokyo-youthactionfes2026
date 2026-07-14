@@ -443,15 +443,21 @@
     }
 
     /* ============ GALLERY ページ ============ */
-    .ghero {
+    .ghero-head {
       max-width: var(--container-narrow) !important;
       margin: 0 auto !important;
-      border-radius: 26px !important;
+    }
+    .ghero2 {
+      max-width: var(--container-narrow) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+      aspect-ratio: 4 / 3 !important;
     }
     .gallery-grid {
       max-width: var(--container-narrow) !important;
       margin: 0 auto !important;
     }
+    .gg2 .gg-cell { height: 300px !important; }
 
     /* ============ EVENT DETAIL / ARTICLES 等 ============ */
     .event-hero,
@@ -1179,122 +1185,136 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* ============ GALLERY PAGE (editorial) ============ */
-  /* 背景はサイト共通のアイボリーのまま。写真コラージュと手書きロゴで構成 */
-  .ghero {
-    position: relative;
-    padding: 20px 20px 26px;
-    overflow: hidden;
-    min-height: 305px;
-  }
-  .ghero-photo {
-    position: absolute;
-    object-fit: cover;
-    border: 4px solid #fff;
-    border-radius: 14px;
-    box-shadow: 0 8px 22px rgba(45, 42, 38, 0.16);
-    cursor: pointer;
-    background: var(--color-card-alt);
-  }
-  .ghero-photo-a {
-    top: 16px;
-    right: -16px;
-    width: 56%;
-    aspect-ratio: 4 / 5;
-    transform: rotate(2deg);
-    z-index: 1;
-  }
-  .ghero-photo-b {
-    bottom: 16px;
-    right: 14px;
-    width: 31%;
-    aspect-ratio: 1;
-    transform: rotate(-3deg);
-    z-index: 2;
+  /* ============ GALLERY PAGE (韓国アルバム風・写真固定) ============ */
+  .ghero-head {
+    text-align: center;
+    padding: 2px 20px 14px;
   }
   .ghero-script {
-    position: relative;
-    z-index: 3;
     font-family: var(--font-script);
-    font-size: 46px;
+    font-size: 44px;
     font-weight: 700;
     color: var(--color-coral);
-    line-height: 1.05;
+    line-height: 1;
     transform: rotate(-2deg);
     display: inline-block;
     text-shadow: 2px 2px 0 var(--color-yellow-soft);
-    margin: 10px 0 0;
-    max-width: 55%;
+    margin: 0;
   }
   .ghero-jp {
-    position: relative;
-    z-index: 3;
     font-family: var(--font-body);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.42em;
+    letter-spacing: 0.4em;
     color: var(--color-ink-soft);
-    margin-top: 12px;
+    margin-top: 8px;
   }
-  .ghero-sub {
+
+  /* 大きなヒーロー写真（全幅・クロスフェード＋ケンバーンズ） */
+  .ghero2 {
     position: relative;
-    z-index: 3;
-    font-size: 11.5px;
-    line-height: 1.75;
-    color: var(--color-ink-soft);
-    margin: 10px 0 0;
-    max-width: 44%;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--color-card-alt);
   }
-  /* ロゴのキラキラを引用したアクセント（ロゴ由来の4色） */
-  .ghero-spark {
+  .gh2-slide {
     position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.8s ease;
+    cursor: pointer;
+  }
+  .gh2-slide.show { opacity: 1; }
+  .gh2-slide.kb1 { animation: gh2-kba 16s ease-in-out infinite alternate; }
+  .gh2-slide.kb2 { animation: gh2-kbb 16s ease-in-out infinite alternate; }
+  @keyframes gh2-kba { from { transform: scale(1); } to { transform: scale(1.12) translate(-1.5%, 1.5%); } }
+  @keyframes gh2-kbb { from { transform: scale(1.12) translate(1.5%, -1%); } to { transform: scale(1); } }
+  .ghero2::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%);
     z-index: 2;
-    font-size: 15px;
-    line-height: 1;
     pointer-events: none;
   }
-  .ghero-spark.gs1 { top: 24px; left: 43%; color: var(--color-coral); transform: rotate(12deg); }
-  .ghero-spark.gs2 { top: 116px; left: 8px; color: var(--color-teal); font-size: 13px; }
-  .ghero-spark.gs3 { bottom: 88px; left: 58%; color: var(--color-yellow); font-size: 12px; transform: rotate(-8deg); }
-  .ghero-spark.gs4 { bottom: 30px; left: 12px; color: var(--color-purple); font-size: 14px; }
+  .gh2-word {
+    position: absolute;
+    left: 18px;
+    top: 46%;
+    z-index: 3;
+    color: #fff;
+    font-family: var(--font-script);
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    transform: rotate(-2deg);
+    text-shadow: 0 2px 14px rgba(0,0,0,0.32);
+    pointer-events: none;
+  }
+  .gh2-word small {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    margin-top: 10px;
+    opacity: 0.92;
+  }
+  .gh2-cap {
+    position: absolute;
+    left: 18px;
+    bottom: 14px;
+    z-index: 3;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    pointer-events: none;
+  }
 
-  /* 2カラムの互い違いマソンリー（雑誌のコラージュ風） */
-  .gallery-grid {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 20px 14px 10px;
+  /* すき間2pxのタイトなグリッド（3枚行と大小2枚行の繰り返し） */
+  .gallery-grid { padding-bottom: 8px; }
+  .gg3, .gg2 {
+    display: grid;
+    gap: 2px;
+    margin-top: 2px;
   }
-  .gallery-col {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .gallery-col + .gallery-col { margin-top: 30px; }
-  .gallery-item {
+  .gg3 { grid-template-columns: 1fr 1fr 1fr; }
+  .gg2 { grid-template-columns: 3fr 2fr; }
+  .gg2.rev { grid-template-columns: 2fr 3fr; }
+  .gg-cell {
+    aspect-ratio: 1;
     overflow: hidden;
-    border-radius: 14px;
     background: var(--color-card-alt);
-    position: relative;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 3px 12px rgba(90, 74, 42, 0.08);
   }
-  .gallery-item img {
+  .gg2 .gg-cell { aspect-ratio: auto; height: 46vw; max-height: 330px; }
+  .gg-cell img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    /* 色味は各画像に焼き込み済み。表示側はごく軽く整えるのみ */
-    filter: saturate(1.0) contrast(1.005);
     opacity: 0;
-    transform: scale(1.02);
-    transition: opacity 0.5s ease, transform 0.4s ease;
+    transform: translateY(16px) scale(1.03);
+    transition: opacity 0.9s ease, transform 0.9s ease;
   }
-  .gallery-item img.loaded { opacity: 1; transform: scale(1); }
-  .gallery-item:active img.loaded { transform: scale(1.05); }
+  /* ふんわり出現（スクロールで画面に入ったら） */
+  .gg-cell img.in {
+    opacity: 1;
+    transform: translateY(0) scale(1.03);
+  }
+  /* 表示中もごくゆっくり寄り続ける */
+  .gg-cell img.in.drift { animation: gg-drift var(--dur, 14s) ease-in-out var(--dly, 0s) infinite alternate; }
+  @keyframes gg-drift {
+    from { transform: translateY(0) scale(1.03); }
+    to   { transform: translateY(0) scale(1.12) translate(var(--dx, -1.5%), var(--dy, 1%)); }
+  }
   .gallery-caption {
     padding: 0 20px 8px;
     text-align: center;
@@ -4467,26 +4487,25 @@
       <div></div>
     </div>
 
-    <div class="ghero">
-      <img class="ghero-photo ghero-photo-a" id="ghero-pa" alt="フェスの様子">
-      <img class="ghero-photo ghero-photo-b" id="ghero-pb" alt="フェスの様子">
-      <span class="ghero-spark gs1">✦</span>
-      <span class="ghero-spark gs2">＋</span>
-      <span class="ghero-spark gs3">✦</span>
-      <span class="ghero-spark gs4">＋</span>
+    <div class="ghero-head">
       <h1 class="ghero-script">Photo Gallery</h1>
       <div class="ghero-jp">ギャラリー</div>
-      <p class="ghero-sub">各地で開催されるフェスの様子を、お届けします！</p>
+    </div>
+
+    <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
+    <div class="ghero2" id="ghero2">
+      <div class="gh2-word">Summer<small>YOUTH ACTION FES 2026</small></div>
+      <div class="gh2-cap">みんなの笑顔、あつめました</div>
     </div>
 
     <div class="gallery-grid" id="gallery-grid" aria-label="フェスの写真ギャラリー">
-      <!-- 写真は JS(renderGallery) で毎回ランダムに差し込まれます -->
+      <!-- 写真は JS(renderGallery) で固定の並びで差し込まれます -->
     </div>
 
     <div class="gallery-foot">
       <div class="gallery-foot-mark">♡</div>
       <p class="gallery-foot-title">みんなでつくるギャラリー</p>
-      <p class="gallery-foot-msg">各地のフェスで生まれた、たくさんの笑顔。<br>開くたびに順番が変わります。</p>
+      <p class="gallery-foot-msg">各地のフェスで生まれた、たくさんの笑顔。<br>写真はこれからも増えていきます。</p>
     </div>
   </div>
 
@@ -6168,69 +6187,106 @@
     }
   }
 
-  /* ====================== PHOTO GALLERY ====================== */
-  // assets/gallery/g001.jpg 〜 gNNN.jpg（連番）
-  var GALLERY_COUNT = 167;
-  var GALLERY_PHOTOS = Array.from({ length: GALLERY_COUNT }, function (_, i) {
-    return 'assets/gallery/g' + String(i + 1).padStart(3, '0') + '.jpg';
-  });
-  var galleryOrder = [];   // 現在表示中の並び順（ライトボックスと共有）
+  /* ====================== PHOTO GALLERY (写真固定・選定済み) ====================== */
+  function gsrc(n) { return 'assets/gallery/' + n + '.jpg'; }
 
-  function shuffle(arr) {
-    var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
+  // ヒーロー: 人が切れないことを確認済みの3枚（クロスフェード）
+  var GALLERY_HERO = ['g003', 'g148', 'g144'].map(gsrc);
 
-  // タイルの縦横比パターン（高さが揃わないことでコラージュ風の互い違いが生まれる）
-  var GALLERY_TILE_RATIOS = ['4 / 5', '1 / 1', '3 / 4', '1 / 1', '4 / 5', '7 / 5'];
+  // グリッド: 3枚行(t3) と 大小2枚行(t2/t2r) の繰り返し。並びは固定
+  var GALLERY_ROWS = [
+    { t: 't3',  p: ['g157', 'g007', 'g124'] },
+    { t: 't2',  p: ['g143', 'g036'] },
+    { t: 't3',  p: ['g055', 'g023', 'g085'] },
+    { t: 't2r', p: ['g037', 'g149'] },
+    { t: 't3',  p: ['g125', 'g008', 'g067'] },
+    { t: 't2',  p: ['g099', 'g070'] },
+    { t: 't3',  p: ['g018', 'g129', 'g005'] },
+    { t: 't2r', p: ['g015', 'g113'] },
+    { t: 't3',  p: ['g044', 'g060', 'g132'] },
+    { t: 't2',  p: ['g163', 'g045'] },
+    { t: 't3',  p: ['g102', 'g033', 'g147'] },
+    { t: 't2r', p: ['g024', 'g167'] },
+    { t: 't3',  p: ['g162', 'g006', 'g140'] }
+  ];
+
+  // ライトボックス用の通し順 = ヒーロー3枚 + グリッドの並び
+  var galleryOrder = GALLERY_HERO.concat(
+    GALLERY_ROWS.reduce(function (acc, r) { return acc.concat(r.p.map(gsrc)); }, [])
+  );
+
+  var galleryRendered = false;
+  var galleryIO = null;
 
   function renderGallery() {
+    if (galleryRendered) return;
     var grid = document.getElementById('gallery-grid');
-    if (!grid) return;
-    galleryOrder = shuffle(GALLERY_PHOTOS);
+    var hero = document.getElementById('ghero2');
+    if (!grid || !hero) return;
+    galleryRendered = true;
 
-    // ヒーローのコラージュ写真（並び順の末尾から採用してグリッド上部との重複を避ける）
-    var pa = document.getElementById('ghero-pa');
-    var pb = document.getElementById('ghero-pb');
-    if (pa && galleryOrder.length > 1) {
-      var ia = galleryOrder.length - 1;
-      pa.src = galleryOrder[ia];
-      pa.onclick = function () { openLightbox(ia); };
-    }
-    if (pb && galleryOrder.length > 2) {
-      var ib = galleryOrder.length - 2;
-      pb.src = galleryOrder[ib];
-      pb.onclick = function () { openLightbox(ib); };
-    }
-
-    grid.innerHTML = '';
-    var colA = document.createElement('div');
-    var colB = document.createElement('div');
-    colA.className = 'gallery-col';
-    colB.className = 'gallery-col';
-    galleryOrder.forEach(function (src, idx) {
-      var cell = document.createElement('div');
-      cell.className = 'gallery-item';
-      cell.style.aspectRatio = GALLERY_TILE_RATIOS[idx % GALLERY_TILE_RATIOS.length];
-      cell.setAttribute('data-idx', idx);
-      var img = document.createElement('img');
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.alt = 'フェスの様子';
-      img.addEventListener('load', function () { img.classList.add('loaded'); });
-      img.src = src;
-      // 既にキャッシュ済みで load が発火しない場合の保険
-      if (img.complete) img.classList.add('loaded');
-      cell.appendChild(img);
-      cell.addEventListener('click', function () { openLightbox(idx); });
-      (idx % 2 === 0 ? colA : colB).appendChild(cell);
+    /* ---- ヒーロー: 固定3枚を6秒ごとにクロスフェード ---- */
+    var slides = [document.createElement('img'), document.createElement('img')];
+    slides.forEach(function (s, si) {
+      s.className = 'gh2-slide ' + (si === 0 ? 'kb1' : 'kb2');
+      s.alt = 'フェスの様子';
+      hero.insertBefore(s, hero.firstChild);
     });
-    grid.appendChild(colA);
-    grid.appendChild(colB);
+    var heroIdx = 0, activeSlide = 0;
+    slides[0].src = GALLERY_HERO[0];
+    slides[0].classList.add('show');
+    slides.forEach(function (s) {
+      s.addEventListener('click', function () { openLightbox(heroIdx); });
+    });
+    setInterval(function () {
+      heroIdx = (heroIdx + 1) % GALLERY_HERO.length;
+      var nxt = 1 - activeSlide;
+      slides[nxt].src = GALLERY_HERO[heroIdx];
+      slides[nxt].classList.add('show');
+      slides[activeSlide].classList.remove('show');
+      activeSlide = nxt;
+    }, 6000);
+
+    /* ---- グリッド: ふんわり出現 → ごく遅いズームで動き続ける ---- */
+    galleryIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var img = en.target;
+          setTimeout(function () { img.classList.add('in'); }, (img.dataset.stag || 0) * 90);
+          setTimeout(function () { img.classList.add('drift'); }, 1100);
+          galleryIO.unobserve(img);
+        }
+      });
+    }, { rootMargin: '40px' });
+
+    var idx = GALLERY_HERO.length;
+    GALLERY_ROWS.forEach(function (row) {
+      var div = document.createElement('div');
+      div.className = row.t === 't3' ? 'gg3' : ('gg2' + (row.t === 't2r' ? ' rev' : ''));
+      row.p.forEach(function (name, c) {
+        var cell = document.createElement('div');
+        cell.className = 'gg-cell';
+        var img = document.createElement('img');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.alt = 'フェスの様子';
+        img.src = gsrc(name);
+        img.dataset.stag = c;
+        // 写真ごとに速さ・方向を変えて自然なゆらぎに
+        img.style.setProperty('--dur', (11 + (idx % 7)) + 's');
+        img.style.setProperty('--dly', ((idx % 3) * 0.8) + 's');
+        img.style.setProperty('--dx', (idx % 2) ? '-1.5%' : '1.5%');
+        img.style.setProperty('--dy', (idx % 3) ? '1%' : '-1%');
+        cell.appendChild(img);
+        (function (i) {
+          cell.addEventListener('click', function () { openLightbox(i); });
+        })(idx);
+        galleryIO.observe(img);
+        div.appendChild(cell);
+        idx++;
+      });
+      grid.appendChild(div);
+    });
   }
 
   /* ---- Lightbox ---- */
