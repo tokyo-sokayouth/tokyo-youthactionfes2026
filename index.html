@@ -1221,10 +1221,9 @@
     cursor: pointer;
   }
   .gh2-slide.show { opacity: 1; }
-  .gh2-slide.kb1 { animation: gh2-kba 16s ease-in-out infinite alternate; }
-  .gh2-slide.kb2 { animation: gh2-kbb 16s ease-in-out infinite alternate; }
-  @keyframes gh2-kba { from { transform: scale(1); } to { transform: scale(1.12) translate(-1.5%, 1.5%); } }
-  @keyframes gh2-kbb { from { transform: scale(1.12) translate(1.5%, -1%); } to { transform: scale(1); } }
+  /* 表示のたびに同じ動きで最初から: ゆっくり寄るだけの一定リズム */
+  .gh2-slide.kbzoom { animation: gh2-zoom 8.5s ease-out forwards; }
+  @keyframes gh2-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
   /* すき間2pxのタイトなグリッド（3枚行・大小2枚行・全幅1枚行） */
   .gallery-grid { padding-bottom: 28px; }
   .gg3, .gg2, .gg1 {
@@ -6149,28 +6148,47 @@
     if (!grid || !hero) return;
     galleryRendered = true;
 
-    /* ---- ヒーロー: 固定3枚を6秒ごとにクロスフェード ---- */
+    /* ---- ヒーロー: 固定スライドを6秒ごとにクロスフェード ---- */
+    // 全画像を事前読み込み（切替時に一瞬白く抜けるのを防ぐ）
+    GALLERY_HERO.forEach(function (h) { var im = new Image(); im.src = h.src; });
+
     var slides = [document.createElement('img'), document.createElement('img')];
-    slides.forEach(function (s, si) {
-      s.className = 'gh2-slide ' + (si === 0 ? 'kb1' : 'kb2');
+    slides.forEach(function (s) {
+      s.className = 'gh2-slide';
       s.alt = 'フェスの様子';
       hero.insertBefore(s, hero.firstChild);
     });
+
+    // 表示のたびにズームを最初から再生 → 毎回同じリズム
+    function revealSlide(s) {
+      s.classList.remove('kbzoom');
+      void s.offsetWidth; /* reflowでアニメーションをリセット */
+      s.classList.add('kbzoom');
+      s.classList.add('show');
+    }
+
     var heroIdx = 0, activeSlide = 0;
     slides[0].src = GALLERY_HERO[0].src;
     slides[0].style.objectPosition = GALLERY_HERO[0].pos;
-    slides[0].classList.add('show');
+    revealSlide(slides[0]);
+
     // タップで拡大（動き続けるスライドではなく静止したコンテナ側で受ける）
     hero.style.cursor = 'pointer';
     hero.addEventListener('click', function () { openLightbox(heroIdx); });
+
     setInterval(function () {
       heroIdx = (heroIdx + 1) % GALLERY_HERO.length;
       var nxt = 1 - activeSlide;
-      slides[nxt].src = GALLERY_HERO[heroIdx].src;
-      slides[nxt].style.objectPosition = GALLERY_HERO[heroIdx].pos;
-      slides[nxt].classList.add('show');
-      slides[activeSlide].classList.remove('show');
-      activeSlide = nxt;
+      var s = slides[nxt];
+      s.src = GALLERY_HERO[heroIdx].src;
+      s.style.objectPosition = GALLERY_HERO[heroIdx].pos;
+      var reveal = function () {
+        revealSlide(s);
+        slides[activeSlide].classList.remove('show');
+        activeSlide = nxt;
+      };
+      // デコード完了を待ってからフェード（読み込み中の白抜け防止）
+      if (s.decode) { s.decode().then(reveal).catch(reveal); } else { reveal(); }
     }, 6000);
 
     /* ---- グリッド: ふんわり出現 → ごく遅いズームで動き続ける ---- */
