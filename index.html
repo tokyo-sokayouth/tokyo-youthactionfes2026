@@ -1201,15 +1201,6 @@
     text-shadow: 2px 2px 0 var(--color-yellow-soft);
     margin: 0;
   }
-  .ghero-jp {
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.4em;
-    color: var(--color-ink-soft);
-    margin-top: 8px;
-  }
-
   /* 大きなヒーロー写真（全幅・クロスフェード＋ケンバーンズ） */
   .ghero2 {
     position: relative;
@@ -1233,59 +1224,15 @@
   .gh2-slide.kb2 { animation: gh2-kbb 16s ease-in-out infinite alternate; }
   @keyframes gh2-kba { from { transform: scale(1); } to { transform: scale(1.12) translate(-1.5%, 1.5%); } }
   @keyframes gh2-kbb { from { transform: scale(1.12) translate(1.5%, -1%); } to { transform: scale(1); } }
-  .ghero2::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.38) 100%);
-    z-index: 2;
-    pointer-events: none;
-  }
-  .gh2-word {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    text-align: center;
-    color: #fff;
-    font-family: var(--font-script);
-    font-weight: 700;
-    font-size: 52px;
-    line-height: 1;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.38);
-    pointer-events: none;
-  }
-  .gh2-word small {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.24em;
-    margin-top: 9px;
-    opacity: 0.92;
-  }
-  .gh2-cap {
-    position: absolute;
-    left: 18px;
-    bottom: 14px;
-    z-index: 3;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
-    pointer-events: none;
-  }
-
-  /* すき間2pxのタイトなグリッド（3枚行と大小2枚行の繰り返し） */
-  .gallery-grid { padding-bottom: 8px; }
-  .gg3, .gg2 {
+  /* すき間2pxのタイトなグリッド（3枚行・大小2枚行・全幅1枚行） */
+  .gallery-grid { padding-bottom: 28px; }
+  .gg3, .gg2, .gg1 {
     display: grid;
     gap: 2px;
     margin-top: 2px;
   }
   .gg3 { grid-template-columns: 1fr 1fr 1fr; }
+  .gg1 { grid-template-columns: 1fr; }
   .gg2 { grid-template-columns: 3fr 2fr; }
   .gg2.rev { grid-template-columns: 2fr 3fr; }
   .gg-cell {
@@ -1324,34 +1271,6 @@
     line-height: 1.6;
   }
   .gallery-caption p { margin: 0; }
-
-  /* ---- Gallery footer ---- */
-  .gallery-foot {
-    text-align: center;
-    padding: 18px 24px 40px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-  .gallery-foot-mark {
-    font-size: 22px;
-    color: var(--color-coral);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .gallery-foot-title {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-ink);
-    letter-spacing: 0.08em;
-    margin: 0 0 6px;
-  }
-  .gallery-foot-msg {
-    font-size: 11.5px;
-    color: var(--color-ink-soft);
-    line-height: 1.7;
-    margin: 0;
-  }
 
   /* ---- Photo lightbox ---- */
   .glb {
@@ -4490,24 +4409,15 @@
 
     <div class="ghero-head">
       <h1 class="ghero-script">Photo Gallery</h1>
-      <div class="ghero-jp">ギャラリー</div>
     </div>
 
     <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
-    <div class="ghero2" id="ghero2">
-      <div class="gh2-word">Summer<small>YOUTH ACTION FES 2026</small></div>
-      <div class="gh2-cap">みんなの笑顔、あつめました</div>
-    </div>
+    <div class="ghero2" id="ghero2"></div>
 
     <div class="gallery-grid" id="gallery-grid" aria-label="フェスの写真ギャラリー">
       <!-- 写真は JS(renderGallery) で固定の並びで差し込まれます -->
     </div>
 
-    <div class="gallery-foot">
-      <div class="gallery-foot-mark">♡</div>
-      <p class="gallery-foot-title">みんなでつくるギャラリー</p>
-      <p class="gallery-foot-msg">各地のフェスで生まれた、たくさんの笑顔。<br>写真はこれからも増えていきます。</p>
-    </div>
   </div>
 
   <!-- ====================== PHOTO LIGHTBOX ====================== -->
@@ -6197,15 +6107,17 @@
 
   // グリッド: 選抜写真を固定順で。インパクトのある人物・動きを上位に、
   // 小物・ディテールカットを後半に配置。3枚行(t3)と大小2枚行(t2/t2r)の繰り返し
+  // t1 = 全幅・元の縦横比のまま表示（端が切れない）。arで比率を指定
   var GALLERY_ROWS = [
     { t: 't3',  p: ['s4947', 's3584', 's5883'] },
-    { t: 't2',  p: ['s5033', 's6258'] },
+    { t: 't1',  p: ['s5033'], ar: '3 / 2' },
     { t: 't3',  p: ['s3546', 's4599', 's3696'] },
     { t: 't2r', p: ['s4664', 's4294'] },
     { t: 't3',  p: ['s4550', 's3606', 's4820'] },
-    { t: 't2',  p: ['s5443', 's4174'] },
-    { t: 't3',  p: ['s5834', 's3593', 's6480'] },
-    { t: 't2r', p: ['s3875', 's6110'] },
+    { t: 't1',  p: ['s5443'], ar: '1200 / 846' },
+    { t: 't2',  p: ['s6258', 's4174'] },
+    { t: 't3',  p: ['s5834', 's3593', 's6110'] },
+    { t: 't2r', p: ['s3875', 's6480'] },
     { t: 't3',  p: ['s6203', 's4568', 's5940'] },
     { t: 't2',  p: ['s3557', 's4827'] },
     { t: 't3',  p: ['s3620', 's4745', 's4634'] },
@@ -6238,9 +6150,9 @@
     var heroIdx = 0, activeSlide = 0;
     slides[0].src = GALLERY_HERO[0];
     slides[0].classList.add('show');
-    slides.forEach(function (s) {
-      s.addEventListener('click', function () { openLightbox(heroIdx); });
-    });
+    // タップで拡大（動き続けるスライドではなく静止したコンテナ側で受ける）
+    hero.style.cursor = 'pointer';
+    hero.addEventListener('click', function () { openLightbox(heroIdx); });
     setInterval(function () {
       heroIdx = (heroIdx + 1) % GALLERY_HERO.length;
       var nxt = 1 - activeSlide;
@@ -6265,10 +6177,13 @@
     var idx = GALLERY_HERO.length;
     GALLERY_ROWS.forEach(function (row) {
       var div = document.createElement('div');
-      div.className = row.t === 't3' ? 'gg3' : ('gg2' + (row.t === 't2r' ? ' rev' : ''));
+      div.className = row.t === 't3' ? 'gg3'
+                    : row.t === 't1' ? 'gg1'
+                    : ('gg2' + (row.t === 't2r' ? ' rev' : ''));
       row.p.forEach(function (name, c) {
         var cell = document.createElement('div');
         cell.className = 'gg-cell';
+        if (row.ar) cell.style.aspectRatio = row.ar;  // t1: 元の縦横比のまま（端が切れない）
         var img = document.createElement('img');
         img.loading = 'lazy';
         img.decoding = 'async';
