@@ -4401,7 +4401,7 @@
     <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
     <div class="ghero2" id="ghero2"></div>
 
-    <div class="gallery-grid" id="gallery-grid" aria-label="フェスの写真ギャラリー">
+    <div class="gallery-grid" id="gallery-grid" aria-label="YAF-Gallery">
       <!-- 写真は JS(renderGallery) で固定の並びで差し込まれます -->
     </div>
 
@@ -4413,7 +4413,7 @@
     <button class="glb-nav glb-prev" id="glb-prev" type="button" aria-label="前へ">&#8249;</button>
     <button class="glb-nav glb-next" id="glb-next" type="button" aria-label="次へ">&#8250;</button>
     <div class="glb-stage" id="glb-stage">
-      <img class="glb-img" id="glb-img" alt="フェスの写真">
+      <img class="glb-img" id="glb-img" alt="YAF-Gallery">
     </div>
   </div>
 
@@ -6152,7 +6152,7 @@
     var slides = [document.createElement('img'), document.createElement('img')];
     slides.forEach(function (s) {
       s.className = 'gh2-slide';
-      s.alt = 'フェスの様子';
+      s.alt = 'YAF-Gallery';
       hero.insertBefore(s, hero.firstChild);
     });
 
@@ -6213,7 +6213,7 @@
         var img = document.createElement('img');
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.alt = 'フェスの様子';
+        img.alt = 'YAF-Gallery';
         img.src = gsrc(name);
         img.dataset.stag = c;
         // 写真ごとに速さ・方向を変えて自然なゆらぎに
