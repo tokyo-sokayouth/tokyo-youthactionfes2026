@@ -1233,6 +1233,28 @@
   }
   .gg3 { grid-template-columns: 1fr 1fr 1fr; }
   .gg1 { grid-template-columns: 1fr; }
+
+  /* 全幅スライドショー枠（グリッド中盤） */
+  .ggslide {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 2px;
+    background: var(--color-card-alt);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ggslide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+  }
+  .ggslide img.show { opacity: 1; }
+  .ggslide img.kbzoom { animation: gh2-zoom 8.5s ease-out forwards; }
   .gg2 { grid-template-columns: 3fr 2fr; }
   .gg2.rev { grid-template-columns: 2fr 3fr; }
   .gg-cell {
@@ -6125,7 +6147,8 @@
     { t: 't3',  p: ['s3875', 's3557', 's4827'] },
     // 男性陣のフォトポイント集合を全幅で
     { t: 't1',  p: ['n9521'], ar: '3 / 2' },
-    { t: 't1',  p: ['s5033'], ar: '3 / 2' },
+    // 中盤の全幅枠はスライドショー（ステージの盛り上がりを数枚で見せる）
+    { t: 'slide', p: ['n7104', 's5033'], ar: '3 / 2' },
     // 端が切れないよう全幅・元比率で大きく配置
     { t: 't1',  p: ['s4550'], ar: '3 / 2' },
     { t: 't3',  p: ['s4294', 'n9138', 'n2234'] },
@@ -6210,6 +6233,42 @@
 
     var idx = GALLERY_HERO.length;
     GALLERY_ROWS.forEach(function (row) {
+      // 全幅スライドショー枠: 数枚を6秒ごとにクロスフェード
+      if (row.t === 'slide') {
+        var box = document.createElement('div');
+        box.className = 'ggslide';
+        if (row.ar) box.style.aspectRatio = row.ar;
+        var baseIdx = idx;
+        var slideSrcs = row.p.map(gsrc);
+        slideSrcs.forEach(function (s) { var im = new Image(); im.src = s; });  // 事前読み込み
+        var sl = [document.createElement('img'), document.createElement('img')];
+        sl.forEach(function (s) { s.alt = 'YAF-Gallery'; box.appendChild(s); });
+        var si = 0, act = 0;
+        function reveal(el) {
+          el.classList.remove('kbzoom');
+          void el.offsetWidth;
+          el.classList.add('kbzoom');
+          el.classList.add('show');
+        }
+        sl[0].src = slideSrcs[0];
+        reveal(sl[0]);
+        box.addEventListener('click', function () { openLightbox(baseIdx + si); });
+        setInterval(function () {
+          si = (si + 1) % slideSrcs.length;
+          var nx = 1 - act, el = sl[nx];
+          el.src = slideSrcs[si];
+          var go = function () {
+            reveal(el);
+            sl[act].classList.remove('show');
+            act = nx;
+          };
+          if (el.decode) { el.decode().then(go).catch(go); } else { go(); }
+        }, 6000);
+        grid.appendChild(box);
+        idx += row.p.length;
+        return;
+      }
+
       var div = document.createElement('div');
       div.className = row.t === 't3' ? 'gg3'
                     : row.t === 't1' ? 'gg1'
