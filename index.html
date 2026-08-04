@@ -1209,36 +1209,34 @@
     color: var(--color-ink-soft);
     margin: 12px 0 0;
   }
-  /* BGMボタン（初期は停止。押したときだけ鳴る） */
+  /* BGMボタン: 右下に控えめに固定。初期は停止、押したときだけ鳴る */
   .gbgm-btn {
-    display: inline-flex;
+    position: fixed;
+    right: 14px;
+    bottom: calc(var(--nav-h, 62px) + 14px);
+    z-index: 60;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
     align-items: center;
-    gap: 7px;
-    margin: 14px 0 2px;
-    padding: 7px 15px 7px 12px;
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-card);
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(6px);
     color: var(--color-ink-soft);
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    opacity: 0.55;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition: opacity 0.2s ease, color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
   }
-  .gbgm-btn:active { transform: scale(0.97); }
-  .gbgm-btn.playing {
-    color: var(--color-coral);
-    border-color: var(--color-coral);
-    background: var(--color-coral-soft);
-  }
-  .gbgm-ico { display: inline-flex; line-height: 0; }
+  .gbgm-btn:active { transform: scale(0.94); }
+  .gbgm-btn.playing { opacity: 1; color: var(--color-coral); }
   .gbgm-ico-on { display: none; }
   .gbgm-btn.playing .gbgm-ico-off { display: none; }
-  .gbgm-btn.playing .gbgm-ico-on { display: inline; }
+  .gbgm-btn.playing .gbgm-ico-on { display: block; }
   /* 大きなヒーロー写真（全幅・クロスフェード＋ケンバーンズ） */
   .ghero2 {
     position: relative;
@@ -4457,23 +4455,21 @@
     <div class="ghero-head">
       <h1 class="ghero-script">Photo Gallery</h1>
       <p class="ghero-lead">心おどる瞬間。<br>各地のフェスの様子をお届けします！</p>
-      <!-- BGM: 初期は停止。ユーザーが押したときだけ再生する -->
-      <button class="gbgm-btn" id="gbgm-btn" type="button" aria-pressed="false">
-        <span class="gbgm-ico" aria-hidden="true">
-          <svg class="gbgm-ico-off" viewBox="0 0 24 24" width="15" height="15">
-            <path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-          </svg>
-          <svg class="gbgm-ico-on" viewBox="0 0 24 24" width="15" height="15">
-            <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
-            <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
-          </svg>
-        </span>
-        <span class="gbgm-label" id="gbgm-label">BGMを再生する</span>
-      </button>
-      <audio id="gbgm-audio" src="assets/bgm-youth-action-fes.mp3" loop preload="none"></audio>
     </div>
+
+    <!-- BGM: 目立たない小さなボタン。初期は停止、押したときだけ再生 -->
+    <button class="gbgm-btn" id="gbgm-btn" type="button" aria-pressed="false" aria-label="BGMを再生する">
+      <svg class="gbgm-ico-off" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+        <path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="gbgm-ico-on" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+        <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+        <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+      </svg>
+    </button>
+    <audio id="gbgm-audio" src="assets/bgm-youth-action-fes.mp3" loop preload="none"></audio>
 
     <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
     <div class="ghero2" id="ghero2"></div>
@@ -6348,7 +6344,6 @@
   (function initBgm() {
     var btn = document.getElementById('gbgm-btn');
     var audio = document.getElementById('gbgm-audio');
-    var label = document.getElementById('gbgm-label');
     if (!btn || !audio) return;
 
     audio.volume = 0;   // フェードインで始めるため無音から
@@ -6371,7 +6366,7 @@
     function setUi(playing) {
       btn.classList.toggle('playing', playing);
       btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
-      if (label) label.textContent = playing ? 'BGMを停止する' : 'BGMを再生する';
+      btn.setAttribute('aria-label', playing ? 'BGMを停止する' : 'BGMを再生する');
     }
 
     function stopBgm() {
