@@ -4460,21 +4460,6 @@
       <p class="ghero-lead">心おどる瞬間。<br>各地のフェスの様子をお届けします！</p>
     </div>
 
-    <!-- BGM: 目立たない小さなボタン。初期は停止、押したときだけ再生 -->
-    <button class="gbgm-btn" id="gbgm-btn" type="button" aria-pressed="false" aria-label="BGMを再生する">
-      <svg class="gbgm-ico-off" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
-        <path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-        <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <svg class="gbgm-ico-on" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
-        <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
-        <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
-      </svg>
-      <span class="gbgm-label" id="gbgm-label">BGM</span>
-    </button>
-    <audio id="gbgm-audio" src="assets/bgm-youth-action-fes.mp3" loop preload="none"></audio>
-
     <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
     <div class="ghero2" id="ghero2"></div>
 
@@ -5095,6 +5080,22 @@
       <button type="button" data-target="page-privacy">プライバシーポリシー</button>
     </div>
   </footer>
+
+  <!-- ====================== BGM（全ページ共通） ====================== -->
+  <!-- 初期は停止。ユーザーが押したときだけ再生し、ページを移動しても鳴り続ける -->
+  <button class="gbgm-btn" id="gbgm-btn" type="button" aria-pressed="false" aria-label="BGMを再生する">
+    <svg class="gbgm-ico-off" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <svg class="gbgm-ico-on" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+      <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+    </svg>
+    <span class="gbgm-label" id="gbgm-label">BGM</span>
+  </button>
+  <audio id="gbgm-audio" src="assets/bgm-youth-action-fes.mp3" loop preload="none"></audio>
 
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
   <nav class="bottom-nav">
@@ -6409,9 +6410,6 @@
       else stopBgm();
     });
 
-    // ギャラリー以外のページへ移動したら自動で停止（goToPageから呼ばれる）
-    window.stopGalleryBgm = stopBgm;
-
     // タブを離れたら停止（バックグラウンド再生を防ぐ）
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) stopBgm();
@@ -6513,11 +6511,9 @@
     }
 
     // ギャラリー: 初回訪問時に写真を描画
+    // （BGMは全ページ共通のため、ページを移動しても停止しない）
     if (pageId === 'page-event') {
       renderGallery();
-    } else if (window.stopGalleryBgm) {
-      // ギャラリーを離れたらBGMを停止
-      window.stopGalleryBgm();
     }
 
     // optional schedule-page tab pre-selection
