@@ -6353,54 +6353,31 @@
     if (!btn || !audio) return;
 
     var fadeTimer = null;
-    var gainNode = null;      // iOS Safari は audio.volume を無視するため Web Audio で制御
-    var audioCtx = null;
+    var TARGET_VOL = 0.5;
 
-    // Web Audio が使えれば GainNode 経由で音量を制御する
-    function setupGain() {
-      if (gainNode !== null || audioCtx === false) return;
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) { audioCtx = false; return; }
+    // audio.volume が実際に変更できるか（iOS Safari は無視する）
+    var volumeWorks = (function () {
       try {
-        audioCtx = new AC();
-        var src = audioCtx.createMediaElementSource(audio);
-        gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0;
-        src.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-      } catch (_) {
-        audioCtx = false;
-        gainNode = null;
-      }
-    }
+        audio.volume = 0.5;
+        var ok = Math.abs(audio.volume - 0.5) < 0.01;
+        audio.volume = 1;
+        return ok;
+      } catch (_) { return false; }
+    })();
 
-    function getVol() {
-      return gainNode ? gainNode.gain.value : audio.volume;
-    }
-    function setVol(v) {
-      v = Math.max(0, Math.min(1, v));
-      if (gainNode) gainNode.gain.value = v;
-      else { try { audio.volume = v; } catch (_) {} }
-    }
-
-    // フェード。音量制御が効かない環境でも必ず done を呼ぶ（停止できなくなるのを防ぐ）
-    function fadeTo(target, done) {
+    // フェードイン（音量制御が効く環境のみ。効かない場合は何もしない）
+    function fadeIn() {
       clearInterval(fadeTimer);
-      var steps = 0;
-      var prev = getVol();
+      if (!volumeWorks) return;
+      audio.volume = 0;
       fadeTimer = setInterval(function () {
-        steps++;
-        var cur = getVol();
-        var d = target - cur;
-        var stuck = steps >= 3 && cur === prev;   // 音量が変わらない環境
-        if (Math.abs(d) < 0.03 || stuck || steps > 25) {
-          setVol(target);
+        var next = audio.volume + TARGET_VOL * 0.12;
+        if (next >= TARGET_VOL) {
+          audio.volume = TARGET_VOL;
           clearInterval(fadeTimer);
-          if (done) done();
           return;
         }
-        prev = cur;
-        setVol(cur + d * 0.18);
+        audio.volume = next;
       }, 40);
     }
 
@@ -6411,20 +6388,18 @@
     }
 
     function stopBgm() {
+      clearInterval(fadeTimer);
       if (audio.paused) return;
+      audio.pause();          // フェードを待たずに確実に止める
       setUi(false);
-      fadeTo(0, function () { audio.pause(); });
-      // 保険: フェードが完了しなくても必ず止める
-      setTimeout(function () { if (!audio.paused) audio.pause(); }, 700);
     }
 
     function playBgm() {
-      setupGain();
-      if (audioCtx && audioCtx.resume) { try { audioCtx.resume(); } catch (_) {} }
-      setVol(0);                      // 無音から始める
+      clearInterval(fadeTimer);
+      if (volumeWorks) audio.volume = 0;   // 無音から始める
       var p = audio.play();
       if (p && p.catch) p.catch(function () { setUi(false); });
-      fadeTo(0.45);                   // ゆっくり立ち上げる（音量は控えめ）
+      fadeIn();               // 効く環境ではゆっくり立ち上げる
       setUi(true);
       gaEvent('bgm_play', { page_path: '/#page-event' });
     }
