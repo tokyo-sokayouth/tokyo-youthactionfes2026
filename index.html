@@ -4680,7 +4680,7 @@
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25T13:30" data-event-id="bunkyo" onclick="openEventDetail('bunkyo')">
           <div class="area-pill-name">文京区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25" data-event-id="machida" onclick="openEventDetail('machida')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25T13:00" data-event-id="machida" onclick="openEventDetail('machida')">
           <div class="area-pill-name">町田総区</div>
           <div class="area-pill-sub">町田市</div>
         </div>
@@ -5701,17 +5701,19 @@
     'machida': {
       region: 'tokyo-2nd',
       eyebrow: 'MACHIDA AREA',
-      eventNameJp: '町田ユースフェスタ',
-      eventNameEn: 'Machida Youth Festa',
-      sessions: [{ dateLabel: '2026年10月25日(日)' }],
+      eventNameJp: '町田ハロウィンフェス（まちハロ）',
+      eventNameEn: 'Machi Halloween Fes',
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: '13:00〜17:00' }],
       venue: '創価学会 町田平和会館',
-      address: '〒194-0037 東京都町田市木曽西4丁目35-45',
+      address: '東京都町田市木曽西4-12-31',
       kidsSpace: 'あり',
       allowExternal: true,
-      flyer: null,
+      flyer: 'assets/machida-flyer-sm.jpg',
+      flyers: ['assets/machida-flyer.jpg'],
+      flyersThumb: ['assets/machida-flyer-sm.jpg'],
       youtube: null,
-      linktree: null,
-      description: '今回は開催場所を例年の町田文化ではなく、町田平和で行います。比較的新しい会館のため、ご友人を含めて、ご家族でお越しいただけることを重視しています。【つながる】をテーマに、会館オープンデーとして、バンド演奏や参加者型企画、対話コーナーを設けます。'
+      linktree: 'https://sgi-t.github.io/machi-hello/',
+      description: '出会って、笑って、心地いい。Where smiles connect\n\n音楽やパフォーマンスで会場を盛り上げる【ステージパフォーマンス】、つくって楽しい体験ブースも充実の【ワークショップ】、お子さまが安心して遊べる【キッズスペース】をご用意しています。ご家族・ご友人お誘い合わせのうえ、お気軽にお越しください。'
     },
     'toshima': {
       region: 'tokyo23',
