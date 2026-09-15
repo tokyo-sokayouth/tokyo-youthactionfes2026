@@ -4636,17 +4636,8 @@
         <span class="month-label">OCTOBER</span>
       </div>
       <div class="area-grid">
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="toshima" onclick="openEventDetail('toshima')">
-          <div class="area-pill-name">豊島総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="sumida" onclick="openEventDetail('sumida')">
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-11T11:00" data-event-id="sumida" onclick="openEventDetail('sumida')">
           <div class="area-pill-name">墨田総区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-15" data-event-id="minato" onclick="openEventDetail('minato')">
-          <div class="area-pill-name">港区</div>
-        </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="arakawa" onclick="openEventDetail('arakawa')">
-          <div class="area-pill-name">荒川総区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="taito" onclick="openEventDetail('taito')">
           <div class="area-pill-name">台東区</div>
@@ -4660,9 +4651,15 @@
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18" data-event-id="meguro" onclick="openEventDetail('meguro')">
           <div class="area-pill-name">目黒総区</div>
         </div>
-        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-20" data-event-id="shintachikawa" onclick="openEventDetail('shintachikawa')">
+        <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-18T10:00" data-event-id="shintachikawa" onclick="openEventDetail('shintachikawa')">
           <div class="area-pill-name">新立川総区</div>
           <div class="area-pill-sub is-compact">立川市（4会場）<br>昭島市・日野市</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18T13:00" data-event-id="toshima" onclick="openEventDetail('toshima')">
+          <div class="area-pill-name">豊島総区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-18T13:00" data-event-id="arakawa" onclick="openEventDetail('arakawa')">
+          <div class="area-pill-name">荒川総区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="suginami" onclick="openEventDetail('suginami')">
           <div class="area-pill-name">杉並総区</div>
@@ -4677,15 +4674,18 @@
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25" data-event-id="itabashi" onclick="openEventDetail('itabashi')">
           <div class="area-pill-name">板橋総区</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25T13:30" data-event-id="bunkyo" onclick="openEventDetail('bunkyo')">
-          <div class="area-pill-name">文京区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25T10:00" data-event-id="minato" onclick="openEventDetail('minato')">
+          <div class="area-pill-name">港区</div>
+        </div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25T10:00" data-event-id="kita" onclick="openEventDetail('kita')">
+          <div class="area-pill-name">北総区</div>
         </div>
         <div class="area-pill has-detail" data-region="tokyo-2nd" data-event-date="2026-10-25T13:00" data-event-id="machida" onclick="openEventDetail('machida')">
           <div class="area-pill-name">町田総区</div>
           <div class="area-pill-sub">町田市</div>
         </div>
-        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-28" data-event-id="kita" onclick="openEventDetail('kita')">
-          <div class="area-pill-name">北総区</div>
+        <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-25T13:30" data-event-id="bunkyo" onclick="openEventDetail('bunkyo')">
+          <div class="area-pill-name">文京区</div>
         </div>
         <div class="area-pill" data-region="tokyo23" data-event-date="2026-10-31" data-event-id="adachi" onclick="openEventDetail('adachi')">
           <div class="area-pill-name">足立総区</div>
@@ -5392,7 +5392,7 @@
       eyebrow: 'ARAKAWA AREA',
       eventNameJp: '荒川学縁祭「アラフェス」',
       eventNameEn: 'ARAKAWA Festival',
-      sessions: [{ dateLabel: '2026年10月中旬（予定）' }],
+      sessions: [{ dateLabel: '2026年10月18日(日)', timeLabel: '13:00〜18:00' }],
       venue: '創価学会 荒川文化会館',
       address: '〒116-0001 東京都荒川区町屋7丁目10-4',
       kidsSpace: 'あり（親子で遊べるブースを設置）',
@@ -5470,21 +5470,26 @@
       eyebrow: 'SHIN-TACHIKAWA AREA',
       eventNameJp: 'SOKA YOUTH OPEN DAY 2026​（新立川総区 4会場）',
       eventNameEn: 'Soka Youth Open Day 2026',
-      sessions: [{ dateLabel: '2026年10月中下旬' }],
-      venue: '4会場 同時開催（創価学会 立川文化会館 / 立川平和会館 / 昭島文化会館 / 日野文化会館）',
+      sessions: [
+        { dateLabel: '2026年10月18日(日)', timeLabel: '昭島牧口区 10:00〜（昭島文化会館）' },
+        { dateLabel: '2026年10月25日(日)', timeLabel: '日野池田区 10:00〜12:00（日野文化会館）' },
+        { dateLabel: '2026年10月25日(日)', timeLabel: '立川戸田区 11:00〜15:00（立川平和会館）' },
+        { dateLabel: '2026年10月25日(日)', timeLabel: '立川池田区 13:30〜（立川文化会館）' }
+      ],
+      venue: '4会場で開催（創価学会 立川文化会館 / 立川平和会館 / 昭島文化会館 / 日野文化会館）',
       address: '昭島市・日野市・立川市',
       allowExternal: true,
       flyer: null,
       youtube: null,
       linktree: null,
-      description: '新立川総区では4会場で同時開催します。ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催し、その後は各会場全体をフル活用して、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。\n\n◆ 立川会場（文化会館）：創価学会 立川文化会館\n（東京都立川市羽衣町3-10-7）\n◆ 立川会場（平和会館）：創価学会 立川平和会館\n（東京都立川市上砂町3-12-20）\n◆ 昭島会場：創価学会 昭島文化会館\n（東京都昭島市拝島町2-9-20）\n◆ 日野会場：創価学会 日野文化会館\n（東京都日野市旭が丘3-6-1）'
+      description: '新立川総区では各区ごとに4会場で開催します。ご家族や地域の友人も楽しめる、学園祭のようなオープンなイベントです。冒頭にオープニングイベントを開催し、その後は各会場全体をフル活用して、「子ども向け・ファミリー向け企画」や「女性部（ヤング白ゆり・池田華陽会）企画」など、各部の特色を生かした企画を予定しています。\n\n◆ 昭島牧口区：10月18日(日) 10:00〜\n創価学会 昭島文化会館（東京都昭島市拝島町2-9-20）\n\n◆ 日野池田区：10月25日(日) 10:00〜12:00\n創価学会 日野文化会館（東京都日野市旭が丘3-6-1）\n\n◆ 立川戸田区：10月25日(日) 11:00〜15:00\n創価学会 立川平和会館（東京都立川市上砂町3-12-20）\n\n◆ 立川池田区：10月25日(日) 13:30〜\n創価学会 立川文化会館（東京都立川市羽衣町3-10-7）'
     },
     'shintachikawa-akishima': {
       region: 'tokyo-2nd',
       eyebrow: 'AKISHIMA',
-      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 昭島',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 昭島（昭島牧口区）',
       eventNameEn: 'Soka Youth Open Day - Akishima',
-      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      sessions: [{ dateLabel: '2026年10月18日(日)', timeLabel: '10:00〜' }],
       venue: '創価学会 昭島文化会館',
       address: '東京都昭島市拝島町2丁目9-20',
       allowExternal: true,
@@ -5496,9 +5501,9 @@
     'shintachikawa-hino': {
       region: 'tokyo-2nd',
       eyebrow: 'HINO',
-      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 日野',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 日野（日野池田区）',
       eventNameEn: 'Soka Youth Open Day - Hino',
-      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜12:00' }],
       venue: '創価学会 日野文化会館',
       address: '東京都日野市旭が丘3丁目6-1',
       allowExternal: true,
@@ -5510,9 +5515,9 @@
     'shintachikawa-tachikawa-bunka': {
       region: 'tokyo-2nd',
       eyebrow: 'TACHIKAWA',
-      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（文化会館）',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（立川池田区）',
       eventNameEn: 'Soka Youth Open Day - Tachikawa Bunka',
-      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: '13:30〜' }],
       venue: '創価学会 立川文化会館',
       address: '東京都立川市羽衣町3丁目10-7',
       allowExternal: true,
@@ -5524,9 +5529,9 @@
     'shintachikawa-tachikawa-heiwa': {
       region: 'tokyo-2nd',
       eyebrow: 'TACHIKAWA',
-      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（平和会館）',
+      eventNameJp: 'SOKA YOUTH OPEN DAY 2026 in 立川（立川戸田区）',
       eventNameEn: 'Soka Youth Open Day - Tachikawa Heiwa',
-      sessions: [{ dateLabel: '2026年10月中下旬' }],
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: '11:00〜15:00' }],
       venue: '創価学会 立川平和会館',
       address: '東京都立川市上砂町3丁目12-20',
       allowExternal: true,
@@ -5720,7 +5725,7 @@
       eyebrow: 'TOSHIMA AREA',
       eventNameJp: '豊島総区 ユースアクションフェス',
       eventNameEn: 'Toshima Youth Action Fes',
-      sessions: [{ dateLabel: '2026年10月中' }],
+      sessions: [{ dateLabel: '2026年10月18日(日)', timeLabel: '13:00〜17:00' }],
       venue: '創価学会 東京戸田記念講堂',
       address: '東京都豊島区巣鴨2-10-21',
       allowExternal: true,
@@ -5826,8 +5831,8 @@
       eyebrow: 'SUMIDA AREA',
       eventNameJp: '墨田 ユースアクションフェス',
       eventNameEn: 'Sumida Youth Action Fes',
-      sessions: [{ dateLabel: '2026年10月中' }],
-      venue: '創価学会 墨田文化会館（予定）',
+      sessions: [{ dateLabel: '2026年10月11日(日)', timeLabel: '11:00〜17:00' }],
+      venue: '創価学会 墨田文化会館',
       address: '東京都墨田区太平2-2-2',
       allowExternal: true,
       flyer: null,
@@ -5871,8 +5876,8 @@
       eyebrow: 'MINATO AREA',
       eventNameJp: '港ユースフェス',
       eventNameEn: 'Minato Youth Fes',
-      sessions: [{ dateLabel: '2026年10月' }],
-      venue: '創価学会 麻布文化会館（予定）',
+      sessions: [{ dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜18:00' }],
+      venue: '創価学会 麻布文化会館',
       address: '東京都港区南麻布3-21-15',
       allowExternal: true,
       flyer: null,
@@ -5971,7 +5976,10 @@
       eyebrow: 'KITA AREA',
       eventNameJp: '城北フェス',
       eventNameEn: 'Kita Fes',
-      sessions: [{ dateLabel: '2026年10月後半' }],
+      sessions: [
+        { dateLabel: '2026年10月25日(日)', timeLabel: '午前の部 10:00〜12:00' },
+        { dateLabel: '2026年10月25日(日)', timeLabel: '午後の部 13:00〜15:00' }
+      ],
       venue: '創価学会 城北池田記念講堂',
       address: '東京都北区東十条6丁目14-3',
       kidsSpace: 'あり',
