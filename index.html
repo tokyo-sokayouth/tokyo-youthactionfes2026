@@ -6764,7 +6764,7 @@
       setScheduleView(tabKey);
       // エリア指定で来た場合も、月指定がなければ開催が近い月まで送る
       if (!monthAnchor && !opts.isBack) {
-        scrollToScheduleMonth(currentScheduleMonth());
+        scrollToScheduleMonth(currentScheduleMonth(tabKey));
       }
     }
 
@@ -6807,9 +6807,9 @@
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     } else if (pageId === 'page-schedule') {
-      // 月指定がない場合は、開催が近い月まで自動で送る
+      // 月指定がない場合は、開催が近い月まで自動で送る（表示中のエリアで判定）
       window.scrollTo({ top: 0 });
-      scrollToScheduleMonth(currentScheduleMonth());
+      scrollToScheduleMonth(currentScheduleMonth(tabKey));
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -6894,17 +6894,21 @@
       if (tab.dataset.scheduleTab) {
         const key = tab.dataset.scheduleTab;
         setScheduleView(key);
-        // エリアを切り替えたときも、開催が近い月まで送る
-        scrollToScheduleMonth(currentScheduleMonth());
+        // エリアを切り替えたときも、そのエリア内で開催が近い月まで送る
+        scrollToScheduleMonth(currentScheduleMonth(key));
       }
     });
   });
 
   // 開催スケジュールを開いたとき最初に見せる月。
+  // region を渡すとそのエリア内で判定する（山梨のように開催が先のエリアでも空振りしない）。
   // 「今日以降で最も近い開催がある月」を返し、すべて終了していれば最後の月。
   // 日付データから判定するので、年が変わっても手直しは不要。
-  function currentScheduleMonth() {
-    const pills = [...document.querySelectorAll('#page-schedule .area-pill[data-event-date]')];
+  function currentScheduleMonth(region) {
+    const sel = (region && region !== 'all')
+      ? `#page-schedule .area-pill[data-event-date][data-region="${region}"]`
+      : '#page-schedule .area-pill[data-event-date]';
+    const pills = [...document.querySelectorAll(sel)];
     const today = new Date();
     const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
     let upcoming = null, last = null;
