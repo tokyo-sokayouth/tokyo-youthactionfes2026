@@ -1197,12 +1197,12 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* ============ GALLERY PAGE ============ */
-  .gallery-header {
+  /* ============ GALLERY PAGE (韓国アルバム風・写真固定) ============ */
+  .ghero-head {
     text-align: center;
-    padding: 4px 20px 18px;
+    padding: 2px 20px 14px;
   }
-  .gallery-eyebrow {
+  .ghero-script {
     font-family: var(--font-script);
     font-size: 44px;
     font-weight: 700;
@@ -1211,46 +1211,100 @@
     transform: rotate(-2deg);
     display: inline-block;
     text-shadow: 2px 2px 0 var(--color-yellow-soft);
-  }
-  .gallery-jp {
-    font-family: var(--font-body);
-    font-size: 13px;
-    color: var(--color-ink-soft);
-    letter-spacing: 0.35em;
-    margin: 6px 0 10px;
-    font-weight: 600;
-  }
-  .gallery-subtitle {
-    font-size: 12px;
-    color: var(--color-ink-soft);
-    line-height: 1.6;
     margin: 0;
   }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding: 0 16px 18px;
+  .ghero-lead {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 0.12em;
+    color: var(--color-ink-soft);
+    margin: 12px 0 0;
   }
-  .gallery-item {
+  /* 大きなヒーロー写真（全幅・クロスフェード＋ケンバーンズ） */
+  .ghero2 {
+    position: relative;
+    width: 100%;
+    /* 写真の元比率(3:2)のまま表示。端が切れない */
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--color-card-alt);
+  }
+  .gh2-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.8s ease;
+    cursor: pointer;
+  }
+  .gh2-slide.show { opacity: 1; }
+  /* 表示のたびに同じ動きで最初から: ゆっくり寄るだけの一定リズム */
+  .gh2-slide.kbzoom { animation: gh2-zoom 8.5s ease-out forwards; }
+  @keyframes gh2-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+  /* すき間2pxのタイトなグリッド（3枚行・大小2枚行・全幅1枚行） */
+  .gallery-grid { padding-bottom: 28px; }
+  .gg3, .gg2, .gg1 {
+    display: grid;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .gg3 { grid-template-columns: 1fr 1fr 1fr; }
+  .gg1 { grid-template-columns: 1fr; }
+
+  /* 全幅スライドショー枠（グリッド中盤） */
+  .ggslide {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 2px;
+    background: var(--color-card-alt);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ggslide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+  }
+  .ggslide img.show { opacity: 1; }
+  .ggslide img.kbzoom { animation: gh2-zoom 8.5s ease-out forwards; }
+  .gg2 { grid-template-columns: 3fr 2fr; }
+  .gg2.rev { grid-template-columns: 2fr 3fr; }
+  .gg-cell {
     aspect-ratio: 1;
     overflow: hidden;
-    border-radius: var(--radius-md);
     background: var(--color-card-alt);
-    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
-  .gallery-item.gallery-wide {
-    grid-column: span 2;
-    aspect-ratio: 16/9;
-  }
-  .gallery-item img {
+  .gg2 .gg-cell { aspect-ratio: auto; height: 46vw; max-height: 330px; }
+  .gg-cell img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    opacity: 0;
+    transform: translateY(16px) scale(1.03);
+    transition: opacity 0.9s ease, transform 0.9s ease;
   }
-  .gallery-item:active img { transform: scale(1.04); }
+  /* ふんわり出現（スクロールで画面に入ったら） */
+  .gg-cell img.in {
+    opacity: 1;
+    transform: translateY(0) scale(1.03);
+  }
+  /* 表示中もごくゆっくり寄り続ける */
+  .gg-cell img.in.drift { animation: gg-drift var(--dur, 14s) ease-in-out var(--dly, 0s) infinite alternate; }
+  @keyframes gg-drift {
+    from { transform: translateY(0) scale(1.03); }
+    to   { transform: translateY(0) scale(1.12) translate(var(--dx, -1.5%), var(--dy, 1%)); }
+  }
   .gallery-caption {
     padding: 0 20px 8px;
     text-align: center;
@@ -1259,77 +1313,77 @@
     line-height: 1.6;
   }
   .gallery-caption p { margin: 0; }
-  .gallery-coming-soon {
-    margin: 4px 16px 24px;
-    padding: 0;
-    background: var(--color-card);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    min-height: 420px;
-  }
-  .gallery-photo-grid {
-    position: absolute;
+
+  /* ---- Photo lightbox ---- */
+  .glb {
+    position: fixed;
     inset: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: 1fr;
-    gap: 2px;
-    z-index: 0;
+    z-index: 1000;
+    background: rgba(20, 16, 12, 0.94);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    touch-action: none;
   }
-  .gallery-photo {
-    background-size: cover;
-    background-position: center;
-    background-color: var(--color-card-alt);
+  .glb.open { display: flex; opacity: 1; }
+  .glb-stage {
+    max-width: 100vw;
+    max-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
   }
-  .gallery-coming-soon::after {
-    content: '';
+  .glb-img {
+    max-width: 96vw;
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .glb-close, .glb-nav {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255,250,242,0.55) 0%, rgba(255,250,242,0.8) 100%);
-    z-index: 1;
-  }
-  .gallery-overlay {
-    position: relative;
-    z-index: 2;
-    padding: 80px 24px 80px;
-    text-align: center;
-  }
-  .coming-soon-eyebrow {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    letter-spacing: 0.28em;
-    font-weight: 800;
+    background: rgba(255,255,255,0.12);
     color: #fff;
-    padding: 5px 14px;
-    background: var(--color-coral);
-    border-radius: 999px;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 8px rgba(214,72,57,0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease;
+    backdrop-filter: blur(4px);
   }
-  .coming-soon-title {
-    font-family: var(--font-script);
-    font-size: 64px;
-    font-weight: 700;
-    color: var(--color-ink);
+  .glb-close:hover, .glb-nav:hover { background: rgba(255,255,255,0.24); }
+  .glb-close {
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 26px;
     line-height: 1;
-    margin: 0 0 18px;
-    display: inline-block;
-    transform: rotate(-3deg);
-    text-shadow:
-      0 0 24px rgba(255,255,255,0.9),
-      4px 4px 0 rgba(255,193,77,0.55);
   }
-  .coming-soon-msg {
-    font-size: 13px;
-    color: var(--color-ink);
-    line-height: 1.9;
-    margin: 0;
-    font-weight: 500;
-    text-shadow: 0 0 12px rgba(255,255,255,0.85);
+  .glb-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-size: 30px;
+    line-height: 1;
+    padding-bottom: 3px;
+  }
+  .glb-prev { left: 12px; }
+  .glb-next { right: 12px; }
+  @media (max-width: 500px) {
+    .glb-nav { width: 40px; height: 40px; font-size: 26px; }
+    .glb-close { top: 10px; right: 10px; }
   }
 
   /* ============ LINKS PAGE ============ */
@@ -4732,29 +4786,27 @@
       <div></div>
     </div>
 
-    <div class="gallery-header">
-      <div class="gallery-eyebrow">Photo Gallery</div>
-      <div class="gallery-jp">ギャラリー</div>
-      <p class="gallery-subtitle">各地で開催されるフェスの様子を、<br>お届けします！</p>
+    <div class="ghero-head">
+      <h1 class="ghero-script">Photo Gallery</h1>
+      <p class="ghero-lead">心おどる瞬間。<br>各地のフェスの様子をお届けします！</p>
     </div>
 
-    <div class="gallery-coming-soon">
-      <div class="gallery-photo-grid" aria-hidden="true">
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=400&fit=crop&auto=format')"></div>
-        <div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=400&h=400&fit=crop&auto=format')"></div>
-      </div>
-      <div class="gallery-overlay">
-        <span class="coming-soon-eyebrow">STAY TUNED</span>
-        <div class="coming-soon-title">Coming Soon</div>
-        <p class="coming-soon-msg">写真は現在準備中です。<br>各地のフェスの様子を、<br>もうしばらくお待ちください。</p>
-      </div>
+    <!-- 大きなヒーロー写真: 固定3枚をクロスフェード＋ケンバーンズ -->
+    <div class="ghero2" id="ghero2"></div>
+
+    <div class="gallery-grid" id="gallery-grid" aria-label="YAF-Gallery">
+      <!-- 写真は JS(renderGallery) で固定の並びで差し込まれます -->
+    </div>
+
+  </div>
+
+  <!-- ====================== PHOTO LIGHTBOX ====================== -->
+  <div class="glb" id="glb" aria-hidden="true">
+    <button class="glb-close" id="glb-close" type="button" aria-label="閉じる">&times;</button>
+    <button class="glb-nav glb-prev" id="glb-prev" type="button" aria-label="前へ">&#8249;</button>
+    <button class="glb-nav glb-next" id="glb-next" type="button" aria-label="次へ">&#8250;</button>
+    <div class="glb-stage" id="glb-stage">
+      <img class="glb-img" id="glb-img" alt="YAF-Gallery">
     </div>
   </div>
 
@@ -6710,6 +6762,247 @@
 
   // ページ遷移履歴（{pageId, scrollY}）。戻る操作で元の位置に復元するために使う。
   const navHistory = [];
+  /* ====================== PHOTO GALLERY (写真固定・選定済み) ====================== */
+  function gsrc(n) { return 'assets/gallery/' + n + '.jpg'; }
+
+  // ヒーロー: クロスフェードする固定スライド（3:2表示なので全員入る）
+  // だっこ(トップ) → 大田(家族) → 男の子2人(ピース) → 大田(バルーンアーチ) → ちるフェス集合
+  var GALLERY_HERO = [
+    { src: gsrc('s3696'), pos: '50% 50%' },
+    { src: gsrc('n6029'), pos: '50% 50%' },
+    { src: gsrc('n1712'), pos: '50% 50%' }
+  ];
+
+  // グリッド: 選抜写真を固定順で。インパクトのある人物・動きを上位に、
+  // 小物・ディテールカットを後半に配置。3枚行(t3)と大小2枚行(t2/t2r)の繰り返し
+  // t1 = 全幅・元の縦横比のまま表示（端が切れない）。arで比率を指定
+  // 正方形などで切り抜かれる際の構図調整（object-position）
+  var GALLERY_POS = {
+    s6556: '0% 50%',   // しおりが端で切れないよう左寄せ
+    s4664: '30% 50%'   // うちわ全体が収まるようやや左寄せ
+  };
+
+  // 人物カットと風景・小物カットが交互になるよう配置し、
+  // 各行にできるだけ人の写真が1枚入るようバランスを取っている
+  var GALLERY_ROWS = [
+    // 母子(横顔)/うちわ作り看板/浴衣の子(後ろ姿)
+    { t: 't3',  p: ['s5834', 'n9527', 'n2212'] },
+    // 拍手の聴衆（手元中心）を全幅・横長で
+    { t: 't1',  p: ['s4745'], ar: '3 / 2' },
+    { t: 't3',  p: ['s4599', 'n2216', 's4664'] },
+    // キッチンカーを全幅・元比率で（のぼりや看板が切れないように）
+    { t: 't1',  p: ['n1709'], ar: '1200 / 802' },
+    { t: 't3',  p: ['s3546', 's4568', 's3584'] },
+    // 中盤の全幅枠はスライドショー
+    { t: 'slide', p: ['n7104', 's6258'], ar: '3 / 2' },
+    // しおりは正方形で（構図はGALLERY_POSで調整）
+    { t: 't3',  p: ['s6556', 'n2234', 's4634'] },
+    { t: 't2',  p: ['n6099', 's3875'] },
+    { t: 't3',  p: ['s4827', 's3557', 's3620'] },
+    { t: 't2r', p: ['s6447', 's5303'] },
+    // 玉入れリレーの応援（会場の広がりが出るので全幅で）
+    { t: 't1',  p: ['a001'], ar: '3 / 2' },
+    { t: 't3',  p: ['s3593', 's4294', 's3482'] },
+    { t: 't3',  p: ['s4174', 'a002', 'n6106'] },
+    { t: 't2',  p: ['s3606', 's4592'] }
+  ];
+
+  // ライトボックス用の通し順 = ヒーロー + グリッドの並び
+  var galleryOrder = GALLERY_HERO.map(function (h) { return h.src; }).concat(
+    GALLERY_ROWS.reduce(function (acc, r) { return acc.concat(r.p.map(gsrc)); }, [])
+  );
+
+  var galleryRendered = false;
+  var galleryIO = null;
+
+  function renderGallery() {
+    if (galleryRendered) return;
+    var grid = document.getElementById('gallery-grid');
+    var hero = document.getElementById('ghero2');
+    if (!grid || !hero) return;
+    galleryRendered = true;
+
+    /* ---- ヒーロー: 固定スライドを6秒ごとにクロスフェード ---- */
+    // 全画像を事前読み込み（切替時に一瞬白く抜けるのを防ぐ）
+    GALLERY_HERO.forEach(function (h) { var im = new Image(); im.src = h.src; });
+
+    var slides = [document.createElement('img'), document.createElement('img')];
+    slides.forEach(function (s) {
+      s.className = 'gh2-slide';
+      s.alt = 'YAF-Gallery';
+      hero.insertBefore(s, hero.firstChild);
+    });
+
+    // 表示のたびにズームを最初から再生 → 毎回同じリズム
+    function revealSlide(s) {
+      s.classList.remove('kbzoom');
+      void s.offsetWidth; /* reflowでアニメーションをリセット */
+      s.classList.add('kbzoom');
+      s.classList.add('show');
+    }
+
+    var heroIdx = 0, activeSlide = 0;
+    slides[0].src = GALLERY_HERO[0].src;
+    slides[0].style.objectPosition = GALLERY_HERO[0].pos;
+    revealSlide(slides[0]);
+
+    // タップで拡大（動き続けるスライドではなく静止したコンテナ側で受ける）
+    hero.style.cursor = 'pointer';
+    hero.addEventListener('click', function () { openLightbox(heroIdx); });
+
+    setInterval(function () {
+      heroIdx = (heroIdx + 1) % GALLERY_HERO.length;
+      var nxt = 1 - activeSlide;
+      var s = slides[nxt];
+      s.src = GALLERY_HERO[heroIdx].src;
+      s.style.objectPosition = GALLERY_HERO[heroIdx].pos;
+      var reveal = function () {
+        revealSlide(s);
+        slides[activeSlide].classList.remove('show');
+        activeSlide = nxt;
+      };
+      // デコード完了を待ってからフェード（読み込み中の白抜け防止）
+      if (s.decode) { s.decode().then(reveal).catch(reveal); } else { reveal(); }
+    }, 6000);
+
+    /* ---- グリッド: ふんわり出現 → ごく遅いズームで動き続ける ---- */
+    galleryIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var img = en.target;
+          setTimeout(function () { img.classList.add('in'); }, (img.dataset.stag || 0) * 90);
+          setTimeout(function () { img.classList.add('drift'); }, 1100);
+          galleryIO.unobserve(img);
+        }
+      });
+    }, { rootMargin: '40px' });
+
+    var idx = GALLERY_HERO.length;
+    GALLERY_ROWS.forEach(function (row) {
+      // 全幅スライドショー枠: 数枚を6秒ごとにクロスフェード
+      if (row.t === 'slide') {
+        var box = document.createElement('div');
+        box.className = 'ggslide';
+        if (row.ar) box.style.aspectRatio = row.ar;
+        var baseIdx = idx;
+        var slideSrcs = row.p.map(gsrc);
+        slideSrcs.forEach(function (s) { var im = new Image(); im.src = s; });  // 事前読み込み
+        var sl = [document.createElement('img'), document.createElement('img')];
+        sl.forEach(function (s) { s.alt = 'YAF-Gallery'; box.appendChild(s); });
+        var si = 0, act = 0;
+        function reveal(el) {
+          el.classList.remove('kbzoom');
+          void el.offsetWidth;
+          el.classList.add('kbzoom');
+          el.classList.add('show');
+        }
+        sl[0].src = slideSrcs[0];
+        reveal(sl[0]);
+        box.addEventListener('click', function () { openLightbox(baseIdx + si); });
+        setInterval(function () {
+          si = (si + 1) % slideSrcs.length;
+          var nx = 1 - act, el = sl[nx];
+          el.src = slideSrcs[si];
+          var go = function () {
+            reveal(el);
+            sl[act].classList.remove('show');
+            act = nx;
+          };
+          if (el.decode) { el.decode().then(go).catch(go); } else { go(); }
+        }, 6000);
+        grid.appendChild(box);
+        idx += row.p.length;
+        return;
+      }
+
+      var div = document.createElement('div');
+      div.className = row.t === 't3' ? 'gg3'
+                    : row.t === 't1' ? 'gg1'
+                    : ('gg2' + (row.t === 't2r' ? ' rev' : ''));
+      row.p.forEach(function (name, c) {
+        var cell = document.createElement('div');
+        cell.className = 'gg-cell';
+        if (row.ar) cell.style.aspectRatio = row.ar;  // t1: 元の縦横比のまま（端が切れない）
+        var img = document.createElement('img');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.alt = 'YAF-Gallery';
+        img.src = gsrc(name);
+        if (GALLERY_POS[name]) img.style.objectPosition = GALLERY_POS[name];
+        img.dataset.stag = c;
+        // 写真ごとに速さ・方向を変えて自然なゆらぎに
+        img.style.setProperty('--dur', (11 + (idx % 7)) + 's');
+        img.style.setProperty('--dly', ((idx % 3) * 0.8) + 's');
+        img.style.setProperty('--dx', (idx % 2) ? '-1.5%' : '1.5%');
+        img.style.setProperty('--dy', (idx % 3) ? '1%' : '-1%');
+        cell.appendChild(img);
+        (function (i) {
+          cell.addEventListener('click', function () { openLightbox(i); });
+        })(idx);
+        galleryIO.observe(img);
+        div.appendChild(cell);
+        idx++;
+      });
+      grid.appendChild(div);
+    });
+  }
+
+
+  /* ---- Lightbox ---- */
+  var glbIndex = 0;
+  function openLightbox(idx) {
+    var glb = document.getElementById('glb');
+    var img = document.getElementById('glb-img');
+    if (!glb || !img) return;
+    glbIndex = idx;
+    img.src = galleryOrder[idx];
+    glb.classList.add('open');
+    glb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    var glb = document.getElementById('glb');
+    if (!glb) return;
+    glb.classList.remove('open');
+    glb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function glbStep(dir) {
+    if (!galleryOrder.length) return;
+    glbIndex = (glbIndex + dir + galleryOrder.length) % galleryOrder.length;
+    var img = document.getElementById('glb-img');
+    img.src = galleryOrder[glbIndex];
+  }
+  (function initLightbox() {
+    var glb = document.getElementById('glb');
+    if (!glb) return;
+    document.getElementById('glb-close').addEventListener('click', closeLightbox);
+    document.getElementById('glb-prev').addEventListener('click', function (e) { e.stopPropagation(); glbStep(-1); });
+    document.getElementById('glb-next').addEventListener('click', function (e) { e.stopPropagation(); glbStep(1); });
+    // 背景タップで閉じる（画像自体のタップは無視）
+    glb.addEventListener('click', function (e) {
+      if (e.target === glb || e.target.id === 'glb-stage') closeLightbox();
+    });
+    // キーボード操作
+    document.addEventListener('keydown', function (e) {
+      if (!glb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') glbStep(-1);
+      else if (e.key === 'ArrowRight') glbStep(1);
+    });
+    // スワイプでの前後移動
+    var sx = 0, sy = 0;
+    glb.addEventListener('touchstart', function (e) {
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    }, { passive: true });
+    glb.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - sx;
+      var dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) glbStep(dx < 0 ? 1 : -1);
+      else if (dy > 80 && Math.abs(dy) > Math.abs(dx)) closeLightbox();
+    }, { passive: true });
+  })();
+
   function goToPage(pageId, tabKey, monthAnchor, opts) {
     opts = opts || {};
     // Pause videos only on the page we're LEAVING (not the one we're entering)
@@ -6754,6 +7047,11 @@
         void pano.offsetWidth; // force reflow to restart animation
         pano.classList.add('play');
       }
+    }
+
+    // ギャラリー: 初回訪問時に写真を描画
+    if (pageId === 'page-event') {
+      renderGallery();
     }
 
     // optional schedule-page tab pre-selection
