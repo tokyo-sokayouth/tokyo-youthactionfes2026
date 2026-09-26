@@ -1221,6 +1221,37 @@
     color: var(--color-ink-soft);
     margin: 12px 0 0;
   }
+  /* BGMボタン: 右上に固定。初期は停止、押したときだけ鳴る */
+  .gbgm-btn {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px 8px 11px;
+    border: 1.5px solid var(--color-coral);
+    border-radius: var(--radius-pill);
+    background: var(--color-card);
+    color: var(--color-coral);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: background 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .gbgm-btn:active { transform: scale(0.96); }
+  .gbgm-btn.playing {
+    background: var(--color-coral);
+    color: #fff;
+  }
+  .gbgm-ico-on { display: none; }
+  .gbgm-btn.playing .gbgm-ico-off { display: none; }
+  .gbgm-btn.playing .gbgm-ico-on { display: block; }
   /* 大きなヒーロー写真（全幅・クロスフェード＋ケンバーンズ） */
   .ghero2 {
     position: relative;
@@ -5378,6 +5409,22 @@
     <img id="flyer-lightbox-img" alt="フライヤー拡大表示" draggable="false">
   </div>
 
+  <!-- ====================== BGM（全ページ共通） ====================== -->
+  <!-- 初期は停止。ユーザーが押したときだけ再生し、ページを移動しても鳴り続ける -->
+  <button class="gbgm-btn" id="gbgm-btn" type="button" aria-pressed="false" aria-label="BGMを再生する">
+    <svg class="gbgm-ico-off" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <svg class="gbgm-ico-on" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+      <rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/>
+    </svg>
+    <span class="gbgm-label" id="gbgm-label">BGM</span>
+  </button>
+  <audio id="gbgm-audio" src="assets/bgm-youth-action-fes.mp3" loop preload="none"></audio>
+
   <!-- ====================== BOTTOM NAVIGATION ====================== -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="page-home">
@@ -6947,6 +6994,75 @@
     });
   }
 
+
+  /* ---- BGM（初期は停止。ユーザーが押したときだけ再生） ---- */
+  (function initBgm() {
+    var btn = document.getElementById('gbgm-btn');
+    var audio = document.getElementById('gbgm-audio');
+    if (!btn || !audio) return;
+
+    var fadeTimer = null;
+    var TARGET_VOL = 0.5;
+
+    // audio.volume が実際に変更できるか（iOS Safari は無視する）
+    var volumeWorks = (function () {
+      try {
+        audio.volume = 0.5;
+        var ok = Math.abs(audio.volume - 0.5) < 0.01;
+        audio.volume = 1;
+        return ok;
+      } catch (_) { return false; }
+    })();
+
+    // フェードイン（音量制御が効く環境のみ。効かない場合は何もしない）
+    function fadeIn() {
+      clearInterval(fadeTimer);
+      if (!volumeWorks) return;
+      audio.volume = 0;
+      fadeTimer = setInterval(function () {
+        var next = audio.volume + TARGET_VOL * 0.12;
+        if (next >= TARGET_VOL) {
+          audio.volume = TARGET_VOL;
+          clearInterval(fadeTimer);
+          return;
+        }
+        audio.volume = next;
+      }, 40);
+    }
+
+    function setUi(playing) {
+      btn.classList.toggle('playing', playing);
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.setAttribute('aria-label', playing ? 'BGMを停止する' : 'BGMを再生する');
+    }
+
+    function stopBgm() {
+      clearInterval(fadeTimer);
+      if (audio.paused) return;
+      audio.pause();          // フェードを待たずに確実に止める
+      setUi(false);
+    }
+
+    function playBgm() {
+      clearInterval(fadeTimer);
+      if (volumeWorks) audio.volume = 0;   // 無音から始める
+      var p = audio.play();
+      if (p && p.catch) p.catch(function () { setUi(false); });
+      fadeIn();               // 効く環境ではゆっくり立ち上げる
+      setUi(true);
+      gaEvent('bgm_play', { page_path: '/#page-event' });
+    }
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) playBgm();
+      else stopBgm();
+    });
+
+    // タブを離れたら停止（バックグラウンド再生を防ぐ）
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopBgm();
+    });
+  })();
 
   /* ---- Lightbox ---- */
   var glbIndex = 0;
