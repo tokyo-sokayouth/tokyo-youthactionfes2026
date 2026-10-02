@@ -111,7 +111,7 @@
      prevents overflow on very long unbreakable strings. */
   p, h1, h2, h3, h4, h5, h6,
   .event-no-external strong, .event-no-external p,
-  .event-name-jp, .event-content-text,
+  .event-name-jp, .event-name-sub, .event-content-text,
   .sli-name, .sli-venue, .sli-desc, .sli-region,
   .qa-body, .qa-summary-text, .qa-quote, .qa-section-desc,
   .about-lead, .about-body, .about-headline, .about-can-title, .about-can-list li,
@@ -2772,6 +2772,15 @@
     color: var(--color-ink-soft);
     margin-top: 6px;
   }
+  /* タイトル2行目（サブタイトル／テーマ）。eventSubtitle がある総区のみ表示 */
+  .event-name-sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    opacity: 0.85;
+    line-height: 1.45;
+    margin-top: 3px;
+  }
   .event-poster {
     margin-top: 16px;
     aspect-ratio: 4/5;
@@ -4852,6 +4861,7 @@
       <div class="event-eyebrow" id="ed-eyebrow">AREA</div>
       <div class="event-name-en" id="ed-name-en"></div>
       <div class="event-name-jp" id="ed-name-jp"></div>
+      <div class="event-name-sub" id="ed-name-sub" style="display:none;"></div>
 
       <!-- Hero: self-hosted video (when available, highest priority) -->
       <div class="event-flyer-wrap event-selfvideo-wrap" id="ed-hero-selfvideo-wrap" style="display:none;">
@@ -5695,6 +5705,7 @@
       region: 'tokyo23',
       eyebrow: 'CHIYODA AREA',
       eventNameJp: 'ユースアクションフェス',
+      eventSubtitle: '青年世代の可能性 無限に、広げゆけ',
       eventNameEn: 'Youth Action Fes',
       sessions: [
         { label: '昼の部', dateLabel: '2026年11月1日(日)', timeLabel: '10:00〜14:00' },
@@ -6566,6 +6577,10 @@
     // English event name is intentionally hidden (area name + official JP name only)
     document.getElementById('ed-name-en').style.display = 'none';
     document.getElementById('ed-name-jp').textContent = e.eventNameJp || '';
+    // タイトル2行目（サブタイトル／テーマ）。指定がない総区は非表示のまま
+    const nameSub = document.getElementById('ed-name-sub');
+    nameSub.textContent = e.eventSubtitle || '';
+    nameSub.style.display = e.eventSubtitle ? '' : 'none';
 
     // Hero & video: priority = self-hosted video > flyer > YouTube hero > typography fallback
     const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
@@ -7711,7 +7726,7 @@
   const SELECTOR = [
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     '.event-no-external strong', '.event-no-external p',
-    '.event-name-jp', '.event-content-text',
+    '.event-name-jp', '.event-name-sub', '.event-content-text',
     '.sli-name', '.sli-venue', '.sli-desc', '.sli-region',
     '.qa-body', '.qa-summary',
     '.about-text', '.about-list',
