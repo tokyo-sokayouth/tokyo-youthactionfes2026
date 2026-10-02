@@ -5570,10 +5570,10 @@
       eventNameJp: 'SOKA YOUTH OPEN DAY 2026​（新立川総区 4会場）',
       eventNameEn: 'Soka Youth Open Day 2026',
       sessions: [
-        { dateLabel: '2026年10月18日(日)', timeLabel: '昭島牧口区 10:00〜（昭島文化会館）' },
-        { dateLabel: '2026年10月25日(日)', timeLabel: '日野池田区 10:00〜12:00（日野文化会館）' },
-        { dateLabel: '2026年10月25日(日)', timeLabel: '立川戸田区 11:00〜15:00（立川平和会館）' },
-        { dateLabel: '2026年10月25日(日)', timeLabel: '立川池田区 13:30〜（立川文化会館）' }
+        { label: '昭島牧口区', dateLabel: '2026年10月18日(日)', timeLabel: '10:00〜（昭島文化会館）' },
+        { label: '日野池田区', dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜12:00（日野文化会館）' },
+        { label: '立川戸田区', dateLabel: '2026年10月25日(日)', timeLabel: '11:00〜15:00（立川平和会館）' },
+        { label: '立川池田区', dateLabel: '2026年10月25日(日)', timeLabel: '13:30〜（立川文化会館）' }
       ],
       venue: '4会場で開催（創価学会 立川文化会館 / 立川平和会館 / 昭島文化会館 / 日野文化会館）',
       address: '昭島市・日野市・立川市',
@@ -5697,8 +5697,8 @@
       eventNameJp: 'Youth Action Fes',
       eventNameEn: 'Youth Action Fes',
       sessions: [
-        { dateLabel: '2026年11月1日(日)', timeLabel: '昼の部 10:00〜14:00' },
-        { dateLabel: '2026年11月1日(日)', timeLabel: '夜の部 17:00〜20:00' }
+        { label: '昼の部', dateLabel: '2026年11月1日(日)', timeLabel: '10:00〜14:00' },
+        { label: '夜の部', dateLabel: '2026年11月1日(日)', timeLabel: '17:00〜20:00' }
       ],
       venue: '創価学会 千代田文化会館',
       address: '東京都千代田区富士見1丁目11-8',
@@ -6090,8 +6090,8 @@
       eventNameJp: '城北フェス',
       eventNameEn: 'Kita Fes',
       sessions: [
-        { dateLabel: '2026年10月25日(日)', timeLabel: '午前の部 10:00〜12:00' },
-        { dateLabel: '2026年10月25日(日)', timeLabel: '午後の部 13:00〜15:00' }
+        { label: '午前の部', dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜12:00' },
+        { label: '午後の部', dateLabel: '2026年10月25日(日)', timeLabel: '13:00〜15:00' }
       ],
       venue: '創価学会 城北池田記念講堂',
       address: '東京都北区東十条6丁目14-3',
@@ -6674,7 +6674,11 @@
     const sessionsEl = document.getElementById('ed-sessions');
     const single = (e.sessions || []).length <= 1;
     sessionsEl.innerHTML = (e.sessions || []).map((s, i) => {
-      const label = (e.sessions.length > 1) ? `<div class="event-session-label">DAY ${i + 1}</div>` : '';
+      // s.label があればそれを見出しに使う（例: 昼の部 / 夜の部）。
+      // 指定がなければ従来どおり日程順に DAY 1, DAY 2 … と振る。
+      const labelText = s.label || `DAY ${i + 1}`;
+      const label = (e.sessions.length > 1)
+        ? `<div class="event-session-label">${escapeHtml(labelText)}</div>` : '';
       const time = s.timeLabel ? `<span class="event-session-time">${s.timeLabel}</span>` : '';
       return `<div class="event-session${single ? ' single' : ''}">${label}<span class="event-session-date">${s.dateLabel}</span>${time}</div>`;
     }).join('');
