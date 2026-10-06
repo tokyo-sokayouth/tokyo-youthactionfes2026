@@ -5553,7 +5553,6 @@
       address: '小金井市前原町3-35-20 ／ 国分寺市東元町2-7-15 ／ 国立市東1丁目15-7',
       allowExternal: true,
       flyer: 'assets/koganei-flyer-sm.jpg',
-      flyerAutoplayMs: 2000,
       flyers: ['assets/koganei-flyer.jpg', 'assets/koganei-flyer-2.jpg', 'assets/koganei-flyer-3.jpg'],
       flyersThumb: ['assets/koganei-flyer-sm.jpg', 'assets/koganei-flyer-2-sm.jpg', 'assets/koganei-flyer-3-sm.jpg'],
       youtube: null,
@@ -6422,6 +6421,19 @@
     if (single) single.style.display = '';
   }
   // 複数フライヤーを横スワイプできるスライダーとして構築（JSで完全制御）
+  // 複数会場で開催する総区かどうか（会場名が「/」「／」で区切られている、または「N会場」と書かれている）
+  function isMultiVenueEvent(e) {
+    return /[／/]|\d+\s*会場/.test((e && e.venue) || '');
+  }
+  // フライヤーの自動送り間隔(ms)。複数会場 × 複数フライヤーの総区は
+  // 会場ごとのフライヤーが順に見えるよう自動で切り替える。
+  // flyerAutoplayMs を直接指定すればそちらが優先（0 を指定すると自動送りなし）。
+  function flyerAutoplayFor(e) {
+    if (typeof e.flyerAutoplayMs === 'number') return e.flyerAutoplayMs;
+    const count = (e.flyers && e.flyers.length) || 0;
+    return (count > 1 && isMultiVenueEvent(e)) ? 2000 : 0;
+  }
+
   // フライヤー自動送りのタイマー（同時に動くのは常に1本）
   let flyerAutoTimer = null;
   function stopFlyerAutoplay() {
@@ -6668,7 +6680,7 @@
       // 複数フライヤー: 横スワイプのカルーセル
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
-      buildFlyerCarousel(e.flyers, e.flyerAutoplayMs);
+      buildFlyerCarousel(e.flyers, flyerAutoplayFor(e));
       flyerWrap.style.display = 'block';
       typo.style.display = 'none';
       if (ytId) {
