@@ -3145,6 +3145,34 @@
     background: transparent;
     padding: 0;
   }
+  /* フライヤー付きの日程：タップで該当会場のフライヤーを拡大表示 */
+  .event-session.is-tappable {
+    cursor: pointer;
+    transition: transform 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .event-session.is-tappable:active { transform: scale(0.985); }
+  .event-session.is-tappable:focus-visible {
+    outline: 2px solid var(--color-coral);
+    outline-offset: 2px;
+  }
+  /* 日付と重ならないよう、独立した行として右下に置く */
+  .event-session-hint {
+    align-self: flex-end;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-coral);
+    background: #fff;
+    border: 1px solid var(--color-coral);
+    border-radius: 999px;
+    padding: 5px 10px;
+  }
   .event-session-date {
     font-weight: 700;
     font-size: 14px;
@@ -5582,10 +5610,10 @@
       eventNameJp: 'SOKA YOUTH OPEN DAY 2026​（新立川総区 4会場）',
       eventNameEn: 'Soka Youth Open Day 2026',
       sessions: [
-        { label: '昭島牧口区', dateLabel: '2026年10月18日(日)', timeLabel: '10:00〜13:00（昭島文化会館）' },
-        { label: '日野池田区', dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜12:00（日野文化会館）' },
-        { label: '立川戸田区', dateLabel: '2026年10月25日(日)', timeLabel: '11:00〜15:00（立川平和会館）' },
-        { label: '立川池田区', dateLabel: '2026年10月25日(日)', timeLabel: '13:30〜16:00（立川文化会館）' }
+        { label: '昭島牧口区', dateLabel: '2026年10月18日(日)', timeLabel: '10:00〜13:00（昭島文化会館）', flyer: 'assets/shintachikawa-akishima-flyer.jpg' },
+        { label: '日野池田区', dateLabel: '2026年10月25日(日)', timeLabel: '10:00〜12:00（日野文化会館）', flyer: 'assets/shintachikawa-hino-flyer.jpg' },
+        { label: '立川戸田区', dateLabel: '2026年10月25日(日)', timeLabel: '11:00〜15:00（立川平和会館）', flyer: 'assets/shintachikawa-tachikawa-heiwa-flyer.jpg' },
+        { label: '立川池田区', dateLabel: '2026年10月25日(日)', timeLabel: '13:30〜16:00（立川文化会館）', flyer: 'assets/shintachikawa-tachikawa-bunka-flyer.jpg' }
       ],
       venue: '4会場で開催（創価学会 立川文化会館 / 立川平和会館 / 昭島文化会館 / 日野文化会館）',
       address: '昭島市・日野市・立川市',
@@ -6767,8 +6795,21 @@
       const label = (e.sessions.length > 1)
         ? `<div class="event-session-label">${escapeHtml(labelText)}</div>` : '';
       const time = s.timeLabel ? `<span class="event-session-time">${s.timeLabel}</span>` : '';
-      return `<div class="event-session${single ? ' single' : ''}">${label}<span class="event-session-date">${s.dateLabel}</span>${time}</div>`;
+      // s.flyer があれば、その日程をタップして該当会場のフライヤーを拡大表示できるようにする
+      const tappable = s.flyer ? ' is-tappable' : '';
+      const hint = s.flyer ? `<span class="event-session-hint">フライヤーを見る</span>` : '';
+      return `<div class="event-session${single ? ' single' : ''}${tappable}" data-session-index="${i}"${s.flyer ? ' role="button" tabindex="0"' : ''}>${label}<span class="event-session-date">${s.dateLabel}</span>${time}${hint}</div>`;
     }).join('');
+    // フライヤー付きの日程にタップ操作を割り当てる（URLはDOMに書かずデータから取得）
+    sessionsEl.querySelectorAll('.event-session.is-tappable').forEach(el => {
+      const s = (e.sessions || [])[Number(el.dataset.sessionIndex)];
+      if (!s || !s.flyer) return;
+      const open = () => { if (window.openFlyerLightbox) window.openFlyerLightbox(s.flyer); };
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', ev => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(); }
+      });
+    });
 
     // Venue / address
     document.getElementById('ed-venue').textContent = e.venue || '';
