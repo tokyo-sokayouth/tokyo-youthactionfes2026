@@ -5553,6 +5553,7 @@
       address: '小金井市前原町3-35-20 ／ 国分寺市東元町2-7-15 ／ 国立市東1丁目15-7',
       allowExternal: true,
       flyer: 'assets/koganei-flyer-sm.jpg',
+      flyerAutoplayMs: 2000,
       flyers: ['assets/koganei-flyer.jpg', 'assets/koganei-flyer-2.jpg', 'assets/koganei-flyer-3.jpg'],
       flyersThumb: ['assets/koganei-flyer-sm.jpg', 'assets/koganei-flyer-2-sm.jpg', 'assets/koganei-flyer-3-sm.jpg'],
       youtube: null,
@@ -6421,11 +6422,19 @@
     if (single) single.style.display = '';
   }
   // 複数フライヤーを横スワイプできるスライダーとして構築（JSで完全制御）
-  function buildFlyerCarousel(urls) {
+  // フライヤー自動送りのタイマー（同時に動くのは常に1本）
+  let flyerAutoTimer = null;
+  function stopFlyerAutoplay() {
+    if (flyerAutoTimer) { clearInterval(flyerAutoTimer); flyerAutoTimer = null; }
+  }
+
+  function buildFlyerCarousel(urls, autoplayMs) {
     const single = document.getElementById('ed-hero-flyer');
     const car = document.getElementById('ed-hero-carousel');
     const dots = document.getElementById('ed-hero-dots');
     if (!car) return;
+    // 前の総区を開いたときの自動送りタイマーが残らないよう必ず止める
+    stopFlyerAutoplay();
     if (single) single.style.display = 'none';
     // 1枚目は即時、それ以降は必要時に読み込む（通信節約）
     car.innerHTML = `<div class="flyer-track">` + urls.map((u, i) =>
@@ -6454,7 +6463,10 @@
         `<button type="button" aria-label="${i + 1}枚目を表示" class="${i === 0 ? 'is-active' : ''}"></button>`
       ).join('');
       dots.style.display = 'flex';
-      Array.from(dots.children).forEach((b, i) => { dotEls.push(b); b.onclick = () => go(i); });
+      Array.from(dots.children).forEach((b, i) => {
+        dotEls.push(b);
+        b.onclick = () => { go(i); if (car._restartAuto) car._restartAuto(); };
+      });
     } else {
       dots.style.display = 'none';
     }
@@ -6466,9 +6478,19 @@
       updateHeight();
     }
 
+    // 自動送り（autoplayMs が指定された総区のみ）。最後の1枚まで行ったら先頭へ戻る
+    function startAuto() {
+      if (!autoplayMs || count < 2) return;
+      stopFlyerAutoplay();
+      flyerAutoTimer = setInterval(() => { go((index + 1) % count); }, autoplayMs);
+    }
+    // 操作中は自動送りを止め、離したら再開（スワイプやドットの操作を邪魔しない）
+    car._restartAuto = startAuto;
+
     // ドラッグ/スワイプ（タッチ・マウス共通の Pointer Events）
     let down = false, startX = 0, startY = 0, dx = 0, decided = false, horiz = false, w = 0;
     car.onpointerdown = (e) => {
+      stopFlyerAutoplay();
       down = true; decided = false; horiz = false; dx = 0;
       startX = e.clientX; startY = e.clientY; w = car.clientWidth || 1;
       track.classList.add('is-dragging');
@@ -6497,13 +6519,16 @@
         // ドラッグでない＝タップ → 全画面で拡大表示
         const cur = imgs[index];
         if (cur && cur.src && window.openFlyerLightbox) window.openFlyerLightbox(cur.src);
+        return; // 拡大表示中は自動送りを止めたままにする
       }
+      startAuto();
     };
     car.onpointerup = up;
     car.onpointercancel = up;
     car.onpointerleave = up;
 
     go(0);
+    startAuto();
   }
 
   // ===== フライヤー拡大ビューア（タップで全画面／ピンチ拡大・ドラッグ移動・ダブルタップ・×で閉じる） =====
@@ -6526,6 +6551,9 @@
     const close = () => {
       box.classList.remove('open'); box.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lb-open'); img.src = '';
+      // 拡大表示を閉じたらフライヤーの自動送りを再開する
+      const car = document.getElementById('ed-hero-carousel');
+      if (car && car._restartAuto && car.style.display !== 'none') car._restartAuto();
     };
     closeBtn.addEventListener('click', close);
     box.addEventListener('click', (e) => { if (e.target === box) close(); });
@@ -6587,6 +6615,8 @@
     nameSub.style.display = e.eventSubtitle ? '' : 'none';
 
     // Hero & video: priority = self-hosted video > flyer > YouTube hero > typography fallback
+    // 別の総区を開くとき、前のカルーセルの自動送りを止める
+    stopFlyerAutoplay();
     const flyerWrap = document.getElementById('ed-hero-flyer-wrap');
     const flyerImg = document.getElementById('ed-hero-flyer');
     const typo = document.getElementById('ed-hero-typo');
@@ -6638,7 +6668,7 @@
       // 複数フライヤー: 横スワイプのカルーセル
       selfVideoEl.removeAttribute('src'); selfVideoEl.load();
       selfVideoWrap.style.display = 'none';
-      buildFlyerCarousel(e.flyers);
+      buildFlyerCarousel(e.flyers, e.flyerAutoplayMs);
       flyerWrap.style.display = 'block';
       typo.style.display = 'none';
       if (ytId) {
